@@ -280,24 +280,16 @@ your-project/
 
 ### 工作流程
 
-```
-/pm       需求分析，输出 REQ 文档
-   ↓
-/clarify  澄清待确认项（如需）
-   ↓
-/lead     技术方案，任务分解，输出 DES + TSK
-   ↓
-/designer UI 设计审查（前端任务）
-   ↓
-/dev      编码实现，单元测试
-   ↓
-/qa       功能验证，质量保证
-   ↓
-/commit   代码提交
-   ↓
-/clear    清除上下文
-   ↓
-循环继续...
+```mermaid
+flowchart LR
+    PM["/pm<br/>需求分析"] --> Clarify["/clarify<br/>澄清（如需）"]
+    Clarify --> Lead["/lead<br/>技术方案"]
+    Lead --> Designer["/designer<br/>UI 设计"]
+    Designer --> Dev["/dev<br/>编码实现"]
+    Dev --> QA["/qa<br/>功能验证"]
+    QA --> Commit["/commit<br/>代码提交"]
+    Commit --> Clear["/clear<br/>清除上下文"]
+    Clear -.->|循环| PM
 ```
 
 **开发模式**:
