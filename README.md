@@ -1,15 +1,38 @@
 # Claude Code Best Practices Template
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social)](https://github.com/xiaobei930/claude-code-best-practices)
+<p align="center">
+  <strong>🚀 Clone → Configure → Code</strong>
+</p>
 
-[English](#english) | [中文](#中文)
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
+  <a href="https://github.com/xiaobei930/claude-code-best-practices/network/members"><img src="https://img.shields.io/github/forks/xiaobei930/claude-code-best-practices?style=social" alt="GitHub forks"></a>
+  <a href="https://github.com/xiaobei930/claude-code-best-practices/issues"><img src="https://img.shields.io/github/issues/xiaobei930/claude-code-best-practices" alt="GitHub issues"></a>
+  <img src="https://img.shields.io/badge/Claude%20Code-Ready-blueviolet" alt="Claude Code Ready">
+</p>
+
+<p align="center">
+  <a href="#english">English</a> | <a href="#中文">中文</a> | <a href="FAQ.md">FAQ</a> | <a href="CONTRIBUTING.md">Contributing</a>
+</p>
 
 ---
 
 ## English
 
+> **Clone this template and start coding with Claude in minutes, not hours.**
+
 A comprehensive Claude Code configuration template for development teams. Supports **Python / Vue / TypeScript / C++ / Java / C# / Go** with built-in workflows, hooks, and multi-language coding standards.
+
+### Why This Template?
+
+| Without Template | With Template |
+|------------------|---------------|
+| ❌ Configure from scratch | ✅ Pre-configured, ready to use |
+| ❌ Inconsistent code style | ✅ Enforced coding standards |
+| ❌ Manual workflow | ✅ Role-based automation (PM→Dev→QA) |
+| ❌ Risk of dangerous commands | ✅ Safety hooks protect your system |
+| ❌ Context lost between sessions | ✅ Memory bank persists progress |
 
 ### ✨ Features
 
@@ -113,7 +136,19 @@ MIT License - Feel free to use and modify.
 
 ## 中文
 
+> **Clone 即用，几分钟而非几小时内开始与 Claude 协作编程。**
+
 这是一个可复制到任意项目的 Claude Code 配置模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go** 多语言开发。
+
+### 为什么使用这个模板？
+
+| 没有模板 | 使用模板 |
+|----------|----------|
+| ❌ 从零配置 | ✅ 开箱即用 |
+| ❌ 代码风格不一致 | ✅ 强制执行编码规范 |
+| ❌ 手动工作流 | ✅ 角色化自动化（PM→Dev→QA） |
+| ❌ 危险命令风险 | ✅ 安全钩子保护系统 |
+| ❌ 会话间上下文丢失 | ✅ 记忆库持久化进度 |
 
 **快速导航**: [特性](#-特性) | [快速使用](#快速使用) | [目录结构](#目录结构) | [工作流程](#工作流程) | [技能说明](#技能skills说明) | [自定义](#自定义) | [最佳实践](#最佳实践)
 
@@ -380,8 +415,32 @@ MIT License - 可自由使用和修改
 
 ---
 
-## Contributing
+## Contributing / 参与贡献
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions of all kinds! 我们欢迎各种形式的贡献！
 
-欢迎贡献！请随时提交 Pull Request。
+### Ways to Contribute / 贡献方式
+
+| Type | Description |
+|------|-------------|
+| ⭐ **Star** | Show your support / 表示支持 |
+| 🐛 **Bug Report** | [Report issues](../../issues/new?template=bug_report.md) / 报告问题 |
+| 💡 **Feature Request** | [Suggest features](../../issues/new?template=feature_request.md) / 建议功能 |
+| 📝 **Documentation** | Improve docs / 改进文档 |
+| 🌐 **Translation** | Add English translations / 添加英文翻译 |
+| 🔧 **Code** | Add commands, rules, skills / 添加命令、规则、技能 |
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+详细指南请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+### Community / 社区
+
+- [Discussions](../../discussions) - Ask questions, share ideas / 提问交流
+- [Issues](../../issues) - Report bugs, request features / 报告问题
+
+---
+
+**If you find this template useful, please give it a ⭐ star!**
+
+**如果你觉得这个模板有用，请给它一个 ⭐ Star！**
