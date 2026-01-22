@@ -1,0 +1,131 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "description": "跨会话持久化记忆"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "链式思考推理增强"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-playwright"],
+      "description": "浏览器自动化和前端测试"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/your/projects"],
+      "description": "文件系统操作（修改为你的项目路径）"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/mcp-server"],
+      "description": "实时文档查询"
+    },
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--project-ref=YOUR_PROJECT_REF"],
+      "description": "Supabase 数据库操作（修改 project-ref）"
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "YOUR_FIRECRAWL_KEY_HERE"
+      },
+      "description": "网页抓取和爬取（需要 API Key）"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT_HERE"
+      },
+      "description": "GitHub 操作 - PR、Issue、仓库管理（需要 PAT）"
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com",
+      "description": "Vercel 部署和项目管理"
+    },
+    "railway": {
+      "command": "npx",
+      "args": ["-y", "@railway/mcp-server"],
+      "description": "Railway 部署"
+    },
+    "cloudflare-docs": {
+      "type": "http",
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "description": "Cloudflare 文档搜索"
+    },
+    "cloudflare-workers-builds": {
+      "type": "http",
+      "url": "https://builds.mcp.cloudflare.com/mcp",
+      "description": "Cloudflare Workers 构建"
+    },
+    "cloudflare-workers-bindings": {
+      "type": "http",
+      "url": "https://bindings.mcp.cloudflare.com/mcp",
+      "description": "Cloudflare Workers 绑定"
+    },
+    "cloudflare-observability": {
+      "type": "http",
+      "url": "https://observability.mcp.cloudflare.com/mcp",
+      "description": "Cloudflare 可观测性/日志"
+    },
+    "clickhouse": {
+      "type": "http",
+      "url": "https://mcp.clickhouse.cloud/mcp",
+      "description": "ClickHouse 分析查询"
+    },
+    "magic": {
+      "command": "npx",
+      "args": ["-y", "@magicuidesign/mcp@latest"],
+      "description": "Magic UI 组件库"
+    }
+  },
+  "_config": {
+    "default_enabled": [
+      "memory",
+      "sequential-thinking",
+      "playwright",
+      "filesystem",
+      "context7",
+      "supabase",
+      "firecrawl"
+    ],
+    "default_disabled": [
+      "github",
+      "vercel",
+      "railway",
+      "cloudflare-docs",
+      "cloudflare-workers-builds",
+      "cloudflare-workers-bindings",
+      "cloudflare-observability",
+      "clickhouse",
+      "magic"
+    ],
+    "requires_setup": {
+      "filesystem": "修改 args 中的路径为你的项目目录",
+      "supabase": "修改 --project-ref 参数为你的项目 ID",
+      "firecrawl": "设置 FIRECRAWL_API_KEY 环境变量",
+      "github": "设置 GITHUB_PERSONAL_ACCESS_TOKEN 环境变量"
+    },
+    "role_recommendations": {
+      "/pm": ["memory", "firecrawl"],
+      "/lead": ["memory", "sequential-thinking", "github", "context7"],
+      "/designer": ["memory", "playwright", "magic"],
+      "/dev": ["memory", "context7", "supabase", "vercel", "railway"],
+      "/qa": ["memory", "playwright", "cloudflare-observability"]
+    }
+  },
+  "_usage": {
+    "step1": "复制 mcpServers 部分到 ~/.claude.json",
+    "step2": "修改 requires_setup 中标注的配置项",
+    "step3": "项目级禁用在 .claude/settings.local.json 的 disabledMcpServers 中配置",
+    "performance_tip": "同时启用不超过 10 个 MCP 以保持最佳性能"
+  }
+}

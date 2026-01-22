@@ -1,0 +1,305 @@
+{
+  "$schema": "本文件为 settings.local.json 的示例，复制为 settings.local.json 后使用，根据项目需求删减配置",
+
+  "_comment_statusLine": "自定义状态栏配置示例，显示: 用户:路径 分支* 上下文% 模型 时间",
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir' | sed \"s|$HOME|~|g\"); model=$(echo \"$input\" | jq -r '.model.display_name'); time=$(date +%H:%M); remaining=$(echo \"$input\" | jq -r '.context_window.remaining_percentage // empty'); cd \"$(echo \"$input\" | jq -r '.workspace.current_dir')\" 2>/dev/null; branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo ''); status=''; [ -n \"$branch\" ] && { [ -n \"$(git status --porcelain 2>/dev/null)\" ] && status='*'; }; printf \"${cwd}\"; [ -n \"$branch\" ] && printf \" [${branch}${status}]\"; [ -n \"$remaining\" ] && printf \" ctx:${remaining}%%\"; printf \" ${model} ${time}\"; echo"
+  },
+
+  "_env_guide": {
+    "_comment": "Shell 配置指南 - 根据你的操作系统选择",
+    "_windows_gitbash": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "_windows_wsl": "wsl.exe",
+    "_macos": "/bin/zsh 或 /bin/bash (通常不需要配置，使用系统默认)",
+    "_linux": "/bin/bash 或 /usr/bin/zsh (通常不需要配置，使用系统默认)"
+  },
+  "env": {
+    "_comment": "Mac/Linux 用户: 可删除整个 env 块，使用系统默认 shell; Windows 用户: 取消下方注释并选择合适的 shell",
+    "_CLAUDE_CODE_SHELL_windows_gitbash": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "_CLAUDE_CODE_SHELL_windows_wsl": "wsl.exe"
+  },
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "WebSearch",
+      "mcp__*",
+
+      "WebFetch(domain:anthropic.com)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:stackoverflow.com)",
+      "WebFetch(domain:docs.python.org)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:developer.mozilla.org)",
+      "WebFetch(domain:vuejs.org)",
+      "WebFetch(domain:learn.microsoft.com)",
+      "WebFetch(domain:huggingface.co)",
+      "WebFetch(domain:pytorch.org)",
+      "WebFetch(domain:fastapi.tiangolo.com)",
+
+      "Skill(iterate)",
+      "Skill(pair)",
+      "Skill(pm)",
+      "Skill(lead)",
+      "Skill(lead:*)",
+      "Skill(clarify)",
+      "Skill(dev)",
+      "Skill(qa)",
+      "Skill(designer)",
+      "Skill(frontend-design:frontend-design)",
+      "Skill(build)",
+      "Skill(test)",
+      "Skill(run)",
+      "Skill(commit)",
+      "Skill(checkpoint)",
+      "Skill(status)",
+      "Skill(context)",
+      "Skill(memory)",
+      "Skill(catchup)",
+      "Skill(git)",
+      "Skill(self-check)",
+      "Skill(task)",
+      "Skill(pr)",
+      "Skill(train)",
+      "Skill(infer)",
+      "Skill(compact)",
+      "Skill(setup)",
+      "Skill(verify)",
+      "Skill(cleanup)",
+      "Skill(docs)",
+      "Skill(fix)",
+      "Skill(learn)",
+      "Skill(hookify:hookify)",
+      "Skill(hookify:*)",
+
+      "Skill(code-review:code-review)",
+      "Skill(feature-dev:*)",
+      "Skill(pr-review-toolkit:*)",
+      "Skill(code-simplifier:code-simplifier)",
+      "Skill(security-guidance:*)",
+
+      "Bash(git commit:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf $HOME)",
+      "Bash(del /s /q C:\\*)",
+      "Bash(git push --force)",
+      "Bash(git push --force-with-lease)",
+      "Bash(git reset --hard)",
+      "Bash(chmod 777)",
+      "Bash(mkfs.*)",
+      "Bash(dd if=*of=/dev/*)",
+      "Bash(format *:)"
+    ]
+  },
+
+  "enableAllProjectMcpServers": true,
+
+  "enabledMcpjsonServers": [
+    "memory",
+    "sequential-thinking",
+    "playwright",
+    "filesystem",
+    "context7",
+    "supabase",
+    "firecrawl"
+  ],
+
+  "disabledMcpServers": [
+    "github",
+    "vercel",
+    "cloudflare-docs",
+    "railway"
+  ],
+
+  "_hooks_guide": "钩子配置指南见 .claude/hooks/README.md",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/validate_command.py",
+            "timeout": 5000
+          }
+        ],
+        "description": "验证危险命令"
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/pause_before_push.sh",
+            "timeout": 5000
+          }
+        ],
+        "description": "git push 前暂停确认"
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/long_running_warning.sh",
+            "timeout": 3000
+          }
+        ],
+        "description": "长时间运行命令提醒（dev server / watch / build --watch）"
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/protect_files.py",
+            "timeout": 3000
+          }
+        ],
+        "description": "保护敏感文件"
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/block_random_md.py",
+            "timeout": 3000
+          }
+        ],
+        "description": "阻止随机创建 .md 文件"
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/strategic-compact/suggest-compact.sh",
+            "timeout": 3000
+          }
+        ],
+        "description": "策略性压缩建议"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/format_file.py",
+            "timeout": 30000
+          }
+        ],
+        "description": "自动格式化代码"
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/check_console_log.py",
+            "timeout": 3000
+          }
+        ],
+        "description": "检查 console.log 语句"
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/typescript_check.sh",
+            "timeout": 10000
+          }
+        ],
+        "description": "TypeScript 类型检查"
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/session_check.py",
+            "timeout": 5000
+          }
+        ],
+        "description": "会话启动健康检查"
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/session_start.sh",
+            "timeout": 3000
+          }
+        ],
+        "description": "加载上次会话上下文"
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/pre_compact.sh",
+            "timeout": 5000
+          }
+        ],
+        "description": "压缩前保存状态"
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/session_end.sh",
+            "timeout": 5000
+          }
+        ],
+        "description": "会话结束时持久化状态"
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/continuous-learning/evaluate-session.sh",
+            "timeout": 5000
+          }
+        ],
+        "description": "持续学习 - 评估可提取模式"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Success'",
+            "timeout": 1000
+          }
+        ]
+      }
+    ]
+  }
+}

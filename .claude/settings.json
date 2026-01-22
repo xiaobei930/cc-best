@@ -1,0 +1,70 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(python *)",
+      "Bash(pytest *)",
+      "Bash(pip *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(node *)",
+      "Bash(dotnet *)",
+      "Bash(mvn *)",
+      "Bash(gradle *)",
+      "Bash(make *)",
+      "Bash(cmake *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git branch*)",
+      "Bash(git checkout*)",
+      "Bash(git pull*)",
+      "Bash(git fetch*)",
+      "Bash(git stash*)",
+      "Bash(ls *)",
+      "Bash(dir *)",
+      "Bash(mkdir *)",
+      "Bash(cat *)",
+      "Bash(type *)",
+      "Bash(echo *)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf $HOME)",
+      "Bash(del /s /q C:\\*)",
+      "Bash(rmdir /s /q C:\\*)",
+      "Bash(git push --force)",
+      "Bash(git push --force-with-lease)",
+      "Bash(git reset --hard)",
+      "Bash(chmod 777)",
+      "Bash(mkfs.*)",
+      "Bash(dd if=*of=/dev/*)",
+      "Bash(format *:)"
+    ]
+  },
+  "env": {
+    "PYTHONPATH": ".",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "enabledPlugins": {
+    "pyright@claude-code-lsps": true,
+    "vtsls@claude-code-lsps": true,
+    "code-review@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true
+  }
+}
