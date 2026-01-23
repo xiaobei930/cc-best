@@ -1,6 +1,5 @@
 {
   "name": "claude-code-best-practices",
-  "version": "1.0.0",
   "description": "Production-ready Claude Code configuration template with role-based workflows, safety hooks, multi-language standards, and memory persistence",
   "author": {
     "name": "xiaobei930",

@@ -149,7 +149,7 @@ your-project/
     │   ├── frontend-style.md   # Vue/TS/JS style
     │   └── security.md         # Security rules
     │
-    ├── skills/                 # Development skills (12 categories)
+    ├── skills/                 # Development skills (14 categories)
     │   ├── backend-patterns/   # Backend patterns
     │   ├── frontend-patterns/  # Frontend patterns
     │   ├── devops-patterns/    # DevOps patterns
@@ -256,6 +256,7 @@ flowchart LR
 | `/task`       | Task granularity management |
 | `/infer`      | Model inference             |
 | `/train`      | Model training              |
+| `/setup-pm`   | Package manager setup       |
 
 ---
 
@@ -263,7 +264,7 @@ flowchart LR
 
 | Skill                 | Purpose                 | Key Contents                                             |
 | --------------------- | ----------------------- | -------------------------------------------------------- |
-| `backend-patterns`    | Backend development     | Generic patterns + Python/TS/Java/Go/C# subfiles         |
+| `backend-patterns`    | Backend development     | Generic patterns + Python/TS/Java/Go/C#/Rust subfiles    |
 | `frontend-patterns`   | Frontend development    | Generic patterns + Vue/React/Svelte/Angular subfiles     |
 | `devops-patterns`     | DevOps practices        | CI/CD pipelines, Docker, deployment strategies           |
 | `tdd-workflow`        | Test-driven development | Red-Green-Refactor cycle                                 |
@@ -278,17 +279,72 @@ flowchart LR
 
 ---
 
+## 🏗️ Layered Architecture: Commands / Skills / Agents
+
+This template uses a three-tier architecture, each with different responsibilities and triggers:
+
+### Layer Comparison
+
+| Layer        | Directory           | Trigger Method           | Responsibility                                | Detail Level |
+| ------------ | ------------------- | ------------------------ | --------------------------------------------- | ------------ |
+| **Commands** | `.claude/commands/` | User invokes `/xxx`      | Role-playing, full workflow, context handoff  | Complete     |
+| **Skills**   | `.claude/skills/`   | Auto-inject or reference | Reference docs, best practices, code examples | Detailed     |
+| **Agents**   | `.claude/agents/`   | Task tool delegation     | Sub-agent execution, isolated context         | Concise      |
+
+### Trigger Conditions
+
+#### Commands (User-Initiated)
+
+Triggered when user types `/command`:
+
+- **Role switch**: `/pm`, `/lead`, `/dev`, `/qa`, `/designer`
+- **Workflow start**: `/iterate`, `/pair`
+- **Tool execution**: `/build`, `/test`, `/commit`
+
+#### Skills (Context Injection)
+
+Claude auto-loads relevant skills, or pre-loads via agent frontmatter:
+
+- **Auto-load**: Load `api-development` when implementing APIs
+- **Explicit reference**: `skills: [tdd-workflow]` in agent
+- **User request**: `Check code using security-review skill`
+
+#### Agents (Task Tool Delegation)
+
+Delegated by Claude via Task tool when appropriate:
+
+- **Code review**: After code changes → `code-reviewer`
+- **Security check**: Auth/input involved → `security-reviewer`
+- **TDD guidance**: Tests needed → `tdd-guide`
+- **Task planning**: Complex features → `planner`
+
+### Usage Example
+
+```
+User: Implement user login feature
+
+Claude behavior:
+1. /lead role → Design solution
+2. Load api-development + security-review skills
+3. /dev role → Coding implementation
+4. Delegate tdd-guide agent → Write tests
+5. Delegate security-reviewer agent → Security check
+6. /qa role → Acceptance testing
+```
+
+---
+
 ## 🤖 Agents
 
 Sub-agents for specialized tasks, automatically invoked by the Task tool.
 
-| Agent                   | Purpose                | Trigger Scenario                                      |
+| Agent                   | Purpose                | Auto-Trigger Condition                                |
 | ----------------------- | ---------------------- | ----------------------------------------------------- |
 | `code-reviewer`         | Code review            | After code changes for quality/architecture checks    |
 | `code-simplifier`       | Code simplification    | Post-feature cleanup, dead code removal               |
 | `planner`               | Task planning          | Complex feature implementation, architectural changes |
 | `requirement-validator` | Requirement validation | Validate requirement docs before design phase         |
-| `security-reviewer`     | Security review        | Auth, user input, secrets, API endpoints              |
+| `security-reviewer`     | Security review        | Auth, user input, secrets, API endpoints involved     |
 | `tdd-guide`             | TDD guidance           | New features, bug fixes, test-first methodology       |
 
 ---
@@ -636,6 +692,18 @@ chmod +x .claude/scripts/*.py
 | Node.js       | 16+                | For cross-platform hooks (default) |
 | Python        | 3.8+               | For some hook scripts              |
 | Bash/Git Bash | Any version        | Optional for bash hooks            |
+
+### Optional MCP Servers
+
+Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
+
+| MCP Server | Used By                    | Purpose                                           |
+| ---------- | -------------------------- | ------------------------------------------------- |
+| Playwright | `/designer`, `/dev`, `/pm` | Browser automation for UI testing and screenshots |
+| Firecrawl  | `/pm`, `/lead`             | Web scraping for requirement research             |
+
+> **Note**: These are optional. Commands work without MCP servers but with reduced functionality.
+> Install via Claude Code settings: `Settings > MCP Servers`
 
 ### Supported Languages
 

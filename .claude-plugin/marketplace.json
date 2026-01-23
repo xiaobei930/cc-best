@@ -6,15 +6,13 @@
   },
   "metadata": {
     "description": "Production-ready Claude Code template - Clone and start coding in minutes",
-    "version": "1.0.0",
     "minClaudeCodeVersion": "1.0.0"
   },
   "plugins": [
     {
       "name": "claude-code-best-practices",
       "source": "./",
-      "description": "Complete development environment with role-based workflows (PM→Lead→Dev→QA), safety hooks, 30+ commands, 12 skills, 6 agents, and multi-language coding standards",
-      "version": "1.0.0",
+      "description": "Complete development environment with role-based workflows (PM→Lead→Dev→QA), safety hooks, 30+ commands, 14 skills, 6 agents, and multi-language coding standards",
       "author": {
         "name": "xiaobei930"
       },

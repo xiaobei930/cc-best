@@ -80,7 +80,19 @@
     "pyright@claude-code-lsps": true,
     "vtsls@claude-code-lsps": true,
     "code-review@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true
+    "hookify@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true
+  },
+  "_plugins_guide": {
+    "description": "推荐的官方插件配置。本地 agents/skills 无需插件也能独立工作，插件提供增强功能。",
+    "optional_plugins": {
+      "ralph-wiggum@claude-plugins-official": "跨会话持久化循环，配合 /ralph-loop 使用",
+      "frontend-design@claude-plugins-official": "前端设计系统，配合 /designer 使用"
+    },
+    "local_alternatives": {
+      "code-review": "本地 code-reviewer agent 提供轻量级审查",
+      "security-guidance": "本地 security-reviewer agent 提供 OWASP 清单检查"
+    }
   },
   "_guide": "Claude Code 项目配置 - 提交到 Git 的共享配置。详细配置见 settings.local.json",
   "_permissions_guide": {
