@@ -1,0 +1,237 @@
+# Claude Code 定时任务工作流
+# 自动化执行周期性维护任务
+#
+# 任务列表:
+# - 月度: 文档同步检查
+# - 周度: 代码质量扫描
+# - 双周: 依赖安全审计
+#
+# 配置说明:
+# 1. 需要设置 ANTHROPIC_API_KEY secret
+# 2. 需要设置 PAT_TOKEN (Personal Access Token) 用于创建 PR
+
+name: Claude Scheduled Tasks
+
+on:
+  schedule:
+    # 每月 1 号 UTC 2:00 (北京时间 10:00)
+    - cron: '0 2 1 * *'
+    # 每周一 UTC 3:00 (北京时间 11:00)
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: '选择要运行的任务'
+        required: true
+        type: choice
+        options:
+          - all
+          - docs-sync
+          - code-quality
+          - dependency-audit
+
+# 防止多个定时任务同时运行
+concurrency:
+  group: claude-scheduled
+  cancel-in-progress: false
+
+jobs:
+  # ============================================
+  # 文档同步检查（月度）
+  # ============================================
+  docs-sync:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.task == 'all' || github.event.inputs.task == 'docs-sync') ||
+      (github.event_name == 'schedule' && github.event.schedule == '0 2 1 * *')
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Check Documentation Sync
+        id: docs-check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cat > /tmp/docs-prompt.md << 'PROMPT'
+          请检查项目文档的一致性和完整性:
+
+          1. 检查 README.md 与实际功能是否一致
+          2. 检查 CLAUDE.md 是否包含必要的项目信息
+          3. 检查 .claude/ 目录下的 README 文件是否与实际内容匹配
+          4. 检查 API 文档（如果有）是否与代码同步
+
+          输出需要更新的文档列表和具体建议。
+          如果发现问题，创建一个简洁的修复方案。
+          PROMPT
+
+          claude --print "$(cat /tmp/docs-prompt.md)" > /tmp/docs-result.md 2>&1 || true
+          cat /tmp/docs-result.md
+
+      - name: Create Issue if Needed
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const result = fs.readFileSync('/tmp/docs-result.md', 'utf8');
+
+            // 检查是否有需要更新的内容
+            if (result.includes('需要更新') || result.includes('不一致')) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '📚 月度文档同步检查报告',
+                body: `## 文档同步检查结果\n\n${result}\n\n---\n<sub>🤖 由 Claude Code 自动生成 | ${new Date().toISOString().split('T')[0]}</sub>`,
+                labels: ['documentation', 'automated']
+              });
+            }
+
+  # ============================================
+  # 代码质量扫描（周度）
+  # ============================================
+  code-quality:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.task == 'all' || github.event.inputs.task == 'code-quality') ||
+      (github.event_name == 'schedule' && github.event.schedule == '0 3 * * 1')
+
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Code Quality Scan
+        id: quality-scan
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cat > /tmp/quality-prompt.md << 'PROMPT'
+          请对项目进行代码质量扫描，检查以下方面:
+
+          1. **代码异味**: 过长函数、深层嵌套、重复代码
+          2. **命名规范**: 变量、函数、文件命名是否一致
+          3. **注释质量**: 是否有过时或误导性注释
+          4. **TODO/FIXME**: 列出所有待处理项
+          5. **复杂度**: 识别高复杂度的模块
+
+          以表格形式输出发现的问题，按严重程度排序。
+          PROMPT
+
+          claude --print "$(cat /tmp/quality-prompt.md)" > /tmp/quality-result.md 2>&1 || true
+          cat /tmp/quality-result.md
+
+      - name: Summary
+        run: |
+          echo "## 📊 周度代码质量报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/quality-result.md >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # 依赖安全审计
+  # ============================================
+  dependency-audit:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.task == 'all' || github.event.inputs.task == 'dependency-audit')
+
+    permissions:
+      contents: read
+      issues: write
+      security-events: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for Package Files
+        id: check-deps
+        run: |
+          has_npm=false
+          has_pip=false
+
+          [ -f "package.json" ] && has_npm=true
+          [ -f "requirements.txt" ] || [ -f "pyproject.toml" ] && has_pip=true
+
+          echo "has_npm=$has_npm" >> $GITHUB_OUTPUT
+          echo "has_pip=$has_pip" >> $GITHUB_OUTPUT
+
+      - name: NPM Audit
+        if: steps.check-deps.outputs.has_npm == 'true'
+        continue-on-error: true
+        run: |
+          npm audit --json > /tmp/npm-audit.json 2>&1 || true
+          echo "## NPM Audit Results" >> /tmp/audit-result.md
+          npm audit 2>&1 | head -100 >> /tmp/audit-result.md || true
+
+      - name: Pip Audit
+        if: steps.check-deps.outputs.has_pip == 'true'
+        continue-on-error: true
+        run: |
+          pip install pip-audit
+          echo "## Pip Audit Results" >> /tmp/audit-result.md
+          pip-audit 2>&1 | head -100 >> /tmp/audit-result.md || true
+
+      - name: Create Security Issue if Vulnerabilities Found
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let result = '';
+            try {
+              result = fs.readFileSync('/tmp/audit-result.md', 'utf8');
+            } catch (e) {
+              result = '未检测到依赖文件或审计完成无问题。';
+            }
+
+            // 检查是否有漏洞
+            if (result.includes('high') || result.includes('critical') || result.includes('vulnerability')) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🔒 依赖安全审计发现漏洞',
+                body: `## 依赖安全审计报告\n\n${result}\n\n---\n<sub>🤖 由 Claude Code 自动生成 | ${new Date().toISOString().split('T')[0]}</sub>`,
+                labels: ['security', 'dependencies', 'automated']
+              });
+            }
+
+      - name: Summary
+        run: |
+          echo "## 🔒 依赖安全审计报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f /tmp/audit-result.md ]; then
+            cat /tmp/audit-result.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "未检测到依赖文件。" >> $GITHUB_STEP_SUMMARY
+          fi
