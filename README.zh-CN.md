@@ -1,7 +1,7 @@
-# Claude Code 最佳实践模板
+# Claude Code 最佳实践
 
 <p align="center">
-  <strong>🚀 Clone → 配置 → 开始编码</strong>
+  <strong>🚀 安装 → 配置 → 开始编码</strong>
 </p>
 
 <p align="center">
@@ -22,9 +22,9 @@
 
 ---
 
-> **Clone 即用，几分钟内开始与 Claude 协作编程。**
+> **安装插件即用，几分钟内开始与 Claude 协作编程。**
 
-这是一个可复制到任意项目的 Claude Code 配置模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go** 多语言开发。
+Claude Code 插件 & 模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go** 多语言开发。
 
 ## 📑 目录
 
@@ -79,7 +79,7 @@
 xiaobei930/claude-code-best-practices
 
 # 然后选择 "Install Plugin"，选择：
-claude-code-best-practices
+cc-best
 ```
 
 或者使用命令行方式：
@@ -105,7 +105,7 @@ claude-code-best-practices
     }
   },
   "enabledPlugins": {
-    "claude-code-best-practices@claude-code-best-practices": true
+    "cc-best@xiaobei930": true
   }
 }
 ```

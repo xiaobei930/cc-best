@@ -1,7 +1,7 @@
-# Claude Code Best Practices Template
+# Claude Code Best Practices
 
 <p align="center">
-  <strong>🚀 Clone → Configure → Code</strong>
+  <strong>🚀 Install → Configure → Code</strong>
 </p>
 
 <p align="center">
@@ -22,9 +22,9 @@
 
 ---
 
-> **Clone and start coding with Claude in minutes, not hours.**
+> **Install as plugin and start coding with Claude in minutes, not hours.**
 
-A comprehensive Claude Code configuration template for development teams. Supports **Python / Vue / TypeScript / C++ / Java / C# / Go** with built-in workflows, hooks, and multi-language coding standards.
+A Claude Code plugin & template for development teams. Supports **Python / Vue / TypeScript / C++ / Java / C# / Go** with built-in workflows, hooks, and multi-language coding standards.
 
 ## 📑 Table of Contents
 
@@ -79,7 +79,7 @@ The easiest way to use this repo - install as a Claude Code plugin:
 xiaobei930/claude-code-best-practices
 
 # Then select "Install Plugin" and choose:
-claude-code-best-practices
+cc-best
 ```
 
 Or use direct commands:
@@ -105,7 +105,7 @@ Or add directly to your `~/.claude/settings.json`:
     }
   },
   "enabledPlugins": {
-    "claude-code-best-practices@claude-code-best-practices": true
+    "cc-best@xiaobei930": true
   }
 }
 ```
