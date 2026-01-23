@@ -29,6 +29,7 @@ A comprehensive Claude Code configuration template for development teams. Suppor
 - [Workflow](#-workflow)
 - [Command Reference](#-command-reference)
 - [Skills](#-skills)
+- [Agents](#-agents)
 - [Customization Guide](#-customization-guide)
 - [Best Practices](#-best-practices)
 - [FAQ](#-faq)
@@ -39,13 +40,13 @@ A comprehensive Claude Code configuration template for development teams. Suppor
 
 ## Why This Template?
 
-| Without Template | With Template |
-|------------------|---------------|
-| ❌ Configure Claude Code from scratch | ✅ Ready to use out of the box |
-| ❌ Inconsistent code style | ✅ Enforced coding standards |
-| ❌ Manual repetitive workflows | ✅ Role-based automation (PM→Dev→QA) |
-| ❌ Risk of dangerous commands | ✅ Safety hooks protect your system |
-| ❌ Context lost between sessions | ✅ Memory bank persists progress |
+| Without Template                      | With Template                        |
+| ------------------------------------- | ------------------------------------ |
+| ❌ Configure Claude Code from scratch | ✅ Ready to use out of the box       |
+| ❌ Inconsistent code style            | ✅ Enforced coding standards         |
+| ❌ Manual repetitive workflows        | ✅ Role-based automation (PM→Dev→QA) |
+| ❌ Risk of dangerous commands         | ✅ Safety hooks protect your system  |
+| ❌ Context lost between sessions      | ✅ Memory bank persists progress     |
 
 ---
 
@@ -92,21 +93,27 @@ bash .claude/scripts/init.sh
 ## ✨ Core Features
 
 ### 🎭 Role-Based Workflow
+
 PM → Lead → Dev → QA → Commit complete development cycle, each role with clear responsibilities.
 
 ### 🔄 Autonomous Iteration Mode
+
 `/iterate` mode lets Claude autonomously complete task lists without frequent intervention.
 
 ### 🛡️ Safety Hooks
+
 Pre-configured guards against dangerous operations: blocks `rm -rf /`, `git push --force`, and other risky commands.
 
 ### 📐 Multi-Language Standards
+
 Coding standards for 7+ languages: Python, Vue/TS, C++, Java, C#, Go, and more.
 
 ### 🧠 Memory Bank
+
 `memory-bank/` directory persists project progress, architecture decisions, and tech stack choices.
 
 ### 🔌 MCP Integration
+
 Ready-to-use MCP server configurations supporting memory, playwright, firecrawl, and more.
 
 ---
@@ -137,17 +144,19 @@ your-project/
     │   ├── frontend-style.md   # Vue/TS/JS style
     │   └── security.md         # Security rules
     │
-    ├── skills/                 # Development skills (10 categories)
+    ├── skills/                 # Development skills (12 categories)
     │   ├── backend-patterns/   # Backend patterns
     │   ├── frontend-patterns/  # Frontend patterns
+    │   ├── devops-patterns/    # DevOps patterns
     │   └── tdd-workflow/       # TDD workflow
     │
     ├── agents/                 # Sub-agents (6)
     │   ├── code-reviewer.md    # Code review
     │   └── security-reviewer.md# Security review
     │
-    └── scripts/                # Automation scripts (15)
+    └── scripts/                # Automation scripts (17)
         ├── init.sh             # Initialization
+        ├── cleanup.sh          # MCP temp directory cleanup
         ├── format_file.py      # Auto-formatting
         └── validate_command.py # Command validation
 ```
@@ -172,11 +181,11 @@ flowchart LR
 
 ### Three Development Modes
 
-| Mode | Command | Use Case | Characteristics |
-|------|---------|----------|-----------------|
-| **Autonomous Iteration** | `/iterate` | Clear task list | Fully autonomous, no intervention needed |
-| **Pair Programming** | `/pair` | Learning, sensitive operations | Confirm each step, human-machine collaboration |
-| **Long-Running Loop** | `/ralph-loop` | Hour-level batch tasks | Requires plugin installation |
+| Mode                     | Command       | Use Case                       | Characteristics                                |
+| ------------------------ | ------------- | ------------------------------ | ---------------------------------------------- |
+| **Autonomous Iteration** | `/iterate`    | Clear task list                | Fully autonomous, no intervention needed       |
+| **Pair Programming**     | `/pair`       | Learning, sensitive operations | Confirm each step, human-machine collaboration |
+| **Long-Running Loop**    | `/ralph-loop` | Hour-level batch tasks         | Requires plugin installation                   |
 
 ---
 
@@ -184,55 +193,87 @@ flowchart LR
 
 ### Role Commands
 
-| Command | Role | Responsibilities |
-|---------|------|------------------|
-| `/pm` | Product Manager | Requirement analysis, user stories, acceptance criteria |
-| `/lead` | Tech Lead | Technical design, task breakdown, architecture decisions |
-| `/dev` | Developer | Code implementation, unit tests |
-| `/qa` | QA Engineer | Functional verification, test cases |
-| `/designer` | UI Designer | Design guidance, interface specifications |
-| `/clarify` | Clarification Expert | Requirement clarification, boundary confirmation |
+| Command     | Role                 | Responsibilities                                         |
+| ----------- | -------------------- | -------------------------------------------------------- |
+| `/pm`       | Product Manager      | Requirement analysis, user stories, acceptance criteria  |
+| `/lead`     | Tech Lead            | Technical design, task breakdown, architecture decisions |
+| `/dev`      | Developer            | Code implementation, unit tests                          |
+| `/qa`       | QA Engineer          | Functional verification, test cases                      |
+| `/designer` | UI Designer          | Design guidance, interface specifications                |
+| `/clarify`  | Clarification Expert | Requirement clarification, boundary confirmation         |
 
 ### Mode Commands
 
-| Command | Description |
-|---------|-------------|
+| Command    | Description                                                                   |
+| ---------- | ----------------------------------------------------------------------------- |
 | `/iterate` | Autonomous iteration loop, reads progress.md and executes tasks automatically |
-| `/pair` | Pair programming mode, continues after confirming each key step |
+| `/pair`    | Pair programming mode, continues after confirming each key step               |
 
 ### Tool Commands
 
-| Command | Function |
-|---------|----------|
-| `/build` | Build project |
-| `/test` | Run tests |
-| `/run` | Start development server |
-| `/commit` | Git commit |
-| `/pr` | Create Pull Request |
-| `/status` | View project status |
-| `/checkpoint` | Create checkpoint |
-| `/compact` | Compress context |
-| `/context` | Context management |
-| `/memory` | Project memory management |
-| `/verify` | Verify code quality |
-| `/setup` | Project initialization |
+| Command       | Function                  |
+| ------------- | ------------------------- |
+| `/build`      | Build project             |
+| `/test`       | Run tests                 |
+| `/run`        | Start development server  |
+| `/commit`     | Git commit                |
+| `/pr`         | Create Pull Request       |
+| `/git`        | Git commit conventions    |
+| `/status`     | View project status       |
+| `/checkpoint` | Create checkpoint         |
+| `/compact`    | Compress context          |
+| `/context`    | Context management        |
+| `/memory`     | Project memory management |
+| `/verify`     | Verify code quality       |
+| `/setup`      | Project initialization    |
+| `/fix`        | Fix build errors          |
+| `/docs`       | Sync documentation        |
+
+### Auxiliary Commands
+
+| Command       | Function                    |
+| ------------- | --------------------------- |
+| `/catchup`    | Quick context recovery      |
+| `/cleanup`    | Dead code cleanup           |
+| `/learn`      | Session learning            |
+| `/self-check` | Self-check validation       |
+| `/task`       | Task granularity management |
+| `/infer`      | Model inference             |
+| `/train`      | Model training              |
 
 ---
 
 ## 🛠️ Skills
 
-| Skill | Purpose | Key Contents |
-|-------|---------|--------------|
-| `backend-patterns` | Backend development | Generic patterns + Python/TS/Java/Go/C# subfiles |
-| `frontend-patterns` | Frontend development | Generic patterns + Vue/React subfiles |
-| `tdd-workflow` | Test-driven development | Red-Green-Refactor cycle |
-| `api-development` | API development | RESTful design, response formats, authentication |
-| `database-patterns` | Database design | Naming conventions, query optimization, migrations |
-| `security-review` | Security review | OWASP checklist, vulnerability protection |
-| `debugging` | Systematic debugging | Problem localization, log analysis, profiling |
-| `git-workflow` | Git workflow | Branch strategy, commit conventions, conflict resolution |
-| `continuous-learning` | Continuous learning | Session evaluation, knowledge extraction |
-| `strategic-compact` | Strategic compression | Compression timing, best practices |
+| Skill                 | Purpose                 | Key Contents                                             |
+| --------------------- | ----------------------- | -------------------------------------------------------- |
+| `backend-patterns`    | Backend development     | Generic patterns + Python/TS/Java/Go/C# subfiles         |
+| `frontend-patterns`   | Frontend development    | Generic patterns + Vue/React/Svelte/Angular subfiles     |
+| `devops-patterns`     | DevOps practices        | CI/CD pipelines, Docker, deployment strategies           |
+| `tdd-workflow`        | Test-driven development | Red-Green-Refactor cycle                                 |
+| `api-development`     | API development         | RESTful design, response formats, authentication         |
+| `database-patterns`   | Database design         | Naming conventions, query optimization, migrations       |
+| `security-review`     | Security review         | OWASP checklist, vulnerability protection                |
+| `debugging`           | Systematic debugging    | Problem localization, log analysis, profiling            |
+| `git-workflow`        | Git workflow            | Branch strategy, commit conventions, conflict resolution |
+| `isolated-research`   | Deep code research      | Isolated context exploration without polluting session   |
+| `continuous-learning` | Continuous learning     | Session evaluation, knowledge extraction                 |
+| `strategic-compact`   | Strategic compression   | Compression timing, best practices                       |
+
+---
+
+## 🤖 Agents
+
+Sub-agents for specialized tasks, automatically invoked by the Task tool.
+
+| Agent                   | Purpose                | Trigger Scenario                                      |
+| ----------------------- | ---------------------- | ----------------------------------------------------- |
+| `code-reviewer`         | Code review            | After code changes for quality/architecture checks    |
+| `code-simplifier`       | Code simplification    | Post-feature cleanup, dead code removal               |
+| `planner`               | Task planning          | Complex feature implementation, architectural changes |
+| `requirement-validator` | Requirement validation | Validate requirement docs before design phase         |
+| `security-reviewer`     | Security review        | Auth, user input, secrets, API endpoints              |
+| `tdd-guide`             | TDD guidance           | New features, bug fixes, test-first methodology       |
 
 ---
 
@@ -251,6 +292,7 @@ paths:
 # Rule Title
 
 ## Rule Content
+
 ...
 ```
 
@@ -270,9 +312,11 @@ allowed_tools:
 # /your-command - Command Name
 
 ## Responsibilities
+
 ...
 
 ## Execution Steps
+
 1. ...
 2. ...
 ```
@@ -302,39 +346,71 @@ Edit `.claude/settings.local.json`:
 
 ### Pre-configured Hooks
 
-| Trigger | Function | Script |
-|---------|----------|--------|
-| PreToolUse | Validate dangerous commands | `validate_command.py` |
-| PreToolUse | Confirm before git push | `pause_before_push.sh` |
-| PreToolUse | Protect sensitive files | `protect_files.py` |
-| PostToolUse | Auto-format code | `format_file.py` |
-| PostToolUse | TypeScript type check | `typescript_check.sh` |
-| SessionStart | Session health check | `session_check.py` |
-| Stop | Session end persistence | `session_end.sh` |
+| Trigger      | Function                    | Script                 |
+| ------------ | --------------------------- | ---------------------- |
+| PreToolUse   | Validate dangerous commands | `validate_command.py`  |
+| PreToolUse   | Confirm before git push     | `pause_before_push.sh` |
+| PreToolUse   | Protect sensitive files     | `protect_files.py`     |
+| PostToolUse  | Auto-format code            | `format_file.py`       |
+| PostToolUse  | TypeScript type check       | `typescript_check.sh`  |
+| SessionStart | Session health check        | `session_check.py`     |
+| Stop         | Session end persistence     | `session_end.sh`       |
 
 ---
 
 ## 💡 Best Practices
 
 ### 1. Keep CLAUDE.md Concise
+
 - Keep it under 100 lines
 - Put detailed specifications in `.claude/rules/`
 
 ### 2. Use the Memory Bank
+
 - Update `progress.md` after each task completion
 - Record important decisions in `architecture.md`
 
 ### 3. Context Management
+
 - Normal mode: Use `/clear` frequently to avoid context overflow
 - `/iterate` mode: Don't clear manually, maintain loop continuity
 
 ### 4. Don't Overload MCP
+
 - Enable no more than 10 MCP servers per project
 - Use `disabledMcpServers` to disable unused ones
 
 ### 5. Regular Cleanup
+
 - Delete unused language rules
 - Remove unused commands
+
+### 6. MCP Temporary Directory Management
+
+MCP tools auto-create temporary directories in your project:
+
+| Directory              | Source           | Purpose                                 |
+| ---------------------- | ---------------- | --------------------------------------- |
+| `.playwright-mcp/`     | MCP auto-created | Playwright MCP temporary files          |
+| `.claude/mcp-data/`    | MCP auto-created | MCP shared data                         |
+| `*-mcp/`               | MCP auto-created | Other MCP tool directories              |
+| `.claude/screenshots/` | Template-defined | Manually saved screenshots (meaningful) |
+
+**Cleanup Script**: Use `cleanup.sh` for regular maintenance:
+
+```bash
+# Preview files to delete (dry run)
+bash .claude/scripts/cleanup.sh --dry-run
+
+# Clean files older than 7 days (default)
+bash .claude/scripts/cleanup.sh
+
+# Clean files older than 3 days
+bash .claude/scripts/cleanup.sh --days 3
+
+# Clean all MCP temporary files
+bash .claude/scripts/cleanup.sh --all
+```
 
 ---
 
@@ -346,11 +422,13 @@ Edit `.claude/settings.local.json`:
 <summary><strong>Q: Can I delete files I don't need?</strong></summary>
 
 Yes! Commonly deletable files:
+
 - `.github/` - If you don't need contribution templates
 - `CONTRIBUTING.md`, `CHANGELOG.md`, `FAQ.md` - Template-specific docs
 - Unused language rules (e.g., Python projects can delete `cpp-style.md`)
 
 Minimum to keep:
+
 - `CLAUDE.md` - Core configuration
 - `.claude/settings.json` - Permission settings
 - Language rules you actually use
@@ -360,12 +438,14 @@ Minimum to keep:
 <summary><strong>Q: Do I need to keep the Git history?</strong></summary>
 
 No. For a fresh start:
+
 ```bash
 rm -rf .git
 git init
 git add .
 git commit -m "Initial commit from Claude Code template"
 ```
+
 </details>
 
 ### Hook Issues
@@ -374,15 +454,19 @@ git commit -m "Initial commit from Claude Code template"
 <summary><strong>Q: Hooks not working?</strong></summary>
 
 1. Check if `settings.local.json` exists:
+
    ```bash
    ls .claude/settings.local.json
    ```
+
    If not:
+
    ```bash
    cp .claude/settings.local.json.example .claude/settings.local.json
    ```
 
 2. Check script permissions (Linux/Mac):
+
    ```bash
    chmod +x .claude/scripts/*.sh
    chmod +x .claude/scripts/*.py
@@ -395,6 +479,7 @@ git commit -m "Initial commit from Claude Code template"
 <summary><strong>Q: format_file.py encoding error</strong></summary>
 
 Common Windows issue. Solutions:
+
 1. Ensure Python 3.8+ is installed
 2. Set environment variable: `PYTHONUTF8=1`
 </details>
@@ -404,22 +489,25 @@ Common Windows issue. Solutions:
 <details>
 <summary><strong>Q: What's the difference between /iterate and /pair?</strong></summary>
 
-| Mode | Control | Use Case |
-|------|---------|----------|
-| `/iterate` | Fully autonomous | Clear task list |
-| `/pair` | Confirm each step | Learning, sensitive operations |
+| Mode       | Control           | Use Case                       |
+| ---------- | ----------------- | ------------------------------ |
+| `/iterate` | Fully autonomous  | Clear task list                |
+| `/pair`    | Confirm each step | Learning, sensitive operations |
+
 </details>
 
 <details>
 <summary><strong>Q: /iterate stopped unexpectedly</strong></summary>
 
 Check stop conditions:
+
 - User interrupt (Ctrl+C)
 - All tasks in `progress.md` completed
 - Fatal error occurred
 - User decision required
 
 Recovery: Run `/iterate` again
+
 </details>
 
 <details>
@@ -436,26 +524,28 @@ Recovery: Run `/iterate` again
 <summary><strong>Q: How to configure MCP servers?</strong></summary>
 
 Edit `.claude/settings.local.json`:
+
 ```json
 {
-  "enabledMcpjsonServers": [
-    "memory",
-    "sequential-thinking"
-  ]
+  "enabledMcpjsonServers": ["memory", "sequential-thinking"]
 }
 ```
+
 Then restart Claude Code.
+
 </details>
 
 <details>
 <summary><strong>Q: Too many MCP tools causing issues</strong></summary>
 
 Best practice: Enable no more than 10 per project.
+
 ```json
 {
   "disabledMcpServers": ["github", "vercel"]
 }
 ```
+
 </details>
 
 ### Troubleshooting
@@ -470,6 +560,7 @@ chmod +x .claude/scripts/*.py
 
 # Windows: Run as Administrator
 ```
+
 </details>
 
 <details>
@@ -483,32 +574,34 @@ chmod +x .claude/scripts/*.py
 
 ## 🔧 Requirements
 
-| Dependency | Version | Notes |
-|------------|---------|-------|
-| Claude Code | Latest recommended | Hooks require recent versions |
-| Python | 3.8+ | For hook scripts |
-| Bash/Git Bash | Any version | Windows users: use Git Bash |
+| Dependency    | Version            | Notes                         |
+| ------------- | ------------------ | ----------------------------- |
+| Claude Code   | Latest recommended | Hooks require recent versions |
+| Python        | 3.8+               | For hook scripts              |
+| Bash/Git Bash | Any version        | Windows users: use Git Bash   |
 
 ### Supported Languages
 
-| Language | Rule File | Formatter | Test Framework |
-|----------|-----------|-----------|----------------|
-| Python | `code-style.md` | Black + isort | pytest |
-| Vue/TS/JS | `frontend-style.md` | Prettier | Vitest |
-| C++ | `cpp-style.md` | clang-format | Google Test |
-| Java | `java-style.md` | google-java-format | JUnit |
-| C# | `csharp-style.md` | dotnet format | xUnit/NUnit |
-| Go | `backend-patterns/go.md` | gofmt | testing |
+| Language  | Rule File                | Formatter          | Test Framework |
+| --------- | ------------------------ | ------------------ | -------------- |
+| Python    | `code-style.md`          | Black + isort      | pytest         |
+| Vue/TS/JS | `frontend-style.md`      | Prettier           | Vitest         |
+| C++       | `cpp-style.md`           | clang-format       | Google Test    |
+| Java      | `java-style.md`          | google-java-format | JUnit          |
+| C#        | `csharp-style.md`        | dotnet format      | xUnit/NUnit    |
+| Go        | `backend-patterns/go.md` | gofmt              | testing        |
 
 ---
 
 ## 📚 References
 
 ### Official Resources
+
 - [Anthropic Official Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)
 - [CLAUDE.md Complete Guide](https://www.builder.io/blog/claude-md-guide)
 
 ### Community Projects
+
 - [everything-claude-code](https://github.com/affaan-m/everything-claude-code) - Claude Code resource collection
 - [vibe-coding-cn](https://github.com/2025Emma/vibe-coding-cn) - Chinese Vibe Coding guide
 
@@ -530,13 +623,13 @@ If you prefer English internal files, community contributions for English transl
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-| Contribution Type | Description |
-|-------------------|-------------|
-| ⭐ Star | Show your support |
-| 🐛 Bug Report | [Report issues](../../issues/new?template=bug_report.md) |
+| Contribution Type  | Description                                                      |
+| ------------------ | ---------------------------------------------------------------- |
+| ⭐ Star            | Show your support                                                |
+| 🐛 Bug Report      | [Report issues](../../issues/new?template=bug_report.md)         |
 | 💡 Feature Request | [Suggest features](../../issues/new?template=feature_request.md) |
-| 📝 Documentation | Improve docs |
-| 🔧 Code | Add commands, rules, skills |
+| 📝 Documentation   | Improve docs                                                     |
+| 🔧 Code            | Add commands, rules, skills                                      |
 
 ---
 
