@@ -1,198 +1,69 @@
 {
-  "$schema": "Standalone hooks configuration for plugin compatibility",
-  "_note": "Copy relevant sections to .claude/settings.local.json to activate",
-  "_cross_platform": "All hooks use Node.js by default (cross-platform). Alternatives in _command_* comments.",
-  "_scripts_structure": "Scripts organized by language: shell/ (bash), python/ (python), node/ (node.js)",
-
+  "description": "Claude Code Best Practices plugin hooks - safety guards and automation",
   "hooks": {
-    "Setup": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/init.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/init.sh",
-            "timeout": 30
-          }
-        ],
-        "description": "Project initialization - triggered by claude --init"
-      }
-    ],
-
     "PreToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js",
-            "_command_python": "python ${PLUGIN_ROOT}/.claude/scripts/python/validate-command.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js",
             "timeout": 5
           }
-        ],
-        "description": "Validate dangerous commands"
+        ]
       },
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/pause-before-push.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/pause-before-push.sh",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/pause-before-push.js",
             "timeout": 5
           }
-        ],
-        "description": "Pause before git push"
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/long-running-warning.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/long-running-warning.sh",
-            "timeout": 3
-          }
-        ],
-        "description": "Warn about long-running commands"
+        ]
       },
       {
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/protect-files.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/protect-files.js",
             "timeout": 3
           }
-        ],
-        "description": "Protect sensitive files"
-      },
-      {
-        "matcher": "Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/block-random-md.js",
-            "timeout": 3
-          }
-        ],
-        "description": "Block random .md file creation"
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/skills/strategic-compact/suggest-compact.sh",
-            "timeout": 3
-          }
-        ],
-        "description": "Strategic compaction suggestions"
+        ]
       }
     ],
-
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/format-file.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/format-file.js",
             "timeout": 30
           }
-        ],
-        "description": "Auto-format code"
-      },
-      {
-        "matcher": "Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/check-console-log.js",
-            "timeout": 3
-          }
-        ],
-        "description": "Check for console.log statements"
+        ]
       },
       {
         "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/typescript-check.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/typescript-check.sh",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/typescript-check.js",
             "timeout": 10
           }
-        ],
-        "description": "TypeScript type check"
+        ]
       }
     ],
-
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-check.js",
-            "timeout": 5
-          }
-        ],
-        "description": "Session health check"
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-start.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/session-start.sh",
-            "timeout": 3
-          }
-        ],
-        "description": "Load previous session context"
-      }
-    ],
-
-    "PreCompact": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/pre-compact.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/pre-compact.sh",
-            "timeout": 5
-          }
-        ],
-        "description": "Save state before context compaction"
-      }
-    ],
-
     "Stop": [
       {
-        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-end.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/session-end.sh",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/session-end.js",
             "timeout": 5
           }
-        ],
-        "description": "Persist state on session end"
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/skills/continuous-learning/evaluate-session.sh",
-            "timeout": 5
-          }
-        ],
-        "description": "Evaluate session for extractable patterns"
+        ]
       }
     ]
   }

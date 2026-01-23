@@ -67,7 +67,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 2. Run initialization
-bash .claude/scripts/init.sh
+bash .claude/scripts/shell/init.sh
 
 # 3. Edit CLAUDE.md and replace placeholders
 #    {{PROJECT_NAME}} → Your project name
@@ -88,7 +88,7 @@ cp -r claude-code-best-practices/memory-bank /path/to/your/project/
 
 # Navigate to your project and initialize
 cd /path/to/your/project
-bash .claude/scripts/init.sh
+bash .claude/scripts/shell/init.sh
 ```
 
 > **Windows Users**: Use Git Bash to run scripts, or use `robocopy` to copy files.

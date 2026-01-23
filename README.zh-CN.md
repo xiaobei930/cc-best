@@ -67,7 +67,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 2. 运行初始化
-bash .claude/scripts/init.sh
+bash .claude/scripts/shell/init.sh
 
 # 3. 编辑 CLAUDE.md，替换占位符
 #    {{PROJECT_NAME}} → 项目名称
@@ -88,7 +88,7 @@ cp -r claude-code-best-practices/memory-bank /path/to/your/project/
 
 # 进入项目并初始化
 cd /path/to/your/project
-bash .claude/scripts/init.sh
+bash .claude/scripts/shell/init.sh
 ```
 
 > **Windows 用户**：使用 Git Bash 运行脚本，或使用 `robocopy` 复制文件。
