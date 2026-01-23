@@ -1,21 +1,12 @@
 {
-  "_guide": "Claude Code 项目配置 - 提交到 Git 的共享配置。详细配置见 settings.local.json",
-  "_permissions_guide": {
-    "wildcard_syntax": "v2.1.0+ 支持 * 通配符，如 Bash(npm *) 匹配所有 npm 子命令",
-    "evaluation_order": "deny 优先于 allow，更具体的规则优先于宽泛规则",
-    "examples": [
-      "Bash(npm *)        - npm 所有子命令",
-      "Bash(git * main)   - git 命令中包含 main",
-      "Bash(docker compose *) - docker compose 所有操作",
-      "mcp__server__*     - 特定 MCP 服务器的所有工具"
-    ]
+  "env": {
+    "PYTHONPATH": ".",
+    "PYTHONDONTWRITEBYTECODE": "1"
   },
-
   "attribution": {
     "commit": "",
     "pr": ""
   },
-
   "permissions": {
     "allow": [
       "Read",
@@ -23,7 +14,6 @@
       "Edit",
       "Glob",
       "Grep",
-
       "Bash(python *)",
       "Bash(pytest *)",
       "Bash(pip *)",
@@ -37,14 +27,12 @@
       "Bash(gradle *)",
       "Bash(make *)",
       "Bash(cmake *)",
-
       "Bash(docker build *)",
       "Bash(docker run *)",
       "Bash(docker compose *)",
       "Bash(docker ps *)",
       "Bash(docker logs *)",
       "Bash(docker exec *)",
-
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
@@ -60,15 +48,14 @@
       "Bash(git rebase *)",
       "Bash(git cherry-pick *)",
       "Bash(git push origin *)",
-
       "Bash(ls *)",
       "Bash(dir *)",
       "Bash(mkdir *)",
       "Bash(cat *)",
       "Bash(type *)",
       "Bash(echo *)",
-
-      "WebSearch"
+      "WebSearch",
+      "mcp__filesystem__create_directory"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -77,31 +64,33 @@
       "Bash(rm -rf $HOME)",
       "Bash(del /s /q C:\\*)",
       "Bash(rmdir /s /q C:\\*)",
-
       "Bash(git push --force)",
       "Bash(git push --force-with-lease)",
       "Bash(git reset --hard)",
       "Bash(git clean -fd)",
-
       "Bash(chmod 777)",
       "Bash(mkfs.*)",
       "Bash(dd if=*of=/dev/*)",
       "Bash(format *:)",
-
       "Bash(docker rm -f *)",
       "Bash(docker system prune *)"
     ]
   },
-
-  "env": {
-    "PYTHONPATH": ".",
-    "PYTHONDONTWRITEBYTECODE": "1"
-  },
-
   "enabledPlugins": {
     "pyright@claude-code-lsps": true,
     "vtsls@claude-code-lsps": true,
     "code-review@claude-plugins-official": true,
     "hookify@claude-plugins-official": true
+  },
+  "_guide": "Claude Code 项目配置 - 提交到 Git 的共享配置。详细配置见 settings.local.json",
+  "_permissions_guide": {
+    "wildcard_syntax": "v2.1.0+ 支持 * 通配符，如 Bash(npm *) 匹配所有 npm 子命令",
+    "evaluation_order": "deny 优先于 allow，更具体的规则优先于宽泛规则",
+    "examples": [
+      "Bash(npm *)        - npm 所有子命令",
+      "Bash(git * main)   - git 命令中包含 main",
+      "Bash(docker compose *) - docker compose 所有操作",
+      "mcp__server__*     - 特定 MCP 服务器的所有工具"
+    ]
   }
 }

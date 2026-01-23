@@ -1,7 +1,8 @@
 {
   "$schema": "Standalone hooks configuration for plugin compatibility",
   "_note": "Copy relevant sections to .claude/settings.local.json to activate",
-  "_cross_platform": "Session hooks use Node.js by default (cross-platform). Bash alternatives in _command_bash comments.",
+  "_cross_platform": "All hooks use Node.js by default (cross-platform). Alternatives in _command_* comments.",
+  "_scripts_structure": "Scripts organized by language: shell/ (bash), python/ (python), node/ (node.js)",
 
   "hooks": {
     "Setup": [
@@ -10,7 +11,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/init.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/init.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/init.sh",
             "timeout": 30
           }
         ],
@@ -24,7 +26,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/validate_command.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js",
+            "_command_python": "python ${PLUGIN_ROOT}/.claude/scripts/python/validate-command.py",
             "timeout": 5
           }
         ],
@@ -35,7 +38,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/pause_before_push.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/pause-before-push.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/pause-before-push.sh",
             "timeout": 5
           }
         ],
@@ -46,7 +50,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/long_running_warning.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/long-running-warning.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/long-running-warning.sh",
             "timeout": 3
           }
         ],
@@ -57,7 +62,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/protect_files.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/protect-files.js",
             "timeout": 3
           }
         ],
@@ -68,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/block_random_md.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/block-random-md.js",
             "timeout": 3
           }
         ],
@@ -93,7 +98,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/format_file.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/format-file.js",
             "timeout": 30
           }
         ],
@@ -104,7 +109,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/check_console_log.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/check-console-log.js",
             "timeout": 3
           }
         ],
@@ -115,7 +120,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/typescript_check.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/typescript-check.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/typescript-check.sh",
             "timeout": 10
           }
         ],
@@ -129,7 +135,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python ${PLUGIN_ROOT}/.claude/scripts/session_check.py",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-check.js",
             "timeout": 5
           }
         ],
@@ -140,8 +146,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/session-start.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/session_start.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-start.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/session-start.sh",
             "timeout": 3
           }
         ],
@@ -155,8 +161,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/pre-compact.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/pre_compact.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/pre-compact.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/pre-compact.sh",
             "timeout": 5
           }
         ],
@@ -170,8 +176,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/session-end.js",
-            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/session_end.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/session-end.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/shell/session-end.sh",
             "timeout": 5
           }
         ],
