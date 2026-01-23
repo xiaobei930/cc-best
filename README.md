@@ -59,7 +59,74 @@ A comprehensive Claude Code configuration template for development teams. Suppor
 
 ## 🚀 Quick Start
 
-### 5-Minute Setup
+### Option 1: Install as Plugin (Recommended)
+
+The easiest way to use this repo - install as a Claude Code plugin:
+
+```bash
+# In Claude Code, run:
+/plugin
+
+# Select "Add Marketplace", then enter:
+xiaobei930/claude-code-best-practices
+
+# Then select "Install Plugin" and choose:
+claude-code-best-practices
+```
+
+Or use direct commands:
+
+```bash
+# Add this repo as a marketplace
+/plugin marketplace add xiaobei930/claude-code-best-practices
+
+# Install the plugin
+/plugin install claude-code-best-practices@claude-code-best-practices
+```
+
+Or add directly to your `~/.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-code-best-practices": {
+      "source": {
+        "source": "github",
+        "repo": "xiaobei930/claude-code-best-practices"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "claude-code-best-practices@claude-code-best-practices": true
+  }
+}
+```
+
+This gives you instant access to all commands, agents, skills, and hooks.
+
+#### Plugin Configuration
+
+After installing as a plugin:
+
+1. **Override plugin settings** by creating local files:
+   - Create `commands/` in your project to add/override commands
+   - Create `rules/` to add project-specific rules
+
+2. **Memory bank**: Plugin doesn't include memory-bank. Create manually if needed:
+
+```bash
+mkdir -p memory-bank
+touch memory-bank/progress.md
+touch memory-bank/architecture.md
+```
+
+3. **Hookify rules**: Plugin's hookify rules (`.claude/hookify.*.local.md`) won't auto-apply to your project. The core safety features are provided by `hooks/hooks.json` instead.
+
+---
+
+### Option 2: Clone Template (Full Customization)
+
+For new projects where you want full control:
 
 ```bash
 # 1. Clone the template
@@ -78,7 +145,7 @@ bash scripts/shell/init.sh
 /pm   # Begin with the Product Manager role for your first requirement
 ```
 
-### Copy to Existing Project
+#### Copy to Existing Project
 
 ```bash
 # Copy configuration files to your project
@@ -101,56 +168,14 @@ bash scripts/shell/init.sh
 
 **Migrating from an existing project?** See [MIGRATION.md](MIGRATION.md).
 
-### Install as Plugin
+---
 
-For existing projects where you want to add these features without copying files:
+### Plugin vs Clone: When to Use Which
 
-```bash
-# In Claude Code, run:
-/plugin
-
-# Select "Add Marketplace", then enter:
-xiaobei930/claude-code-best-practices
-```
-
-Or install directly:
-
-```
-/plugin install github:xiaobei930/claude-code-best-practices
-```
-
-#### Clone vs Plugin: When to Use Which
-
-| Method             | Best For          | What You Get                                  |
-| ------------------ | ----------------- | --------------------------------------------- |
-| **Clone Template** | New projects      | Full customization, all files in your repo    |
-| **Install Plugin** | Existing projects | Commands, skills, agents added to Claude Code |
-
-#### Plugin Configuration
-
-After installing as a plugin, you may want to customize settings:
-
-1. **Enable/disable specific components** in your project's `.claude/settings.local.json`:
-
-```json
-{
-  "enabledPlugins": {
-    "claude-code-best-practices@xiaobei930": true
-  }
-}
-```
-
-2. **Override plugin settings** by creating local files:
-   - Create `commands/` in your project to add/override commands
-   - Create `rules/` to add project-specific rules
-
-3. **Memory bank**: Plugin doesn't include memory-bank. Create manually if needed:
-
-```bash
-mkdir -p memory-bank
-touch memory-bank/progress.md
-touch memory-bank/architecture.md
-```
+| Method             | Best For          | What You Get                                       |
+| ------------------ | ----------------- | -------------------------------------------------- |
+| **Install Plugin** | Existing projects | Commands, skills, agents, hooks added instantly    |
+| **Clone Template** | New projects      | Full customization, all files in your repo         |
 
 > **Note**: Don't install the plugin in a project that was cloned from this template - it will cause duplicate commands and hooks.
 
@@ -583,16 +608,16 @@ MCP tools auto-create temporary directories in your project:
 
 ```bash
 # Preview files to delete (dry run)
-bash scripts/cleanup.sh --dry-run
+bash scripts/shell/cleanup.sh --dry-run
 
 # Clean files older than 7 days (default)
-bash scripts/cleanup.sh
+bash scripts/shell/cleanup.sh
 
 # Clean files older than 3 days
-bash scripts/cleanup.sh --days 3
+bash scripts/shell/cleanup.sh --days 3
 
 # Clean all MCP temporary files
-bash scripts/cleanup.sh --all
+bash scripts/shell/cleanup.sh --all
 ```
 
 ---

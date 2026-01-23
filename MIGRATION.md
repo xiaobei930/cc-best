@@ -42,7 +42,7 @@ cp -r /tmp/cc-template/memory-bank /path/to/your/project/
 
 ```bash
 cd /path/to/your/project
-bash scripts/init.sh
+bash scripts/shell/init.sh
 ```
 
 #### Step 4: Configure CLAUDE.md
@@ -125,7 +125,7 @@ Keep all rules - they auto-match based on file extensions.
 
 2. Run init script:
    ```bash
-   bash scripts/init.sh
+   bash scripts/shell/init.sh
    ```
 
 3. Set script permissions (Linux/Mac):
@@ -182,7 +182,7 @@ cp -r /tmp/cc-template/memory-bank /path/to/your/project/
 
 ```bash
 cd /path/to/your/project
-bash scripts/init.sh
+bash scripts/shell/init.sh
 ```
 
 #### 步骤 4：配置 CLAUDE.md
@@ -265,7 +265,7 @@ cp -r /tmp/cc-template/scripts/ scripts/
 
 2. 运行初始化脚本：
    ```bash
-   bash scripts/init.sh
+   bash scripts/shell/init.sh
    ```
 
 3. 设置脚本权限（Linux/Mac）：

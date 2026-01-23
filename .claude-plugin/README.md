@@ -35,7 +35,7 @@ This template is designed to be cloned directly. The plugin structure enables fu
 ```bash
 # Clone and use
 git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
-cd my-project && bash scripts/init.sh
+cd my-project && bash scripts/shell/init.sh
 ```
 
 ## Version History

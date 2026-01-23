@@ -27,5 +27,5 @@
 ## 清理说明
 
 - 此目录中的文件已被 .gitignore 忽略
-- 定期清理过时截图：运行 `scripts/cleanup.sh`
+- 定期清理过时截图：运行 `scripts/shell/cleanup.sh`
 - MCP 临时目录由清理脚本统一处理

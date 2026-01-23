@@ -2,7 +2,8 @@
 /**
  * Claude Code 项目初始化脚本
  *
- * 用法: node scripts/node/hooks/init.js
+ * Clone 模式用法: node scripts/node/hooks/init.js
+ * Plugin 模式：在 Claude Code 中运行 /setup 命令
  * 跨平台支持（Windows/macOS/Linux）
  */
 
@@ -13,6 +14,7 @@ const { ensureDir, fileExists, writeFile, log } = require("../lib/utils");
 // 颜色输出（支持跨平台）
 const GREEN = "\x1b[32m";
 const YELLOW = "\x1b[33m";
+const BLUE = "\x1b[34m";
 const NC = "\x1b[0m"; // No Color
 
 function success(msg) {
@@ -23,14 +25,40 @@ function skip(msg) {
   console.log(`${YELLOW}⏭️${NC} ${msg}`);
 }
 
+function info(msg) {
+  console.log(`${BLUE}ℹ️${NC} ${msg}`);
+}
+
+// 获取脚本所在目录（插件根目录）
+const SCRIPT_DIR = __dirname;
+// 从 scripts/node/hooks/ 往上三级得到项目/插件根目录
+const TEMPLATE_ROOT = path.resolve(SCRIPT_DIR, "..", "..", "..");
+
+// 检测运行模式
+function detectMode() {
+  const pluginJsonPath = path.join(TEMPLATE_ROOT, ".claude-plugin", "plugin.json");
+  const localSettingsPath = path.join(process.cwd(), ".claude", "settings.json");
+
+  if (fileExists(pluginJsonPath) && !fileExists(localSettingsPath)) {
+    return "plugin";
+  }
+  return "clone";
+}
+
 function copyIfNotExists(src, dest, description) {
   if (!fileExists(dest)) {
     if (fileExists(src)) {
+      ensureDir(path.dirname(dest));
       fs.copyFileSync(src, dest);
       success(`创建 ${description}`);
+      return true;
+    } else {
+      info(`模板不存在: ${src}`);
+      return false;
     }
   } else {
     skip(`${description} 已存在`);
+    return false;
   }
 }
 
@@ -49,24 +77,44 @@ function main() {
   console.log("==========================");
   console.log("");
 
-  // 1. 创建 settings.local.json
+  const mode = detectMode();
+  if (mode === "plugin") {
+    console.log(`${YELLOW}📦 检测到 Plugin 模式${NC}`);
+  } else {
+    console.log(`${GREEN}📁 检测到 Clone 模式${NC}`);
+  }
+  console.log("");
+
+  // 确定模板源目录
+  const templateClaudeDir = mode === "plugin"
+    ? path.join(TEMPLATE_ROOT, ".claude")
+    : ".claude";
+
+  // 1. 创建 .claude 目录
+  ensureDir(".claude");
+
+  // 2. 创建 settings.local.json
   copyIfNotExists(
-    ".claude/settings.local.json.example",
+    path.join(templateClaudeDir, "settings.local.json.example"),
     ".claude/settings.local.json",
     "settings.local.json",
   );
 
-  // 2. 创建 Hookify 规则文件
-  const hookifyExamples = fs
-    .readdirSync(".claude")
-    .filter((f) => f.match(/^hookify\..*\.local\.md\.example$/));
-  for (const example of hookifyExamples) {
-    const target = example.replace(".example", "");
-    copyIfNotExists(
-      path.join(".claude", example),
-      path.join(".claude", target),
-      target,
-    );
+  // 3. 创建 Hookify 规则文件（仅 Clone 模式，Plugin 模式由 hooks.json 提供安全功能）
+  if (mode === "clone" && fileExists(templateClaudeDir)) {
+    const hookifyExamples = fs
+      .readdirSync(templateClaudeDir)
+      .filter((f) => f.match(/^hookify\..*\.local\.md\.example$/));
+    for (const example of hookifyExamples) {
+      const target = example.replace(".example", "");
+      copyIfNotExists(
+        path.join(templateClaudeDir, example),
+        path.join(".claude", target),
+        target,
+      );
+    }
+  } else if (mode === "plugin") {
+    info("Plugin 模式下安全功能由 hooks.json 提供");
   }
 
   // 3. 创建必要目录

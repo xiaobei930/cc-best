@@ -1,6 +1,8 @@
 #!/bin/bash
 # Ralph Loop 便捷启动脚本
-# 用法: bash scripts/ralph.sh [mode] [max-iterations] [feature-description]
+#
+# Clone 模式用法: bash scripts/shell/ralph.sh [mode] [max-iterations] [feature-description]
+# Plugin 模式：直接在 Claude Code 中使用 /ralph-loop 命令
 #
 # mode: phase | fix-tests | refactor | feature
 # max-iterations: 默认 30 (feature 模式默认 50)
@@ -25,7 +27,7 @@ case $MODE in
   feature)
     if [ -z "$FEATURE_DESC" ]; then
       echo "feature 模式需要提供需求描述"
-      echo "用法: bash scripts/ralph.sh feature 50 \"需求描述\""
+      echo "用法: bash scripts/shell/ralph.sh feature 50 \"需求描述\""
       exit 1
     fi
     MAX_ITER=${2:-50}
@@ -42,8 +44,8 @@ case $MODE in
     echo "  feature    - 完全自主设计开发新功能"
     echo ""
     echo "用法:"
-    echo "  bash scripts/ralph.sh phase 30"
-    echo "  bash scripts/ralph.sh feature 50 \"实现用户登录功能\""
+    echo "  bash scripts/shell/ralph.sh phase 30"
+    echo "  bash scripts/shell/ralph.sh feature 50 \"实现用户登录功能\""
     exit 1
     ;;
 esac

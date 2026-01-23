@@ -197,41 +197,43 @@ echo $?  # 检查退出码
 ## 文件组织
 
 ```
-.claude/
-├── settings.local.json                          # 主要钩子配置（运行时）
-├── settings.local.json.example                  # 配置示例（模板）
-├── hookify.*.local.md                           # Hookify 规则文件（运行时）
-└── scripts/
-    ├── shell/                                   # Bash 脚本 (10)
-    │   ├── init.sh, cleanup.sh
-    │   ├── session-start.sh, session-end.sh
-    │   └── pre-compact.sh, ...
-    ├── python/                                  # Python 脚本 (9)
-    │   ├── validate-command.py, protect-files.py
-    │   ├── format-file.py, check-console-log.py
-    │   └── session-check.py, ...
-    └── node/                                    # Node.js（默认，跨平台）
-        ├── lib/
-        │   ├── utils.js                         # 27 个辅助函数
-        │   └── package-manager.js               # 包管理器检测
-        └── hooks/                               # 13 个生命周期钩子
-            ├── validate-command.js              # 命令验证
-            ├── protect-files.js                 # 文件保护
-            ├── format-file.js                   # 自动格式化
-            ├── check-console-log.js             # console.log 检查
-            ├── typescript-check.js              # TypeScript 检查
-            ├── pause-before-push.js             # Push 前确认
-            ├── block-random-md.js               # 阻止随机 .md
-            ├── long-running-warning.js          # 长时间运行警告
-            ├── session-check.js                 # 会话检查
-            ├── session-start.js                 # 会话启动
-            ├── session-end.js                   # 会话结束
-            ├── pre-compact.js                   # 压缩前处理
-            └── init.js                          # 项目初始化
-
-hooks/
-├── hooks.json                                   # 插件兼容配置
-└── README.md                                    # 本文档
+项目根目录/
+├── .claude/
+│   ├── settings.local.json                      # 主要钩子配置（运行时）
+│   ├── settings.local.json.example              # 配置示例（模板）
+│   └── hookify.*.local.md                       # Hookify 规则文件（运行时）
+│
+├── scripts/                                     # 脚本目录（根目录）
+│   ├── shell/                                   # Bash 脚本 (10)
+│   │   ├── init.sh, cleanup.sh
+│   │   ├── session-start.sh, session-end.sh
+│   │   └── pre-compact.sh, ...
+│   ├── python/                                  # Python 脚本 (9)
+│   │   ├── validate-command.py, protect-files.py
+│   │   ├── format-file.py, check-console-log.py
+│   │   └── session-check.py, ...
+│   └── node/                                    # Node.js（默认，跨平台）
+│       ├── lib/
+│       │   ├── utils.js                         # 27 个辅助函数
+│       │   └── package-manager.js               # 包管理器检测
+│       └── hooks/                               # 13 个生命周期钩子
+│           ├── validate-command.js              # 命令验证
+│           ├── protect-files.js                 # 文件保护
+│           ├── format-file.js                   # 自动格式化
+│           ├── check-console-log.js             # console.log 检查
+│           ├── typescript-check.js              # TypeScript 检查
+│           ├── pause-before-push.js             # Push 前确认
+│           ├── block-random-md.js               # 阻止随机 .md
+│           ├── long-running-warning.js          # 长时间运行警告
+│           ├── session-check.js                 # 会话检查
+│           ├── session-start.js                 # 会话启动
+│           ├── session-end.js                   # 会话结束
+│           ├── pre-compact.js                   # 压缩前处理
+│           └── init.js                          # 项目初始化
+│
+└── hooks/
+    ├── hooks.json                               # 插件兼容配置
+    └── README.md                                # 本文档
 ```
 
 ## 注意事项

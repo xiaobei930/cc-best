@@ -17,7 +17,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 3. Run initialization
-bash scripts/init.sh
+bash scripts/shell/init.sh
 
 # 4. Edit CLAUDE.md - replace placeholders:
 #    {{PROJECT_NAME}}, {{DATE}}, {{PROJECT_DESCRIPTION}}
@@ -128,7 +128,7 @@ Check these locations:
 #### Q: memory-bank files are empty
 Run initialization:
 ```bash
-bash scripts/init.sh
+bash scripts/shell/init.sh
 ```
 Or manually create from templates in `memory-bank/`.
 
@@ -193,7 +193,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 3. 运行初始化
-bash scripts/init.sh
+bash scripts/shell/init.sh
 
 # 4. 编辑 CLAUDE.md，替换占位符：
 #    {{PROJECT_NAME}}, {{DATE}}, {{PROJECT_DESCRIPTION}}
@@ -304,7 +304,7 @@ git commit -m "Initial commit from Claude Code template"
 #### Q: memory-bank 文件是空的
 运行初始化：
 ```bash
-bash scripts/init.sh
+bash scripts/shell/init.sh
 ```
 或者手动从 `memory-bank/` 中的模板创建。
 

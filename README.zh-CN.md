@@ -59,7 +59,74 @@
 
 ## 🚀 快速开始
 
-### 5 分钟上手
+### 方式一：作为插件安装（推荐）
+
+最简单的使用方式 - 直接安装为 Claude Code 插件：
+
+```bash
+# 在 Claude Code 中运行：
+/plugin
+
+# 选择 "Add Marketplace"，然后输入：
+xiaobei930/claude-code-best-practices
+
+# 然后选择 "Install Plugin"，选择：
+claude-code-best-practices
+```
+
+或者使用命令行方式：
+
+```bash
+# 添加 marketplace
+/plugin marketplace add xiaobei930/claude-code-best-practices
+
+# 安装插件
+/plugin install claude-code-best-practices@claude-code-best-practices
+```
+
+或者直接添加到 `~/.claude/settings.json`：
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-code-best-practices": {
+      "source": {
+        "source": "github",
+        "repo": "xiaobei930/claude-code-best-practices"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "claude-code-best-practices@claude-code-best-practices": true
+  }
+}
+```
+
+安装后即可使用所有命令、智能体、技能和 hooks。
+
+#### 插件配置
+
+安装为插件后：
+
+1. **覆盖插件设置**，创建本地文件：
+   - 在项目中创建 `commands/` 来添加/覆盖命令
+   - 创建 `rules/` 来添加项目特定规则
+
+2. **记忆库**：插件不包含 memory-bank，如需要请手动创建：
+
+```bash
+mkdir -p memory-bank
+touch memory-bank/progress.md
+touch memory-bank/architecture.md
+```
+
+3. **Hookify 规则**：插件中的 hookify 规则（`.claude/hookify.*.local.md`）不会自动应用到你的项目。核心安全功能由 `hooks/hooks.json` 提供。
+
+---
+
+### 方式二：Clone 模板（完全定制）
+
+适用于需要完全控制的新项目：
 
 ```bash
 # 1. 克隆模板
@@ -78,7 +145,7 @@ bash scripts/shell/init.sh
 /pm   # 从产品经理角色开始第一个需求
 ```
 
-### 复制到现有项目
+#### 复制到现有项目
 
 ```bash
 # 复制配置文件到你的项目
@@ -99,56 +166,16 @@ bash scripts/shell/init.sh
 
 > **Windows 用户**：使用 Git Bash 运行脚本，或使用 `robocopy` 复制文件。
 
-### 作为插件安装
+**从现有项目迁移？** 参见 [MIGRATION.md](MIGRATION.md)。
 
-如果你想在现有项目中添加这些功能，而不需要复制文件：
+---
 
-```bash
-# 在 Claude Code 中运行：
-/plugin
+### 插件 vs Clone：何时使用哪种方式
 
-# 选择 "Add Marketplace"，然后输入：
-xiaobei930/claude-code-best-practices
-```
-
-或者直接安装：
-
-```
-/plugin install github:xiaobei930/claude-code-best-practices
-```
-
-#### Clone vs 插件：何时使用哪种方式
-
-| 方式           | 适用场景 | 获得内容                             |
-| -------------- | -------- | ------------------------------------ |
-| **Clone 模板** | 新项目   | 完全可定制，所有文件在你的仓库中     |
-| **安装插件**   | 现有项目 | 命令、技能、智能体添加到 Claude Code |
-
-#### 插件配置
-
-安装为插件后，你可能需要自定义设置：
-
-1. **启用/禁用特定组件**，在项目的 `.claude/settings.local.json` 中：
-
-```json
-{
-  "enabledPlugins": {
-    "claude-code-best-practices@xiaobei930": true
-  }
-}
-```
-
-2. **覆盖插件设置**，创建本地文件：
-   - 在项目中创建 `commands/` 来添加/覆盖命令
-   - 创建 `rules/` 来添加项目特定规则
-
-3. **记忆库**：插件不包含 memory-bank，如需要请手动创建：
-
-```bash
-mkdir -p memory-bank
-touch memory-bank/progress.md
-touch memory-bank/architecture.md
-```
+| 方式           | 适用场景 | 获得内容                               |
+| -------------- | -------- | -------------------------------------- |
+| **安装插件**   | 现有项目 | 命令、技能、智能体、hooks 即时可用     |
+| **Clone 模板** | 新项目   | 完全可定制，所有文件在你的仓库中       |
 
 > **注意**：不要在从此模板 clone 的项目中安装此插件——会导致命令和 hooks 重复。
 
@@ -581,16 +608,16 @@ MCP 工具会在项目中自动创建临时目录：
 
 ```bash
 # 预览待删除文件（dry run）
-bash scripts/cleanup.sh --dry-run
+bash scripts/shell/cleanup.sh --dry-run
 
 # 清理 7 天前的文件（默认）
-bash scripts/cleanup.sh
+bash scripts/shell/cleanup.sh
 
 # 清理 3 天前的文件
-bash scripts/cleanup.sh --days 3
+bash scripts/shell/cleanup.sh --days 3
 
 # 清理所有 MCP 临时文件
-bash scripts/cleanup.sh --all
+bash scripts/shell/cleanup.sh --all
 ```
 
 ---

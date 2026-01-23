@@ -146,7 +146,7 @@ jobs:
         run: |
           echo "🔍 Checking Python scripts syntax..."
 
-          for script in scripts/*.py; do
+          for script in scripts/python/*.py; do
             if [ -f "$script" ]; then
               python -m py_compile "$script" && echo "✅ $script" || {
                 echo "❌ Syntax error: $script"
@@ -206,6 +206,8 @@ jobs:
           echo "| Rules | $(ls -1 rules/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Skills | $(ls -1d skills/*/ 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Agents | $(ls -1 agents/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Scripts | $(ls -1 scripts/*.{py,sh} 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Shell Scripts | $(ls -1 scripts/shell/*.sh 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Python Scripts | $(ls -1 scripts/python/*.py 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Node.js Scripts | $(ls -1 scripts/node/**/*.js 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ All validations passed!" >> $GITHUB_STEP_SUMMARY
