@@ -10,7 +10,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/init.sh",
-            "timeout": 30000
+            "timeout": 30
           }
         ],
         "description": "Project initialization - triggered by claude --init"
@@ -24,7 +24,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/validate_command.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Validate dangerous commands"
@@ -35,7 +35,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/pause_before_push.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Pause before git push"
@@ -46,7 +46,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/long_running_warning.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Warn about long-running commands"
@@ -57,7 +57,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/protect_files.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Protect sensitive files"
@@ -68,7 +68,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/block_random_md.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Block random .md file creation"
@@ -79,7 +79,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/skills/strategic-compact/suggest-compact.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Strategic compaction suggestions"
@@ -93,7 +93,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/format_file.py",
-            "timeout": 30000
+            "timeout": 30
           }
         ],
         "description": "Auto-format code"
@@ -104,7 +104,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/check_console_log.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Check for console.log statements"
@@ -115,7 +115,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/typescript_check.sh",
-            "timeout": 10000
+            "timeout": 10
           }
         ],
         "description": "TypeScript type check"
@@ -129,7 +129,7 @@
           {
             "type": "command",
             "command": "python ${PLUGIN_ROOT}/.claude/scripts/session_check.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Session health check"
@@ -140,7 +140,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/session_start.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "Load previous session context"
@@ -154,7 +154,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/pre_compact.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Save state before context compaction"
@@ -168,7 +168,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/scripts/session_end.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Persist state on session end"
@@ -179,7 +179,7 @@
           {
             "type": "command",
             "command": "bash ${PLUGIN_ROOT}/.claude/skills/continuous-learning/evaluate-session.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "Evaluate session for extractable patterns"

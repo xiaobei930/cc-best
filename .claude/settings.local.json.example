@@ -133,7 +133,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/init.sh",
-            "timeout": 30000
+            "timeout": 30
           }
         ],
         "description": "项目初始化 - 通过 claude --init 触发"
@@ -146,7 +146,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/validate_command.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "验证危险命令"
@@ -157,7 +157,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/pause_before_push.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "git push 前暂停确认"
@@ -168,7 +168,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/long_running_warning.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "长时间运行命令提醒（dev server / watch / build --watch）"
@@ -179,7 +179,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/protect_files.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "保护敏感文件"
@@ -190,7 +190,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/block_random_md.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "阻止随机创建 .md 文件"
@@ -201,7 +201,7 @@
           {
             "type": "command",
             "command": "bash .claude/skills/strategic-compact/suggest-compact.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "策略性压缩建议"
@@ -214,7 +214,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/format_file.py",
-            "timeout": 30000
+            "timeout": 30
           }
         ],
         "description": "自动格式化代码"
@@ -225,7 +225,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/check_console_log.py",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "检查 console.log 语句"
@@ -236,7 +236,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/typescript_check.sh",
-            "timeout": 10000
+            "timeout": 10
           }
         ],
         "description": "TypeScript 类型检查"
@@ -249,7 +249,7 @@
           {
             "type": "command",
             "command": "python .claude/scripts/session_check.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "会话启动健康检查"
@@ -260,7 +260,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/session_start.sh",
-            "timeout": 3000
+            "timeout": 3
           }
         ],
         "description": "加载上次会话上下文"
@@ -273,7 +273,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/pre_compact.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "压缩前保存状态"
@@ -286,7 +286,7 @@
           {
             "type": "command",
             "command": "bash .claude/scripts/session_end.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "会话结束时持久化状态"
@@ -297,7 +297,7 @@
           {
             "type": "command",
             "command": "bash .claude/skills/continuous-learning/evaluate-session.sh",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "持续学习 - 评估可提取模式"
@@ -309,7 +309,7 @@
           {
             "type": "command",
             "command": "echo 'Success'",
-            "timeout": 1000
+            "timeout": 1
           }
         ]
       }

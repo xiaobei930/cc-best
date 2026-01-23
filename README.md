@@ -30,6 +30,7 @@ A comprehensive Claude Code configuration template for development teams. Suppor
 - [Command Reference](#-command-reference)
 - [Skills](#-skills)
 - [Agents](#-agents)
+- [Plugin Compatibility](#-plugin-compatibility)
 - [Customization Guide](#-customization-guide)
 - [Best Practices](#-best-practices)
 - [FAQ](#-faq)
@@ -277,6 +278,40 @@ Sub-agents for specialized tasks, automatically invoked by the Task tool.
 
 ---
 
+## 🔌 Plugin Compatibility
+
+This template is designed to work seamlessly with official Claude Code plugins. Our built-in agents and skills complement (not replace) official plugins.
+
+### Relationship with Official Plugins
+
+| Template Content          | Official Plugin      | Relationship                                                                 |
+| ------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| `code-reviewer` agent     | `code-review` plugin | Template: lightweight local version; Plugin: more powerful with auto-trigger |
+| `security-reviewer` agent | `security-guidance`  | Template: OWASP checklist; Plugin: automatic security analysis               |
+| `code-simplifier` agent   | `code-simplifier`    | Similar function; plugin has more context                                    |
+| `/iterate` command        | `ralph-loop` plugin  | Template: single session; Plugin: cross-session persistence                  |
+| `hookify` examples        | `hookify` plugin     | Template: examples; Plugin: full hook management                             |
+
+### Recommended Plugin Configuration
+
+```json
+{
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true
+  }
+}
+```
+
+### When to Use Which
+
+- **No plugins installed**: Template agents/skills work standalone
+- **With plugins**: Use plugins for advanced features, template for quick local checks
+- **Best practice**: Install plugins, use template agents for immediate feedback, plugins for deep analysis
+
+---
+
 ## ⚙️ Customization Guide
 
 ### Adding New Rules
@@ -335,7 +370,7 @@ Edit `.claude/settings.local.json`:
           {
             "type": "command",
             "command": "python .claude/scripts/your-script.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ]
       }

@@ -76,7 +76,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
           {
             "type": "command",
             "command": "python .claude/scripts/validate_command.py",
-            "timeout": 5000
+            "timeout": 5
           }
         ],
         "description": "验证危险命令"
@@ -132,7 +132,8 @@ pattern: "rm\\s+-rf\\s+/"
 ### 脚本输出
 
 - **退出码 0**: 允许操作继续
-- **退出码非 0**: 阻止操作（PreToolUse）或发出警告
+- **退出码 2**: 阻止操作（PreToolUse）并向 Claude 反馈
+- **其他退出码**: 发出警告但不阻止
 - **stdout 输出**: 作为反馈信息显示给 Claude
 
 ### 示例脚本
@@ -155,7 +156,7 @@ def main():
     for pattern in DANGEROUS_PATTERNS:
         if re.search(pattern, command):
             print(f"危险命令被阻止: {pattern}")
-            sys.exit(1)
+            sys.exit(2)  # Exit code 2 = 阻止操作
 
     sys.exit(0)
 
@@ -167,9 +168,9 @@ if __name__ == '__main__':
 
 ### 超时设置
 
-- 简单检查: 1000-3000ms
-- 格式化/编译: 10000-30000ms
-- 网络操作: 根据需要设置
+- 简单检查: 1-3 秒
+- 格式化/编译: 10-30 秒
+- 网络操作: 根据需要设置（单位：秒）
 
 ### 错误处理
 
