@@ -79,6 +79,7 @@
       "Skill(learn)",
       "Skill(hookify:hookify)",
       "Skill(hookify:*)",
+      "Skill(setup-pm)",
 
       "Skill(code-review:code-review)",
       "Skill(feature-dev:*)",
@@ -124,6 +125,7 @@
   ],
 
   "_hooks_guide": "钩子配置指南见 hooks/README.md",
+  "_hooks_note": "会话相关 hooks 默认使用 Node.js 版本（跨平台），bash 版本见 _command_bash 注释",
 
   "hooks": {
     "Setup": [
@@ -259,7 +261,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/scripts/session_start.sh",
+            "command": "node .claude/scripts/hooks/session-start.js",
+            "_command_bash": "bash .claude/scripts/session_start.sh",
             "timeout": 3
           }
         ],
@@ -272,7 +275,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/scripts/pre_compact.sh",
+            "command": "node .claude/scripts/hooks/pre-compact.js",
+            "_command_bash": "bash .claude/scripts/pre_compact.sh",
             "timeout": 5
           }
         ],
@@ -285,7 +289,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/scripts/session_end.sh",
+            "command": "node .claude/scripts/hooks/session-end.js",
+            "_command_bash": "bash .claude/scripts/session_end.sh",
             "timeout": 5
           }
         ],

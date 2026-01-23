@@ -1,6 +1,7 @@
 {
   "$schema": "Standalone hooks configuration for plugin compatibility",
   "_note": "Copy relevant sections to .claude/settings.local.json to activate",
+  "_cross_platform": "Session hooks use Node.js by default (cross-platform). Bash alternatives in _command_bash comments.",
 
   "hooks": {
     "Setup": [
@@ -139,7 +140,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/session_start.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/session-start.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/session_start.sh",
             "timeout": 3
           }
         ],
@@ -153,7 +155,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/pre_compact.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/pre-compact.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/pre_compact.sh",
             "timeout": 5
           }
         ],
@@ -167,7 +170,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${PLUGIN_ROOT}/.claude/scripts/session_end.sh",
+            "command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/session-end.js",
+            "_command_bash": "bash ${PLUGIN_ROOT}/.claude/scripts/session_end.sh",
             "timeout": 5
           }
         ],

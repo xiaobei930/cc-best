@@ -113,6 +113,10 @@ Coding standards for 7+ languages: Python, Vue/TS, C++, Java, C#, Go, and more.
 
 `memory-bank/` directory persists project progress, architecture decisions, and tech stack choices.
 
+### 🌐 Cross-Platform Support
+
+Node.js-based hooks and utilities for Windows/macOS/Linux compatibility. Auto-detects package manager (npm/pnpm/yarn/bun).
+
 ### 🔌 MCP Integration
 
 Ready-to-use MCP server configurations supporting memory, playwright, firecrawl, and more.
@@ -155,11 +159,18 @@ your-project/
     │   ├── code-reviewer.md    # Code review
     │   └── security-reviewer.md# Security review
     │
-    └── scripts/                # Automation scripts (17)
+    └── scripts/                # Automation scripts
         ├── init.sh             # Initialization
         ├── cleanup.sh          # MCP temp directory cleanup
         ├── format_file.py      # Auto-formatting
-        └── validate_command.py # Command validation
+        ├── validate_command.py # Command validation
+        ├── lib/                # Cross-platform utilities
+        │   ├── utils.js        # File/system operations
+        │   └── package-manager.js # PM auto-detection
+        └── hooks/              # Node.js hooks (cross-platform)
+            ├── session-start.js
+            ├── session-end.js
+            └── pre-compact.js
 ```
 
 ---
@@ -610,11 +621,12 @@ chmod +x .claude/scripts/*.py
 
 ## 🔧 Requirements
 
-| Dependency    | Version            | Notes                         |
-| ------------- | ------------------ | ----------------------------- |
-| Claude Code   | Latest recommended | Hooks require recent versions |
-| Python        | 3.8+               | For hook scripts              |
-| Bash/Git Bash | Any version        | Windows users: use Git Bash   |
+| Dependency    | Version            | Notes                              |
+| ------------- | ------------------ | ---------------------------------- |
+| Claude Code   | Latest recommended | Hooks require recent versions      |
+| Node.js       | 16+                | For cross-platform hooks (default) |
+| Python        | 3.8+               | For some hook scripts              |
+| Bash/Git Bash | Any version        | Optional for bash hooks            |
 
 ### Supported Languages
 
