@@ -67,7 +67,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 2. Run initialization
-bash .claude/scripts/shell/init.sh
+bash scripts/shell/init.sh
 
 # 3. Edit CLAUDE.md and replace placeholders
 #    {{PROJECT_NAME}} → Your project name
@@ -83,12 +83,18 @@ bash .claude/scripts/shell/init.sh
 ```bash
 # Copy configuration files to your project
 cp -r claude-code-best-practices/.claude /path/to/your/project/
-cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
+cp -r claude-code-best-practices/commands /path/to/your/project/
+cp -r claude-code-best-practices/skills /path/to/your/project/
+cp -r claude-code-best-practices/agents /path/to/your/project/
+cp -r claude-code-best-practices/rules /path/to/your/project/
+cp -r claude-code-best-practices/scripts /path/to/your/project/
+cp -r claude-code-best-practices/hooks /path/to/your/project/
 cp -r claude-code-best-practices/memory-bank /path/to/your/project/
+cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
 
 # Navigate to your project and initialize
 cd /path/to/your/project
-bash .claude/scripts/shell/init.sh
+bash scripts/shell/init.sh
 ```
 
 > **Windows Users**: Use Git Bash to run scripts, or use `robocopy` to copy files.
@@ -136,7 +142,7 @@ After installing as a plugin, you may want to customize settings:
 
 2. **Override plugin settings** by creating local files:
    - Create `commands/` in your project to add/override commands
-   - Create `.claude/rules/` to add project-specific rules
+   - Create `rules/` to add project-specific rules
 
 3. **Memory bank**: Plugin doesn't include memory-bank. Create manually if needed:
 
@@ -192,47 +198,53 @@ your-project/
 │   ├── architecture.md         # Architecture documentation
 │   └── tech-stack.md           # Technology choices
 │
-└── .claude/
+├── commands/                   # Slash commands (30+)
+│   ├── pm.md, lead.md          # Role commands
+│   ├── iterate.md, pair.md     # Mode commands
+│   └── build.md, test.md       # Tool commands
+│
+├── rules/                      # Coding standards (13 files)
+│   ├── methodology.md          # Development methodology
+│   ├── coding-standards.md     # Universal standards
+│   ├── code-style.md           # Python style
+│   ├── frontend-style.md       # Vue/TS/JS style
+│   └── security.md             # Security rules
+│
+├── skills/                     # Development skills (14 categories)
+│   ├── backend-patterns/       # Backend patterns
+│   ├── frontend-patterns/      # Frontend patterns
+│   ├── devops-patterns/        # DevOps patterns
+│   └── tdd-workflow/           # TDD workflow
+│
+├── agents/                     # Sub-agents (6)
+│   ├── code-reviewer.md        # Code review
+│   └── security-reviewer.md    # Security review
+│
+├── scripts/                    # Automation scripts (by language)
+│   ├── shell/                  # Bash scripts (10)
+│   │   ├── init.sh, cleanup.sh
+│   │   └── session-start.sh, session-end.sh
+│   ├── python/                 # Python scripts (9)
+│   │   ├── validate-command.py, protect-files.py
+│   │   └── format-file.py, check-console-log.py
+│   └── node/                   # Node.js (default, cross-platform)
+│       ├── lib/                # Utilities
+│       │   ├── utils.js        # 27 helper functions
+│       │   └── package-manager.js
+│       └── hooks/              # 13 lifecycle hooks
+│           ├── validate-command.js, protect-files.js
+│           ├── session-start.js, session-end.js
+│           └── format-file.js, typescript-check.js
+│
+├── hooks/                      # Hook configuration
+│   └── hooks.json              # Plugin hooks config
+│
+└── .claude/                    # Claude Code configuration
     ├── settings.json           # Base permissions (commit to Git)
     ├── settings.local.json     # Local config + Hooks (don't commit)
-    │
-    ├── commands/               # Slash commands (30+)
-    │   ├── pm.md, lead.md      # Role commands
-    │   ├── iterate.md, pair.md # Mode commands
-    │   └── build.md, test.md   # Tool commands
-    │
-    ├── rules/                  # Coding standards (13 files)
-    │   ├── methodology.md      # Development methodology
-    │   ├── coding-standards.md # Universal standards
-    │   ├── code-style.md       # Python style
-    │   ├── frontend-style.md   # Vue/TS/JS style
-    │   └── security.md         # Security rules
-    │
-    ├── skills/                 # Development skills (14 categories)
-    │   ├── backend-patterns/   # Backend patterns
-    │   ├── frontend-patterns/  # Frontend patterns
-    │   ├── devops-patterns/    # DevOps patterns
-    │   └── tdd-workflow/       # TDD workflow
-    │
-    ├── agents/                 # Sub-agents (6)
-    │   ├── code-reviewer.md    # Code review
-    │   └── security-reviewer.md# Security review
-    │
-    └── scripts/                # Automation scripts (by language)
-        ├── shell/              # Bash scripts (10)
-        │   ├── init.sh, cleanup.sh
-        │   └── session-start.sh, session-end.sh
-        ├── python/             # Python scripts (9)
-        │   ├── validate-command.py, protect-files.py
-        │   └── format-file.py, check-console-log.py
-        └── node/               # Node.js (default, cross-platform)
-            ├── lib/            # Utilities
-            │   ├── utils.js    # 27 helper functions
-            │   └── package-manager.js
-            └── hooks/          # 13 lifecycle hooks
-                ├── validate-command.js, protect-files.js
-                ├── session-start.js, session-end.js
-                └── format-file.js, typescript-check.js
+    ├── mcp-configs/            # MCP server configurations
+    ├── ralph-prompts/          # Ralph Loop prompts
+    └── learned/                # Continuous learning storage
 ```
 
 ---
@@ -446,7 +458,7 @@ This template is designed to work seamlessly with official Claude Code plugins. 
 
 ### Adding New Rules
 
-Create a file in `.claude/rules/`:
+Create a file in `rules/`:
 
 ```markdown
 ---
@@ -499,7 +511,7 @@ Edit `.claude/settings.local.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/scripts/your-script.py",
+            "command": "python scripts/your-script.py",
             "timeout": 5
           }
         ]
@@ -534,7 +546,7 @@ All hooks default to Node.js for cross-platform compatibility. Python/Bash alter
 ### 1. Keep CLAUDE.md Concise
 
 - Keep it under 100 lines
-- Put detailed specifications in `.claude/rules/`
+- Put detailed specifications in `rules/`
 
 ### 2. Use the Memory Bank
 
@@ -571,16 +583,16 @@ MCP tools auto-create temporary directories in your project:
 
 ```bash
 # Preview files to delete (dry run)
-bash .claude/scripts/cleanup.sh --dry-run
+bash scripts/cleanup.sh --dry-run
 
 # Clean files older than 7 days (default)
-bash .claude/scripts/cleanup.sh
+bash scripts/cleanup.sh
 
 # Clean files older than 3 days
-bash .claude/scripts/cleanup.sh --days 3
+bash scripts/cleanup.sh --days 3
 
 # Clean all MCP temporary files
-bash .claude/scripts/cleanup.sh --all
+bash scripts/cleanup.sh --all
 ```
 
 ---
@@ -639,8 +651,8 @@ git commit -m "Initial commit from Claude Code template"
 2. Check script permissions (Linux/Mac):
 
    ```bash
-   chmod +x .claude/scripts/*.sh
-   chmod +x .claude/scripts/*.py
+   chmod +x scripts/*.sh
+   chmod +x scripts/*.py
    ```
 
 3. Check Claude Code version - hooks require recent versions
@@ -726,8 +738,8 @@ Best practice: Enable no more than 10 per project.
 
 ```bash
 # Linux/Mac
-chmod +x .claude/scripts/*.sh
-chmod +x .claude/scripts/*.py
+chmod +x scripts/*.sh
+chmod +x scripts/*.py
 
 # Windows: Run as Administrator
 ```
@@ -793,7 +805,7 @@ Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 
 ## 🌐 Note on Internal Files
 
-This template's internal files (`commands/`, `.claude/rules/`, `skills/`) are written in **Chinese**. This is intentional:
+This template's internal files (`commands/`, `rules/`, `skills/`) are written in **Chinese**. This is intentional:
 
 - **Claude understands Chinese** - All Claude models can read and follow Chinese instructions perfectly
 - **No translation burden** - Maintaining dual-language internal files would be impractical

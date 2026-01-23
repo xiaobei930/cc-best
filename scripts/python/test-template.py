@@ -33,8 +33,8 @@ def test_structure():
         "CLAUDE.md",
         ".claude/settings.json",
         ".claude/settings.local.json.example",
-        ".claude/rules/methodology.md",
-        ".claude/rules/security.md",
+        "rules/methodology.md",
+        "rules/security.md",
         "commands/pm.md",
         "commands/lead.md",
         "commands/dev.md",
@@ -145,7 +145,7 @@ def test_workflow_consistency():
 
     # 检查 CLAUDE.md 和 methodology.md 中的工作流是否一致
     claude_md = base / "CLAUDE.md"
-    methodology = base / ".claude/rules/methodology.md"
+    methodology = base / "rules/methodology.md"
 
     # 关键角色列表
     key_roles = ['/pm', '/lead', '/dev', '/qa']
@@ -217,7 +217,7 @@ def test_commands():
     print("="*50)
 
     base = Path(__file__).parent.parent.parent
-    commands_dir = base / ".claude/commands"
+    commands_dir = base / "commands"
 
     if not commands_dir.exists():
         warn("commands 目录不存在")

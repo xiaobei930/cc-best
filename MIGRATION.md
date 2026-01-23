@@ -26,6 +26,12 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git /tmp/cc-t
 
 # Copy essential files
 cp -r /tmp/cc-template/.claude /path/to/your/project/
+cp -r /tmp/cc-template/commands /path/to/your/project/
+cp -r /tmp/cc-template/skills /path/to/your/project/
+cp -r /tmp/cc-template/agents /path/to/your/project/
+cp -r /tmp/cc-template/rules /path/to/your/project/
+cp -r /tmp/cc-template/scripts /path/to/your/project/
+cp -r /tmp/cc-template/hooks /path/to/your/project/
 cp /tmp/cc-template/CLAUDE.md /path/to/your/project/
 
 # Optional: Copy memory-bank if you want progress tracking
@@ -36,7 +42,7 @@ cp -r /tmp/cc-template/memory-bank /path/to/your/project/
 
 ```bash
 cd /path/to/your/project
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 ```
 
 #### Step 4: Configure CLAUDE.md
@@ -75,14 +81,14 @@ cp -r /tmp/cc-template/commands/ commands/
 #### Just the Coding Rules
 
 ```bash
-cp -r /tmp/cc-template/.claude/rules/ .claude/rules/
+cp -r /tmp/cc-template/rules/ rules/
 ```
 
 #### Just the Hooks
 
 ```bash
 cp /tmp/cc-template/.claude/settings.local.json.example .claude/
-cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
+cp -r /tmp/cc-template/scripts/ scripts/
 ```
 
 ### Language-Specific Migration
@@ -90,8 +96,8 @@ cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
 #### Python Project
 
 Keep these rules:
-- `.claude/rules/code-style.md` (Python style)
-- `.claude/rules/coding-standards.md` (Universal)
+- `rules/code-style.md` (Python style)
+- `rules/coding-standards.md` (Universal)
 - `skills/backend-patterns/python.md`
 
 Remove if not needed:
@@ -100,8 +106,8 @@ Remove if not needed:
 #### Vue/TypeScript Project
 
 Keep these rules:
-- `.claude/rules/frontend-style.md`
-- `.claude/rules/coding-standards.md`
+- `rules/frontend-style.md`
+- `rules/coding-standards.md`
 - `skills/frontend-patterns/vue.md`
 
 #### Multi-Language Project
@@ -119,13 +125,13 @@ Keep all rules - they auto-match based on file extensions.
 
 2. Run init script:
    ```bash
-   bash .claude/scripts/init.sh
+   bash scripts/init.sh
    ```
 
 3. Set script permissions (Linux/Mac):
    ```bash
-   chmod +x .claude/scripts/*.sh
-   chmod +x .claude/scripts/*.py
+   chmod +x scripts/*.sh
+   chmod +x scripts/*.py
    ```
 
 #### Commands Not Found
@@ -160,6 +166,12 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git /tmp/cc-t
 
 # 复制必要文件
 cp -r /tmp/cc-template/.claude /path/to/your/project/
+cp -r /tmp/cc-template/commands /path/to/your/project/
+cp -r /tmp/cc-template/skills /path/to/your/project/
+cp -r /tmp/cc-template/agents /path/to/your/project/
+cp -r /tmp/cc-template/rules /path/to/your/project/
+cp -r /tmp/cc-template/scripts /path/to/your/project/
+cp -r /tmp/cc-template/hooks /path/to/your/project/
 cp /tmp/cc-template/CLAUDE.md /path/to/your/project/
 
 # 可选：如果需要进度跟踪，复制 memory-bank
@@ -170,7 +182,7 @@ cp -r /tmp/cc-template/memory-bank /path/to/your/project/
 
 ```bash
 cd /path/to/your/project
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 ```
 
 #### 步骤 4：配置 CLAUDE.md
@@ -209,14 +221,14 @@ cp -r /tmp/cc-template/commands/ commands/
 #### 只要编码规则
 
 ```bash
-cp -r /tmp/cc-template/.claude/rules/ .claude/rules/
+cp -r /tmp/cc-template/rules/ rules/
 ```
 
 #### 只要钩子
 
 ```bash
 cp /tmp/cc-template/.claude/settings.local.json.example .claude/
-cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
+cp -r /tmp/cc-template/scripts/ scripts/
 ```
 
 ### 按语言迁移
@@ -224,8 +236,8 @@ cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
 #### Python 项目
 
 保留这些规则：
-- `.claude/rules/code-style.md`（Python 风格）
-- `.claude/rules/coding-standards.md`（通用）
+- `rules/code-style.md`（Python 风格）
+- `rules/coding-standards.md`（通用）
 - `skills/backend-patterns/python.md`
 
 如不需要可删除：
@@ -234,8 +246,8 @@ cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
 #### Vue/TypeScript 项目
 
 保留这些规则：
-- `.claude/rules/frontend-style.md`
-- `.claude/rules/coding-standards.md`
+- `rules/frontend-style.md`
+- `rules/coding-standards.md`
 - `skills/frontend-patterns/vue.md`
 
 #### 多语言项目
@@ -253,13 +265,13 @@ cp -r /tmp/cc-template/.claude/scripts/ .claude/scripts/
 
 2. 运行初始化脚本：
    ```bash
-   bash .claude/scripts/init.sh
+   bash scripts/init.sh
    ```
 
 3. 设置脚本权限（Linux/Mac）：
    ```bash
-   chmod +x .claude/scripts/*.sh
-   chmod +x .claude/scripts/*.py
+   chmod +x scripts/*.sh
+   chmod +x scripts/*.py
    ```
 
 #### 命令找不到

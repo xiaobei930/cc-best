@@ -15,9 +15,9 @@ Brief description of changes.
 ## Changed Files / 修改的文件
 
 - [ ] `commands/` - New or modified command
-- [ ] `.claude/rules/` - New or modified rule
+- [ ] `rules/` - New or modified rule
 - [ ] `skills/` - New or modified skill
-- [ ] `.claude/scripts/` - New or modified script
+- [ ] `scripts/` - New or modified script
 - [ ] `agents/` - New or modified agent
 - [ ] `CLAUDE.md` - Core documentation
 - [ ] `README.md` - Project documentation
@@ -39,7 +39,7 @@ How did you test this change?
 ```bash
 # Commands used for testing
 # 用于测试的命令
-python .claude/scripts/test_template.py
+python scripts/test_template.py
 ```
 
 ## Screenshots / 截图（如适用）

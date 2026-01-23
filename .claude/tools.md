@@ -4,10 +4,10 @@
 
 ## 目录结构
 
-脚本按语言分类存放在 `.claude/scripts/` 目录下：
+脚本按语言分类存放在 `scripts/` 目录下：
 
 ```
-.claude/scripts/
+scripts/
 ├── shell/      # Bash 脚本
 ├── python/     # Python 脚本
 └── node/       # Node.js 脚本和工具库
@@ -15,7 +15,7 @@
     └── hooks/  # 跨平台 hooks
 ```
 
-## Shell 脚本 (.claude/scripts/shell/)
+## Shell 脚本 (scripts/shell/)
 
 ### 安全相关
 
@@ -42,7 +42,7 @@
 | **cleanup** | `cleanup.sh` | 清理临时文件   |
 | **ralph**   | `ralph.sh`   | 长时间运行循环 |
 
-## Python 脚本 (.claude/scripts/python/)
+## Python 脚本 (scripts/python/)
 
 ### 安全相关
 
@@ -73,7 +73,7 @@
 | ----------------- | ------------------ | ------------ |
 | **test-template** | `test-template.py` | 模板验证测试 |
 
-## Node.js 工具 (.claude/scripts/node/)
+## Node.js 工具 (scripts/node/)
 
 为解决 Windows/macOS/Linux 兼容性问题，提供 Node.js 版本的工具库和 hooks。
 
@@ -134,52 +134,52 @@
 
 ```bash
 # 基本用法：提交特定文件
-.claude/scripts/shell/committer.sh "feat: add login" src/auth.ts src/login.vue
+scripts/shell/committer.sh "feat: add login" src/auth.ts src/login.vue
 
 # 强制模式：清除 lock 文件后重试
-.claude/scripts/shell/committer.sh --force "fix: resolve bug" src/fix.ts
+scripts/shell/committer.sh --force "fix: resolve bug" src/fix.ts
 
 # 错误示例：禁止使用 "."
-.claude/scripts/shell/committer.sh "feat: all changes" .  # ❌ 会被拒绝
+scripts/shell/committer.sh "feat: all changes" .  # ❌ 会被拒绝
 ```
 
 ### trash - 可恢复删除
 
 ```bash
 # 删除文件到回收站
-python .claude/scripts/python/trash.py old_file.ts deprecated/
+python scripts/python/trash.py old_file.ts deprecated/
 
 # 查看回收站内容
-python .claude/scripts/python/trash.py --list
+python scripts/python/trash.py --list
 
 # 恢复提示
-python .claude/scripts/python/trash.py --restore
+python scripts/python/trash.py --restore
 ```
 
 ### cleanup - 清理临时文件
 
 ```bash
 # 预览将被清理的内容
-bash .claude/scripts/shell/cleanup.sh --dry-run
+bash scripts/shell/cleanup.sh --dry-run
 
 # 执行清理
-bash .claude/scripts/shell/cleanup.sh
+bash scripts/shell/cleanup.sh
 ```
 
 ### setup-package-manager - 包管理器配置
 
 ```bash
 # 检测当前配置
-node .claude/scripts/node/setup-package-manager.js --detect
+node scripts/node/setup-package-manager.js --detect
 
 # 设置项目首选为 pnpm
-node .claude/scripts/node/setup-package-manager.js --project pnpm
+node scripts/node/setup-package-manager.js --project pnpm
 
 # 设置全局首选为 bun
-node .claude/scripts/node/setup-package-manager.js --global bun
+node scripts/node/setup-package-manager.js --global bun
 
 # 列出所有可用选项
-node .claude/scripts/node/setup-package-manager.js --list
+node scripts/node/setup-package-manager.js --list
 ```
 
 ## 外部工具依赖
@@ -221,9 +221,9 @@ node .claude/scripts/node/setup-package-manager.js --list
 ## 添加新工具
 
 1. 根据语言将脚本放置在对应目录：
-   - Bash 脚本 → `.claude/scripts/shell/`
-   - Python 脚本 → `.claude/scripts/python/`
-   - Node.js 脚本 → `.claude/scripts/node/`
+   - Bash 脚本 → `scripts/shell/`
+   - Python 脚本 → `scripts/python/`
+   - Node.js 脚本 → `scripts/node/`
 2. 确保有执行权限：`chmod +x script.sh`
 3. 在此文档添加条目
 4. 如需钩子触发，在 `settings.local.json` 中配置

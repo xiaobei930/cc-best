@@ -2,6 +2,39 @@
 
 本文档记录本地 agents/commands/skills 与官方 Claude Code 插件的联动关系和使用策略。
 
+## 组件目录结构
+
+本项目支持两种使用模式：
+
+### Plugin 模式（作为插件安装）
+
+组件位于插件根目录：
+```
+/                    # 插件根目录
+├── commands/        # Slash 命令
+├── skills/          # 开发技能
+├── agents/          # 子智能体
+├── rules/           # 编码规范
+├── scripts/         # 自动化脚本
+└── hooks/           # Hook 配置
+```
+
+### Clone 模式（克隆后直接使用）
+
+与 Plugin 模式相同，组件在项目根目录，`.claude/` 目录存放 Claude Code 配置：
+```
+.claude/
+├── settings.json                  # 权限配置
+├── settings.local.json            # 本地配置 + Hooks
+├── mcp-configs/                   # MCP 服务器配置参考
+├── ralph-prompts/                 # Ralph Loop 提示词
+├── learned/                       # 持续学习存储
+├── docs/                          # 项目文档
+├── screenshots/                   # 截图存储
+├── hookify.*.local.md             # Hookify 插件规则
+└── tools.md                       # 工具说明
+```
+
 ## 设计原则
 
 1. **独立可用** - 本地组件无需安装任何插件即可正常工作
@@ -190,10 +223,23 @@ Claude 会在适当时机自动委派：
 - **建议**: 添加完整推荐配置
 - **状态**: ✅ 已修复 (2026-01-23)
 
+### 问题 4: 组件目录结构重构
+
+- **变更**: 组件从 `.claude/` 移动到根目录
+- **原因**: 符合官方插件目录结构规范
+- **影响**:
+  - `.claude/commands/` → `commands/`
+  - `.claude/skills/` → `skills/`
+  - `.claude/agents/` → `agents/`
+  - `.claude/rules/` → `rules/`
+  - `.claude/scripts/` → `scripts/`
+- **状态**: ✅ 已完成 (2026-01-24)
+
 ---
 
 ## 版本历史
 
-| 日期       | 变更                   |
-| ---------- | ---------------------- |
-| 2026-01-23 | 初始版本，记录联动关系 |
+| 日期       | 变更                             |
+| ---------- | -------------------------------- |
+| 2026-01-24 | 更新组件目录结构（Plugin 优先）  |
+| 2026-01-23 | 初始版本，记录联动关系           |

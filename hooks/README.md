@@ -26,7 +26,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ## 钩子脚本分类
 
-> **默认使用 Node.js 版本**，支持 Windows/macOS/Linux 跨平台运行。脚本位于 `.claude/scripts/node/hooks/` 目录。
+> **默认使用 Node.js 版本**，支持 Windows/macOS/Linux 跨平台运行。脚本位于 `scripts/node/hooks/` 目录。
 
 ### 安全防护 (PreToolUse)
 
@@ -77,7 +77,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/validate-command.js",
+            "command": "node scripts/node/hooks/validate-command.js",
             "timeout": 5000
           }
         ],
@@ -110,7 +110,7 @@ pattern: "rm\\s+-rf\\s+/"
 
 ```json
 {
-  "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js"
+  "command": "node ${PLUGIN_ROOT}/scripts/node/hooks/validate-command.js"
 }
 ```
 
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
 ```bash
 # 测试钩子脚本（Node.js 版本）
-echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | node .claude/scripts/node/hooks/validate-command.js
+echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | node scripts/node/hooks/validate-command.js
 echo $?  # 检查退出码
 ```
 

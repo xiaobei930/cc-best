@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/validate-command.js",
             "timeout": 5
           }
         ]
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/pause-before-push.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/pause-before-push.js",
             "timeout": 5
           }
         ]
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/protect-files.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/protect-files.js",
             "timeout": 3
           }
         ]
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/format-file.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/format-file.js",
             "timeout": 30
           }
         ]
@@ -49,7 +49,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/typescript-check.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/typescript-check.js",
             "timeout": 10
           }
         ]
@@ -61,7 +61,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/.claude/scripts/node/hooks/session-end.js",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-end.js",
             "timeout": 5
           }
         ]

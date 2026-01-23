@@ -67,7 +67,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 2. 运行初始化
-bash .claude/scripts/shell/init.sh
+bash scripts/shell/init.sh
 
 # 3. 编辑 CLAUDE.md，替换占位符
 #    {{PROJECT_NAME}} → 项目名称
@@ -83,12 +83,18 @@ bash .claude/scripts/shell/init.sh
 ```bash
 # 复制配置文件到你的项目
 cp -r claude-code-best-practices/.claude /path/to/your/project/
-cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
+cp -r claude-code-best-practices/commands /path/to/your/project/
+cp -r claude-code-best-practices/skills /path/to/your/project/
+cp -r claude-code-best-practices/agents /path/to/your/project/
+cp -r claude-code-best-practices/rules /path/to/your/project/
+cp -r claude-code-best-practices/scripts /path/to/your/project/
+cp -r claude-code-best-practices/hooks /path/to/your/project/
 cp -r claude-code-best-practices/memory-bank /path/to/your/project/
+cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
 
 # 进入项目并初始化
 cd /path/to/your/project
-bash .claude/scripts/shell/init.sh
+bash scripts/shell/init.sh
 ```
 
 > **Windows 用户**：使用 Git Bash 运行脚本，或使用 `robocopy` 复制文件。
@@ -134,7 +140,7 @@ xiaobei930/claude-code-best-practices
 
 2. **覆盖插件设置**，创建本地文件：
    - 在项目中创建 `commands/` 来添加/覆盖命令
-   - 创建 `.claude/rules/` 来添加项目特定规则
+   - 创建 `rules/` 来添加项目特定规则
 
 3. **记忆库**：插件不包含 memory-bank，如需要请手动创建：
 
@@ -190,47 +196,53 @@ your-project/
 │   ├── architecture.md         # 架构文档
 │   └── tech-stack.md           # 技术选型
 │
-└── .claude/
+├── commands/                   # Slash 命令（30+）
+│   ├── pm.md, lead.md          # 角色命令
+│   ├── iterate.md, pair.md     # 模式命令
+│   └── build.md, test.md       # 工具命令
+│
+├── rules/                      # 编码规范（13 个文件）
+│   ├── methodology.md          # 开发方法论
+│   ├── coding-standards.md     # 通用标准
+│   ├── code-style.md           # Python 风格
+│   ├── frontend-style.md       # Vue/TS/JS 风格
+│   └── security.md             # 安全规则
+│
+├── skills/                     # 开发技能（14 类）
+│   ├── backend-patterns/       # 后端模式
+│   ├── frontend-patterns/      # 前端模式
+│   ├── devops-patterns/        # DevOps 模式
+│   └── tdd-workflow/           # TDD 工作流
+│
+├── agents/                     # 子智能体（6 个）
+│   ├── code-reviewer.md        # 代码审查
+│   └── security-reviewer.md    # 安全审查
+│
+├── scripts/                    # 自动化脚本（按语言分类）
+│   ├── shell/                  # Bash 脚本 (10)
+│   │   ├── init.sh, cleanup.sh
+│   │   └── session-start.sh, session-end.sh
+│   ├── python/                 # Python 脚本 (9)
+│   │   ├── validate-command.py, protect-files.py
+│   │   └── format-file.py, check-console-log.py
+│   └── node/                   # Node.js（默认，跨平台）
+│       ├── lib/                # 工具库
+│       │   ├── utils.js        # 27 个辅助函数
+│       │   └── package-manager.js
+│       └── hooks/              # 13 个生命周期钩子
+│           ├── validate-command.js, protect-files.js
+│           ├── session-start.js, session-end.js
+│           └── format-file.js, typescript-check.js
+│
+├── hooks/                      # Hook 配置
+│   └── hooks.json              # 插件 hooks 配置
+│
+└── .claude/                    # Claude Code 配置
     ├── settings.json           # 基础权限（提交到 Git）
     ├── settings.local.json     # 本地配置 + Hooks（不提交）
-    │
-    ├── commands/               # Slash 命令（30+）
-    │   ├── pm.md, lead.md      # 角色命令
-    │   ├── iterate.md, pair.md # 模式命令
-    │   └── build.md, test.md   # 工具命令
-    │
-    ├── rules/                  # 编码规范（13 个文件）
-    │   ├── methodology.md      # 开发方法论
-    │   ├── coding-standards.md # 通用标准
-    │   ├── code-style.md       # Python 风格
-    │   ├── frontend-style.md   # Vue/TS/JS 风格
-    │   └── security.md         # 安全规则
-    │
-    ├── skills/                 # 开发技能（14 类）
-    │   ├── backend-patterns/   # 后端模式
-    │   ├── frontend-patterns/  # 前端模式
-    │   ├── devops-patterns/    # DevOps 模式
-    │   └── tdd-workflow/       # TDD 工作流
-    │
-    ├── agents/                 # 子智能体（6 个）
-    │   ├── code-reviewer.md    # 代码审查
-    │   └── security-reviewer.md# 安全审查
-    │
-    └── scripts/                # 自动化脚本（按语言分类）
-        ├── shell/              # Bash 脚本 (10)
-        │   ├── init.sh, cleanup.sh
-        │   └── session-start.sh, session-end.sh
-        ├── python/             # Python 脚本 (9)
-        │   ├── validate-command.py, protect-files.py
-        │   └── format-file.py, check-console-log.py
-        └── node/               # Node.js（默认，跨平台）
-            ├── lib/            # 工具库
-            │   ├── utils.js    # 27 个辅助函数
-            │   └── package-manager.js
-            └── hooks/          # 13 个生命周期钩子
-                ├── validate-command.js, protect-files.js
-                ├── session-start.js, session-end.js
-                └── format-file.js, typescript-check.js
+    ├── mcp-configs/            # MCP 服务器配置
+    ├── ralph-prompts/          # Ralph Loop 提示词
+    └── learned/                # 持续学习存储
 ```
 
 ---
@@ -444,7 +456,7 @@ Claude 行为:
 
 ### 添加新规则
 
-在 `.claude/rules/` 创建文件：
+在 `rules/` 创建文件：
 
 ```markdown
 ---
@@ -497,7 +509,7 @@ allowed_tools:
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/scripts/your-script.py",
+            "command": "python scripts/your-script.py",
             "timeout": 5000
           }
         ]
@@ -532,7 +544,7 @@ allowed_tools:
 ### 1. CLAUDE.md 保持简洁
 
 - 控制在 100 行以内
-- 详细规范放在 `.claude/rules/`
+- 详细规范放在 `rules/`
 
 ### 2. 善用记忆库
 
@@ -569,16 +581,16 @@ MCP 工具会在项目中自动创建临时目录：
 
 ```bash
 # 预览待删除文件（dry run）
-bash .claude/scripts/cleanup.sh --dry-run
+bash scripts/cleanup.sh --dry-run
 
 # 清理 7 天前的文件（默认）
-bash .claude/scripts/cleanup.sh
+bash scripts/cleanup.sh
 
 # 清理 3 天前的文件
-bash .claude/scripts/cleanup.sh --days 3
+bash scripts/cleanup.sh --days 3
 
 # 清理所有 MCP 临时文件
-bash .claude/scripts/cleanup.sh --all
+bash scripts/cleanup.sh --all
 ```
 
 ---
@@ -637,8 +649,8 @@ git commit -m "Initial commit from Claude Code template"
 2. 检查脚本权限（Linux/Mac）：
 
    ```bash
-   chmod +x .claude/scripts/*.sh
-   chmod +x .claude/scripts/*.py
+   chmod +x scripts/*.sh
+   chmod +x scripts/*.py
    ```
 
 3. 检查 Claude Code 版本 - 钩子需要较新版本
@@ -724,8 +736,8 @@ Windows 常见问题。解决方案：
 
 ```bash
 # Linux/Mac
-chmod +x .claude/scripts/*.sh
-chmod +x .claude/scripts/*.py
+chmod +x scripts/*.sh
+chmod +x scripts/*.py
 
 # Windows：以管理员身份运行
 ```

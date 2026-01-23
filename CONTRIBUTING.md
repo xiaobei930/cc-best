@@ -40,7 +40,7 @@ cd claude-code-best-practices
 git checkout -b feature/your-feature-name
 
 # 3. Make changes and test
-python .claude/scripts/test_template.py
+python scripts/test_template.py
 
 # 4. Commit (follow conventional commits - English only)
 git commit -m "feat(commands): add new command for X"
@@ -113,7 +113,7 @@ commands/your-command.md
 #### Adding a New Rule
 
 ```
-.claude/rules/your-rule.md
+rules/your-rule.md
 ```
 
 - Specify `paths` in frontmatter for auto-matching
@@ -176,7 +176,7 @@ cd claude-code-best-practices
 git checkout -b feature/your-feature-name
 
 # 3. 修改并测试
-python .claude/scripts/test_template.py
+python scripts/test_template.py
 
 # 4. 提交（必须使用英文）
 git commit -m "feat(commands): add new command for X"
@@ -249,7 +249,7 @@ commands/your-command.md
 #### 添加新规则
 
 ```
-.claude/rules/your-rule.md
+rules/your-rule.md
 ```
 
 - 在 frontmatter 中指定 `paths` 用于自动匹配

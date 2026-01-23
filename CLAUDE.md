@@ -14,7 +14,7 @@
 | `memory-bank/progress.md` | Current status 当前状态 |
 | `memory-bank/architecture.md` | System architecture 系统架构 |
 | `memory-bank/tech-stack.md` | Tech stack 技术选型 |
-| `.claude/rules/methodology.md` | Full methodology 完整方法论 |
+| `rules/methodology.md` | Full methodology 完整方法论 |
 
 ## Core Constraints | 核心约束
 
@@ -87,7 +87,7 @@
 - **Naming 命名**: Variables/functions in English, comments/logs in Chinese 变量/函数英文，注释/日志中文
 - **Formatting 格式化**: Auto-executed by hooks Hook 自动执行
 - **Commits 提交**: Conventional Commits
-- **Detailed rules 详细规范**: See 见 `.claude/rules/`
+- **Detailed rules 详细规范**: See 见 `rules/`
 
 ---
 

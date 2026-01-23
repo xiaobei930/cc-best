@@ -330,7 +330,7 @@ UI 设计指导已完成，调用 /dev 进行开发实现
 
 ## 相关规则
 
-> 本命令的设计规范与 `.claude/rules/ui-design.md` 保持同步。
+> 本命令的设计规范与 `rules/ui-design.md` 保持同步。
 > - 编写前端代码时，`ui-design.md` 规则会自动加载
 > - 详细的 CSS 变量、组件代码示例见 `ui-design.md`
 

@@ -135,8 +135,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/init.js",
-            "_command_bash": "bash .claude/scripts/shell/init.sh",
+            "command": "node scripts/node/hooks/init.js",
+            "_command_bash": "bash scripts/shell/init.sh",
             "timeout": 30
           }
         ],
@@ -149,8 +149,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/validate-command.js",
-            "_command_python": "python .claude/scripts/python/validate-command.py",
+            "command": "node scripts/node/hooks/validate-command.js",
+            "_command_python": "python scripts/python/validate-command.py",
             "timeout": 5
           }
         ],
@@ -161,8 +161,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/pause-before-push.js",
-            "_command_bash": "bash .claude/scripts/shell/pause-before-push.sh",
+            "command": "node scripts/node/hooks/pause-before-push.js",
+            "_command_bash": "bash scripts/shell/pause-before-push.sh",
             "timeout": 5
           }
         ],
@@ -173,8 +173,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/long-running-warning.js",
-            "_command_bash": "bash .claude/scripts/shell/long-running-warning.sh",
+            "command": "node scripts/node/hooks/long-running-warning.js",
+            "_command_bash": "bash scripts/shell/long-running-warning.sh",
             "timeout": 3
           }
         ],
@@ -185,7 +185,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/protect-files.js",
+            "command": "node scripts/node/hooks/protect-files.js",
             "timeout": 3
           }
         ],
@@ -196,7 +196,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/block-random-md.js",
+            "command": "node scripts/node/hooks/block-random-md.js",
             "timeout": 3
           }
         ],
@@ -220,7 +220,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/format-file.js",
+            "command": "node scripts/node/hooks/format-file.js",
             "timeout": 30
           }
         ],
@@ -231,7 +231,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/check-console-log.js",
+            "command": "node scripts/node/hooks/check-console-log.js",
             "timeout": 3
           }
         ],
@@ -242,8 +242,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/typescript-check.js",
-            "_command_bash": "bash .claude/scripts/shell/typescript-check.sh",
+            "command": "node scripts/node/hooks/typescript-check.js",
+            "_command_bash": "bash scripts/shell/typescript-check.sh",
             "timeout": 10
           }
         ],
@@ -256,7 +256,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/session-check.js",
+            "command": "node scripts/node/hooks/session-check.js",
             "timeout": 5
           }
         ],
@@ -267,8 +267,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/session-start.js",
-            "_command_bash": "bash .claude/scripts/shell/session-start.sh",
+            "command": "node scripts/node/hooks/session-start.js",
+            "_command_bash": "bash scripts/shell/session-start.sh",
             "timeout": 3
           }
         ],
@@ -281,8 +281,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/pre-compact.js",
-            "_command_bash": "bash .claude/scripts/shell/pre-compact.sh",
+            "command": "node scripts/node/hooks/pre-compact.js",
+            "_command_bash": "bash scripts/shell/pre-compact.sh",
             "timeout": 5
           }
         ],
@@ -295,8 +295,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/scripts/node/hooks/session-end.js",
-            "_command_bash": "bash .claude/scripts/shell/session-end.sh",
+            "command": "node scripts/node/hooks/session-end.js",
+            "_command_bash": "bash scripts/shell/session-end.sh",
             "timeout": 5
           }
         ],

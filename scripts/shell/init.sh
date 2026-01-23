@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code 项目初始化脚本
-# 用法: bash .claude/scripts/init.sh
+# 用法: bash scripts/init.sh
 
 set -e
 

@@ -2,7 +2,7 @@
 /**
  * Claude Code 项目初始化脚本
  *
- * 用法: node .claude/scripts/node/hooks/init.js
+ * 用法: node scripts/node/hooks/init.js
  * 跨平台支持（Windows/macOS/Linux）
  */
 

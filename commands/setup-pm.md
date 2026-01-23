@@ -11,16 +11,16 @@ disable-model-invocation: true
 
 ```bash
 # 检测当前配置
-node .claude/scripts/node/setup-package-manager.js --detect
+node scripts/node/setup-package-manager.js --detect
 
 # 设置项目首选为 pnpm
-node .claude/scripts/node/setup-package-manager.js --project pnpm
+node scripts/node/setup-package-manager.js --project pnpm
 
 # 设置全局首选为 bun
-node .claude/scripts/node/setup-package-manager.js --global bun
+node scripts/node/setup-package-manager.js --global bun
 
 # 列出所有可用选项
-node .claude/scripts/node/setup-package-manager.js --list
+node scripts/node/setup-package-manager.js --list
 ```
 
 ## 检测优先级

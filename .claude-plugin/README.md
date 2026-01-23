@@ -12,15 +12,20 @@ This directory contains metadata for Claude Code Plugin Marketplace compatibilit
 ## Plugin Components
 
 ```
-.claude/
-├── commands/    # 30 slash commands
-├── skills/      # 12 development skills
-├── agents/      # 6 sub-agents
-├── rules/       # 13 coding standards
-└── scripts/     # 17 automation scripts
+/                    # Plugin root
+├── commands/        # 30+ slash commands
+├── skills/          # 14 development skills
+├── agents/          # 6 sub-agents
+├── rules/           # 13 coding standards
+├── scripts/         # 17 automation scripts
+├── hooks/           # Hook configuration and scripts
+└── memory-bank/     # Progress persistence
 
-hooks/           # Hook scripts organized by function
-memory-bank/     # Progress persistence
+.claude/             # Clone-mode config (auto-loaded by Claude Code)
+├── settings.json    # Permission settings
+├── mcp-configs/     # MCP server configurations
+├── ralph-prompts/   # Ralph Loop prompts
+└── learned/         # Continuous learning storage
 ```
 
 ## Usage
@@ -30,7 +35,7 @@ This template is designed to be cloned directly. The plugin structure enables fu
 ```bash
 # Clone and use
 git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
-cd my-project && bash .claude/scripts/init.sh
+cd my-project && bash scripts/init.sh
 ```
 
 ## Version History

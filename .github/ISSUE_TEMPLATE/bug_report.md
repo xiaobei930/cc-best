@@ -42,8 +42,8 @@ Which files are involved? (commands, rules, scripts, etc.)
 涉及哪些文件？（命令、规则、脚本等）
 
 - [ ] `commands/`
-- [ ] `.claude/rules/`
-- [ ] `.claude/scripts/`
+- [ ] `rules/`
+- [ ] `scripts/`
 - [ ] `skills/`
 - [ ] `CLAUDE.md`
 - [ ] Other / 其他: ___

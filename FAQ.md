@@ -17,7 +17,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 3. Run initialization
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 
 # 4. Edit CLAUDE.md - replace placeholders:
 #    {{PROJECT_NAME}}, {{DATE}}, {{PROJECT_DESCRIPTION}}
@@ -61,7 +61,7 @@ git commit -m "Initial commit from Claude Code template"
 
 2. **Check script permissions** (Linux/Mac):
    ```bash
-   chmod +x .claude/scripts/*.sh
+   chmod +x scripts/*.sh
    ```
 
 3. **Check Python/Bash availability**:
@@ -128,7 +128,7 @@ Check these locations:
 #### Q: memory-bank files are empty
 Run initialization:
 ```bash
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 ```
 Or manually create from templates in `memory-bank/`.
 
@@ -160,8 +160,8 @@ Best practice: Enable max 10 MCP servers per project. Use `disabledMcpServers` t
 #### Q: "Permission denied" errors
 ```bash
 # Linux/Mac: Fix script permissions
-chmod +x .claude/scripts/*.sh
-chmod +x .claude/scripts/*.py
+chmod +x scripts/*.sh
+chmod +x scripts/*.py
 
 # Windows: Run as administrator or check execution policy
 ```
@@ -193,7 +193,7 @@ git clone https://github.com/xiaobei930/claude-code-best-practices.git my-projec
 cd my-project
 
 # 3. 运行初始化
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 
 # 4. 编辑 CLAUDE.md，替换占位符：
 #    {{PROJECT_NAME}}, {{DATE}}, {{PROJECT_DESCRIPTION}}
@@ -237,7 +237,7 @@ git commit -m "Initial commit from Claude Code template"
 
 2. **检查脚本权限**（Linux/Mac）：
    ```bash
-   chmod +x .claude/scripts/*.sh
+   chmod +x scripts/*.sh
    ```
 
 3. **检查 Python/Bash 是否可用**：
@@ -304,7 +304,7 @@ git commit -m "Initial commit from Claude Code template"
 #### Q: memory-bank 文件是空的
 运行初始化：
 ```bash
-bash .claude/scripts/init.sh
+bash scripts/init.sh
 ```
 或者手动从 `memory-bank/` 中的模板创建。
 
@@ -336,8 +336,8 @@ bash .claude/scripts/init.sh
 #### Q: "Permission denied" 权限错误
 ```bash
 # Linux/Mac：修复脚本权限
-chmod +x .claude/scripts/*.sh
-chmod +x .claude/scripts/*.py
+chmod +x scripts/*.sh
+chmod +x scripts/*.py
 
 # Windows：以管理员身份运行或检查执行策略
 ```

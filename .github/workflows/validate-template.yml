@@ -54,11 +54,11 @@ jobs:
           echo "🔍 Checking directory structure..."
 
           required_dirs=(
-            ".claude/commands"
-            ".claude/rules"
-            ".claude/skills"
-            ".claude/agents"
-            ".claude/scripts"
+            "commands"
+            "rules"
+            "skills"
+            "agents"
+            "scripts"
             "memory-bank"
           )
 
@@ -93,7 +93,7 @@ jobs:
             "commit.md"
           )
 
-          cd .claude/commands
+          cd commands
           missing=0
           for cmd in "${core_commands[@]}"; do
             if [ -f "$cmd" ]; then
@@ -123,7 +123,7 @@ jobs:
             "security.md"
           )
 
-          cd .claude/rules
+          cd rules
           missing=0
           for rule in "${core_rules[@]}"; do
             if [ -f "$rule" ]; then
@@ -146,7 +146,7 @@ jobs:
         run: |
           echo "🔍 Checking Python scripts syntax..."
 
-          for script in .claude/scripts/*.py; do
+          for script in scripts/*.py; do
             if [ -f "$script" ]; then
               python -m py_compile "$script" && echo "✅ $script" || {
                 echo "❌ Syntax error: $script"
@@ -203,9 +203,9 @@ jobs:
           echo "| Category | Count |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Commands | $(ls -1 commands/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Rules | $(ls -1 .claude/rules/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Rules | $(ls -1 rules/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Skills | $(ls -1d skills/*/ 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Agents | $(ls -1 agents/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Scripts | $(ls -1 .claude/scripts/*.{py,sh} 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Scripts | $(ls -1 scripts/*.{py,sh} 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ All validations passed!" >> $GITHUB_STEP_SUMMARY
