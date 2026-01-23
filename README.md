@@ -159,18 +159,21 @@ your-project/
     │   ├── code-reviewer.md    # Code review
     │   └── security-reviewer.md# Security review
     │
-    └── scripts/                # Automation scripts
-        ├── init.sh             # Initialization
-        ├── cleanup.sh          # MCP temp directory cleanup
-        ├── format_file.py      # Auto-formatting
-        ├── validate_command.py # Command validation
-        ├── lib/                # Cross-platform utilities
-        │   ├── utils.js        # File/system operations
-        │   └── package-manager.js # PM auto-detection
-        └── hooks/              # Node.js hooks (cross-platform)
-            ├── session-start.js
-            ├── session-end.js
-            └── pre-compact.js
+    └── scripts/                # Automation scripts (by language)
+        ├── shell/              # Bash scripts (10)
+        │   ├── init.sh, cleanup.sh
+        │   └── session-start.sh, session-end.sh
+        ├── python/             # Python scripts (9)
+        │   ├── validate-command.py, protect-files.py
+        │   └── format-file.py, check-console-log.py
+        └── node/               # Node.js (default, cross-platform)
+            ├── lib/            # Utilities
+            │   ├── utils.js    # 27 helper functions
+            │   └── package-manager.js
+            └── hooks/          # 13 lifecycle hooks
+                ├── validate-command.js, protect-files.js
+                ├── session-start.js, session-end.js
+                └── format-file.js, typescript-check.js
 ```
 
 ---
@@ -393,15 +396,21 @@ Edit `.claude/settings.local.json`:
 
 ### Pre-configured Hooks
 
-| Trigger      | Function                    | Script                 |
+All hooks default to Node.js for cross-platform compatibility. Python/Bash alternatives available.
+
+| Trigger      | Function                    | Script (Node.js)       |
 | ------------ | --------------------------- | ---------------------- |
-| PreToolUse   | Validate dangerous commands | `validate_command.py`  |
-| PreToolUse   | Confirm before git push     | `pause_before_push.sh` |
-| PreToolUse   | Protect sensitive files     | `protect_files.py`     |
-| PostToolUse  | Auto-format code            | `format_file.py`       |
-| PostToolUse  | TypeScript type check       | `typescript_check.sh`  |
-| SessionStart | Session health check        | `session_check.py`     |
-| Stop         | Session end persistence     | `session_end.sh`       |
+| PreToolUse   | Validate dangerous commands | `validate-command.js`  |
+| PreToolUse   | Confirm before git push     | `pause-before-push.js` |
+| PreToolUse   | Protect sensitive files     | `protect-files.js`     |
+| PreToolUse   | Block random .md creation   | `block-random-md.js`   |
+| PostToolUse  | Auto-format code            | `format-file.js`       |
+| PostToolUse  | Check console.log           | `check-console-log.js` |
+| PostToolUse  | TypeScript type check       | `typescript-check.js`  |
+| SessionStart | Session health check        | `session-check.js`     |
+| SessionStart | Load previous context       | `session-start.js`     |
+| PreCompact   | Save state before compact   | `pre-compact.js`       |
+| Stop         | Session end persistence     | `session-end.js`       |
 
 ---
 

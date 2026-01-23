@@ -26,32 +26,34 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ## 钩子脚本分类
 
+> **默认使用 Node.js 版本**，支持 Windows/macOS/Linux 跨平台运行。脚本位于 `.claude/scripts/node/hooks/` 目录。
+
 ### 安全防护 (PreToolUse)
 
-| 脚本                   | 功能             | 阻止内容                |
-| ---------------------- | ---------------- | ----------------------- |
-| `validate_command.py`  | 验证危险命令     | `rm -rf /`, `format` 等 |
-| `pause_before_push.sh` | git push 前暂停  | 给予审查时间            |
-| `protect_files.py`     | 保护敏感文件     | `.env`, `.key`, `.git/` |
-| `block_random_md.py`   | 阻止随机创建 .md | 非必要文档              |
+| 脚本 (Node.js)            | 功能             | 阻止内容                |
+| ------------------------- | ---------------- | ----------------------- |
+| `validate-command.js`     | 验证危险命令     | `rm -rf /`, `format` 等 |
+| `pause-before-push.js`    | git push 前暂停  | 给予审查时间            |
+| `protect-files.js`        | 保护敏感文件     | `.env`, `.key`, `.git/` |
+| `block-random-md.js`      | 阻止随机创建 .md | 非必要文档              |
+| `long-running-warning.js` | 长时间运行警告   | dev server 等           |
 
 ### 代码质量 (PostToolUse)
 
-| 脚本                   | 功能                | 触发条件               |
+| 脚本 (Node.js)         | 功能                | 触发条件               |
 | ---------------------- | ------------------- | ---------------------- |
-| `format_file.py`       | 自动格式化代码      | Write/Edit             |
-| `check_console_log.py` | 检查 console.log    | Edit                   |
-| `typescript_check.sh`  | TypeScript 类型检查 | Write/Edit on .ts/.tsx |
+| `format-file.js`       | 自动格式化代码      | Write/Edit             |
+| `check-console-log.js` | 检查 console.log    | Edit                   |
+| `typescript-check.js`  | TypeScript 类型检查 | Write/Edit on .ts/.tsx |
 
 ### 会话生命周期
 
-| 钩子         | 脚本                  | 触发时机       |
-| ------------ | --------------------- | -------------- |
-| SessionStart | `session_check.py`    | 新会话启动     |
-| SessionStart | `session_start.sh`    | 加载上次上下文 |
-| PreCompact   | `pre_compact.sh`      | 上下文压缩前   |
-| Stop         | `session_end.sh`      | 会话结束       |
-| Stop         | `evaluate-session.sh` | 提取可复用模式 |
+| 钩子         | 脚本 (Node.js)     | 触发时机       |
+| ------------ | ------------------ | -------------- |
+| SessionStart | `session-check.js` | 新会话启动     |
+| SessionStart | `session-start.js` | 加载上次上下文 |
+| PreCompact   | `pre-compact.js`   | 上下文压缩前   |
+| Stop         | `session-end.js`   | 会话结束       |
 
 ### 策略性钩子
 
@@ -75,8 +77,8 @@ cp .claude/settings.local.json.example .claude/settings.local.json
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/scripts/validate_command.py",
-            "timeout": 5
+            "command": "node .claude/scripts/node/hooks/validate-command.js",
+            "timeout": 5000
           }
         ],
         "description": "验证危险命令"
@@ -108,7 +110,7 @@ pattern: "rm\\s+-rf\\s+/"
 
 ```json
 {
-  "command": "python ${PLUGIN_ROOT}/.claude/scripts/validate_command.py"
+  "command": "node ${PLUGIN_ROOT}/.claude/scripts/node/hooks/validate-command.js"
 }
 ```
 
@@ -187,8 +189,8 @@ if __name__ == '__main__':
 ### 调试技巧
 
 ```bash
-# 测试钩子脚本
-echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | python .claude/scripts/validate_command.py
+# 测试钩子脚本（Node.js 版本）
+echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | node .claude/scripts/node/hooks/validate-command.js
 echo $?  # 检查退出码
 ```
 
@@ -200,16 +202,32 @@ echo $?  # 检查退出码
 ├── settings.local.json.example                  # 配置示例（模板）
 ├── hookify.*.local.md                           # Hookify 规则文件（运行时）
 └── scripts/
-    ├── validate_command.py                      # 命令验证
-    ├── protect_files.py                         # 文件保护
-    ├── format_file.py                           # 自动格式化
-    ├── check_console_log.py                     # console.log 检查
-    ├── typescript_check.sh                      # TypeScript 检查
-    ├── pause_before_push.sh                     # Push 前确认
-    ├── session_check.py                         # 会话检查
-    ├── session_start.sh                         # 会话启动
-    ├── session_end.sh                           # 会话结束
-    └── pre_compact.sh                           # 压缩前处理
+    ├── shell/                                   # Bash 脚本 (10)
+    │   ├── init.sh, cleanup.sh
+    │   ├── session-start.sh, session-end.sh
+    │   └── pre-compact.sh, ...
+    ├── python/                                  # Python 脚本 (9)
+    │   ├── validate-command.py, protect-files.py
+    │   ├── format-file.py, check-console-log.py
+    │   └── session-check.py, ...
+    └── node/                                    # Node.js（默认，跨平台）
+        ├── lib/
+        │   ├── utils.js                         # 27 个辅助函数
+        │   └── package-manager.js               # 包管理器检测
+        └── hooks/                               # 13 个生命周期钩子
+            ├── validate-command.js              # 命令验证
+            ├── protect-files.js                 # 文件保护
+            ├── format-file.js                   # 自动格式化
+            ├── check-console-log.js             # console.log 检查
+            ├── typescript-check.js              # TypeScript 检查
+            ├── pause-before-push.js             # Push 前确认
+            ├── block-random-md.js               # 阻止随机 .md
+            ├── long-running-warning.js          # 长时间运行警告
+            ├── session-check.js                 # 会话检查
+            ├── session-start.js                 # 会话启动
+            ├── session-end.js                   # 会话结束
+            ├── pre-compact.js                   # 压缩前处理
+            └── init.js                          # 项目初始化
 
 hooks/
 ├── hooks.json                                   # 插件兼容配置
@@ -220,6 +238,7 @@ hooks/
 
 1. **Hookify 规则文件必须以 `.local.md` 结尾**，否则不会被识别
 2. **`.local.json` 和 `.local.md` 不应提交到 Git**，使用 `.example` 文件作为模板
-3. **钩子脚本需要可执行权限**（Linux/macOS）
-4. **Windows 下使用 Git Bash** 或 WSL 执行 shell 脚本
+3. **钩子脚本需要可执行权限**（Linux/macOS，仅 shell/python 版本）
+4. **推荐使用 Node.js 版本**，原生支持 Windows/macOS/Linux 跨平台
 5. **钩子在会话启动时加载**，修改后需重启会话生效
+6. **Node.js 16+ 是必需的**，用于运行 Node.js hooks
