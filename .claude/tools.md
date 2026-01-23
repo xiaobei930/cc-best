@@ -32,11 +32,51 @@
 
 ### 项目管理
 
-| 工具              | 路径                               | 用途         |
-| ----------------- | ---------------------------------- | ------------ |
-| **init**          | `.claude/scripts/init.sh`          | 项目初始化   |
-| **cleanup**       | `.claude/scripts/cleanup.sh`       | 清理临时文件 |
-| **test_template** | `.claude/scripts/test_template.py` | 模板验证测试 |
+| 工具              | 路径                                       | 用途         |
+| ----------------- | ------------------------------------------ | ------------ |
+| **init**          | `.claude/scripts/init.sh`                  | 项目初始化   |
+| **cleanup**       | `.claude/scripts/cleanup.sh`               | 清理临时文件 |
+| **test_template** | `.claude/scripts/test_template.py`         | 模板验证测试 |
+| **setup-pm**      | `.claude/scripts/setup-package-manager.js` | 包管理器配置 |
+
+## Node.js 跨平台工具库
+
+为解决 Windows/macOS/Linux 兼容性问题，提供 Node.js 版本的工具库和 hooks。
+
+### 工具库
+
+| 模块                   | 路径                                     | 用途                |
+| ---------------------- | ---------------------------------------- | ------------------- |
+| **utils.js**           | `.claude/scripts/lib/utils.js`           | 跨平台文件/系统操作 |
+| **package-manager.js** | `.claude/scripts/lib/package-manager.js` | 包管理器自动检测    |
+
+### Node.js Hooks（可选替代）
+
+| Hook              | 路径                                     | 用途                     |
+| ----------------- | ---------------------------------------- | ------------------------ |
+| **session-start** | `.claude/scripts/hooks/session-start.js` | 会话启动（Node.js 版）   |
+| **session-end**   | `.claude/scripts/hooks/session-end.js`   | 会话结束（Node.js 版）   |
+| **pre-compact**   | `.claude/scripts/hooks/pre-compact.js`   | 压缩前保存（Node.js 版） |
+
+### 选择指南
+
+| 环境        | 推荐版本        | 原因                       |
+| ----------- | --------------- | -------------------------- |
+| Windows     | Node.js (`.js`) | 避免 CRLF 和 bash 兼容问题 |
+| macOS/Linux | 均可            | 两者都兼容                 |
+| CI/CD       | Node.js (`.js`) | 更好的跨平台支持           |
+
+### 切换到 Node.js Hooks
+
+在 `hooks.json` 或 `settings.local.json` 中修改命令：
+
+```json
+// 原 bash 版本
+"command": "bash ${PLUGIN_ROOT}/.claude/scripts/session_start.sh"
+
+// 改为 Node.js 版本
+"command": "node ${PLUGIN_ROOT}/.claude/scripts/hooks/session-start.js"
+```
 
 ## 使用示例
 
