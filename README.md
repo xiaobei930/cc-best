@@ -8,100 +8,155 @@
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml/badge.svg" alt="Validate Template"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/network/members"><img src="https://img.shields.io/github/forks/xiaobei930/claude-code-best-practices?style=social" alt="GitHub forks"></a>
 </p>
 
 <p align="center">
-  <a href="#english">English</a> | <a href="#中文">中文</a> | <a href="FAQ.md">FAQ</a> | <a href="MIGRATION.md">Migration</a> | <a href="CONTRIBUTING.md">Contributing</a>
+  <strong>English</strong> | <a href="README.zh-CN.md">中文</a>
 </p>
 
 ---
 
-## English
-
-> **Clone this template and start coding with Claude in minutes, not hours.**
+> **Clone and start coding with Claude in minutes, not hours.**
 
 A comprehensive Claude Code configuration template for development teams. Supports **Python / Vue / TypeScript / C++ / Java / C# / Go** with built-in workflows, hooks, and multi-language coding standards.
 
-### Why This Template?
+## 📑 Table of Contents
+
+- [Why This Template?](#why-this-template)
+- [Quick Start](#-quick-start)
+- [Core Features](#-core-features)
+- [Directory Structure](#-directory-structure)
+- [Workflow](#-workflow)
+- [Command Reference](#-command-reference)
+- [Skills](#-skills)
+- [Customization Guide](#-customization-guide)
+- [Best Practices](#-best-practices)
+- [FAQ](#-faq)
+- [Requirements](#-requirements)
+- [References](#-references)
+
+---
+
+## Why This Template?
 
 | Without Template | With Template |
 |------------------|---------------|
-| ❌ Configure from scratch | ✅ Pre-configured, ready to use |
+| ❌ Configure Claude Code from scratch | ✅ Ready to use out of the box |
 | ❌ Inconsistent code style | ✅ Enforced coding standards |
-| ❌ Manual workflow | ✅ Role-based automation (PM→Dev→QA) |
+| ❌ Manual repetitive workflows | ✅ Role-based automation (PM→Dev→QA) |
 | ❌ Risk of dangerous commands | ✅ Safety hooks protect your system |
 | ❌ Context lost between sessions | ✅ Memory bank persists progress |
 
-### ✨ Features
+---
 
-- **🎭 Role-based Workflow** - PM → Lead → Dev → QA → Commit cycle
-- **🔄 Autonomous Iteration** - `/iterate` mode for self-driving development
-- **🛡️ Safety Hooks** - Pre-configured guards against dangerous operations
-- **📐 Multi-language Rules** - Coding standards for 7+ languages
-- **🧠 Memory Bank** - Progress tracking and architecture documentation
-- **🔌 MCP Integration** - Ready-to-use MCP server configurations
+## 🚀 Quick Start
 
-### Quick Start
+### 5-Minute Setup
 
 ```bash
-# 1. Clone this template
-git clone https://github.com/xiaobei930/claude-code-best-practices.git
+# 1. Clone the template
+git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
+cd my-project
 
-# 2. Copy to your project
-cp -r claude-code-best-practices/.claude /path/to/your/project/
-cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
-
-# 3. Initialize
-cd /path/to/your/project
+# 2. Run initialization
 bash .claude/scripts/init.sh
 
-# 4. Customize CLAUDE.md (replace placeholders)
-# {{PROJECT_NAME}}, {{DATE}}, {{PROJECT_DESCRIPTION}}
+# 3. Edit CLAUDE.md and replace placeholders
+#    {{PROJECT_NAME}} → Your project name
+#    {{PROJECT_DESCRIPTION}} → Project description
+#    {{DATE}} → Current date
 
-# 5. Start developing
-/pm   # Begin first requirement
+# 4. Start developing
+/pm   # Begin with the Product Manager role for your first requirement
 ```
 
-### Workflow Commands
+### Copy to Existing Project
 
-| Command | Role | Description |
-|---------|------|-------------|
-| `/pm` | Product Manager | Requirement analysis |
-| `/lead` | Tech Lead | Technical design & task breakdown |
-| `/dev` | Developer | Implementation |
-| `/qa` | QA Engineer | Testing & verification |
-| `/commit` | - | Git commit |
-| `/iterate` | - | Autonomous iteration loop |
-| `/pair` | - | Pair programming mode |
+```bash
+# Copy configuration files to your project
+cp -r claude-code-best-practices/.claude /path/to/your/project/
+cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
+cp -r claude-code-best-practices/memory-bank /path/to/your/project/
 
-### Project Structure
+# Navigate to your project and initialize
+cd /path/to/your/project
+bash .claude/scripts/init.sh
+```
+
+> **Windows Users**: Use Git Bash to run scripts, or use `robocopy` to copy files.
+
+**Migrating from an existing project?** See [MIGRATION.md](MIGRATION.md).
+
+---
+
+## ✨ Core Features
+
+### 🎭 Role-Based Workflow
+PM → Lead → Dev → QA → Commit complete development cycle, each role with clear responsibilities.
+
+### 🔄 Autonomous Iteration Mode
+`/iterate` mode lets Claude autonomously complete task lists without frequent intervention.
+
+### 🛡️ Safety Hooks
+Pre-configured guards against dangerous operations: blocks `rm -rf /`, `git push --force`, and other risky commands.
+
+### 📐 Multi-Language Standards
+Coding standards for 7+ languages: Python, Vue/TS, C++, Java, C#, Go, and more.
+
+### 🧠 Memory Bank
+`memory-bank/` directory persists project progress, architecture decisions, and tech stack choices.
+
+### 🔌 MCP Integration
+Ready-to-use MCP server configurations supporting memory, playwright, firecrawl, and more.
+
+---
+
+## 📁 Directory Structure
 
 ```
 your-project/
-├── CLAUDE.md                 # Project constitution
-├── memory-bank/              # Progress & architecture docs
+├── CLAUDE.md                   # Project constitution (must keep)
+├── memory-bank/                # Project memory bank
+│   ├── progress.md             # Progress tracking
+│   ├── architecture.md         # Architecture documentation
+│   └── tech-stack.md           # Technology choices
+│
 └── .claude/
-    ├── commands/             # Slash commands (30+)
-    ├── rules/                # Coding standards (13 files)
-    ├── skills/               # Development skills (10 categories)
-    ├── agents/               # Sub-agents (6 types)
-    ├── hooks/                # Hook documentation
-    └── scripts/              # Automation scripts
+    ├── settings.json           # Base permissions (commit to Git)
+    ├── settings.local.json     # Local config + Hooks (don't commit)
+    │
+    ├── commands/               # Slash commands (30+)
+    │   ├── pm.md, lead.md      # Role commands
+    │   ├── iterate.md, pair.md # Mode commands
+    │   └── build.md, test.md   # Tool commands
+    │
+    ├── rules/                  # Coding standards (13 files)
+    │   ├── methodology.md      # Development methodology
+    │   ├── coding-standards.md # Universal standards
+    │   ├── code-style.md       # Python style
+    │   ├── frontend-style.md   # Vue/TS/JS style
+    │   └── security.md         # Security rules
+    │
+    ├── skills/                 # Development skills (10 categories)
+    │   ├── backend-patterns/   # Backend patterns
+    │   ├── frontend-patterns/  # Frontend patterns
+    │   └── tdd-workflow/       # TDD workflow
+    │
+    ├── agents/                 # Sub-agents (6)
+    │   ├── code-reviewer.md    # Code review
+    │   └── security-reviewer.md# Security review
+    │
+    └── scripts/                # Automation scripts (15)
+        ├── init.sh             # Initialization
+        ├── format_file.py      # Auto-formatting
+        └── validate_command.py # Command validation
 ```
 
-### Supported Languages
+---
 
-| Language | Style Guide | Formatter | Test Framework |
-|----------|-------------|-----------|----------------|
-| Python | `code-style.md` | Black + isort | pytest |
-| Vue/TS/JS | `frontend-style.md` | Prettier | Vitest |
-| C++ | `cpp-style.md` | clang-format | Google Test |
-| Java | `java-style.md` | google-java-format | JUnit |
-| C# | `csharp-style.md` | dotnet format | xUnit/NUnit |
-| Go | `backend-patterns/go.md` | gofmt | testing |
+## 🔄 Workflow
 
-### Workflow
+### Standard Development Cycle
 
 ```mermaid
 flowchart LR
@@ -111,188 +166,333 @@ flowchart LR
     Designer --> Dev["/dev<br/>Implement"]
     Dev --> QA["/qa<br/>Verify"]
     QA --> Commit["/commit<br/>Commit"]
-    Commit --> Clear["/clear<br/>Clear"]
+    Commit --> Clear["/clear<br/>Clear Context"]
     Clear -.->|Loop| PM
 ```
 
-### Philosophy
+### Three Development Modes
 
-This template follows the **"道法术器" (Dao-Fa-Shu-Qi)** methodology:
-- **道 (Dao)** - Core principles and philosophy
-- **法 (Fa)** - Methods and workflows
-- **术 (Shu)** - Practices and techniques
-- **器 (Qi)** - Tools and configurations
-
-### Requirements
-
-| Requirement | Version | Note |
-|-------------|---------|------|
-| Claude Code | Latest recommended | Hooks require recent versions |
-| Python | 3.8+ | For hook scripts |
-| Bash/Git Bash | Any | For shell scripts (Windows: use Git Bash) |
-
-### Note
-
-This template is primarily designed for **Chinese-speaking developers**. Most internal documentation (rules, commands, skills) is written in Chinese. International users are welcome to use and adapt it, or contribute English translations.
-
-**Migrating from an existing project?** See [MIGRATION.md](MIGRATION.md).
-
-### License
-
-MIT License - Feel free to use and modify.
+| Mode | Command | Use Case | Characteristics |
+|------|---------|----------|-----------------|
+| **Autonomous Iteration** | `/iterate` | Clear task list | Fully autonomous, no intervention needed |
+| **Pair Programming** | `/pair` | Learning, sensitive operations | Confirm each step, human-machine collaboration |
+| **Long-Running Loop** | `/ralph-loop` | Hour-level batch tasks | Requires plugin installation |
 
 ---
 
-## 中文
+## 📋 Command Reference
 
-> **Clone 即用，几分钟而非几小时内开始与 Claude 协作编程。**
+### Role Commands
 
-这是一个可复制到任意项目的 Claude Code 配置模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go** 多语言开发。
+| Command | Role | Responsibilities |
+|---------|------|------------------|
+| `/pm` | Product Manager | Requirement analysis, user stories, acceptance criteria |
+| `/lead` | Tech Lead | Technical design, task breakdown, architecture decisions |
+| `/dev` | Developer | Code implementation, unit tests |
+| `/qa` | QA Engineer | Functional verification, test cases |
+| `/designer` | UI Designer | Design guidance, interface specifications |
+| `/clarify` | Clarification Expert | Requirement clarification, boundary confirmation |
 
-### 为什么使用这个模板？
+### Mode Commands
 
-| 没有模板 | 使用模板 |
-|----------|----------|
-| ❌ 从零配置 | ✅ 开箱即用 |
-| ❌ 代码风格不一致 | ✅ 强制执行编码规范 |
-| ❌ 手动工作流 | ✅ 角色化自动化（PM→Dev→QA） |
-| ❌ 危险命令风险 | ✅ 安全钩子保护系统 |
-| ❌ 会话间上下文丢失 | ✅ 记忆库持久化进度 |
+| Command | Description |
+|---------|-------------|
+| `/iterate` | Autonomous iteration loop, reads progress.md and executes tasks automatically |
+| `/pair` | Pair programming mode, continues after confirming each key step |
 
-**快速导航**: [特性](#-特性) | [快速使用](#快速使用) | [目录结构](#目录结构) | [工作流程](#工作流程) | [技能说明](#技能skills说明) | [自定义](#自定义) | [最佳实践](#最佳实践)
+### Tool Commands
 
-### ✨ 特性
+| Command | Function |
+|---------|----------|
+| `/build` | Build project |
+| `/test` | Run tests |
+| `/run` | Start development server |
+| `/commit` | Git commit |
+| `/pr` | Create Pull Request |
+| `/status` | View project status |
+| `/checkpoint` | Create checkpoint |
+| `/compact` | Compress context |
+| `/context` | Context management |
+| `/memory` | Project memory management |
+| `/verify` | Verify code quality |
+| `/setup` | Project initialization |
 
-- **🎭 角色化工作流** - PM → Lead → Dev → QA → Commit 循环
-- **🔄 自主迭代模式** - `/iterate` 模式实现自驱动开发
-- **🛡️ 安全钩子** - 预配置的危险操作防护
-- **📐 多语言规则** - 7+ 种语言的编码规范
-- **🧠 记忆库** - 进度跟踪和架构文档
-- **🔌 MCP 集成** - 开箱即用的 MCP 服务器配置
+---
 
-### 快速使用
+## 🛠️ Skills
 
-#### 1. 复制配置到你的项目
+| Skill | Purpose | Key Contents |
+|-------|---------|--------------|
+| `backend-patterns` | Backend development | Generic patterns + Python/TS/Java/Go/C# subfiles |
+| `frontend-patterns` | Frontend development | Generic patterns + Vue/React subfiles |
+| `tdd-workflow` | Test-driven development | Red-Green-Refactor cycle |
+| `api-development` | API development | RESTful design, response formats, authentication |
+| `database-patterns` | Database design | Naming conventions, query optimization, migrations |
+| `security-review` | Security review | OWASP checklist, vulnerability protection |
+| `debugging` | Systematic debugging | Problem localization, log analysis, profiling |
+| `git-workflow` | Git workflow | Branch strategy, commit conventions, conflict resolution |
+| `continuous-learning` | Continuous learning | Session evaluation, knowledge extraction |
+| `strategic-compact` | Strategic compression | Compression timing, best practices |
 
-```bash
-# 复制整个模板内容到目标项目
-cp -r claude-code-best-practices/* /path/to/your/project/
+---
 
-# 或者使用 robocopy (Windows)
-robocopy claude-code-best-practices /path/to/your/project /E
+## ⚙️ Customization Guide
+
+### Adding New Rules
+
+Create a file in `.claude/rules/`:
+
+```markdown
+---
+paths:
+  - "**/*.your-ext"
+---
+
+# Rule Title
+
+## Rule Content
+...
 ```
 
-#### 2. 运行初始化（二选一）
+### Adding New Commands
 
-**方式 A：使用初始化脚本（推荐）**
-```bash
-cd /path/to/your/project
-bash .claude/scripts/init.sh
+Create a file in `.claude/commands/`:
+
+```markdown
+---
+allowed_tools:
+  - Read
+  - Edit
+  - Write
+  - Bash
+---
+
+# /your-command - Command Name
+
+## Responsibilities
+...
+
+## Execution Steps
+1. ...
+2. ...
 ```
 
-**方式 B：使用 /setup 命令**
-```
-/setup
-```
+### Configuring Hooks
 
-初始化脚本会自动：
-- 创建 `settings.local.json`（从 `.example` 复制）
-- 创建 `memory-bank/` 目录和基础文件
-- 创建 `docs/` 目录结构
+Edit `.claude/settings.local.json`:
 
-#### 3. 自定义 CLAUDE.md
-
-编辑 `CLAUDE.md`，替换以下占位符：
-- `{{PROJECT_NAME}}` - 项目名称
-- `{{PROJECT_DESCRIPTION}}` - 项目描述
-- `{{DATE}}` - 当前日期
-- `{{CURRENT_PHASE}}` - 当前阶段
-
-#### 4. 验证配置（可选）
-
-```bash
-python .claude/scripts/test_template.py
-```
-
-#### 5. 开始开发
-
-```bash
-/pm   # 开始第一个需求
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/scripts/your-script.py",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
-### 目录结构
+### Pre-configured Hooks
 
-```
-your-project/
-├── CLAUDE.md                   # 项目宪法（必须）
-├── memory-bank/                # 项目记忆库（progress/architecture/tech-stack）
-└── .claude/
-    ├── commands/               # Slash 命令（30+）
-    ├── rules/                  # 编码规范（13 个文件）
-    ├── skills/                 # 开发技能（10 类）
-    ├── agents/                 # 子智能体（6 个）
-    ├── scripts/                # Hook 脚本
-    └── mcp-configs/            # MCP 配置参考
-```
+| Trigger | Function | Script |
+|---------|----------|--------|
+| PreToolUse | Validate dangerous commands | `validate_command.py` |
+| PreToolUse | Confirm before git push | `pause_before_push.sh` |
+| PreToolUse | Protect sensitive files | `protect_files.py` |
+| PostToolUse | Auto-format code | `format_file.py` |
+| PostToolUse | TypeScript type check | `typescript_check.sh` |
+| SessionStart | Session health check | `session_check.py` |
+| Stop | Session end persistence | `session_end.sh` |
+
+---
+
+## 💡 Best Practices
+
+### 1. Keep CLAUDE.md Concise
+- Keep it under 100 lines
+- Put detailed specifications in `.claude/rules/`
+
+### 2. Use the Memory Bank
+- Update `progress.md` after each task completion
+- Record important decisions in `architecture.md`
+
+### 3. Context Management
+- Normal mode: Use `/clear` frequently to avoid context overflow
+- `/iterate` mode: Don't clear manually, maintain loop continuity
+
+### 4. Don't Overload MCP
+- Enable no more than 10 MCP servers per project
+- Use `disabledMcpServers` to disable unused ones
+
+### 5. Regular Cleanup
+- Delete unused language rules
+- Remove unused commands
+
+---
+
+## ❓ FAQ
+
+### Getting Started
 
 <details>
-<summary>📂 完整目录结构（点击展开）</summary>
+<summary><strong>Q: Can I delete files I don't need?</strong></summary>
 
-```
-your-project/
-├── CLAUDE.md                   # 项目主文档（必须）
-├── CLAUDE.local.md             # 个人本地配置（可选，不提交）
-│
-├── memory-bank/                # 项目记忆库
-│   ├── progress.md             # 进度跟踪
-│   ├── architecture.md         # 架构文档
-│   └── tech-stack.md           # 技术选型
-│
-└── .claude/
-    ├── settings.json           # 基础权限（提交到 Git）
-    ├── settings.local.json     # 本地权限 + Hooks（不提交）
-    │
-    ├── commands/               # Slash 命令
-    │   ├── pm.md, lead.md, dev.md, qa.md   # 角色命令
-    │   ├── iterate.md, pair.md             # 模式命令
-    │   └── build.md, test.md, commit.md... # 工具命令
-    │
-    ├── rules/                  # 代码规则（按文件类型自动应用）
-    │   ├── methodology.md      # 开发方法论
-    │   ├── code-style.md       # Python 风格
-    │   ├── frontend-style.md   # Vue/TS/JS 风格
-    │   ├── cpp-style.md        # C++ 风格
-    │   ├── java-style.md       # Java 风格
-    │   ├── csharp-style.md     # C# 风格
-    │   └── security.md, testing.md, git-workflow.md...
-    │
-    ├── skills/                 # 自定义技能
-    │   ├── backend-patterns/   # 后端模式（Python/TS/Java/Go/C#）
-    │   ├── frontend-patterns/  # 前端模式（Vue/React）
-    │   ├── tdd-workflow/       # 测试驱动开发
-    │   ├── api-development/    # API 开发
-    │   └── debugging/, git-workflow/, ...
-    │
-    ├── agents/                 # 子智能体
-    │   ├── code-reviewer.md, code-simplifier.md
-    │   ├── planner.md, security-reviewer.md
-    │   └── tdd-guide.md, requirement-validator.md
-    │
-    ├── scripts/                # Hook 脚本
-    │   ├── init.sh             # 初始化
-    │   ├── format_file.py      # 自动格式化
-    │   ├── validate_command.py # 命令验证
-    │   └── protect_files.py, session_check.py...
-    │
-    └── mcp-configs/            # MCP 服务器配置参考
-```
+Yes! Commonly deletable files:
+- `.github/` - If you don't need contribution templates
+- `CONTRIBUTING.md`, `CHANGELOG.md`, `FAQ.md` - Template-specific docs
+- Unused language rules (e.g., Python projects can delete `cpp-style.md`)
 
+Minimum to keep:
+- `CLAUDE.md` - Core configuration
+- `.claude/settings.json` - Permission settings
+- Language rules you actually use
 </details>
 
-### 支持的语言
+<details>
+<summary><strong>Q: Do I need to keep the Git history?</strong></summary>
 
-| 语言 | 规则文件 | 格式化工具 | 测试框架 |
-|------|----------|------------|----------|
+No. For a fresh start:
+```bash
+rm -rf .git
+git init
+git add .
+git commit -m "Initial commit from Claude Code template"
+```
+</details>
+
+### Hook Issues
+
+<details>
+<summary><strong>Q: Hooks not working?</strong></summary>
+
+1. Check if `settings.local.json` exists:
+   ```bash
+   ls .claude/settings.local.json
+   ```
+   If not:
+   ```bash
+   cp .claude/settings.local.json.example .claude/settings.local.json
+   ```
+
+2. Check script permissions (Linux/Mac):
+   ```bash
+   chmod +x .claude/scripts/*.sh
+   chmod +x .claude/scripts/*.py
+   ```
+
+3. Check Claude Code version - hooks require recent versions
+</details>
+
+<details>
+<summary><strong>Q: format_file.py encoding error</strong></summary>
+
+Common Windows issue. Solutions:
+1. Ensure Python 3.8+ is installed
+2. Set environment variable: `PYTHONUTF8=1`
+</details>
+
+### Command Issues
+
+<details>
+<summary><strong>Q: What's the difference between /iterate and /pair?</strong></summary>
+
+| Mode | Control | Use Case |
+|------|---------|----------|
+| `/iterate` | Fully autonomous | Clear task list |
+| `/pair` | Confirm each step | Learning, sensitive operations |
+</details>
+
+<details>
+<summary><strong>Q: /iterate stopped unexpectedly</strong></summary>
+
+Check stop conditions:
+- User interrupt (Ctrl+C)
+- All tasks in `progress.md` completed
+- Fatal error occurred
+- User decision required
+
+Recovery: Run `/iterate` again
+</details>
+
+<details>
+<summary><strong>Q: Command not found</strong></summary>
+
+- Confirm file is in `.claude/commands/` directory
+- Confirm file extension is `.md`
+- Restart Claude Code
+</details>
+
+### MCP Issues
+
+<details>
+<summary><strong>Q: How to configure MCP servers?</strong></summary>
+
+Edit `.claude/settings.local.json`:
+```json
+{
+  "enabledMcpjsonServers": [
+    "memory",
+    "sequential-thinking"
+  ]
+}
+```
+Then restart Claude Code.
+</details>
+
+<details>
+<summary><strong>Q: Too many MCP tools causing issues</strong></summary>
+
+Best practice: Enable no more than 10 per project.
+```json
+{
+  "disabledMcpServers": ["github", "vercel"]
+}
+```
+</details>
+
+### Troubleshooting
+
+<details>
+<summary><strong>Q: "Permission denied" error</strong></summary>
+
+```bash
+# Linux/Mac
+chmod +x .claude/scripts/*.sh
+chmod +x .claude/scripts/*.py
+
+# Windows: Run as Administrator
+```
+</details>
+
+<details>
+<summary><strong>Q: Rule changes not taking effect</strong></summary>
+
+- Claude Code caches rules at session start
+- Restart session or use `/clear` after modifications
+</details>
+
+---
+
+## 🔧 Requirements
+
+| Dependency | Version | Notes |
+|------------|---------|-------|
+| Claude Code | Latest recommended | Hooks require recent versions |
+| Python | 3.8+ | For hook scripts |
+| Bash/Git Bash | Any version | Windows users: use Git Bash |
+
+### Supported Languages
+
+| Language | Rule File | Formatter | Test Framework |
+|----------|-----------|-----------|----------------|
 | Python | `code-style.md` | Black + isort | pytest |
 | Vue/TS/JS | `frontend-style.md` | Prettier | Vitest |
 | C++ | `cpp-style.md` | clang-format | Google Test |
@@ -300,166 +500,52 @@ your-project/
 | C# | `csharp-style.md` | dotnet format | xUnit/NUnit |
 | Go | `backend-patterns/go.md` | gofmt | testing |
 
-### 工作流程
-
-```mermaid
-flowchart LR
-    PM["/pm<br/>需求分析"] --> Clarify["/clarify<br/>澄清（如需）"]
-    Clarify --> Lead["/lead<br/>技术方案"]
-    Lead --> Designer["/designer<br/>UI 设计"]
-    Designer --> Dev["/dev<br/>编码实现"]
-    Dev --> QA["/qa<br/>功能验证"]
-    QA --> Commit["/commit<br/>代码提交"]
-    Commit --> Clear["/clear<br/>清除上下文"]
-    Clear -.->|循环| PM
-```
-
-**开发模式**:
-- `/iterate` - 自主迭代循环（单 session，完全自主）
-- `/pair` - 结对编程模式（人机协作，每步确认）
-- `/ralph-loop` - 长时间循环（需安装插件，见 `.claude/ralph-prompts/`）
-
-#### 模式选择指南
-
-| 场景 | 推荐模式 |
-|------|----------|
-| 任务清单明确，单 session 内执行 | `/iterate` |
-| 学习新技术、设计讨论、敏感操作 | `/pair` |
-| 长时间批量任务（小时级） | `/ralph-loop` |
-
-### 技能（Skills）说明
-
-模板包含多个开发技能，可按需启用：
-
-| 技能 | 用途 | 主要内容 |
-|------|------|----------|
-| `backend-patterns` | 后端开发 | 通用模式 + 多语言子文件（Python/TS/Java/Go/C#） |
-| `frontend-patterns` | 前端开发 | 通用模式 + 多框架子文件（Vue/React） |
-| `tdd-workflow` | 测试驱动开发 | Red-Green-Refactor 循环 |
-| `security-review` | 安全审查 | OWASP 检查清单、漏洞防护 |
-| `api-development` | API 开发 | RESTful 设计、响应格式、认证 |
-| `database-patterns` | 数据库设计 | 命名规范、查询优化、迁移管理 |
-| `debugging` | 系统化调试 | 问题定位、日志分析、性能剖析 |
-| `git-workflow` | Git 工作流 | 分支策略、提交规范、冲突解决 |
-| `continuous-learning` | 持续学习 | 会话评估、知识提取、模式记录 |
-| `strategic-compact` | 策略性压缩 | 压缩时机、压缩清单、最佳实践 |
-
-#### 技能结构说明
-
-`backend-patterns` 和 `frontend-patterns` 采用 **主文件 + 语言/框架子文件** 的结构：
-
-- **SKILL.md**: 通用模式和清单（自动加载）
-- **语言子文件**: 按项目技术栈按需加载（如 `python.md`、`vue.md`）
-
-这种结构的好处：
-1. 减少重复内容
-2. 按需加载，减少 token 消耗
-3. 方便扩展新语言/框架
-
-### 自定义
-
-#### 添加新规则
-
-1. 在 `.claude/rules/` 创建 `your-rule.md`
-2. 使用 YAML frontmatter 指定匹配路径：
-
-```yaml
----
-paths:
-  - "**/*.your-ext"
 ---
 
-# 规则内容
-```
+## 📚 References
 
-#### 添加新命令
+### Official Resources
+- [Anthropic Official Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)
+- [CLAUDE.md Complete Guide](https://www.builder.io/blog/claude-md-guide)
 
-1. 在 `.claude/commands/` 创建 `your-command.md`
-2. 定义命令行为和输出格式
-3. 使用 `/your-command` 调用
-
-#### 配置 Hooks
-
-编辑 `.claude/settings.local.json`，模板预配置的 Hooks 包括：
-
-| Hook 类型 | 触发器 | 功能 | 脚本 |
-|-----------|--------|------|------|
-| PreToolUse | `Bash` | 验证危险命令 | `validate_command.py` |
-| PreToolUse | `Bash` | Git push 前确认 | `pause_before_push.sh` |
-| PreToolUse | `Write\|Edit` | 保护敏感文件 | `protect_files.py` |
-| PreToolUse | `Write` | 阻止随机 .md 文件 | `block_random_md.py` |
-| PreToolUse | `Edit\|Write` | 策略性压缩建议 | `suggest-compact.sh` |
-| PostToolUse | `Write\|Edit` | 自动格式化代码 | `format_file.py` |
-| PostToolUse | `Edit` | 检查 console.log | `check_console_log.py` |
-| PostToolUse | `Edit\|Write` | TypeScript 类型检查 | `typescript_check.sh` |
-| SessionStart | `*` | 会话健康检查 | `session_check.py` |
-| SessionStart | `*` | 加载上次会话上下文 | `session_start.sh` |
-| PreCompact | `*` | 压缩前保存状态 | `pre_compact.sh` |
-| Stop | `*` | 会话结束持久化 | `session_end.sh` |
-| Stop | `*` | 持续学习评估 | `evaluate-session.sh` |
-
-### 最佳实践
-
-1. **CLAUDE.md 保持简洁** - 控制在 100 行以内
-2. **使用规则文件** - 详细规范放在 `.claude/rules/`
-3. **更新 progress.md** - 每次任务完成后更新
-4. **上下文管理**:
-   - 普通模式：频繁 `/clear`，避免上下文过长
-   - `/iterate` 模式：不主动 clear，保持循环连续性
-5. **MCP 不要贪多** - 同时启用不超过 10 个
-
-### 环境要求
-
-| 依赖 | 版本 | 说明 |
-|------|------|------|
-| Claude Code | 推荐最新版 | 钩子功能需要较新版本 |
-| Python | 3.8+ | 用于钩子脚本 |
-| Bash/Git Bash | 任意版本 | 用于 Shell 脚本（Windows 使用 Git Bash） |
-
-**从现有项目迁移？** 请参阅 [MIGRATION.md](MIGRATION.md)。
-
-### 参考
-
-**官方资源**:
-- [Anthropic 官方最佳实践](https://www.anthropic.com/engineering/claude-code-best-practices)
-- [CLAUDE.md 完整指南](https://www.builder.io/blog/claude-md-guide)
-
-**社区项目**:
-- [everything-claude-code](https://github.com/affaan-m/everything-claude-code) - Comprehensive Claude Code resources
-- [vibe-coding-cn](https://github.com/2025Emma/vibe-coding-cn) - 中文 Vibe Coding 指南
-
-### 许可证
-
-MIT License - 可自由使用和修改
+### Community Projects
+- [everything-claude-code](https://github.com/affaan-m/everything-claude-code) - Claude Code resource collection
+- [vibe-coding-cn](https://github.com/2025Emma/vibe-coding-cn) - Chinese Vibe Coding guide
 
 ---
 
-## Contributing / 参与贡献
+## 🌐 Note on Internal Files
 
-We welcome contributions of all kinds! 我们欢迎各种形式的贡献！
+This template's internal files (`.claude/commands/`, `.claude/rules/`, `.claude/skills/`) are written in **Chinese**. This is intentional:
 
-### Ways to Contribute / 贡献方式
+- **Claude understands Chinese** - All Claude models can read and follow Chinese instructions perfectly
+- **No translation burden** - Maintaining dual-language internal files would be impractical
+- **Focus on users** - The README (this file) is fully English for international users
 
-| Type | Description |
-|------|-------------|
-| ⭐ **Star** | Show your support / 表示支持 |
-| 🐛 **Bug Report** | [Report issues](../../issues/new?template=bug_report.md) / 报告问题 |
-| 💡 **Feature Request** | [Suggest features](../../issues/new?template=feature_request.md) / 建议功能 |
-| 📝 **Documentation** | Improve docs / 改进文档 |
-| 🌐 **Translation** | Add English translations / 添加英文翻译 |
-| 🔧 **Code** | Add commands, rules, skills / 添加命令、规则、技能 |
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-详细指南请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)。
-
-### Community / 社区
-
-- [Discussions](../../discussions) - Ask questions, share ideas / 提问交流
-- [Issues](../../issues) - Report bugs, request features / 报告问题
+If you prefer English internal files, community contributions for English translations are welcome!
 
 ---
 
-**If you find this template useful, please give it a ⭐ star!**
+## 🤝 Contributing
 
-**如果你觉得这个模板有用，请给它一个 ⭐ Star！**
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+| Contribution Type | Description |
+|-------------------|-------------|
+| ⭐ Star | Show your support |
+| 🐛 Bug Report | [Report issues](../../issues/new?template=bug_report.md) |
+| 💡 Feature Request | [Suggest features](../../issues/new?template=feature_request.md) |
+| 📝 Documentation | Improve docs |
+| 🔧 Code | Add commands, rules, skills |
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE) - Free to use and modify
+
+---
+
+<p align="center">
+  <strong>If this template helps you, please give it a ⭐ Star!</strong>
+</p>
