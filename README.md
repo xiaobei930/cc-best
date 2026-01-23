@@ -81,7 +81,7 @@ Or use direct commands:
 /plugin marketplace add xiaobei930/claude-code-best-practices
 
 # Install the plugin
-/plugin install cc-best@claude-code-best-practices
+/plugin install cc-best@xiaobei930
 ```
 
 Or add directly to your `~/.claude/settings.json`:

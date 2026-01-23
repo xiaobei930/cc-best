@@ -81,7 +81,7 @@ claude-code-best-practices
 /plugin marketplace add xiaobei930/claude-code-best-practices
 
 # 安装插件
-/plugin install cc-best@claude-code-best-practices
+/plugin install cc-best@xiaobei930
 ```
 
 或者直接添加到 `~/.claude/settings.json`：
