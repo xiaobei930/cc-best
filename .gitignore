@@ -3,7 +3,13 @@ CLAUDE.local.md
 .claude/settings.local.json
 .claude/hookify.*.local.md
 .claude/logs/
-.claude/screenshots/
+.claude/screenshots/*
+!.claude/screenshots/.gitkeep
+
+# MCP 临时目录（由各 MCP 工具自动创建）
+.playwright-mcp/
+.claude/mcp-data/
+*-mcp/
 
 # Python
 __pycache__/
