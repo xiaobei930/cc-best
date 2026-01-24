@@ -5,16 +5,16 @@
  * 用于 Claude Code hooks 和脚本
  */
 
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-const { execSync } = require('child_process');
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+const { execSync, spawnSync } = require("child_process");
 
 // ==================== 平台检测 ====================
 
-const isWindows = process.platform === 'win32';
-const isMacOS = process.platform === 'darwin';
-const isLinux = process.platform === 'linux';
+const isWindows = process.platform === "win32";
+const isMacOS = process.platform === "darwin";
+const isLinux = process.platform === "linux";
 
 // ==================== 路径工具 ====================
 
@@ -29,21 +29,21 @@ function getHomeDir() {
  * 获取 Claude 配置目录 (~/.claude)
  */
 function getClaudeDir() {
-  return path.join(getHomeDir(), '.claude');
+  return path.join(getHomeDir(), ".claude");
 }
 
 /**
  * 获取项目的 .claude 目录
  */
 function getProjectClaudeDir(projectDir = process.cwd()) {
-  return path.join(projectDir, '.claude');
+  return path.join(projectDir, ".claude");
 }
 
 /**
  * 获取 memory-bank 目录
  */
 function getMemoryBankDir(projectDir = process.cwd()) {
-  return path.join(projectDir, 'memory-bank');
+  return path.join(projectDir, "memory-bank");
 }
 
 /**
@@ -70,7 +70,7 @@ function ensureDir(dirPath) {
  */
 function getDateString() {
   const now = new Date();
-  return now.toISOString().split('T')[0];
+  return now.toISOString().split("T")[0];
 }
 
 /**
@@ -86,7 +86,7 @@ function getTimeString() {
  */
 function getDateTimeString() {
   const now = new Date();
-  return now.toISOString().replace('T', ' ').slice(0, 19);
+  return now.toISOString().replace("T", " ").slice(0, 19);
 }
 
 // ==================== 文件操作 ====================
@@ -96,7 +96,7 @@ function getDateTimeString() {
  */
 function readFile(filePath) {
   try {
-    return fs.readFileSync(filePath, 'utf8');
+    return fs.readFileSync(filePath, "utf8");
   } catch {
     return null;
   }
@@ -120,7 +120,7 @@ function readJsonFile(filePath) {
  */
 function writeFile(filePath, content) {
   ensureDir(path.dirname(filePath));
-  fs.writeFileSync(filePath, content, 'utf8');
+  fs.writeFileSync(filePath, content, "utf8");
 }
 
 /**
@@ -135,7 +135,7 @@ function writeJsonFile(filePath, data) {
  */
 function appendFile(filePath, content) {
   ensureDir(path.dirname(filePath));
-  fs.appendFileSync(filePath, content, 'utf8');
+  fs.appendFileSync(filePath, content, "utf8");
 }
 
 /**
@@ -159,9 +159,9 @@ function findFiles(dir, pattern, options = {}) {
 
   // 将 glob 模式转换为正则表达式
   const regexPattern = pattern
-    .replace(/\./g, '\\.')
-    .replace(/\*/g, '.*')
-    .replace(/\?/g, '.');
+    .replace(/\./g, "\\.")
+    .replace(/\*/g, ".*")
+    .replace(/\?/g, ".");
   const regex = new RegExp(`^${regexPattern}$`);
 
   function search(currentDir) {
@@ -173,7 +173,8 @@ function findFiles(dir, pattern, options = {}) {
 
         if (entry.isFile() && regex.test(entry.name)) {
           const stats = fs.statSync(fullPath);
-          const ageInDays = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60 * 24);
+          const ageInDays =
+            (Date.now() - stats.mtimeMs) / (1000 * 60 * 60 * 24);
 
           if (maxAge === null || ageInDays <= maxAge) {
             results.push({ path: fullPath, mtime: stats.mtimeMs, ageInDays });
@@ -200,18 +201,18 @@ function findFiles(dir, pattern, options = {}) {
  */
 async function readStdinJson() {
   return new Promise((resolve, reject) => {
-    let data = '';
+    let data = "";
 
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', chunk => data += chunk);
-    process.stdin.on('end', () => {
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", (chunk) => (data += chunk));
+    process.stdin.on("end", () => {
       try {
         resolve(data.trim() ? JSON.parse(data) : {});
       } catch (err) {
         reject(err);
       }
     });
-    process.stdin.on('error', reject);
+    process.stdin.on("error", reject);
   });
 }
 
@@ -226,18 +227,26 @@ function log(message) {
  * 输出结果到 stdout（返回给 Claude）
  */
 function output(data) {
-  console.log(typeof data === 'object' ? JSON.stringify(data) : data);
+  console.log(typeof data === "object" ? JSON.stringify(data) : data);
 }
 
 // ==================== 系统命令 ====================
 
 /**
  * 检查命令是否存在
+ * 使用 spawnSync 避免命令注入风险
  */
 function commandExists(cmd) {
+  // 输入验证：只允许字母、数字、连字符、下划线、点
+  if (!/^[a-zA-Z0-9_.-]+$/.test(cmd)) {
+    return false;
+  }
+
   try {
-    execSync(isWindows ? `where ${cmd}` : `which ${cmd}`, { stdio: 'pipe' });
-    return true;
+    const result = isWindows
+      ? spawnSync("where", [cmd], { stdio: "pipe" })
+      : spawnSync("which", [cmd], { stdio: "pipe" });
+    return result.status === 0;
   } catch {
     return false;
   }
@@ -245,13 +254,21 @@ function commandExists(cmd) {
 
 /**
  * 执行命令并返回结果
+ *
+ * ⚠️ 安全警告：此函数执行 shell 命令。
+ * - 仅用于可信的、硬编码的命令
+ * - 禁止直接传递用户输入
+ * - 如需处理用户输入，请使用 spawnSync 配合参数数组
+ *
+ * @param {string} cmd - 要执行的命令（应为可信/硬编码的命令）
+ * @param {object} options - execSync 选项
  */
 function runCommand(cmd, options = {}) {
   try {
     const result = execSync(cmd, {
-      encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe'],
-      ...options
+      encoding: "utf8",
+      stdio: ["pipe", "pipe", "pipe"],
+      ...options,
     });
     return { success: true, output: result.trim() };
   } catch (err) {
@@ -263,7 +280,7 @@ function runCommand(cmd, options = {}) {
  * 检查当前目录是否是 git 仓库
  */
 function isGitRepo(dir = process.cwd()) {
-  return runCommand('git rev-parse --git-dir', { cwd: dir }).success;
+  return runCommand("git rev-parse --git-dir", { cwd: dir }).success;
 }
 
 /**
@@ -272,17 +289,17 @@ function isGitRepo(dir = process.cwd()) {
 function getGitModifiedFiles(dir = process.cwd()) {
   if (!isGitRepo(dir)) return [];
 
-  const result = runCommand('git diff --name-only HEAD', { cwd: dir });
+  const result = runCommand("git diff --name-only HEAD", { cwd: dir });
   if (!result.success) return [];
 
-  return result.output.split('\n').filter(Boolean);
+  return result.output.split("\n").filter(Boolean);
 }
 
 /**
  * 获取 git 当前分支名
  */
 function getGitBranch(dir = process.cwd()) {
-  const result = runCommand('git branch --show-current', { cwd: dir });
+  const result = runCommand("git branch --show-current", { cwd: dir });
   return result.success ? result.output : null;
 }
 
@@ -296,7 +313,7 @@ function grepFile(filePath, pattern) {
   if (!content) return [];
 
   const regex = pattern instanceof RegExp ? pattern : new RegExp(pattern);
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const results = [];
 
   lines.forEach((line, index) => {
@@ -315,7 +332,7 @@ function countInFile(filePath, pattern) {
   const content = readFile(filePath);
   if (!content) return 0;
 
-  const regex = pattern instanceof RegExp ? pattern : new RegExp(pattern, 'g');
+  const regex = pattern instanceof RegExp ? pattern : new RegExp(pattern, "g");
   const matches = content.match(regex);
   return matches ? matches.length : 0;
 }
@@ -364,5 +381,5 @@ module.exports = {
 
   // 文本处理
   grepFile,
-  countInFile
+  countInFile,
 };

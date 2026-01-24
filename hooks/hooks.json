@@ -72,7 +72,7 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/format-file.js",
-            "timeout": 30
+            "timeout": 60
           }
         ]
       },
@@ -92,7 +92,7 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/typescript-check.js",
-            "timeout": 10
+            "timeout": 30
           }
         ]
       }
@@ -131,7 +131,7 @@
         ]
       }
     ],
-    "Stop": [
+    "SessionEnd": [
       {
         "matcher": "*",
         "hooks": [
