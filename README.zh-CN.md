@@ -112,6 +112,14 @@ cc-best
 
 安装后即可使用所有命令、智能体、技能和 hooks。
 
+<details>
+<summary>📹 查看安装演示</summary>
+<br>
+<p align="center">
+  <img src="assets/install.gif" alt="安装演示" width="80%">
+</p>
+</details>
+
 #### 更新插件
 
 ```bash
@@ -207,6 +215,14 @@ PM → Lead → Dev → QA → Commit 完整开发循环，每个角色有明确
 ### 🔄 自主迭代模式
 
 `/iterate` 模式让 Claude 自主完成任务列表，无需频繁干预。
+
+<details>
+<summary>📹 查看 /iterate 运行演示</summary>
+<br>
+<p align="center">
+  <img src="assets/iterate.gif" alt="迭代演示" width="80%">
+</p>
+</details>
 
 ### 🛡️ 安全钩子
 

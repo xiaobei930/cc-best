@@ -24,7 +24,15 @@
 
 > **Install as plugin and start coding with Claude in minutes, not hours.**
 
-A Claude Code plugin & template for development teams. Supports **Python / Vue / TypeScript / C++ / Java / C# / Go** with built-in workflows, hooks, and multi-language coding standards.
+A production-ready Claude Code plugin & template for development teams. Includes **30+ commands**, **14 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go**.
+
+### ✨ Highlights
+
+- 🎭 **Role-based workflow**: PM → Lead → Dev → QA pipeline
+- 🔄 **Autonomous mode**: `/iterate` runs tasks without intervention
+- 🛡️ **Safety hooks**: Blocks dangerous commands, protects files
+- 📝 **Memory bank**: Persists progress across sessions with auto-archive
+- 🌍 **Bilingual**: Full documentation in English & Chinese
 
 ## 📑 Table of Contents
 
@@ -111,6 +119,14 @@ Or add directly to your `~/.claude/settings.json`:
 ```
 
 This gives you instant access to all commands, agents, skills, and hooks.
+
+<details>
+<summary>📹 See installation in action</summary>
+<br>
+<p align="center">
+  <img src="assets/install.gif" alt="Install Demo" width="80%">
+</p>
+</details>
 
 #### Update Plugin
 
@@ -207,6 +223,14 @@ PM → Lead → Dev → QA → Commit complete development cycle, each role with
 ### 🔄 Autonomous Iteration Mode
 
 `/iterate` mode lets Claude autonomously complete task lists without frequent intervention.
+
+<details>
+<summary>📹 See /iterate in action</summary>
+<br>
+<p align="center">
+  <img src="assets/iterate.gif" alt="Iterate Demo" width="80%">
+</p>
+</details>
 
 ### 🛡️ Safety Hooks
 
