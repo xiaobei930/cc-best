@@ -242,6 +242,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **核心目标**: 降低上手门槛 + 灵活配置
 
+- [ ] **Lite 模式** - 精简版插件，减少命令/技能数量（待用户反馈确认需求）
+  - 方案：marketplace 中添加 `cc-best-lite` 作为独立插件
+  - 包含：核心命令（/iterate, /checkpoint, /commit）+ 基础 hooks
+  - 排除：角色命令、专业技能、agents
 - [ ] 增强 `/setup` 交互式配置向导
 - [ ] 模型策略配置（质量优先/速度优先/均衡/禁用 opus）
 - [ ] 常见错误诊断与修复建议
