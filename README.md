@@ -324,10 +324,11 @@ flowchart LR
 
 ### Mode Commands
 
-| Command    | Description                                                                   |
-| ---------- | ----------------------------------------------------------------------------- |
-| `/iterate` | Autonomous iteration loop, reads progress.md and executes tasks automatically |
-| `/pair`    | Pair programming mode, continues after confirming each key step               |
+| Command     | Description                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------------------- |
+| `/iterate`  | Autonomous iteration loop, reads progress.md and executes tasks automatically                             |
+| `/pair`     | Pair programming mode, continues after confirming each key step                                           |
+| `/cc-ralph` | Start Ralph Loop with cc-best workflow (requires ralph-loop plugin). Supports `--mode`, `--setup` options |
 
 ### Tool Commands
 

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.2] - 2025-01-25
+
+### Added / 新增
+
+- **`/cc-ralph` 命令** - Ralph Loop 集成命令，使用 cc-best 工作流启动自主开发循环
+  - 支持 `--mode` 参数选择工作模式（full-feature/iterate/bug-fix/refactor/fix-tests/doc-gen）
+  - 支持 `--setup` 参数复制模板到本地项目
+  - 自动检测 Clone 用户和插件用户，适配不同场景
+  - 自动读取项目状态，注入角色工作流（PM→Lead→Dev→QA）
+
+### Changed / 变更
+
+- **README 更新** - 添加 `/cc-ralph` 命令说明到模式命令表格（中英文版）
+
+### Documentation / 文档
+
+- **cc-ralph 命令文档** - 详细说明与官方 ralph-loop 的关系和配合使用方式
+
+---
+
 ## [0.4.1] - 2025-01-25
 
 ### Fixed / 修复
