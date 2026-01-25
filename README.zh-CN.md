@@ -112,6 +112,15 @@ cc-best
 
 安装后即可使用所有命令、智能体、技能和 hooks。
 
+#### 更新插件
+
+```bash
+# 更新到最新版本
+/plugin update cc-best@xiaobei930
+```
+
+> **注意**：`/plugin marketplace update` 只刷新可用插件列表，**不会更新已安装的插件**。使用 `/plugin update` 获取最新版本。
+
 #### 插件配置
 
 安装为插件后：

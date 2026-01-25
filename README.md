@@ -112,6 +112,15 @@ Or add directly to your `~/.claude/settings.json`:
 
 This gives you instant access to all commands, agents, skills, and hooks.
 
+#### Update Plugin
+
+```bash
+# Update to the latest version
+/plugin update cc-best@xiaobei930
+```
+
+> **Note**: `/plugin marketplace update` only refreshes the available plugins list, it does NOT update installed plugins. Use `/plugin update` to get the latest version.
+
 #### Plugin Configuration
 
 After installing as a plugin:
