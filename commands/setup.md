@@ -20,11 +20,43 @@ allowed-tools: Read, Write, Edit, Bash, Glob
 
 # 配置 hooks 到项目
 /setup --hooks --project
+
+# 验证 hooks 配置是否正确
+/setup --verify
 ```
 
 ---
 
+## 参数说明
+
+| 参数        | 说明                                     |
+| ----------- | ---------------------------------------- |
+| `--hooks`   | 仅配置 hooks，跳过其他初始化步骤         |
+| `--global`  | 配置到全局 `~/.claude/settings.json`     |
+| `--project` | 配置到项目 `.claude/settings.local.json` |
+| `--verify`  | 验证 hooks 配置是否正确（诊断模式）      |
+
+---
+
 ## 执行步骤
+
+### 0. 检查 --verify 参数
+
+如果使用 `--verify` 参数，执行验证模式：
+
+```bash
+# 运行 hooks 验证脚本
+node <SCRIPT_PATH>/verify-hooks.js
+```
+
+验证脚本会检查：
+
+- ✅ 脚本路径是否存在
+- ✅ timeout 是否在合理范围 (1ms - 10min)
+- ✅ matcher 语法是否正确
+- ✅ 生命周期事件是否有效
+
+验证完成后输出诊断报告和修复建议，然后退出。
 
 ### 1. 检测运行模式
 
