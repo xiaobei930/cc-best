@@ -455,6 +455,14 @@ test("强制速率限制", async () => {
 - [ ] **CORS**: 正确配置
 - [ ] **文件上传**: 已验证（大小、类型）
 
+## 专题安全指南
+
+详细的专题安全内容请参考：
+
+- **云基础设施安全**: [cloud-security.md](./cloud-security.md) - IAM、密钥管理、CI/CD、网络安全
+
+---
+
 ## 参考资源
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)

@@ -9,12 +9,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.5.1] - 2025-01-26
+
+### Added / 新增
+
+- **数据库专属最佳实践** - 新增 4 个数据库子文件
+  - `skills/database-patterns/postgres.md` - PostgreSQL 数据类型、索引策略、RLS、性能诊断
+  - `skills/database-patterns/mysql.md` - MySQL InnoDB 优化、索引策略、字符集配置
+  - `skills/database-patterns/oracle.md` - Oracle 分区表、全局索引、PL/SQL 最佳实践
+  - `skills/database-patterns/sqlite.md` - SQLite WAL 模式、PRAGMA 优化、移动端场景
+- **云基础设施安全指南** - 新增 `skills/security-review/cloud-security.md`
+  - IAM 最小权限原则
+  - 密钥管理（HSM、Vault）
+  - CI/CD 安全（OIDC、临时凭证）
+  - 网络安全（VPC、WAF）
+- **E2E 测试指南** - 在 `rules/testing.md` 添加端到端测试章节
+  - 页面对象模式
+  - 测试隔离策略
+  - 等待策略最佳实践
+
+### Changed / 变更
+
+- **database-patterns/SKILL.md 精简** - 从 ~430 行精简至 ~210 行
+  - 通用原则保留在 SKILL.md
+  - 数据库专属内容移至子文件
+- **Skill 子文件引用修复** - 在 SKILL.md 中添加显式子文件引用
+  - `database-patterns/SKILL.md` 添加 4 个数据库子文件引用
+  - `security-review/SKILL.md` 添加 cloud-security.md 引用
+- **skills/README 更新** - 更新目录结构和技能表格
+
 ### Fixed / 修复
 
 - **`/cc-ralph` 集成归档功能** - 修复 cc-ralph 启动时未调用 archive-progress.js 的问题
   - 启动循环前自动运行归档，防止 progress.md 过大
   - 每次迭代 checkpoint 后检查是否需要归档
   - 更新执行流程文档，添加归档步骤说明
+
+### Removed / 移除
+
+- **MIGRATION.md** - 移除迁移指南（Plugin 用户无需迁移，Clone 用户参考 README）
 
 ---
 
@@ -310,6 +345,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.5.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.5...v0.5.0
 [0.4.5]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.3...v0.4.4

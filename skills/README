@@ -16,7 +16,8 @@ Skill 是一个包含 `SKILL.md` 文件的文件夹，可以包含：
 skills/
 ├── README.md                    # 本文档
 ├── security-review/
-│   └── SKILL.md                 # 安全审查技能
+│   ├── SKILL.md                 # 安全审查技能（应用代码安全）
+│   └── cloud-security.md        # 云基础设施安全
 ├── backend-patterns/
 │   ├── SKILL.md                 # 后端通用模式
 │   ├── python.md                # Python 特定模式
@@ -34,6 +35,12 @@ skills/
 │   ├── SKILL.md                 # DevOps 通用模式
 │   ├── docker.md                # Docker 最佳实践
 │   └── ci-cd.md                 # CI/CD 流水线
+├── database-patterns/
+│   ├── SKILL.md                 # 数据库通用模式
+│   ├── postgres.md              # PostgreSQL 最佳实践
+│   ├── mysql.md                 # MySQL/MariaDB 最佳实践
+│   ├── oracle.md                # Oracle 最佳实践
+│   └── sqlite.md                # SQLite 最佳实践
 ├── isolated-research/
 │   └── SKILL.md                 # 🆕 隔离上下文研究（context: fork）
 └── ...
@@ -228,12 +235,12 @@ description: 使用扩展思考进行深度分析
 
 | 技能                  | 结构         | 用途                                             |
 | --------------------- | ------------ | ------------------------------------------------ |
-| `security-review`     | 单文件       | 安全审查检查清单                                 |
+| `security-review`     | 主+子(1文件) | 安全审查（应用代码 + 云基础设施）                |
 | `backend-patterns`    | 主+子(5语言) | 后端开发模式（Python, TypeScript, Java, Go, C#） |
 | `frontend-patterns`   | 主+子(4框架) | 前端开发模式（Vue, React, Svelte, Angular）      |
 | `devops-patterns`     | 主+子(2平台) | DevOps 模式（Docker, CI/CD）                     |
 | `api-development`     | 单文件       | RESTful API 设计                                 |
-| `database-patterns`   | 单文件       | 数据库设计和优化                                 |
+| `database-patterns`   | 主+子(4数据库) | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）  |
 | `tdd-workflow`        | 单文件       | 测试驱动开发                                     |
 | `debugging`           | 单文件       | 系统化调试方法                                   |
 | `git-workflow`        | 单文件       | Git 工作流最佳实践                               |

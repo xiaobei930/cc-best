@@ -6,7 +6,7 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 
 # 数据库模式技能
 
-本技能提供数据库设计和操作的最佳实践。
+本技能提供数据库设计和操作的最佳实践，支持多数据库按需加载。
 
 ## 触发条件
 
@@ -16,25 +16,34 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 - 管理数据库迁移
 - 配置索引
 
-## Schema 设计原则
+## 数据库专属模式
+
+根据项目技术栈，加载对应的数据库专属文件：
+
+| 数据库     | 加载文件      | 适用场景               |
+| ---------- | ------------- | ---------------------- |
+| PostgreSQL | `postgres.md` | 企业应用、复杂查询     |
+| MySQL      | `mysql.md`    | Web 应用、读多写少     |
+| Oracle     | `oracle.md`   | 大型企业、高并发 OLTP  |
+| SQLite     | `sqlite.md`   | 嵌入式、移动端、本地化 |
+
+**检测方式**: 根据连接字符串、ORM 配置或项目依赖确定数据库类型。
+
+---
+
+## 通用 Schema 设计
 
 ### 命名规范
 
 ```sql
 -- 表名：小写下划线，复数形式
-users
-order_items
-user_preferences
+users, order_items, user_preferences
 
 -- 列名：小写下划线
-created_at
-updated_at
-user_id
-is_active
+created_at, updated_at, user_id, is_active
 
 -- 索引名：idx_表名_列名
-idx_users_email
-idx_orders_user_id_created_at
+idx_users_email, idx_orders_user_id_created_at
 
 -- 外键名：fk_表名_关联表
 fk_orders_users
@@ -44,390 +53,158 @@ fk_orders_users
 
 ```sql
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id BIGINT PRIMARY KEY,           -- 主键
     -- 业务字段...
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    deleted_at TIMESTAMPTZ  -- 软删除
+    created_at TIMESTAMP NOT NULL,   -- 创建时间
+    updated_at TIMESTAMP NOT NULL,   -- 更新时间
+    deleted_at TIMESTAMP             -- 软删除
 );
-
--- 更新时间触发器
-CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER update_users_updated_at
-    BEFORE UPDATE ON users
-    FOR EACH ROW
-    EXECUTE FUNCTION update_updated_at();
 ```
 
 ### 关系设计
 
-```sql
--- 一对多：用户 -> 订单
-CREATE TABLE orders (
-    id UUID PRIMARY KEY,
-    user_id UUID NOT NULL REFERENCES users(id),
-    -- ...
-);
+| 关系类型 | 设计方式          | 示例                         |
+| -------- | ----------------- | ---------------------------- |
+| 一对多   | 子表添加外键      | orders.user_id → users       |
+| 多对多   | 中间表 + 联合主键 | user_roles(user_id, role_id) |
+| 一对一   | 子表主键 = 外键   | user_settings.user_id        |
 
--- 多对多：用户 <-> 角色
-CREATE TABLE user_roles (
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
-    PRIMARY KEY (user_id, role_id)
-);
+---
 
--- 一对一：用户 -> 用户配置
-CREATE TABLE user_settings (
-    user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    -- ...
-);
-```
+## 通用索引策略
 
-## ORM 使用模式
+### 何时创建索引
 
-### Prisma (TypeScript)
+- ✅ WHERE 条件频繁使用的列
+- ✅ JOIN 关联的列
+- ✅ ORDER BY / GROUP BY 的列
+- ❌ 很少查询的列
+- ❌ 值重复率高的列（如性别）
+- ❌ 频繁更新的列
 
-```typescript
-// schema.prisma
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+### 索引类型选择
 
-  @@index([email])
-}
+| 查询模式            | 推荐索引      |
+| ------------------- | ------------- |
+| `WHERE col = value` | B-tree        |
+| `WHERE col > value` | B-tree        |
+| 全文搜索            | 全文索引      |
+| JSON 字段查询       | GIN/JSON 索引 |
+| 时序数据范围查询    | BRIN（PG）    |
 
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-
-  @@index([authorId])
-}
-```
-
-```typescript
-// 查询示例
-// 获取用户及其文章
-const userWithPosts = await prisma.user.findUnique({
-  where: { id: userId },
-  include: {
-    posts: {
-      where: { published: true },
-      orderBy: { createdAt: "desc" },
-      take: 10,
-    },
-  },
-});
-
-// 批量创建
-await prisma.user.createMany({
-  data: users,
-  skipDuplicates: true,
-});
-
-// 事务
-await prisma.$transaction([
-  prisma.user.update({
-    where: { id },
-    data: { balance: { decrement: amount } },
-  }),
-  prisma.transaction.create({ data: { userId: id, amount, type: "debit" } }),
-]);
-```
-
-### SQLAlchemy (Python)
-
-```python
-# models.py
-from sqlalchemy import Column, String, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(String, primary_key=True)
-    email = Column(String, unique=True, nullable=False, index=True)
-    name = Column(String)
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
-
-    posts = relationship("Post", back_populates="author")
-
-class Post(Base):
-    __tablename__ = "posts"
-
-    id = Column(String, primary_key=True)
-    title = Column(String, nullable=False)
-    content = Column(String)
-    published = Column(Boolean, default=False)
-    author_id = Column(String, ForeignKey("users.id"), index=True)
-
-    author = relationship("User", back_populates="posts")
-```
-
-```python
-# 查询示例
-# 获取用户及文章
-user = session.query(User)\
-    .options(joinedload(User.posts))\
-    .filter(User.id == user_id)\
-    .first()
-
-# 批量插入
-session.bulk_insert_mappings(User, user_dicts)
-session.commit()
-
-# 事务
-try:
-    user.balance -= amount
-    session.add(Transaction(user_id=user.id, amount=amount))
-    session.commit()
-except:
-    session.rollback()
-    raise
-```
-
-## 查询优化
-
-### 索引策略
+### 复合索引原则
 
 ```sql
--- 单列索引：高选择性列
-CREATE INDEX idx_users_email ON users(email);
+-- 规则：等值列在前，范围列在后
+-- 查询：WHERE status = 'active' AND created_at > '2024-01-01'
 
--- 复合索引：按查询顺序
--- 适用于 WHERE user_id = ? AND status = ? ORDER BY created_at
-CREATE INDEX idx_orders_user_status_created
-    ON orders(user_id, status, created_at DESC);
+-- ✅ 正确顺序
+CREATE INDEX idx_orders_status_created ON orders(status, created_at);
 
--- 部分索引：只索引部分数据
-CREATE INDEX idx_orders_pending
-    ON orders(created_at)
-    WHERE status = 'pending';
-
--- 唯一索引
-CREATE UNIQUE INDEX idx_users_email_unique ON users(email);
-
--- 全文索引
-CREATE INDEX idx_posts_content_fts
-    ON posts USING GIN(to_tsvector('chinese', content));
+-- ❌ 错误顺序（范围列在前会导致后续列无法使用索引）
+CREATE INDEX idx_orders_created_status ON orders(created_at, status);
 ```
 
-### N+1 问题解决
+---
 
-```typescript
-// ❌ N+1 问题
-const users = await prisma.user.findMany();
-for (const user of users) {
-  const posts = await prisma.post.findMany({
-    where: { authorId: user.id },
-  });
-}
+## N+1 问题
 
-// ✅ 使用 include 预加载
-const users = await prisma.user.findMany({
-  include: { posts: true },
-});
+### 问题示例
 
-// ✅ 使用 select 只获取需要的字段
-const users = await prisma.user.findMany({
-  select: {
-    id: true,
-    name: true,
-    posts: {
-      select: { id: true, title: true },
-    },
-  },
-});
+```
+获取 100 个用户及其订单：
+1 次查询获取用户 + 100 次查询获取每个用户的订单 = 101 次查询
 ```
 
-```python
-# ❌ N+1 问题
-users = session.query(User).all()
-for user in users:
-    print(user.posts)  # 每次访问触发查询
+### 解决方案
 
-# ✅ 使用 joinedload 预加载
-users = session.query(User)\
-    .options(joinedload(User.posts))\
-    .all()
+| 方案     | 方式            | 适用场景       |
+| -------- | --------------- | -------------- |
+| 预加载   | JOIN 或 IN 查询 | 数据量适中     |
+| 批量加载 | 分批 IN 查询    | 大数据量       |
+| 延迟加载 | 按需查询        | 不确定是否需要 |
 
-# ✅ 使用 subqueryload 子查询加载
-users = session.query(User)\
-    .options(subqueryload(User.posts))\
-    .all()
-```
+---
 
-### 分页优化
+## 分页优化
 
 ```sql
--- ❌ 大偏移量慢
-SELECT * FROM posts ORDER BY created_at DESC OFFSET 10000 LIMIT 20;
+-- ❌ 大偏移量慢（OFFSET 10000 需要扫描 10000 行）
+SELECT * FROM posts ORDER BY id LIMIT 20 OFFSET 10000;
 
--- ✅ 使用游标分页
-SELECT * FROM posts
-WHERE created_at < '2024-01-01'
-ORDER BY created_at DESC
-LIMIT 20;
-
--- ✅ 使用覆盖索引
-SELECT id, title FROM posts  -- 索引覆盖，无需回表
-WHERE author_id = ?
-ORDER BY created_at DESC
-LIMIT 20;
+-- ✅ 游标分页（直接定位）
+SELECT * FROM posts WHERE id > 10000 ORDER BY id LIMIT 20;
 ```
 
-### 查询分析
+---
 
-```sql
--- 分析查询计划
-EXPLAIN ANALYZE
-SELECT * FROM orders
-WHERE user_id = '123' AND status = 'pending'
-ORDER BY created_at DESC;
+## 事务原则
 
--- 查看索引使用
-EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
-SELECT ...
-```
+### ACID 特性
 
-## 数据库迁移
+| 特性     | 含义               |
+| -------- | ------------------ |
+| A 原子性 | 全部成功或全部失败 |
+| C 一致性 | 数据始终有效       |
+| I 隔离性 | 事务互不干扰       |
+| D 持久性 | 提交后永久保存     |
 
-### Prisma 迁移
+### 隔离级别
+
+| 级别             | 脏读 | 不可重复读 | 幻读 | 性能 |
+| ---------------- | ---- | ---------- | ---- | ---- |
+| READ UNCOMMITTED | ✓    | ✓          | ✓    | 最高 |
+| READ COMMITTED   | ✗    | ✓          | ✓    | 高   |
+| REPEATABLE READ  | ✗    | ✗          | ✓    | 中   |
+| SERIALIZABLE     | ✗    | ✗          | ✗    | 低   |
+
+---
+
+## 迁移管理
+
+### 迁移原则
+
+1. **版本控制** - 所有迁移文件纳入 Git
+2. **只增不改** - 不修改已执行的迁移
+3. **可回滚** - 每个 UP 对应 DOWN
+4. **原子性** - 一个迁移只做一件事
+
+### 常用 ORM 命令
 
 ```bash
-# 创建迁移
-npx prisma migrate dev --name add_user_avatar
+# Prisma
+npx prisma migrate dev --name add_column
 
-# 应用迁移
-npx prisma migrate deploy
-
-# 重置数据库
-npx prisma migrate reset
-
-# 生成客户端
-npx prisma generate
-```
-
-### Alembic 迁移 (Python)
-
-```bash
-# 创建迁移
-alembic revision --autogenerate -m "add user avatar"
-
-# 应用迁移
+# SQLAlchemy/Alembic
+alembic revision --autogenerate -m "add column"
 alembic upgrade head
 
-# 回滚
-alembic downgrade -1
-
-# 查看历史
-alembic history
+# TypeORM
+npm run typeorm migration:generate -- -n AddColumn
+npm run typeorm migration:run
 ```
 
-```python
-# migrations/versions/xxx_add_user_avatar.py
-def upgrade():
-    op.add_column('users',
-        sa.Column('avatar_url', sa.String(500), nullable=True)
-    )
+---
 
-def downgrade():
-    op.drop_column('users', 'avatar_url')
-```
+## 最佳实践清单
 
-## 数据完整性
+- [ ] 表名/列名统一命名规范
+- [ ] 必备字段：id, created_at, updated_at
+- [ ] 软删除而非物理删除
+- [ ] 基于查询模式创建索引
+- [ ] 避免 N+1 查询
+- [ ] 大数据量使用游标分页
+- [ ] 迁移文件纳入版本控制
+- [ ] 合理配置连接池
+- [ ] 使用 EXPLAIN 分析慢查询
 
-### 约束
+---
 
-```sql
--- 非空约束
-email VARCHAR(255) NOT NULL
+## 数据库专属内容
 
--- 唯一约束
-UNIQUE(email)
+详细的数据库专属实现请参考：
 
--- 检查约束
-CHECK (age >= 0 AND age <= 150)
-
--- 外键约束
-FOREIGN KEY (user_id) REFERENCES users(id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-
--- 默认值
-created_at TIMESTAMPTZ DEFAULT NOW()
-```
-
-### 事务隔离级别
-
-```sql
--- 读已提交（默认）
-SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
-
--- 可重复读
-SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
-
--- 串行化（最严格）
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-```
-
-## 连接池配置
-
-```typescript
-// Prisma
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
-  },
-  log: ["query", "info", "warn", "error"],
-});
-
-// 连接池通过 URL 参数配置
-// postgresql://user:pass@host/db?connection_limit=10&pool_timeout=30
-```
-
-```python
-# SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy.pool import QueuePool
-
-engine = create_engine(
-    DATABASE_URL,
-    poolclass=QueuePool,
-    pool_size=5,
-    max_overflow=10,
-    pool_timeout=30,
-    pool_recycle=1800
-)
-```
-
-## 最佳实践
-
-1. **命名规范** - 统一的命名约定
-2. **必备字段** - id, created_at, updated_at
-3. **软删除** - deleted_at 而非物理删除
-4. **索引优化** - 基于查询模式创建索引
-5. **避免 N+1** - 使用预加载
-6. **分页优化** - 大数据量使用游标分页
-7. **迁移管理** - 版本控制迁移文件
-8. **连接池** - 合理配置连接数
-9. **查询分析** - 使用 EXPLAIN 分析
-10. **事务边界** - 明确事务范围
+- **PostgreSQL**: [postgres.md](./postgres.md) - 数据类型、索引策略、RLS、性能诊断
+- **MySQL**: [mysql.md](./mysql.md) - InnoDB 优化、索引策略、字符集
+- **Oracle**: [oracle.md](./oracle.md) - 分区表、全局索引、PL/SQL
+- **SQLite**: [sqlite.md](./sqlite.md) - WAL 模式、PRAGMA 优化、嵌入式场景
