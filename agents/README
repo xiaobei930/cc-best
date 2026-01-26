@@ -15,18 +15,35 @@
 | **消耗** | 不额外消耗 token | 独立 token 消耗 |
 | **适用场景** | 需要参考指南时 | 需要独立执行任务时 |
 
-### 配对关系
+### 配对关系与架构模式
 
-本插件中存在功能相关的 Skill-Agent 配对：
+本插件中存在功能相关的 Skill-Agent 配对。**推荐架构**：Agent 通过 `skills:` 字段预加载相关 Skill，避免内容重复。
 
-| Skill | Agent | 关系说明 |
+| Skill | Agent | 架构模式 |
 |-------|-------|----------|
-| `security-review` | `security-reviewer` | Skill 提供检查清单，Agent 执行自动扫描并产出报告 |
-| `tdd-workflow` | `tdd-guide` | Skill 提供 TDD 方法论，Agent 指导具体测试编写 |
-| - | `code-reviewer` | 无对应 Skill，Agent 直接执行代码审查 |
-| - | `code-simplifier` | 无对应 Skill，Agent 直接执行代码简化 |
-| - | `planner` | 无对应 Skill，与 `/lead` 命令配合使用 |
-| - | `requirement-validator` | 无对应 Skill，与 `/pm` 命令配合使用 |
+| `security-review` | `security-reviewer` | ✅ Agent 预加载 Skill（`skills: [security-review]`） |
+| `tdd-workflow` | `tdd-guide` | ✅ Agent 预加载 Skill（`skills: [tdd-workflow]`） |
+| - | `code-reviewer` | 独立 Agent，无对应 Skill |
+| - | `code-simplifier` | 独立 Agent，无对应 Skill |
+| - | `planner` | 独立 Agent，与 `/lead` 命令配合 |
+| - | `requirement-validator` | 独立 Agent，与 `/pm` 命令配合 |
+
+#### 架构优势
+
+```yaml
+# Agent 定义（精简版）
+---
+name: security-reviewer
+skills:
+  - security-review  # Skill 内容自动注入到 Agent 上下文
+---
+# Agent 只定义：行为准则 + 核心职责 + 输出格式
+# Skill 提供：详细知识库 + 代码示例 + 检查清单
+```
+
+- **避免重复**：知识内容只在 Skill 中维护一份
+- **职责分离**：Agent 定义"怎么做"，Skill 定义"做什么"
+- **易于维护**：更新 Skill 自动影响所有引用它的 Agent
 
 ### 使用建议
 
@@ -36,11 +53,7 @@
 
 # 需要自动扫描代码安全问题？→ 使用 Agent
 Task: security-reviewer  # 委派 Agent 执行扫描
-
-# 最佳实践：组合使用
-1. 先加载 Skill 了解检查标准
-2. 再委派 Agent 执行自动检查
-3. Agent 可引用 Skill 中的清单
+# Agent 已预加载 security-review Skill，无需额外加载
 ```
 
 ## 为什么使用子代理？

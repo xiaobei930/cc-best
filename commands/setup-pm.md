@@ -1,5 +1,6 @@
 ---
 description: 配置项目首选包管理器 (npm/pnpm/yarn/bun)
+allowed-tools: Read, Bash
 disable-model-invocation: true
 ---
 

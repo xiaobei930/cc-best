@@ -13,11 +13,11 @@ This directory contains metadata for Claude Code Plugin Marketplace compatibilit
 
 ```
 /                    # Plugin root
-├── commands/        # 30+ slash commands
-├── skills/          # 14 development skills
+├── commands/        # 32 slash commands
+├── skills/          # 16 development skills
 ├── agents/          # 6 sub-agents
 ├── rules/           # 13 coding standards
-├── scripts/         # 17 automation scripts
+├── scripts/         # 35+ automation scripts
 ├── hooks/           # Hook configuration and scripts
 └── memory-bank/     # Progress persistence
 

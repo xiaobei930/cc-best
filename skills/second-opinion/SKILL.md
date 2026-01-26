@@ -1,6 +1,6 @@
 ---
 name: second-opinion
-description: "使用第二个模型交叉验证代码、架构或设计决策。适用于重要决策、复杂重构、安全审查。"
+description: "Cross-validate code, architecture or design decisions using a second model. Use for critical decisions, complex refactoring, security reviews."
 allowed-tools: Read, Grep, Glob
 ---
 
@@ -9,6 +9,7 @@ allowed-tools: Read, Grep, Glob
 ## 概述
 
 在以下场景使用二次审查：
+
 - **架构决策**：重大技术选型、系统设计
 - **安全审查**：认证、授权、数据处理逻辑
 - **复杂重构**：跨模块重构、API 变更
@@ -68,20 +69,25 @@ npx -y @steipete/oracle --engine api \
 # 审查请求
 
 ## 项目背景
+
 - 技术栈：[描述]
 - 构建命令：[描述]
 - 关键约束：[描述]
 
 ## 审查目标
+
 [具体问题或决策]
 
 ## 相关代码
+
 [粘贴关键代码片段]
 
 ## 已尝试的方案
+
 [描述之前的尝试]
 
 ## 期望输出
+
 - 风险评估
 - 改进建议
 - 替代方案
@@ -89,11 +95,11 @@ npx -y @steipete/oracle --engine api \
 
 ### 2. 选择审查模型
 
-| 模型 | 适用场景 | 特点 |
-|------|----------|------|
-| GPT-4/5 | 通用审查、架构分析 | 广泛知识、推理强 |
+| 模型        | 适用场景           | 特点               |
+| ----------- | ------------------ | ------------------ |
+| GPT-4/5     | 通用审查、架构分析 | 广泛知识、推理强   |
 | Claude Opus | 复杂推理、代码分析 | 深度思考、上下文长 |
-| Gemini Pro | 多模态、大规模代码 | 长上下文、快速 |
+| Gemini Pro  | 多模态、大规模代码 | 长上下文、快速     |
 
 ### 3. 审查清单
 

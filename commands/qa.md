@@ -261,6 +261,10 @@ FAIL → 修复 → 重新 /verify
 
 ## E2E 测试能力
 
+> 📚 **详细 E2E 测试指南请参阅**: [e2e-testing 技能](../skills/e2e-testing/SKILL.md)
+>
+> 包含：Playwright 测试结构、Page Object Model、Flaky Test 管理、测试命令、报告模板
+
 ### 何时编写 E2E 测试
 
 | 场景                       | 是否需要 E2E |
@@ -270,179 +274,17 @@ FAIL → 修复 → 重新 /verify
 | 关键页面导航               | ⚠️ 推荐      |
 | 简单展示页面               | ❌ 不需要    |
 
-### Playwright 测试结构
-
-```
-tests/
-├── e2e/                       # E2E 测试目录
-│   ├── auth/                  # 认证流程
-│   │   ├── login.spec.ts
-│   │   └── register.spec.ts
-│   ├── core/                  # 核心功能
-│   │   └── main-flow.spec.ts
-│   └── api/                   # API 测试
-│       └── endpoints.spec.ts
-├── pages/                     # Page Object Model
-│   ├── LoginPage.ts
-│   └── DashboardPage.ts
-└── playwright.config.ts
-```
-
-### Page Object Model 模式
-
-```typescript
-// pages/LoginPage.ts
-import { Page, Locator } from "@playwright/test";
-
-export class LoginPage {
-  readonly page: Page;
-  readonly usernameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly submitButton: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.usernameInput = page.locator('[data-testid="username"]');
-    this.passwordInput = page.locator('[data-testid="password"]');
-    this.submitButton = page.locator('[data-testid="submit"]');
-  }
-
-  async goto() {
-    await this.page.goto("/login");
-  }
-
-  async login(username: string, password: string) {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.submitButton.click();
-    await this.page.waitForLoadState("networkidle");
-  }
-}
-```
-
-### E2E 测试模板
-
-```typescript
-// tests/e2e/auth/login.spec.ts
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/LoginPage";
-
-test.describe("用户登录", () => {
-  let loginPage: LoginPage;
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    await loginPage.goto();
-  });
-
-  test("正常登录成功", async ({ page }) => {
-    // Arrange - 准备
-    await expect(page).toHaveTitle(/登录/);
-
-    // Act - 执行
-    await loginPage.login("testuser", "password123");
-
-    // Assert - 断言
-    await expect(page).toHaveURL(/dashboard/);
-    await expect(page.locator('[data-testid="welcome"]')).toBeVisible();
-  });
-
-  test("错误密码显示提示", async ({ page }) => {
-    await loginPage.login("testuser", "wrongpassword");
-
-    await expect(page.locator('[data-testid="error"]')).toContainText(
-      "密码错误",
-    );
-  });
-});
-```
-
-### Flaky Test 管理
-
-#### 识别 Flaky Test
-
-```bash
-# 运行多次检测稳定性
-npx playwright test tests/xxx.spec.ts --repeat-each=5
-```
-
-#### 隔离 Flaky Test
-
-```typescript
-// 标记为待修复
-test("可能不稳定的测试", async ({ page }) => {
-  test.fixme(true, "Test is flaky - Issue #123");
-  // ...
-});
-
-// 在 CI 中跳过
-test("CI 环境不稳定", async ({ page }) => {
-  test.skip(process.env.CI, "Flaky in CI - Issue #456");
-  // ...
-});
-```
-
-#### 常见 Flaky 原因与修复
-
-| 原因       | 修复方案                          |
-| ---------- | --------------------------------- |
-| 元素未加载 | 使用 `locator.click()` 自动等待   |
-| 网络延迟   | `waitForResponse()` 等待 API      |
-| 动画未完成 | `waitForLoadState('networkidle')` |
-| 时间依赖   | Mock 时间或使用相对时间           |
-
-### E2E 测试命令
+### E2E 测试快速命令
 
 ```bash
 # 运行所有 E2E 测试
 npx playwright test
-
-# 运行指定文件
-npx playwright test tests/e2e/auth/login.spec.ts
-
-# 可视化运行（调试用）
-npx playwright test --headed
 
 # 调试模式
 npx playwright test --debug
 
 # 生成测试代码
 npx playwright codegen http://localhost:3000
-
-# 查看报告
-npx playwright show-report
-```
-
-### E2E 测试报告
-
-```markdown
-## E2E 测试报告
-
-**运行时间**: YYYY-MM-DD HH:MM
-**总耗时**: Xm Ys
-
-### 结果汇总
-
-- 总计: X 个测试
-- 通过: Y 个 (Z%)
-- 失败: A 个
-- 跳过: B 个
-
-### 失败测试
-
-#### 1. tests/e2e/auth/login.spec.ts:25
-
-**测试名称**: 错误密码显示提示
-**错误**: Expected element to be visible
-**截图**: artifacts/login-error-failed.png
-
-**复现步骤**:
-
-1. 打开 /login
-2. 输入错误密码
-3. 点击提交
-
-**可能原因**: 错误提示元素 selector 变更
 ```
 
 ## 验收标准检查

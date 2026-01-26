@@ -24,11 +24,11 @@
 
 > **Install as plugin and start coding with Claude in minutes, not hours.**
 
-A production-ready Claude Code plugin & template for development teams. Includes **30+ commands**, **14 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go**.
+A production-ready Claude Code plugin & template for development teams. Includes **32 commands**, **16 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go**.
 
 ### ✨ Highlights
 
-- 🎭 **Role-based workflow**: PM → Lead → Dev → QA pipeline
+- 🎭 **Role-based workflow**: PM → Lead → Designer → Dev → QA pipeline
 - 🔄 **Autonomous mode**: `/iterate` runs tasks without intervention
 - 🛡️ **Safety hooks**: Blocks dangerous commands, protects files
 - 📝 **Memory bank**: Persists progress across sessions with auto-archive
@@ -271,7 +271,7 @@ your-project/
 │   ├── architecture.md         # Architecture documentation
 │   └── tech-stack.md           # Technology choices
 │
-├── commands/                   # Slash commands (30+)
+├── commands/                   # Slash commands (32)
 │   ├── pm.md, lead.md          # Role commands
 │   ├── iterate.md, pair.md     # Mode commands
 │   └── build.md, test.md       # Tool commands
@@ -283,7 +283,7 @@ your-project/
 │   ├── frontend-style.md       # Vue/TS/JS style
 │   └── security.md             # Security rules
 │
-├── skills/                     # Development skills (14 categories)
+├── skills/                     # Development skills (16 categories)
 │   ├── backend-patterns/       # Backend patterns
 │   ├── frontend-patterns/      # Frontend patterns
 │   ├── devops-patterns/        # DevOps patterns
@@ -369,7 +369,7 @@ flowchart LR
 | Command     | Description                                                                                               |
 | ----------- | --------------------------------------------------------------------------------------------------------- |
 | `/iterate`  | Autonomous iteration loop, reads progress.md and executes tasks automatically                             |
-| `/pair`     | Pair programming mode, continues after confirming each key step                                           |
+| `/pair`     | Pair programming mode - human confirms each step. Use: `/pair [task]` or `/pair --learn [topic]`          |
 | `/cc-ralph` | Start Ralph Loop with cc-best workflow (requires ralph-loop plugin). Supports `--mode`, `--setup` options |
 
 ### Tool Commands
@@ -414,13 +414,17 @@ flowchart LR
 | `backend-patterns`    | Backend development     | Generic patterns + Python/TS/Java/Go/C#/Rust subfiles    |
 | `frontend-patterns`   | Frontend development    | Generic patterns + Vue/React/Svelte/Angular subfiles     |
 | `devops-patterns`     | DevOps practices        | CI/CD pipelines, Docker, deployment strategies           |
-| `tdd-workflow`        | Test-driven development | Red-Green-Refactor cycle                                 |
+| `tdd-workflow`        | Test-driven development | Red-Green-Refactor + TDD examples + framework configs    |
+| `e2e-testing`         | E2E testing             | Playwright, Page Object Model, Flaky Test management     |
 | `api-development`     | API development         | RESTful design, response formats, authentication         |
-| `database-patterns`   | Database design         | Naming conventions, query optimization, migrations       |
-| `security-review`     | Security review         | OWASP checklist, vulnerability protection                |
+| `database-patterns`   | Database design         | PostgreSQL/MySQL/Oracle/SQLite specific patterns         |
+| `security-review`     | Security review         | OWASP checklist + cloud security (IAM, secrets)          |
+| `architecture-design` | Architecture design     | ADR templates, design checklists, architecture patterns  |
 | `debugging`           | Systematic debugging    | Problem localization, log analysis, profiling            |
 | `git-workflow`        | Git workflow            | Branch strategy, commit conventions, conflict resolution |
+| `ios-development`     | iOS/macOS development   | Swift concurrency, SwiftUI performance, Xcode config     |
 | `isolated-research`   | Deep code research      | Isolated context exploration without polluting session   |
+| `second-opinion`      | Cross-validation        | Multi-model verification for architecture decisions      |
 | `continuous-learning` | Continuous learning     | Session evaluation, knowledge extraction                 |
 | `strategic-compact`   | Strategic compression   | Compression timing, best practices                       |
 

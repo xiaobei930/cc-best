@@ -37,7 +37,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Task, WebSearch, 
 而 `/cc-ralph` 自动：
 
 1. 读取项目当前状态
-2. 注入 cc-best 的角色工作流（PM→Lead→Dev→QA）
+2. 注入 cc-best 的角色工作流（PM→Lead→Designer→Dev→QA）
 3. 添加完成标准和卡住处理逻辑
 
 ---
@@ -160,15 +160,16 @@ node scripts/node/archive-progress.js memory-bank
 
 ### 角色选择规则
 
-| 当前状态         | 选择角色    | 动作                   |
-| ---------------- | ----------- | ---------------------- |
-| 无需求文档       | `/pm`       | 需求分析，创建 REQ-XXX |
-| REQ 有待澄清项   | `/clarify`  | 需求澄清               |
-| 有需求无设计     | `/lead`     | 技术设计，创建 DES-XXX |
-| 有设计，前端任务 | `/designer` | UI 设计指导            |
-| 有任务待开发     | `/dev`      | 编码实现               |
-| 有代码待测试     | `/qa`       | 验证测试               |
-| QA 发现 Bug      | `/dev`      | 修复后重新 `/qa`       |
+| 当前状态             | 选择角色    | 动作                                 |
+| -------------------- | ----------- | ------------------------------------ |
+| 无需求文档           | `/pm`       | 需求分析，创建 REQ-XXX               |
+| REQ 有待澄清项       | `/clarify`  | 需求澄清                             |
+| 有需求无设计         | `/lead`     | 技术设计，创建 DES-XXX               |
+| 有设计，前端任务     | `/designer` | UI 设计指导                          |
+| 有任务待开发         | `/dev`      | 编码实现                             |
+| 有代码待验证         | `/verify`   | 综合验证（构建+类型+Lint+测试+安全） |
+| 验证通过，待功能验收 | `/qa`       | 功能验收                             |
+| QA 发现 Bug          | `/dev`      | 修复后重新 `/verify`                 |
 
 ### 每次迭代步骤
 

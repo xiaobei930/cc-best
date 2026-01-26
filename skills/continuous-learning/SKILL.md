@@ -21,33 +21,40 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ### 1. 错误解决模式
 
 当解决了一个错误，记录：
+
 - 错误信息
 - 根本原因
 - 解决方案
 - 预防措施
 
-```markdown
+````markdown
 ## 错误: Cannot read property 'xxx' of undefined
 
 ### 场景
+
 访问嵌套对象属性时
 
 ### 根本原因
+
 异步数据未加载完成就访问
 
 ### 解决方案
+
 ```typescript
 // 使用可选链
-const value = obj?.nested?.property
+const value = obj?.nested?.property;
 
 // 或提供默认值
-const value = obj?.nested?.property ?? defaultValue
+const value = obj?.nested?.property ?? defaultValue;
 ```
+````
 
 ### 预防
+
 - 始终使用可选链访问可能为空的属性
 - 在组件中添加加载状态检查
-```
+
+````
 
 ### 2. 调试技巧
 
@@ -67,11 +74,12 @@ export async function GET(request: NextRequest) {
   })
   // ...
 }
-```
+````
 
 2. 使用 Postman/curl 直接测试
 3. 检查中间件是否拦截
-```
+
+````
 
 ### 3. 变通方案
 
@@ -94,12 +102,14 @@ await prisma.$executeRaw`
   UPDATE users SET updated_at = NOW()
   WHERE id = ${userId}
 `
-```
+````
 
 ### 注意
+
 - 需要手动处理 SQL 注入防护
 - 返回类型需要手动指定
-```
+
+````
 
 ### 4. 项目特定知识
 
@@ -121,7 +131,7 @@ await prisma.$executeRaw`
 - Token 有效期 7 天
 - 刷新 Token 在 /api/auth/refresh
 - 受保护路由在 middleware.ts 配置
-```
+````
 
 ## 评估清单
 
@@ -184,22 +194,28 @@ updated: YYYY-MM-DD
 # [标题]
 
 ## 场景
+
 [描述遇到这个问题/使用这个模式的场景]
 
 ## 问题/需求
+
 [具体的问题描述或需求说明]
 
 ## 解决方案
+
 [详细的解决方案，包括代码示例]
 
 ## 相关文件
+
 - `path/to/file.ts` - [说明]
 
 ## 参考
+
 - [链接1](url)
 - [链接2](url)
 
 ## 注意事项
+
 [使用时需要注意的点]
 ```
 
@@ -248,13 +264,92 @@ echo "[Learning] 保存位置: $LEARNED_PATH" >&2
     "workarounds",
     "project_specific"
   ],
-  "ignore_patterns": [
-    "simple_typos",
-    "one_time_fixes",
-    "external_api_issues"
-  ]
+  "ignore_patterns": ["simple_typos", "one_time_fixes", "external_api_issues"]
 }
 ```
+
+## 本能系统（进阶）
+
+本能是介于"观察"和"正式技能"之间的中间状态，用于捕捉重复出现的模式。
+
+### 本能的生命周期
+
+```
+观察 ──→ 记录 ──→ 本能 ──→ 演化
+ │        │        │        │
+ │        │        │        └─→ 技能/命令/智能体
+ │        │        └─→ 置信度评估
+ │        └─→ observations.jsonl
+ └─→ Hook 自动捕获
+```
+
+### 置信度评分
+
+| 置信度 | 含义     | 动作                |
+| ------ | -------- | ------------------- |
+| 0.3    | 首次观察 | 记录但不采取行动    |
+| 0.5    | 重复出现 | 形成初步本能        |
+| 0.7    | 多次验证 | 考虑演化为技能      |
+| 0.9    | 高度可靠 | 正式演化为技能/命令 |
+
+### 本能记录格式
+
+```markdown
+## 本能: [名称]
+
+### 触发模式
+
+[什么情况下触发]
+
+### 推荐行为
+
+[应该如何响应]
+
+### 置信度: 0.X
+
+[基于多少次观察]
+
+### 观察记录
+
+- 2025-01-20: [场景1]
+- 2025-01-22: [场景2]
+
+### 演化候选
+
+- [ ] 升级为技能
+- [ ] 升级为命令
+- [ ] 写入 CLAUDE.md
+```
+
+### 自动观察 Hook（可选）
+
+```javascript
+// hooks/observe-patterns.js
+const {
+  appendFile,
+  getSessionIdShort,
+  getDateTimeString,
+} = require("./lib/utils");
+
+async function observePattern(input) {
+  const observation = {
+    sessionId: getSessionIdShort(),
+    timestamp: getDateTimeString(),
+    tool: input.tool_name,
+    pattern: detectPattern(input),
+    context: summarizeContext(input),
+  };
+
+  if (observation.pattern) {
+    appendFile(
+      ".claude/learned/observations.jsonl",
+      JSON.stringify(observation) + "\n",
+    );
+  }
+}
+```
+
+---
 
 ## 最佳实践
 
@@ -268,7 +363,10 @@ echo "[Learning] 保存位置: $LEARNED_PATH" >&2
 8. **保持简洁** - 只记录有价值的内容
 9. **更新过时** - 及时更新过时的信息
 10. **关联项目** - 记录项目特定的上下文
+11. **本能演化** - 重复模式升级为正式技能
 
 ---
 
 **记住**：每次调试都是学习机会。记录下来，下次就能更快解决类似问题。
+
+> **进阶**：使用本能系统可以让学习更系统化，从观察到技能的演化过程让知识沉淀更有效。

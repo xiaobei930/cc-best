@@ -63,6 +63,54 @@ function ensureDir(dirPath) {
   return dirPath;
 }
 
+// ==================== 会话管理 ====================
+
+/**
+ * 获取当前 Claude Code 会话 ID
+ * 会话 ID 由 Claude Code 通过 CLAUDE_SESSION_ID 环境变量提供
+ *
+ * @param {string} fallback - 无会话 ID 时的回退值
+ * @returns {string} 完整会话 ID 或回退值
+ */
+function getSessionId(fallback = "default") {
+  const sessionId = process.env.CLAUDE_SESSION_ID;
+  if (!sessionId || sessionId.length === 0) {
+    return fallback;
+  }
+  return sessionId;
+}
+
+/**
+ * 获取会话 ID 的短版本（后 8 位）
+ * 适用于文件命名、日志标记等需要简短标识的场景
+ *
+ * @param {string} fallback - 无会话 ID 时的回退值
+ * @returns {string} 会话 ID 后 8 位或回退值
+ */
+function getSessionIdShort(fallback = "default") {
+  const sessionId = process.env.CLAUDE_SESSION_ID;
+  if (!sessionId || sessionId.length === 0) {
+    return fallback;
+  }
+  return sessionId.slice(-8);
+}
+
+/**
+ * 生成带会话标识的文件名
+ * 用于创建会话特定的日志、状态文件等
+ *
+ * @param {string} baseName - 基础文件名 (如 "progress")
+ * @param {string} ext - 文件扩展名 (如 "md")
+ * @returns {string} 带会话标识的文件名 (如 "progress-a1b2c3d4.md")
+ */
+function getSessionFileName(baseName, ext) {
+  const sessionId = getSessionIdShort();
+  if (sessionId === "default") {
+    return `${baseName}.${ext}`;
+  }
+  return `${baseName}-${sessionId}.${ext}`;
+}
+
 // ==================== 日期时间 ====================
 
 /**
@@ -352,6 +400,11 @@ module.exports = {
   getMemoryBankDir,
   getTempDir,
   ensureDir,
+
+  // 会话管理
+  getSessionId,
+  getSessionIdShort,
+  getSessionFileName,
 
   // 日期时间
   getDateString,

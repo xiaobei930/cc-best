@@ -6,9 +6,12 @@ context: fork
 agent: Explore
 model: haiku
 allowed-tools: Read, Grep, Glob
+parent-skill: codebase-exploration
 ---
 
 # 隔离研究任务
+
+> 本技能是 `codebase-exploration` 的子策略，适用于快速、一次性的代码探索。
 
 你正在一个**隔离的子代理上下文**中运行。这意味着：
 

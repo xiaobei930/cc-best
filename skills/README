@@ -41,8 +41,26 @@ skills/
 │   ├── mysql.md                 # MySQL/MariaDB 最佳实践
 │   ├── oracle.md                # Oracle 最佳实践
 │   └── sqlite.md                # SQLite 最佳实践
+├── tdd-workflow/
+│   ├── SKILL.md                 # TDD 核心原则与检查清单
+│   ├── tdd-example.md           # 完整 TDD 会话示例
+│   └── frameworks.md            # 测试框架配置与 Mock 模式
+├── e2e-testing/
+│   └── SKILL.md                 # E2E 测试（Playwright、Page Object Model）
+├── architecture-design/
+│   └── SKILL.md                 # 架构设计（ADR、设计检查清单、模式速查）
+├── codebase-exploration/
+│   └── SKILL.md                 # 代码库探索父技能（策略选择 + 通用方法）
 ├── isolated-research/
-│   └── SKILL.md                 # 🆕 隔离上下文研究（context: fork）
+│   └── SKILL.md                 # 隔离上下文研究（parent: codebase-exploration）
+├── iterative-retrieval/
+│   └── SKILL.md                 # 渐进式上下文检索（parent: codebase-exploration）
+├── ios-development/
+│   ├── SKILL.md                 # iOS 开发通用模式
+│   ├── swift-concurrency.md     # Swift 并发模式
+│   └── swiftui-performance.md   # SwiftUI 性能优化
+├── second-opinion/
+│   └── SKILL.md                 # 第二意见/交叉验证
 └── ...
 ```
 
@@ -87,6 +105,7 @@ once: true
 | `agent`                    | string  | `context: fork` 时使用的子代理类型                            |
 | `hooks`                    | object  | 技能生命周期钩子                                              |
 | `once`                     | boolean | 设为 `true` 每个会话只运行一次                                |
+| `parent-skill`             | string  | 父技能名称（用于主子技能结构）                                |
 
 ## 调用控制
 
@@ -241,9 +260,15 @@ description: 使用扩展思考进行深度分析
 | `devops-patterns`     | 主+子(2平台) | DevOps 模式（Docker, CI/CD）                     |
 | `api-development`     | 单文件       | RESTful API 设计                                 |
 | `database-patterns`   | 主+子(4数据库) | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）  |
-| `tdd-workflow`        | 单文件       | 测试驱动开发                                     |
+| `tdd-workflow`        | 主+子(2文件) | 测试驱动开发（TDD 示例 + 框架配置）              |
+| `e2e-testing`         | 单文件       | E2E 测试（Playwright、Page Object Model、Flaky Test） |
+| `architecture-design` | 单文件       | 架构设计（ADR、设计检查清单、架构模式速查）      |
 | `debugging`           | 单文件       | 系统化调试方法                                   |
 | `git-workflow`        | 单文件       | Git 工作流最佳实践                               |
 | `continuous-learning` | 主+脚本      | 会话评估和知识提取                               |
 | `strategic-compact`   | 主+脚本      | 策略性上下文压缩                                 |
-| `isolated-research`   | 单文件(fork) | 🆕 隔离上下文深度研究（不污染主会话）            |
+| `codebase-exploration`| 主+子(2技能) | 代码库探索父技能（isolated-research + iterative-retrieval）|
+| `isolated-research`   | 子技能(fork) | 隔离上下文深度研究（快速、一次性探索）           |
+| `iterative-retrieval` | 子技能       | 渐进式上下文检索（多轮迭代、置信度驱动）         |
+| `ios-development`     | 主+子(2文件) | iOS 开发（Swift 并发 + SwiftUI 性能）            |
+| `second-opinion`      | 单文件       | 第二意见/多模型交叉验证                          |
