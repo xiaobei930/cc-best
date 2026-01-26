@@ -261,7 +261,7 @@ FAIL → 修复 → 重新 /verify
 
 ## E2E 测试能力
 
-> 📚 **详细 E2E 测试指南请参阅**: [e2e-testing 技能](../skills/e2e-testing/SKILL.md)
+> 📚 **详细 E2E 测试指南请参阅**: [testing 技能 - E2E 部分](../skills/testing/e2e.md)
 >
 > 包含：Playwright 测试结构、Page Object Model、Flaky Test 管理、测试命令、报告模板
 
@@ -406,8 +406,8 @@ code-reviewer (深度审查)  ←── Agent 独立上下文
 **Skill vs Agent 选择**:
 | 需求 | 选择 |
 |------|------|
-| 需要安全检查清单参考 | `security-review` skill |
-| 需要自动扫描代码安全 | `security-reviewer` agent |
+| 需要安全检查清单参考 | `security` skill |
+| 需要自动扫描代码安全 | `securityer` agent |
 | 需要代码质量深度分析 | `code-reviewer` agent |
 
 ---

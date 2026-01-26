@@ -349,7 +349,7 @@ Phase N: Polish（跨 Story 优化）
 
 ## 架构设计能力
 
-> 📚 **详细架构设计指南请参阅**: [architecture-design 技能](../skills/architecture-design/SKILL.md)
+> 📚 **详细架构设计指南请参阅**: [architecture 技能](../skills/architecture/SKILL.md)
 >
 > 包含：ADR 架构决策记录模板、系统设计检查清单、可扩展性评估、架构模式速查（后端/前端/数据访问）
 

@@ -48,7 +48,7 @@
 | 本地 Agent              | 官方插件            | 本地特点                     | 插件特点               | 配合策略                       |
 | ----------------------- | ------------------- | ---------------------------- | ---------------------- | ------------------------------ |
 | `code-reviewer`         | `code-review`       | 轻量、即时反馈、可定制检查项 | 更深度分析、自动触发   | 本地做快速检查，插件做深度审查 |
-| `security-reviewer`     | `security-guidance` | OWASP 清单、关键词搜索       | 自动安全分析、持续监控 | 本地做清单检查，插件做智能分析 |
+| `securityer`     | `security-guidance` | OWASP 清单、关键词搜索       | 自动安全分析、持续监控 | 本地做清单检查，插件做智能分析 |
 | `code-simplifier`       | `code-simplifier`   | 本地执行、快速反馈           | 更多上下文、更智能     | 二选一或插件优先               |
 | `tdd-guide`             | -                   | 本地独有                     | 无官方对应             | 独立使用                       |
 | `planner`               | -                   | 本地独有                     | 无官方对应             | 独立使用                       |
@@ -135,7 +135,7 @@ Claude 自动委派 code-reviewer agent 进行审查
 **无插件时**:
 
 ```
-Claude 委派 security-reviewer agent
+Claude 委派 securityer agent
 按 OWASP 清单逐项检查
 搜索敏感关键词（password, secret, key 等）
 ```
@@ -176,7 +176,7 @@ Claude 委派 security-reviewer agent
 Claude 会在适当时机自动委派：
 
 - 代码变更后 → `code-reviewer`
-- 涉及认证/输入 → `security-reviewer`
+- 涉及认证/输入 → `securityer`
 - 需要测试 → `tdd-guide`
 - 复杂任务 → `planner`
 - 需求文档 → `requirement-validator`
@@ -194,9 +194,9 @@ Claude 会在适当时机自动委派：
 
 根据任务类型自动加载相关 skills：
 
-- API 开发 → `api-development`
-- 安全相关 → `security-review`
-- TDD 流程 → `tdd-workflow`
+- API 开发 → `api`
+- 安全相关 → `security`
+- TDD 流程 → `tdd`
 
 ---
 

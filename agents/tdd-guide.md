@@ -4,7 +4,7 @@ description: "Guides test-driven development, helps write test cases, and ensure
 model: sonnet
 tools: Read, Write, Edit, Grep, Glob, Bash
 skills:
-  - tdd-workflow
+  - testing
 ---
 
 # TDD Guide Agent
@@ -29,7 +29,7 @@ skills:
 
 ## 执行方式
 
-参考预加载的 `tdd-workflow` 技能中的详细指南执行，包括：
+参考预加载的 `testing` 技能中的详细指南执行，包括：
 
 - TDD 循环的具体步骤
 - 测试命名规范和结构

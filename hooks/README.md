@@ -57,10 +57,10 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ### 策略性钩子
 
-| 脚本                  | 功能         | 位置                          |
-| --------------------- | ------------ | ----------------------------- |
-| `suggest-compact.sh`  | 建议压缩时机 | `skills/strategic-compact/`   |
-| `evaluate-session.sh` | 提取模式     | `skills/continuous-learning/` |
+| 脚本                  | 功能         | 位置               |
+| --------------------- | ------------ | ------------------ |
+| `suggest-compact.sh`  | 建议压缩时机 | `skills/compact/`  |
+| `evaluate-session.sh` | 提取模式     | `skills/learning/` |
 
 ## 配置方式
 

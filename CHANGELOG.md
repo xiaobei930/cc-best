@@ -7,42 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [0.5.2] - 2026-01-26
 
 ### Added / 新增
 
+- **Skills 父子结构重组** - 全面重组技能系统，采用父子结构便于按需加载
+  - 新增 4 个父技能：`testing`、`quality`、`session`、`native`
+  - `testing` 父技能：统一 `tdd` 和 `e2e` 测试技能
+  - `quality` 父技能：统一 `security` 和 `debug` 质量技能
+  - `session` 父技能：统一 `learning` 和 `compact` 会话技能
+  - `native` 父技能：统一原生开发技能（当前含 `ios`，未来含 `android`）
+  - `exploration` 父技能：已有，统一 `isolated-research` 和 `iterative-retrieval`
 - **Session ID 工具函数** - 在 `scripts/node/lib/utils.js` 新增会话管理功能
   - `getSessionId()` - 获取完整会话 ID
   - `getSessionIdShort()` - 获取会话 ID 后 8 位（用于文件命名）
   - `getSessionFileName()` - 生成带会话标识的文件名
-- **codebase-exploration 父技能** - 新增代码库探索通用方法论
-  - 整合 isolated-research 和 iterative-retrieval 为主子结构
-  - 提供策略选择指南和通用输出格式
-- **iterative-retrieval 技能** - 新增渐进式上下文检索技能
+- **iterative-retrieval 子技能** - 新增渐进式上下文检索技能
   - 四阶段方法：DISPATCH → EVALUATE → REFINE → LOOP
   - 置信度评分驱动迭代决策
   - 适用于复杂跨模块探索
 - **异步钩子文档** - 在 `hooks/README.md` 添加异步 hook 使用指南
   - `async: true` 配置说明
   - 适用场景对比表
-
-### Changed / 变更
-
-- **continuous-learning 技能增强** - 添加本能系统（Instincts）
-  - 本能生命周期：观察 → 记录 → 本能 → 演化
-  - 置信度评分（0.3-0.9）
-  - 自动观察 Hook 示例代码
-- **isolated-research 技能** - 添加 `parent-skill: codebase-exploration` 引用
 - **`/designer` 命令** - 新增 UI 设计师角色命令 (342 行)
   - 定义美学方向，避免 AI 通用审美（AI slop）
   - 完整的反模式清单（字体、颜色、布局、背景）
   - 设计审查清单和设计指导文档模板
   - 与官方 `/frontend-design` Skill 协作集成
-- **e2e-testing 技能** - 新增独立的 E2E 测试技能 (252 行)
-  - Playwright 测试结构和 Page Object Model
-  - Flaky Test 识别、隔离与修复
-  - E2E 测试报告模板和命令
-- **architecture-design 技能** - 新增架构设计技能 (188 行)
+- **architecture 技能** - 新增架构设计技能 (188 行)
   - ADR 架构决策记录模板
   - 系统设计检查清单（功能/非功能/技术/运维）
   - 可扩展性评估（MVP 到规模化）
@@ -50,15 +42,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed / 变更
 
-- **commands/qa.md 精简** - 从 647 行减至 489 行，提取 E2E 测试内容到独立技能
-- **commands/lead.md 精简** - 从 615 行减至 471 行，提取架构设计内容到独立技能
-- **README.md skills 表格更新** - 添加 16 个完整 skills 列表（含 ios-development、second-opinion）
-- **skills/README 更新** - 同步目录结构和技能表格
-- **tdd-workflow Skill 拆分优化** - 从 813 行精简至 206 行，符合官方 ≤500 行建议
+- **Skills 目录重命名** - 统一命名风格，简化技能名称
+  - `backend-patterns` → `backend`
+  - `frontend-patterns` → `frontend`
+  - `database-patterns` → `database`
+  - `devops-patterns` → `devops`
+  - `api-development` → `api`
+  - `git-workflow` → `git`
+  - `security-review` → `security`
+  - `debugging` → `debug`
+  - `continuous-learning` → `learning`
+  - `strategic-compact` → `compact`
+  - `codebase-exploration` → `exploration`
+- **Skills 子文件合并** - 将独立子技能合并为父技能的子文件（Claude Code 不支持嵌套技能目录）
+  - `testing/` 合并 tdd 和 e2e：新增 `tdd.md`、`e2e.md`、`tdd-example.md`、`frameworks.md`
+  - `exploration/` 合并研究技能：新增 `isolated-research.md`、`iterative-retrieval.md`
+  - `native/` 合并 iOS 开发：新增 `ios.md`、`swift-concurrency.md`、`swiftui-performance.md`
+  - 删除独立目录：`ios-development/`、`tdd-workflow/`、`e2e-testing/`、`isolated-research/`、`iterative-retrieval/`
+- **learning 技能增强** - 添加本能系统（Instincts）
+  - 本能生命周期：观察 → 记录 → 本能 → 演化
+  - 置信度评分（0.3-0.9）
+  - 自动观察 Hook 示例代码
+- **commands/qa.md 精简** - 从 647 行减至 489 行，提取 E2E 测试内容到 testing 技能
+- **commands/lead.md 精简** - 从 615 行减至 471 行，提取架构设计内容到 architecture 技能
+- **testing Skill 拆分优化** - 从 813 行精简至 206 行，符合官方 ≤500 行建议
   - `SKILL.md` (206 行) - 核心原则、边界情况、反模式、检查清单
+  - `tdd.md` - TDD 工作流（原 tdd-workflow）
+  - `e2e.md` - E2E 测试指南（原 e2e-testing）
   - `tdd-example.md` (361 行) - 完整 TDD 会话示例（积分计算器）
   - `frameworks.md` (263 行) - 测试框架配置、Mock 模式、常用命令
-- **skills/README 更新** - 添加 e2e-testing 和 architecture-design 技能描述
 - **iterate.md 流程优化** - 添加 /verify 步骤到角色选择表和执行流程
   - Step 1 新增 "有代码待验证 → /verify" 角色
   - Step 2 更新为完整流程：/dev → /verify → /qa → /commit
@@ -66,10 +78,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 工作流更新为 PM→Lead→Designer→Dev→QA
   - 角色选择表添加 /verify 步骤
 - **README /pair 说明扩展** - 添加使用示例 `/pair [task]` 和 `/pair --learn [topic]`
+- **README.md skills 表格更新** - 添加 16 个完整 skills 列表
+- **skills/README 更新** - 同步目录结构和技能表格
 
 ### Fixed / 修复
 
 - **setup-pm.md 缺失 allowed-tools** - 添加 `allowed-tools: Read, Bash`
+- **文档引用路径修复** - 更新旧技能名称引用
+  - `agents/README` - `security-review` → `security`, `tdd-workflow` → `testing`
+  - `commands/qa.md` - `skills/e2e/SKILL.md` → `skills/testing/e2e.md`
+  - `commands/lead.md` - `architecture-design` → `architecture`
+  - `.claude/learned/.gitkeep` - `continuous-learning` → `learning`
+  - `hooks/README.md` - `strategic-compact` → `compact`, `continuous-learning` → `learning`
+- **CLAUDE.md 重写为插件说明** - 从项目模板转换为插件说明文档
+  - 移除占位符 `{{PROJECT_NAME}}`、`{{DATE}}` 等
+  - 添加插件版本号和作者信息
+  - 修正 `/ralph-loop` 为 `/cc-ralph`（本插件命令）
+  - 添加代理列表和完整文档引用
+- **Agent/Skill 引用修复**
+  - `agents/security-reviewer.md` - name 字段 `securityer` → `security-reviewer`
+  - `agents/tdd-guide.md` - skills 引用 `tdd` → `testing`
+  - `agents/README` - 更新 tdd-guide 的 skills 引用说明
 
 ---
 
@@ -407,6 +436,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.5.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.5...v0.5.0
 [0.4.5]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.4...v0.4.5

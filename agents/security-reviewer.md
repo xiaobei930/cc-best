@@ -4,7 +4,7 @@ description: "Checks code for security vulnerabilities including OWASP Top 10, s
 model: opus
 tools: Read, Grep, Glob
 skills:
-  - security-review
+  - security
 ---
 
 # Security Reviewer Agent
@@ -29,7 +29,7 @@ skills:
 
 ## 执行方式
 
-参考预加载的 `security-review` 技能中的详细指南执行，包括：
+参考预加载的 `security` 技能中的详细指南执行，包括：
 
 - 完整的安全检查清单（11 大类）
 - 多语言安全代码示例

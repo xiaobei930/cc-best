@@ -276,10 +276,10 @@ your-project/
 │   └── security.md             # 安全规则
 │
 ├── skills/                     # 开发技能（16 类）
-│   ├── backend-patterns/       # 后端模式
-│   ├── frontend-patterns/      # 前端模式
-│   ├── devops-patterns/        # DevOps 模式
-│   └── tdd-workflow/           # TDD 工作流
+│   ├── backend/                # 后端模式（5 种语言）
+│   ├── frontend/               # 前端模式（4 种框架）
+│   ├── testing/                # 测试（TDD、E2E）
+│   └── security/               # 安全审查
 │
 ├── agents/                     # 子智能体（6 个）
 │   ├── code-reviewer.md        # 代码审查
@@ -304,11 +304,17 @@ your-project/
 │           └── format-file.js, typescript-check.js
 │
 ├── hooks/                      # Hook 配置
-│   └── hooks.json              # 插件 hooks 配置
+│   ├── hooks.json              # 插件 hooks 配置
+│   └── README.md               # Hooks 使用文档
+│
+├── .claude-plugin/             # 插件市场元数据
+│   ├── plugin.json             # 插件清单
+│   └── marketplace.json        # 市场列表信息
 │
 └── .claude/                    # Claude Code 配置
     ├── settings.json           # 基础权限（提交到 Git）
     ├── settings.local.json     # 本地配置 + Hooks（不提交）
+    ├── tools.md                # 脚本和工具清单
     ├── mcp-configs/            # MCP 服务器配置
     ├── ralph-prompts/          # Ralph Loop 提示词
     └── learned/                # 持续学习存储
@@ -401,20 +407,20 @@ flowchart LR
 
 ## 🛠️ 技能说明
 
-| 技能                  | 用途         | 主要内容                                   |
-| --------------------- | ------------ | ------------------------------------------ |
-| `backend-patterns`    | 后端开发     | 通用模式 + Python/TS/Java/Go/C# 子文件     |
-| `frontend-patterns`   | 前端开发     | 通用模式 + Vue/React/Svelte/Angular 子文件 |
-| `devops-patterns`     | DevOps 实践  | CI/CD 流水线、Docker、部署策略             |
-| `tdd-workflow`        | 测试驱动开发 | Red-Green-Refactor 循环                    |
-| `api-development`     | API 开发     | RESTful 设计、响应格式、认证               |
-| `database-patterns`   | 数据库设计   | 命名规范、查询优化、迁移管理               |
-| `security-review`     | 安全审查     | OWASP 检查清单、漏洞防护                   |
-| `debugging`           | 系统化调试   | 问题定位、日志分析、性能剖析               |
-| `git-workflow`        | Git 工作流   | 分支策略、提交规范、冲突解决               |
-| `isolated-research`   | 深度代码研究 | 隔离上下文探索，不污染主会话               |
-| `continuous-learning` | 持续学习     | 会话评估、知识提取                         |
-| `strategic-compact`   | 策略性压缩   | 压缩时机、最佳实践                         |
+| 技能          | 用途            | 主要内容                                    |
+| ------------- | --------------- | ------------------------------------------- |
+| `backend`     | 后端开发        | 通用模式 + Python/TS/Java/Go/C#/Rust 子文件 |
+| `frontend`    | 前端开发        | 通用模式 + Vue/React/Svelte/Angular 子文件  |
+| `devops`      | DevOps 实践     | CI/CD 流水线、Docker、部署策略              |
+| `testing`     | 测试（TDD+E2E） | Red-Green-Refactor、E2E 测试                |
+| `api`         | API 开发        | RESTful 设计、响应格式、认证                |
+| `database`    | 数据库设计      | 命名规范、查询优化、迁移管理                |
+| `security`    | 安全审查        | OWASP 检查清单、漏洞防护、云安全            |
+| `debug`       | 系统化调试      | 问题定位、日志分析、性能剖析                |
+| `git`         | Git 工作流      | 分支策略、提交规范、冲突解决                |
+| `exploration` | 代码探索        | 隔离研究 + 迭代检索策略                     |
+| `learning`    | 持续学习        | 会话评估、知识提取                          |
+| `compact`     | 策略性压缩      | 压缩时机、最佳实践                          |
 
 ---
 
@@ -444,9 +450,9 @@ flowchart LR
 
 Claude 根据任务自动加载相关技能，或在 agent frontmatter 中预加载：
 
-- **自动加载**：实现 API 时加载 `api-development`
-- **显式引用**：agent 中 `skills: [tdd-workflow]`
-- **用户请求**：`参考 security-review 技能检查代码`
+- **自动加载**：实现 API 时加载 `api`
+- **显式引用**：agent 中 `skills: [testing]`
+- **用户请求**：`参考 security 技能检查代码`
 
 #### Agents（Task 工具委派）
 
@@ -464,7 +470,7 @@ Claude 根据任务自动加载相关技能，或在 agent frontmatter 中预加
 
 Claude 行为:
 1. /lead 角色 → 设计方案
-2. 加载 api-development + security-review 技能
+2. 加载 api + security 技能
 3. /dev 角色 → 编码实现
 4. 委派 tdd-guide agent → 编写测试
 5. 委派 security-reviewer agent → 安全检查
@@ -942,14 +948,14 @@ chmod +x scripts/*.py
 
 ### 支持的语言
 
-| 语言      | 规则文件                 | 格式化工具         | 测试框架    |
-| --------- | ------------------------ | ------------------ | ----------- |
-| Python    | `code-style.md`          | Black + isort      | pytest      |
-| Vue/TS/JS | `frontend-style.md`      | Prettier           | Vitest      |
-| C++       | `cpp-style.md`           | clang-format       | Google Test |
-| Java      | `java-style.md`          | google-java-format | JUnit       |
-| C#        | `csharp-style.md`        | dotnet format      | xUnit/NUnit |
-| Go        | `backend-patterns/go.md` | gofmt              | testing     |
+| 语言      | 规则文件            | 格式化工具         | 测试框架    |
+| --------- | ------------------- | ------------------ | ----------- |
+| Python    | `code-style.md`     | Black + isort      | pytest      |
+| Vue/TS/JS | `frontend-style.md` | Prettier           | Vitest      |
+| C++       | `cpp-style.md`      | clang-format       | Google Test |
+| Java      | `java-style.md`     | google-java-format | JUnit       |
+| C#        | `csharp-style.md`   | dotnet format      | xUnit/NUnit |
+| Go        | `backend/go.md`     | gofmt              | testing     |
 
 ---
 

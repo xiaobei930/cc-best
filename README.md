@@ -284,10 +284,10 @@ your-project/
 │   └── security.md             # Security rules
 │
 ├── skills/                     # Development skills (16 categories)
-│   ├── backend-patterns/       # Backend patterns
-│   ├── frontend-patterns/      # Frontend patterns
-│   ├── devops-patterns/        # DevOps patterns
-│   └── tdd-workflow/           # TDD workflow
+│   ├── backend/                # Backend patterns (5 languages)
+│   ├── frontend/               # Frontend patterns (4 frameworks)
+│   ├── testing/                # Testing (TDD, E2E)
+│   └── security/               # Security review
 │
 ├── agents/                     # Sub-agents (6)
 │   ├── code-reviewer.md        # Code review
@@ -312,11 +312,17 @@ your-project/
 │           └── format-file.js, typescript-check.js
 │
 ├── hooks/                      # Hook configuration
-│   └── hooks.json              # Plugin hooks config
+│   ├── hooks.json              # Plugin hooks config
+│   └── README.md               # Hooks documentation
+│
+├── .claude-plugin/             # Plugin marketplace metadata
+│   ├── plugin.json             # Plugin manifest
+│   └── marketplace.json        # Marketplace listing
 │
 └── .claude/                    # Claude Code configuration
     ├── settings.json           # Base permissions (commit to Git)
     ├── settings.local.json     # Local config + Hooks (don't commit)
+    ├── tools.md                # Scripts and tools inventory
     ├── mcp-configs/            # MCP server configurations
     ├── ralph-prompts/          # Ralph Loop prompts
     └── learned/                # Continuous learning storage
@@ -409,24 +415,25 @@ flowchart LR
 
 ## 🛠️ Skills
 
-| Skill                 | Purpose                 | Key Contents                                             |
-| --------------------- | ----------------------- | -------------------------------------------------------- |
-| `backend-patterns`    | Backend development     | Generic patterns + Python/TS/Java/Go/C#/Rust subfiles    |
-| `frontend-patterns`   | Frontend development    | Generic patterns + Vue/React/Svelte/Angular subfiles     |
-| `devops-patterns`     | DevOps practices        | CI/CD pipelines, Docker, deployment strategies           |
-| `tdd-workflow`        | Test-driven development | Red-Green-Refactor + TDD examples + framework configs    |
-| `e2e-testing`         | E2E testing             | Playwright, Page Object Model, Flaky Test management     |
-| `api-development`     | API development         | RESTful design, response formats, authentication         |
-| `database-patterns`   | Database design         | PostgreSQL/MySQL/Oracle/SQLite specific patterns         |
-| `security-review`     | Security review         | OWASP checklist + cloud security (IAM, secrets)          |
-| `architecture-design` | Architecture design     | ADR templates, design checklists, architecture patterns  |
-| `debugging`           | Systematic debugging    | Problem localization, log analysis, profiling            |
-| `git-workflow`        | Git workflow            | Branch strategy, commit conventions, conflict resolution |
-| `ios-development`     | iOS/macOS development   | Swift concurrency, SwiftUI performance, Xcode config     |
-| `isolated-research`   | Deep code research      | Isolated context exploration without polluting session   |
-| `second-opinion`      | Cross-validation        | Multi-model verification for architecture decisions      |
-| `continuous-learning` | Continuous learning     | Session evaluation, knowledge extraction                 |
-| `strategic-compact`   | Strategic compression   | Compression timing, best practices                       |
+| Skill            | Purpose               | Key Contents                                             |
+| ---------------- | --------------------- | -------------------------------------------------------- |
+| `backend`        | Backend development   | Generic patterns + Python/TS/Java/Go/C#/Rust subfiles    |
+| `frontend`       | Frontend development  | Generic patterns + Vue/React/Svelte/Angular subfiles     |
+| `devops`         | DevOps practices      | CI/CD pipelines, Docker, deployment strategies           |
+| `testing`        | Testing (TDD + E2E)   | TDD workflow, E2E testing, framework configs             |
+| `api`            | API development       | RESTful design, response formats, authentication         |
+| `database`       | Database design       | PostgreSQL/MySQL/Oracle/SQLite specific patterns         |
+| `security`       | Security review       | OWASP checklist + cloud security (IAM, secrets)          |
+| `architecture`   | Architecture design   | ADR templates, design checklists, architecture patterns  |
+| `debug`          | Systematic debugging  | Problem localization, log analysis, profiling            |
+| `git`            | Git workflow          | Branch strategy, commit conventions, conflict resolution |
+| `native`         | Native development    | iOS/macOS: Swift concurrency, SwiftUI performance        |
+| `exploration`    | Code exploration      | Isolated research, iterative retrieval                   |
+| `second-opinion` | Cross-validation      | Multi-model verification for architecture decisions      |
+| `learning`       | Continuous learning   | Session evaluation, knowledge extraction                 |
+| `compact`        | Strategic compression | Compression timing, best practices                       |
+| `quality`        | Code quality (parent) | Parent skill for security and debug                      |
+| `session`        | Session management    | Parent skill for learning and compact                    |
 
 ---
 
@@ -456,9 +463,9 @@ Triggered when user types `/command`:
 
 Claude auto-loads relevant skills, or pre-loads via agent frontmatter:
 
-- **Auto-load**: Load `api-development` when implementing APIs
-- **Explicit reference**: `skills: [tdd-workflow]` in agent
-- **User request**: `Check code using security-review skill`
+- **Auto-load**: Load `api` when implementing APIs
+- **Explicit reference**: `skills: [testing]` in agent
+- **User request**: `Check code using security skill`
 
 #### Agents (Task Tool Delegation)
 
@@ -476,7 +483,7 @@ User: Implement user login feature
 
 Claude behavior:
 1. /lead role → Design solution
-2. Load api-development + security-review skills
+2. Load api + security skills
 3. /dev role → Coding implementation
 4. Delegate tdd-guide agent → Write tests
 5. Delegate security-reviewer agent → Security check
@@ -954,14 +961,14 @@ Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 
 ### Supported Languages
 
-| Language  | Rule File                | Formatter          | Test Framework |
-| --------- | ------------------------ | ------------------ | -------------- |
-| Python    | `code-style.md`          | Black + isort      | pytest         |
-| Vue/TS/JS | `frontend-style.md`      | Prettier           | Vitest         |
-| C++       | `cpp-style.md`           | clang-format       | Google Test    |
-| Java      | `java-style.md`          | google-java-format | JUnit          |
-| C#        | `csharp-style.md`        | dotnet format      | xUnit/NUnit    |
-| Go        | `backend-patterns/go.md` | gofmt              | testing        |
+| Language  | Rule File           | Formatter          | Test Framework |
+| --------- | ------------------- | ------------------ | -------------- |
+| Python    | `code-style.md`     | Black + isort      | pytest         |
+| Vue/TS/JS | `frontend-style.md` | Prettier           | Vitest         |
+| C++       | `cpp-style.md`      | clang-format       | Google Test    |
+| Java      | `java-style.md`     | google-java-format | JUnit          |
+| C#        | `csharp-style.md`   | dotnet format      | xUnit/NUnit    |
+| Go        | `backend/go.md`     | gofmt              | testing        |
 
 ---
 

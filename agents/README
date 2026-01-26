@@ -21,8 +21,8 @@
 
 | Skill | Agent | 架构模式 |
 |-------|-------|----------|
-| `security-review` | `security-reviewer` | ✅ Agent 预加载 Skill（`skills: [security-review]`） |
-| `tdd-workflow` | `tdd-guide` | ✅ Agent 预加载 Skill（`skills: [tdd-workflow]`） |
+| `security` | `security-reviewer` | ✅ Agent 预加载 Skill（`skills: [security]`） |
+| `testing` | `tdd-guide` | ✅ Agent 预加载 Skill（`skills: [testing]`） |
 | - | `code-reviewer` | 独立 Agent，无对应 Skill |
 | - | `code-simplifier` | 独立 Agent，无对应 Skill |
 | - | `planner` | 独立 Agent，与 `/lead` 命令配合 |
@@ -35,7 +35,7 @@
 ---
 name: security-reviewer
 skills:
-  - security-review  # Skill 内容自动注入到 Agent 上下文
+  - security  # Skill 内容自动注入到 Agent 上下文
 ---
 # Agent 只定义：行为准则 + 核心职责 + 输出格式
 # Skill 提供：详细知识库 + 代码示例 + 检查清单
@@ -49,11 +49,11 @@ skills:
 
 ```
 # 需要了解安全最佳实践？→ 使用 Skill
-/security-review  # 加载安全检查清单到上下文
+/security  # 加载安全检查清单到上下文
 
 # 需要自动扫描代码安全问题？→ 使用 Agent
 Task: security-reviewer  # 委派 Agent 执行扫描
-# Agent 已预加载 security-review Skill，无需额外加载
+# Agent 已预加载 security Skill，无需额外加载
 ```
 
 ## 为什么使用子代理？

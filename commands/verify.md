@@ -352,5 +352,5 @@ security-reviewer (深度审查)  ←── Agent 补充检查
 **Skill vs Agent 选择**:
 | 需求 | 选择 |
 |------|------|
-| 需要安全检查清单参考 | `security-review` skill |
+| 需要安全检查清单参考 | `security` skill |
 | 需要自动扫描代码安全 | `security-reviewer` agent |
