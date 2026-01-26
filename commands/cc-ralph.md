@@ -103,7 +103,21 @@
 - 验证 ralph-loop 插件是否已安装
 - 未安装则提示安装命令并退出
 
-### 2. 检测用户类型
+### 2. 归档历史记录（重要）
+
+启动前先运行归档脚本，防止 progress.md 过大：
+
+```bash
+node scripts/node/archive-progress.js memory-bank
+```
+
+归档策略（滚动窗口）：
+
+- **最近完成**: 保留 5 项，其余移到 progress-archive.md
+- **最近决策**: 保留 5 条
+- **最近检查点**: 保留 5 个
+
+### 3. 检测用户类型
 
 ```
 如果存在 .claude/ralph-prompts/ 目录：
@@ -112,12 +126,12 @@
   → 插件用户，使用内嵌工作流
 ```
 
-### 3. 读取项目上下文
+### 4. 读取项目上下文
 
 - `memory-bank/progress.md` - 当前进度和待办任务
 - `CLAUDE.md` - 核心约束和原则
 
-### 4. 生成 Prompt
+### 5. 生成 Prompt
 
 根据 `--mode` 参数选择对应的工作流：
 
@@ -130,7 +144,7 @@
 | `fix-tests`    | 让测试通过                          | `TESTS_PASSING`     |
 | `doc-gen`      | 生成/更新文档                       | `DOCS_COMPLETE`     |
 
-### 5. 启动 Ralph Loop
+### 6. 启动 Ralph Loop
 
 调用 `/ralph-loop:ralph-loop` 命令，传入生成的 prompt。
 
@@ -159,7 +173,8 @@
 3. **执行任务** - 按角色职责执行
 4. **验证结果** - `/test` + `/build`
 5. **提交和更新** - `/commit` + 更新 progress.md
-6. **继续下一任务** - 不等待用户
+6. **检查归档** - 如果 progress.md 超过限制，自动归档
+7. **继续下一任务** - 不等待用户
 
 ### 关键规则（来自 CLAUDE.md）
 
@@ -237,12 +252,13 @@
 
 1. **检查 ralph-loop 插件** → 未安装则提示
 2. **处理 --setup 参数** → 复制模板并退出
-3. **检测用户类型** → Clone 或 插件
-4. **读取项目状态** → progress.md + CLAUDE.md
-5. **确定模式** → 根据 --mode 或自动检测
-6. **生成工作流 Prompt** → 本地模板或内嵌工作流
-7. **启动 Ralph Loop** → 调用 `/ralph-loop:ralph-loop` 命令
-8. **输出启动信息**
+3. **归档历史记录** → 运行 `archive-progress.js` 清理旧数据
+4. **检测用户类型** → Clone 或 插件
+5. **读取项目状态** → progress.md + CLAUDE.md
+6. **确定模式** → 根据 --mode 或自动检测
+7. **生成工作流 Prompt** → 本地模板或内嵌工作流
+8. **启动 Ralph Loop** → 调用 `/ralph-loop:ralph-loop` 命令
+9. **输出启动信息**
 
    ```
    ✅ CC-Best Ralph Loop 已启动

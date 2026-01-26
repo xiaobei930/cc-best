@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Fixed / 修复
+
+- **`/cc-ralph` 集成归档功能** - 修复 cc-ralph 启动时未调用 archive-progress.js 的问题
+  - 启动循环前自动运行归档，防止 progress.md 过大
+  - 每次迭代 checkpoint 后检查是否需要归档
+  - 更新执行流程文档，添加归档步骤说明
+
+---
+
 ## [0.5.0] - 2025-01-25
 
 ### Added / 新增
