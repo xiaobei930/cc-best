@@ -295,7 +295,7 @@ hooks:
 
 | 代理                    | 模型   | 工具 | 用途               |
 | ----------------------- | ------ | ---- | ------------------ |
-| `code-reviewer`         | Opus   | 只读 | 深度代码审查       |
+| `code-reviewer`         | Opus   | 只读 | 深度代码审查 + 多语言专项检查 (Go/Python/Java/TS/C#/React/Vue/Angular) |
 | `security-reviewer`     | Opus   | 只读 | 安全漏洞检查       |
 | `code-simplifier`       | Opus   | 读写 | 代码简化和重构     |
 | `planner`               | Opus   | 只读 | 任务规划和分解     |

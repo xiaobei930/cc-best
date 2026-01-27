@@ -9,12 +9,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.5.3] - 2026-01-27
 
+### Added / 新增
+
+- **code-reviewer 多语言专项审查** - 增强代码审查能力，支持 8 种语言/框架专项检查
+  - Go：goroutine 泄漏、race 条件、error 处理、惯用法
+  - Python：类型安全、async 正确性、pickle 安全
+  - Java：空指针安全、资源管理、并发安全
+  - TypeScript：类型收窄、Promise 处理、any 滥用
+  - C#：async/await 模式、IDisposable、LINQ 性能
+  - React：Hooks 规则、性能优化、状态管理
+  - Vue：响应式陷阱、组件设计
+  - Angular：变更检测、RxJS 订阅管理
+- **PreCompact Hook 增强** - 上下文压缩前保存完整状态
+  - 保存 git 状态（分支、未提交更改数）
+  - 提取未完成任务列表（从 progress.md）
+  - 记录最近修改的文件
+  - 输出压缩前摘要信息
+- **Go 惯用模式** - 在 `skills/backend/go.md` 新增完整的 Go 惯用法章节
+  - 核心原则：简洁优于技巧、零值可用、接受接口返回结构体
+  - 错误处理：包装、errors.Is/As、不忽略错误
+  - 并发模式：Worker Pool、errgroup、goroutine 泄漏防护、Mutex 正确用法
+  - 性能优化：slice 预分配、strings.Builder、sync.Pool
+  - 反模式：裸返回、panic 流程控制、context 在结构体、循环 defer
+
 ### Fixed / 修复
 
 - **Hooks 配置修复** - 修复 Windows 下 hooks 路径问题
   - 启用插件内置 `hooks/hooks.json` 配置，使用 `${CLAUDE_PLUGIN_ROOT}` 环境变量
-  - 移除路径中的转义引号，解决命令执行失败问题
+  - 为所有路径添加转义引号，解决包含空格的路径问题
   - 更新 `commands/setup.md` 文档，添加跨平台路径说明
+- **plugin.json 声明补全** - 添加缺失的 `agents` 和 `hooks` 路径声明
+  - `"agents": "./agents"` - 启用代理目录
+  - `"hooks": "./hooks/hooks.json"` - 启用 hooks 配置
 - **README 文档更新** - 修复技能数量和列表不一致问题
   - 技能数量从 16 更新为 17
   - README.zh-CN.md 技能表补充缺失的 5 个技能
