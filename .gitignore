@@ -6,6 +6,9 @@ CLAUDE.local.md
 .claude/screenshots/*
 !.claude/screenshots/.gitkeep
 
+# Memory Bank 运行时状态文件
+memory-bank/.pre-compact-state.json
+
 # MCP 临时目录（由各 MCP 工具自动创建）
 .playwright-mcp/
 .claude/mcp-data/

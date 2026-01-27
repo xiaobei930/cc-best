@@ -355,7 +355,7 @@ Task:
 }
 ```
 
-详细说明见 `.claude/docs/plugin-integration.md`
+详细说明见 `.claude-plugin/plugin-integration.md`
 
 ## /agents 命令
 

@@ -4,10 +4,11 @@ This directory contains metadata for Claude Code Plugin Marketplace compatibilit
 
 ## Files
 
-| File               | Purpose                                     |
-| ------------------ | ------------------------------------------- |
-| `plugin.json`      | Plugin metadata (name, version, components) |
-| `marketplace.json` | Marketplace listing information             |
+| File                    | Purpose                                     |
+| ----------------------- | ------------------------------------------- |
+| `plugin.json`           | Plugin metadata (name, version, components) |
+| `marketplace.json`      | Marketplace listing information             |
+| `plugin-integration.md` | Local components & official plugins guide   |
 
 ## Plugin Components
 
