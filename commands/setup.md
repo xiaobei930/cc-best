@@ -99,7 +99,35 @@ fi
 - Plugin 模式下从插件目录复制模板
 - Clone 模式下创建 Hookify 规则文件
 
-### 3. 配置 Hooks（Plugin 模式）
+### 3. 清理旧版本 Hooks 配置
+
+> ⚠️ **v0.5.3 升级**: 如果从旧版本升级，全局 settings.json 可能有冗余的 hooks 配置需要清理。
+
+**检查并清理**：
+
+1. 读取全局配置 `~/.claude/settings.json`
+2. 检查是否存在 `hooks` 字段，且包含 `${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/` 路径
+3. 如果存在，这是旧版本遗留配置，应该删除 `hooks` 字段
+4. 告知用户：「已清理旧版本 hooks 配置，现在通过插件内置 hooks/hooks.json 自动生效」
+
+```javascript
+// 清理逻辑示例
+const settingsPath = path.join(os.homedir(), ".claude/settings.json");
+const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+
+if (settings.hooks) {
+  const hasOldHooks = JSON.stringify(settings.hooks).includes(
+    "scripts/node/hooks/",
+  );
+  if (hasOldHooks) {
+    delete settings.hooks;
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+    console.log("✅ 已清理旧版本 hooks 配置");
+  }
+}
+```
+
+### 4. 配置 Hooks（Plugin 模式）
 
 > ℹ️ **v0.5.3+**: Hooks 现在通过插件内置 `hooks/hooks.json` 自动生效，无需手动配置。
 > 如果需要自定义或覆盖，可以使用 `/setup --hooks` 手动配置。
@@ -167,7 +195,7 @@ const pluginPath = path.join(
 
 ⚠️ **注意**: 路径**不要用引号包裹**（如 `\"...\"`），否则 Windows 下会失败
 
-### 4. 更新 CLAUDE.md
+### 5. 更新 CLAUDE.md
 
 将模板占位符替换为实际项目信息：
 

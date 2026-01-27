@@ -298,3 +298,73 @@ echo $?  # 检查退出码
 4. **推荐使用 Node.js 版本**，原生支持 Windows/macOS/Linux 跨平台
 5. **钩子在会话启动时加载**，修改后需重启会话生效
 6. **Node.js 16+ 是必需的**，用于运行 Node.js hooks
+
+## 已知问题与兼容性
+
+### SessionStart Hook 特殊要求
+
+> ⚠️ **重要**: SessionStart hook 有特殊的输出格式要求，与其他 hooks 不同。
+
+1. **必须输出 JSON 格式**
+   - SessionStart hook 的 stdout 必须是有效的 JSON，否则会显示 `hook error`
+   - 即使执行成功，输出纯文本也会被视为错误
+   - 参考: [claude-code#12671](https://github.com/anthropics/claude-code/issues/12671)
+
+   ```javascript
+   // ✅ 正确：输出 JSON
+   console.log(
+     JSON.stringify({
+       hookSpecificOutput: {
+         hookEventName: "SessionStart",
+         additionalContext: "检查通过",
+       },
+     }),
+   );
+
+   // ✅ 正确：无内容时输出空 JSON
+   console.log("{}");
+
+   // ❌ 错误：输出纯文本
+   console.log("Session check passed");
+   ```
+
+2. **matcher 配置**
+   - 使用 `startup|resume|clear|compact` 而不是 `*`
+   - `*` 匹配符可能导致意外行为
+
+3. **Windows 路径引号**
+   - 路径中使用 `${CLAUDE_PLUGIN_ROOT}` 时需要加引号
+   - 参考: [claude-code#16152](https://github.com/anthropics/claude-code/issues/16152)
+
+   ```json
+   // ✅ 正确：路径加引号
+   "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-check.js\""
+
+   // ❌ 可能出错：路径无引号（Windows 空格路径问题）
+   "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-check.js"
+   ```
+
+### 多插件 SessionStart Hook 冲突
+
+当多个插件都注册了 SessionStart hook 时，任一插件的 hook 失败都会显示 `hook error`，即使其他插件的 hook 成功执行。
+
+**已知受影响的插件:**
+
+- **superpowers** - Windows 上 SessionStart hook 存在兼容性问题
+  - Issue: [obra/superpowers#369](https://github.com/obra/superpowers/issues/369)
+  - 临时解决方案：如果不需要 superpowers 的 SessionStart 功能，可暂时禁用该插件
+
+**调试方法:**
+
+```bash
+# 使用 debug 模式查看详细的 hook 执行日志
+claude --debug
+
+# 日志文件位置（Windows）
+# C:\Users\<用户名>\.claude\debug\<session-id>.txt
+```
+
+在 debug 日志中查找：
+
+- `Parsed initial response: {}` - hook 执行成功
+- `Hook output does not start with {` - hook 输出格式错误（非 JSON）

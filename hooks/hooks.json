@@ -46,11 +46,11 @@
     ],
     "SessionStart": [
       {
-        "matcher": "*",
+        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-check.js",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-check.js\"",
             "timeout": 5
           }
         ]

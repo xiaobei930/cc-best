@@ -115,13 +115,22 @@ function main() {
   allIssues.push(...checkMemoryBank());
   allIssues.push(...checkGitStatus());
 
-  // 输出检查结果（会显示在 Claude 的上下文中）
+  // SessionStart hook 必须输出 JSON 格式，否则会报 'hook error'
+  // 参考：https://github.com/anthropics/claude-code/issues/12671
   if (allIssues.length > 0) {
-    console.log("\n[Session Check]");
-    for (const issue of allIssues) {
-      console.log(`  - ${issue}`);
-    }
-    console.log();
+    const context =
+      "[Session Check]\\n" + allIssues.map((i) => `- ${i}`).join("\\n");
+    console.log(
+      JSON.stringify({
+        hookSpecificOutput: {
+          hookEventName: "SessionStart",
+          additionalContext: context,
+        },
+      }),
+    );
+  } else {
+    // 无问题时也输出空 JSON
+    console.log("{}");
   }
 
   process.exit(0);
