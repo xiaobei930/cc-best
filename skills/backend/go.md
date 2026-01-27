@@ -5,6 +5,7 @@ Go 后端开发的专属模式，涵盖 Gin、Echo、Fiber 等框架。
 ## 项目结构
 
 ### 标准 Go 项目布局
+
 ```
 project/
 ├── cmd/
@@ -726,4 +727,315 @@ staticcheck ./...
 # 依赖管理
 go mod tidy
 go mod download
+```
+
+---
+
+## Go 惯用模式
+
+### 核心原则
+
+#### 1. 简洁优于技巧
+
+```go
+// ✅ 好：清晰直接
+func GetUser(id string) (*User, error) {
+    user, err := db.FindUser(id)
+    if err != nil {
+        return nil, fmt.Errorf("get user %s: %w", id, err)
+    }
+    return user, nil
+}
+
+// ❌ 差：过于复杂
+func GetUser(id string) (*User, error) {
+    return func() (*User, error) {
+        if u, e := db.FindUser(id); e == nil { return u, nil }
+        else { return nil, e }
+    }()
+}
+```
+
+#### 2. 零值可用
+
+设计类型使其零值可直接使用，无需显式初始化。
+
+```go
+// ✅ 好：零值可用
+type Counter struct {
+    mu    sync.Mutex
+    count int  // 零值是 0，可直接使用
+}
+
+var buf bytes.Buffer  // 零值可直接 WriteString
+
+// ❌ 差：需要初始化
+type BadCounter struct {
+    counts map[string]int  // nil map 会 panic
+}
+```
+
+#### 3. 接受接口，返回结构体
+
+```go
+// ✅ 好：接受接口，返回具体类型
+func ProcessData(r io.Reader) (*Result, error) {
+    data, err := io.ReadAll(r)
+    if err != nil {
+        return nil, err
+    }
+    return &Result{Data: data}, nil
+}
+```
+
+---
+
+### 错误处理惯用法
+
+#### 错误包装
+
+```go
+// ✅ 总是添加上下文
+if err != nil {
+    return nil, fmt.Errorf("load config %s: %w", path, err)
+}
+
+// ✅ 使用 errors.Is/As 检查
+if errors.Is(err, sql.ErrNoRows) {
+    return nil, ErrNotFound
+}
+
+var validationErr *ValidationError
+if errors.As(err, &validationErr) {
+    log.Printf("字段 %s 验证失败", validationErr.Field)
+}
+```
+
+#### 不要忽略错误
+
+```go
+// ❌ 差：忽略错误
+result, _ := doSomething()
+
+// ✅ 好：处理或明确说明
+result, err := doSomething()
+if err != nil {
+    return err
+}
+```
+
+---
+
+### 并发模式
+
+#### Worker Pool
+
+```go
+func WorkerPool(jobs <-chan Job, results chan<- Result, numWorkers int) {
+    var wg sync.WaitGroup
+    for i := 0; i < numWorkers; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            for job := range jobs {
+                results <- process(job)
+            }
+        }()
+    }
+    wg.Wait()
+    close(results)
+}
+```
+
+#### errgroup 协调 goroutine
+
+```go
+import "golang.org/x/sync/errgroup"
+
+func FetchAll(ctx context.Context, urls []string) ([][]byte, error) {
+    g, ctx := errgroup.WithContext(ctx)
+    results := make([][]byte, len(urls))
+
+    for i, url := range urls {
+        i, url := i, url  // 捕获循环变量
+        g.Go(func() error {
+            data, err := fetch(ctx, url)
+            if err != nil {
+                return err
+            }
+            results[i] = data
+            return nil
+        })
+    }
+
+    if err := g.Wait(); err != nil {
+        return nil, err
+    }
+    return results, nil
+}
+```
+
+#### 避免 Goroutine 泄漏
+
+```go
+// ❌ 差：context 取消时 goroutine 泄漏
+func leakyFetch(url string) <-chan []byte {
+    ch := make(chan []byte)
+    go func() {
+        data, _ := fetch(url)
+        ch <- data  // 无接收者时永远阻塞
+    }()
+    return ch
+}
+
+// ✅ 好：正确处理取消
+func safeFetch(ctx context.Context, url string) <-chan []byte {
+    ch := make(chan []byte, 1)  // 带缓冲
+    go func() {
+        data, err := fetch(url)
+        if err != nil {
+            return
+        }
+        select {
+        case ch <- data:
+        case <-ctx.Done():
+        }
+    }()
+    return ch
+}
+```
+
+#### Mutex 正确用法
+
+```go
+// ✅ 好：defer 确保解锁
+mu.Lock()
+defer mu.Unlock()
+doSomething()
+
+// ❌ 差：可能忘记解锁
+mu.Lock()
+doSomething()
+mu.Unlock()  // panic 时不会执行
+```
+
+---
+
+### 性能优化
+
+#### 预分配 Slice
+
+```go
+// ❌ 差：多次扩容
+var results []Result
+for _, item := range items {
+    results = append(results, process(item))
+}
+
+// ✅ 好：一次分配
+results := make([]Result, 0, len(items))
+for _, item := range items {
+    results = append(results, process(item))
+}
+```
+
+#### 字符串拼接
+
+```go
+// ❌ 差：多次分配
+var result string
+for _, s := range parts {
+    result += s
+}
+
+// ✅ 好：strings.Builder
+var sb strings.Builder
+for _, s := range parts {
+    sb.WriteString(s)
+}
+return sb.String()
+
+// ✅ 最佳：标准库
+return strings.Join(parts, "")
+```
+
+#### sync.Pool 复用对象
+
+```go
+var bufferPool = sync.Pool{
+    New: func() interface{} {
+        return new(bytes.Buffer)
+    },
+}
+
+func ProcessRequest(data []byte) []byte {
+    buf := bufferPool.Get().(*bytes.Buffer)
+    defer func() {
+        buf.Reset()
+        bufferPool.Put(buf)
+    }()
+    buf.Write(data)
+    return buf.Bytes()
+}
+```
+
+---
+
+### 惯用法速查表
+
+| 惯用法               | 说明                             |
+| -------------------- | -------------------------------- |
+| 接受接口，返回结构体 | 函数参数用接口，返回值用具体类型 |
+| 错误即值             | 错误是普通值，不是异常           |
+| 通过通信共享内存     | 用 channel 协调 goroutine        |
+| 零值可用             | 类型设计应让零值有意义           |
+| 少量复制优于少量依赖 | 避免不必要的外部依赖             |
+| 清晰优于技巧         | 可读性优先                       |
+| 早返回               | 先处理错误，保持主路径清晰       |
+
+---
+
+### 反模式避免
+
+```go
+// ❌ 长函数中的裸返回
+func process() (result int, err error) {
+    // ... 50 行 ...
+    return  // 返回什么？
+}
+
+// ❌ 用 panic 做流程控制
+func GetUser(id string) *User {
+    user, err := db.Find(id)
+    if err != nil {
+        panic(err)  // 不要这样做
+    }
+    return user
+}
+
+// ❌ context 放在结构体里
+type Request struct {
+    ctx context.Context  // context 应该是第一个参数
+    ID  string
+}
+
+// ✅ context 作为第一个参数
+func Process(ctx context.Context, id string) error {
+    // ...
+}
+
+// ❌ 循环中 defer
+for _, path := range paths {
+    f, _ := os.Open(path)
+    defer f.Close()  // 资源累积到函数结束
+}
+
+// ✅ 闭包隔离
+for _, path := range paths {
+    func() {
+        f, _ := os.Open(path)
+        defer f.Close()
+        process(f)
+    }()
+}
 ```

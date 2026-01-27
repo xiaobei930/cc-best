@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/validate-command.js",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/validate-command.js\"",
             "timeout": 5
           }
         ]
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/pause-before-push.js",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/pause-before-push.js\"",
             "timeout": 5
           }
         ]
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/protect-files.js",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/protect-files.js\"",
             "timeout": 3
           }
         ]
@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/format-file.js",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/format-file.js\"",
             "timeout": 60
           }
         ]
@@ -62,6 +62,18 @@
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/session-check.js\"",
             "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/pre-compact.js\"",
+            "timeout": 10
           }
         ]
       }

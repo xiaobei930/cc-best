@@ -77,3 +77,199 @@ tools: Read, Grep, Glob
 - 代码质量: ✓/✗
 - 安全: ✓/✗
 ```
+
+---
+
+## 语言专项审查
+
+根据文件扩展名自动应用对应的专项检查。
+
+### Go (.go)
+
+**安全检查**:
+
+- [ ] SQL 注入：字符串拼接 SQL 查询
+- [ ] 命令注入：未验证的 os/exec 输入
+- [ ] 路径遍历：用户可控的文件路径
+- [ ] 不安全 TLS：InsecureSkipVerify 设为 true
+
+**并发检查**:
+
+- [ ] Goroutine 泄漏：无法终止的 goroutine
+- [ ] Race 条件：共享状态无同步（运行 go build -race）
+- [ ] Channel 死锁：无缓冲 channel 无接收者
+- [ ] Mutex 误用：未使用 defer mu.Unlock()
+
+**错误处理**:
+
+- [ ] 忽略错误：使用 \_ 忽略 error
+- [ ] 缺少 wrap：return err 无上下文
+- [ ] 未用 errors.Is/As：直接 == 比较 error
+
+**惯用法**:
+
+- [ ] context 位置：应为第一个参数
+- [ ] 裸返回：长函数中的 naked return
+- [ ] 循环 defer：资源累积到函数结束
+
+### Python (.py)
+
+**类型安全**:
+
+- [ ] 缺少类型提示：函数参数/返回值无注解
+- [ ] Any 滥用：过多 Any 类型
+- [ ] Optional 处理：未检查 None
+
+**异步正确性**:
+
+- [ ] 阻塞调用：async 中调用同步 I/O
+- [ ] 未 await：忘记 await 协程
+- [ ] 资源泄漏：async with 未正确使用
+
+**安全检查**:
+
+- [ ] 动态执行：eval/exec 执行动态代码
+- [ ] 不安全反序列化：反序列化不可信数据
+- [ ] SQL 注入：f-string 拼接 SQL
+
+### Java (.java)
+
+**Null 安全**:
+
+- [ ] NPE 风险：未检查可能为 null 的返回值
+- [ ] Optional 误用：get() 前未 isPresent()
+- [ ] @Nullable 缺失：可空参数未标注
+
+**资源管理**:
+
+- [ ] 未关闭资源：未使用 try-with-resources
+- [ ] 流未关闭：Stream 未正确关闭
+- [ ] 连接泄漏：数据库连接未释放
+
+**并发检查**:
+
+- [ ] 非线程安全：共享可变状态
+- [ ] 死锁风险：多锁顺序不一致
+- [ ] volatile 缺失：共享变量未正确同步
+
+### TypeScript/JavaScript (.ts/.tsx/.js/.jsx)
+
+**类型安全**:
+
+- [ ] any 滥用：过多 any 类型
+- [ ] 类型断言：过多 as 断言
+- [ ] 类型收窄：未正确收窄联合类型
+
+**Promise 处理**:
+
+- [ ] 未处理 rejection：Promise 无 catch
+- [ ] async/await 混用：then 和 await 混用
+- [ ] 并发限制：Promise.all 无数量限制
+
+**安全检查**:
+
+- [ ] XSS 风险：innerHTML 或不安全的 HTML 注入
+- [ ] 原型污染：未验证的对象合并
+- [ ] 动态执行：eval 或 Function 构造器
+
+### C# (.cs)
+
+**Async/Await**:
+
+- [ ] 阻塞调用：.Result/.Wait() 死锁风险
+- [ ] 未配置 ConfigureAwait：库代码未使用
+- [ ] async void：非事件处理器使用 async void
+
+**资源管理**:
+
+- [ ] IDisposable：未使用 using 语句
+- [ ] 未实现 Dispose：持有非托管资源但未实现
+
+**LINQ 性能**:
+
+- [ ] 多次枚举：IEnumerable 多次迭代
+- [ ] N+1 查询：循环中的延迟加载
+
+### React (.tsx/.jsx 组件)
+
+**Hooks 规则**:
+
+- [ ] 条件调用：if/loop 中调用 Hook
+- [ ] 依赖数组：useEffect/useMemo 依赖不完整
+- [ ] 闭包陷阱：useCallback 捕获过期状态
+
+**性能问题**:
+
+- [ ] 重渲染：父组件渲染导致子组件不必要渲染
+- [ ] 内联对象：JSX 中创建新对象/函数
+- [ ] key 缺失：列表渲染无 key 或用 index
+
+**状态管理**:
+
+- [ ] 状态提升：应提升但未提升的状态
+- [ ] 派生状态：可计算但存储为 state
+
+### Vue (.vue)
+
+**响应式陷阱**:
+
+- [ ] 直接赋值：数组索引直接赋值
+- [ ] 新增属性：对象新增属性非响应式
+- [ ] 解构丢失：reactive 解构丢失响应性
+
+**组件设计**:
+
+- [ ] v-for key：缺少 key 或使用 index
+- [ ] 事件命名：emit 事件名不规范
+- [ ] prop 验证：prop 无类型验证
+
+### Angular (.component.ts)
+
+**变更检测**:
+
+- [ ] 频繁检测：OnPush 策略未使用
+- [ ] 管道纯度：不纯管道性能问题
+
+**RxJS 订阅**:
+
+- [ ] 订阅泄漏：未在 ngOnDestroy 取消订阅
+- [ ] async 管道：应用 async 管道而非手动订阅
+
+---
+
+## 诊断命令
+
+根据语言运行对应检查：
+
+```bash
+# Go
+go vet ./...
+staticcheck ./...
+go build -race ./...
+
+# Python
+mypy --strict .
+ruff check .
+bandit -r .
+
+# TypeScript
+npx tsc --noEmit
+npx eslint .
+
+# Java
+mvn spotbugs:check
+mvn checkstyle:check
+
+# C#
+dotnet build /warnaserror
+```
+
+---
+
+## 审批标准
+
+| 结果    | 条件                     |
+| ------- | ------------------------ |
+| ✅ 通过 | 无高/严重问题            |
+| ⚠️ 警告 | 仅有中等问题（谨慎合并） |
+| ❌ 阻止 | 存在高/严重问题          |
