@@ -101,19 +101,50 @@ fi
 
 ### 3. 配置 Hooks（Plugin 模式）
 
-> ⚠️ 由于 [Claude Code 已知问题](https://github.com/anthropics/claude-code/issues/9354)，
-> 插件的 `${CLAUDE_PLUGIN_ROOT}` 变量在某些平台上可能无法正确展开。
-> 此步骤会自动配置使用绝对路径的 hooks。
+> ℹ️ **v0.5.3+**: Hooks 现在通过插件内置 `hooks/hooks.json` 自动生效，无需手动配置。
+> 如果需要自定义或覆盖，可以使用 `/setup --hooks` 手动配置。
 
-**询问用户**配置位置：
+**自动生效的 Hooks**：
+
+插件安装后，以下 hooks 自动启用：
+
+| Hook                   | 触发条件        | 功能         |
+| ---------------------- | --------------- | ------------ |
+| `validate-command.js`  | Bash 命令执行前 | 阻止危险命令 |
+| `pause-before-push.js` | git push 前     | 推送确认     |
+| `protect-files.js`     | 文件写入前      | 保护敏感文件 |
+| `format-file.js`       | 文件写入后      | 自动格式化   |
+| `session-check.js`     | 会话启动时      | 项目健康检查 |
+
+**手动配置（可选）**：
+
+如果插件内置 hooks 不生效，可以运行 `/setup --hooks` 手动配置。
+
+配置位置选择：
 
 1. 全局配置 (`~/.claude/settings.json`) - 所有项目生效（推荐）
 2. 项目配置 (`.claude/settings.local.json`) - 仅当前项目生效
-3. 跳过 hooks 配置
 
-**生成 hooks 配置**：
+**路径获取方式**（跨平台）：
 
-根据用户选择，将以下配置写入对应文件（合并到现有 hooks 配置中）：
+```javascript
+const os = require("os");
+const path = require("path");
+
+// 获取插件绝对路径
+const homeDir = os.homedir();
+const pluginVersion = "0.5.3"; // 当前版本
+const pluginPath = path.join(
+  homeDir,
+  ".claude/plugins/cache/claude-code-best-practices/cc-best",
+  pluginVersion,
+);
+// Windows: C:\Users\<user>\.claude\plugins\cache\claude-code-best-practices\cc-best\0.5.3
+// macOS:   /Users/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.5.3
+// Linux:   /home/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.5.3
+```
+
+**Hooks 配置模板**：
 
 ```json
 {
@@ -128,60 +159,13 @@ fi
             "timeout": 5
           }
         ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node <PLUGIN_PATH>/scripts/node/hooks/pause-before-push.js",
-            "timeout": 5
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node <PLUGIN_PATH>/scripts/node/hooks/protect-files.js",
-            "timeout": 3
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node <PLUGIN_PATH>/scripts/node/hooks/format-file.js",
-            "timeout": 60
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node <PLUGIN_PATH>/scripts/node/hooks/session-check.js",
-            "timeout": 5
-          }
-        ]
       }
     ]
   }
 }
 ```
 
-**路径替换规则**：
-
-- macOS/Linux: `<PLUGIN_PATH>` → `~/.claude/plugins/cache/cc-best@xiaobei930`
-- Windows: `<PLUGIN_PATH>` → `%USERPROFILE%/.claude/plugins/cache/cc-best@xiaobei930`
+⚠️ **注意**: 路径**不要用引号包裹**（如 `\"...\"`），否则 Windows 下会失败
 
 ### 4. 更新 CLAUDE.md
 

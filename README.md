@@ -24,7 +24,7 @@
 
 > **Install as plugin and start coding with Claude in minutes, not hours.**
 
-A production-ready Claude Code plugin & template for development teams. Includes **32 commands**, **16 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go**.
+A production-ready Claude Code plugin & template for development teams. Includes **32 commands**, **17 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go / Swift**.
 
 ### ✨ Highlights
 

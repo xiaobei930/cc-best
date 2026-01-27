@@ -275,7 +275,7 @@ your-project/
 │   ├── frontend-style.md       # Vue/TS/JS 风格
 │   └── security.md             # 安全规则
 │
-├── skills/                     # 开发技能（16 类）
+├── skills/                     # 开发技能（17 类）
 │   ├── backend/                # 后端模式（5 种语言）
 │   ├── frontend/               # 前端模式（4 种框架）
 │   ├── testing/                # 测试（TDD、E2E）
@@ -407,20 +407,25 @@ flowchart LR
 
 ## 🛠️ 技能说明
 
-| 技能          | 用途            | 主要内容                                    |
-| ------------- | --------------- | ------------------------------------------- |
-| `backend`     | 后端开发        | 通用模式 + Python/TS/Java/Go/C#/Rust 子文件 |
-| `frontend`    | 前端开发        | 通用模式 + Vue/React/Svelte/Angular 子文件  |
-| `devops`      | DevOps 实践     | CI/CD 流水线、Docker、部署策略              |
-| `testing`     | 测试（TDD+E2E） | Red-Green-Refactor、E2E 测试                |
-| `api`         | API 开发        | RESTful 设计、响应格式、认证                |
-| `database`    | 数据库设计      | 命名规范、查询优化、迁移管理                |
-| `security`    | 安全审查        | OWASP 检查清单、漏洞防护、云安全            |
-| `debug`       | 系统化调试      | 问题定位、日志分析、性能剖析                |
-| `git`         | Git 工作流      | 分支策略、提交规范、冲突解决                |
-| `exploration` | 代码探索        | 隔离研究 + 迭代检索策略                     |
-| `learning`    | 持续学习        | 会话评估、知识提取                          |
-| `compact`     | 策略性压缩      | 压缩时机、最佳实践                          |
+| 技能             | 用途            | 主要内容                                    |
+| ---------------- | --------------- | ------------------------------------------- |
+| `backend`        | 后端开发        | 通用模式 + Python/TS/Java/Go/C#/Rust 子文件 |
+| `frontend`       | 前端开发        | 通用模式 + Vue/React/Svelte/Angular 子文件  |
+| `devops`         | DevOps 实践     | CI/CD 流水线、Docker、部署策略              |
+| `testing`        | 测试（TDD+E2E） | Red-Green-Refactor、E2E 测试                |
+| `api`            | API 开发        | RESTful 设计、响应格式、认证                |
+| `database`       | 数据库设计      | PostgreSQL/MySQL/Oracle/SQLite 特定模式     |
+| `security`       | 安全审查        | OWASP 检查清单、漏洞防护、云安全            |
+| `architecture`   | 架构设计        | ADR 模板、设计检查清单、架构模式            |
+| `debug`          | 系统化调试      | 问题定位、日志分析、性能剖析                |
+| `git`            | Git 工作流      | 分支策略、提交规范、冲突解决                |
+| `native`         | 原生开发        | iOS/macOS: Swift 并发、SwiftUI 性能         |
+| `exploration`    | 代码探索        | 隔离研究 + 迭代检索策略                     |
+| `second-opinion` | 交叉验证        | 多模型验证架构决策                          |
+| `learning`       | 持续学习        | 会话评估、知识提取                          |
+| `compact`        | 策略性压缩      | 压缩时机、最佳实践                          |
+| `quality`        | 代码质量（父）  | security 和 debug 的父技能                  |
+| `session`        | 会话管理（父）  | learning 和 compact 的父技能                |
 
 ---
 

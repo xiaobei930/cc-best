@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.3] - 2026-01-27
+
+### Fixed / 修复
+
+- **Hooks 配置修复** - 修复 Windows 下 hooks 路径问题
+  - 启用插件内置 `hooks/hooks.json` 配置，使用 `${CLAUDE_PLUGIN_ROOT}` 环境变量
+  - 移除路径中的转义引号，解决命令执行失败问题
+  - 更新 `commands/setup.md` 文档，添加跨平台路径说明
+- **README 文档更新** - 修复技能数量和列表不一致问题
+  - 技能数量从 16 更新为 17
+  - README.zh-CN.md 技能表补充缺失的 5 个技能
+  - 添加 Swift 语言支持说明
+
+---
+
 ## [0.5.2] - 2026-01-26
 
 ### Added / 新增
@@ -436,6 +451,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.5.3]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.5...v0.5.0
