@@ -24,7 +24,7 @@
 
 > **安装插件即用，几分钟内开始与 Claude 协作编程。**
 
-Claude Code 插件 & 模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go** 多语言开发。
+Claude Code 插件 & 模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go / Swift** 多语言开发。
 
 ## 📑 目录
 
@@ -190,8 +190,6 @@ bash scripts/shell/init.sh
 ```
 
 > **Windows 用户**：使用 Git Bash 运行脚本，或使用 `robocopy` 复制文件。
-
-**从现有项目迁移？** 参见 [MIGRATION.md](MIGRATION.md)。
 
 ---
 

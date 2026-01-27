@@ -19,14 +19,13 @@ const { readStdinJson, log } = require("../lib/utils");
 
 // 禁止修改的文件/目录模式
 const PROTECTED_PATTERNS = [
-  // 取消注释以启用保护
-  // ".env",
-  // ".env.local",
-  // ".env.production",
-  // "*.key",
-  // "*.pem",
-  // "credentials.json",
-  // "secrets.json",
+  ".env",
+  ".env.local",
+  ".env.production",
+  "*.key",
+  "*.pem",
+  "credentials.json",
+  "secrets.json",
   ".git/",
 ];
 

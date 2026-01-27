@@ -199,8 +199,6 @@ bash scripts/shell/init.sh
 
 > **Windows Users**: Use Git Bash to run scripts, or use `robocopy` to copy files.
 
-**Migrating from an existing project?** See [MIGRATION.md](MIGRATION.md).
-
 ---
 
 ### Plugin vs Clone: When to Use Which
@@ -283,7 +281,7 @@ your-project/
 │   ├── frontend-style.md       # Vue/TS/JS style
 │   └── security.md             # Security rules
 │
-├── skills/                     # Development skills (16 categories)
+├── skills/                     # Development skills (17 categories)
 │   ├── backend/                # Backend patterns (5 languages)
 │   ├── frontend/               # Frontend patterns (4 frameworks)
 │   ├── testing/                # Testing (TDD, E2E)
