@@ -9,12 +9,12 @@
 
 ## Quick Navigation | 快速导航
 
-| Document 文档 | Purpose 用途 |
-|---------------|--------------|
-| `memory-bank/progress.md` | Current status 当前状态 |
+| Document 文档                 | Purpose 用途                 |
+| ----------------------------- | ---------------------------- |
+| `memory-bank/progress.md`     | Current status 当前状态      |
 | `memory-bank/architecture.md` | System architecture 系统架构 |
-| `memory-bank/tech-stack.md` | Tech stack 技术选型 |
-| `rules/methodology.md` | Full methodology 完整方法论 |
+| `memory-bank/tech-stack.md`   | Tech stack 技术选型          |
+| `rules/methodology.md`        | Full methodology 完整方法论  |
 
 ## Core Constraints | 核心约束
 
@@ -75,10 +75,10 @@
 
 ## Thinking Triggers | 思考触发词
 
-| Trigger 触发词 | Effect 作用 |
-|----------------|-------------|
-| `ultrathink` | Deep analysis mode 深度分析模式 |
-| `megathink` | Deeper reasoning for architecture 更深层次推理 |
+| Trigger 触发词       | Effect 作用                                    |
+| -------------------- | ---------------------------------------------- |
+| `ultrathink`         | Deep analysis mode 深度分析模式                |
+| `megathink`          | Deeper reasoning for architecture 更深层次推理 |
 | `think step by step` | Step-by-step detailed reasoning 分步骤详细推理 |
 
 ---
@@ -101,7 +101,7 @@
 ### Code 代码
 
 - No guessing APIs 不猜接口、不造接口、不臆想业务
-- No committing secrets 不提交密钥文件（.env, *.key, credentials.*）
+- No committing secrets 不提交密钥文件（.env, _.key, credentials._）
 
 ### Autonomous Mode 自循环模式
 
@@ -116,7 +116,7 @@
 
 /iterate      # Autonomous iteration 自主迭代循环
 /pair         # Pair programming 结对编程模式
-/ralph-loop   # Long-running loop 长时间循环（需安装插件）
+/cc-ralph     # Long-running loop 长时间循环（需安装插件）
 
 
 
@@ -129,6 +129,6 @@
 > Changes to core principles must be documented with reasons.
 > 修改本文档的核心原则需要记录变更原因
 
-| Version 版本 | Date 日期 | Changes 变更内容 | Reason 原因 |
-|--------------|-----------|------------------|-------------|
-| 1.0.0 | {{DATE}} | Initial version 初始版本 | Project start 项目启动 |
+| Version 版本 | Date 日期 | Changes 变更内容         | Reason 原因            |
+| ------------ | --------- | ------------------------ | ---------------------- |
+| 1.0.0        | {{DATE}}  | Initial version 初始版本 | Project start 项目启动 |

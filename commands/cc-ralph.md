@@ -50,7 +50,21 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Task, WebSearch, 
 /plugin install ralph-loop@claude-plugins-official
 ```
 
-> **注意**：ralph-loop 插件依赖 `jq` 工具。Windows 用户建议使用 WSL 或先安装 jq。
+> ⚠️ **Windows 用户注意**：
+>
+> ralph-loop 插件的 setup 脚本是 bash 脚本，在 Windows 原生环境可能报错：
+>
+> ```
+> Error: Bash command failed for pattern "...setup-ralph-loop.sh"
+> ```
+>
+> **解决方案**：
+>
+> 1. **推荐**：使用 WSL (Windows Subsystem for Linux)
+> 2. **替代**：使用 Git Bash 运行 Claude Code
+> 3. **替代**：直接使用 `/iterate`（单会话版本，无需 ralph-loop）
+>
+> ralph-loop 插件还依赖 `jq` 工具，需提前安装。
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: git
-description: "Git branching strategies, commit conventions, merge strategies, conflict resolution. Use when managing branches, creating commits, or resolving conflicts."
+description: "Git version control best practices including branching strategies, commit conventions, merge strategies, and conflict resolution. Use when: managing branches, creating commits, merging code, resolving conflicts, creating PRs, or code review workflows. Auto-activates when users mention: git, commit, branch, merge, rebase, cherry-pick, PR, pull request, conflict, stash, gitflow, conventional commits."
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -15,6 +15,49 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 - 处理合并
 - 解决冲突
 - 代码审查
+
+## Workflow | 工作流程
+
+### 1. 检查当前状态
+
+```bash
+git status
+git branch -a
+git log --oneline -5
+```
+
+根据状态确定下一步操作。
+
+### 2. 选择操作类型
+
+| 场景         | 执行流程                                    |
+| ------------ | ------------------------------------------- |
+| 创建功能分支 | `git checkout -b feature/xxx` → 开发 → 提交 |
+| 提交代码     | `git add` → `git commit` → 验证             |
+| 合并代码     | `git checkout main` → `git merge` → 推送    |
+| 解决冲突     | 查看冲突 → 手动解决 → 标记解决 → 继续       |
+| 创建 PR      | 推送分支 → `gh pr create` → 等待审查        |
+
+### 3. 执行并验证
+
+- 执行命令前确认当前分支和状态
+- 执行后验证结果：`git status`, `git log --oneline -3`
+- 确保无未提交的修改或冲突
+
+### 4. 完成确认
+
+```
+✅ Git 操作完成！
+
+📊 当前状态:
+   分支: [当前分支名]
+   最新提交: [commit message]
+
+⚠️ 提醒:
+   - 功能完成后记得创建 PR
+   - 合并前确保通过所有测试
+   - 定期从 main 分支同步更新
+```
 
 ## 分支策略
 
@@ -452,3 +495,90 @@ coverage/
 8. **备份重要操作** - 变基前创建备份分支
 9. **团队约定** - 统一的分支和提交规范
 10. **利用 Git Hooks** - 自动化检查
+
+## 快速场景指南 | Quick Scenarios
+
+### 日常开发
+
+```bash
+# 开始新功能
+git checkout main && git pull
+git checkout -b feature/my-feature
+
+# 提交工作
+git add -A && git commit -m "feat: add new feature"
+
+# 推送并创建 PR
+git push -u origin feature/my-feature
+gh pr create --fill
+```
+
+### 紧急修复
+
+```bash
+# 从 main 创建热修复分支
+git checkout main && git pull
+git checkout -b hotfix/critical-fix
+
+# 修复并提交
+git add -A && git commit -m "fix: critical bug"
+
+# 快速合并
+git checkout main && git merge hotfix/critical-fix
+git push origin main
+```
+
+### 冲突解决
+
+```bash
+# 更新分支遇到冲突
+git fetch origin
+git rebase origin/main
+# 手动解决冲突文件
+git add <resolved-files>
+git rebase --continue
+```
+
+## 委派到专业 Agent | Delegation to Agents
+
+当遇到以下复杂场景时，应委派给专业 Agent 处理：
+
+### 代码审查
+
+```
+委派给 @code-reviewer:
+- PR 代码质量审查
+- 安全漏洞检查
+- 架构合规性验证
+```
+
+### 安全审查
+
+```
+委派给 @security-reviewer:
+- 检测敏感信息泄露
+- 验证 .gitignore 配置
+- 审查提交历史中的安全问题
+```
+
+### 任务规划
+
+```
+委派给 @planner:
+- 复杂的分支策略规划
+- 大型重构的 Git 工作流设计
+- 多人协作流程设计
+```
+
+### 使用示例
+
+```
+用户: "帮我审查这个 PR 的代码质量"
+→ 委派给 @code-reviewer 进行深度审查
+
+用户: "检查提交历史中是否有敏感信息"
+→ 委派给 @security-reviewer 进行安全审查
+
+用户: "规划一下我们团队的 Git 工作流"
+→ 委派给 @planner 进行流程设计
+```

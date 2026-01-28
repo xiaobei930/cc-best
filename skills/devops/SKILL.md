@@ -20,11 +20,10 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 
 根据项目需求，加载对应的平台专属文件：
 
-| 平台 | 加载文件 | 内容 |
-|------|----------|------|
+| 平台   | 加载文件    | 内容                      |
+| ------ | ----------- | ------------------------- |
 | Docker | `docker.md` | 容器化、Compose、镜像优化 |
-| CI/CD | `ci-cd.md` | GitHub Actions、GitLab CI |
-| Kubernetes | `kubernetes.md` | K8s 部署、服务、配置 |
+| CI/CD  | `ci-cd.md`  | GitHub Actions、GitLab CI |
 
 **加载方式**: 检测项目中的 `Dockerfile`/`.github/workflows`/`k8s/` 等文件确定需求。
 
@@ -99,6 +98,7 @@ DATABASE_URL=postgresql://dev:dev@localhost:5432/myapp_dev
 ```
 
 **切换流程**:
+
 1. 新版本部署到 Standby 环境
 2. 测试验证新版本
 3. 负载均衡切换到新环境
@@ -115,10 +115,11 @@ DATABASE_URL=postgresql://dev:dev@localhost:5432/myapp_dev
 ```
 
 **配置示例**:
+
 ```yaml
 # 滚动更新策略
-maxSurge: 25%        # 最多额外创建 25% 的 Pod
-maxUnavailable: 25%  # 最多 25% 的 Pod 不可用
+maxSurge: 25% # 最多额外创建 25% 的 Pod
+maxUnavailable: 25% # 最多 25% 的 Pod 不可用
 ```
 
 ### 金丝雀发布
@@ -138,6 +139,7 @@ maxUnavailable: 25%  # 最多 25% 的 Pod 不可用
 ```
 
 **流程**:
+
 1. 新版本接收 5-10% 流量
 2. 监控错误率和性能指标
 3. 逐步增加流量比例
@@ -149,11 +151,11 @@ maxUnavailable: 25%  # 最多 25% 的 Pod 不可用
 
 ### 三大支柱
 
-| 支柱 | 用途 | 工具 |
-|------|------|------|
-| **Metrics** | 聚合的数值数据 | Prometheus, Datadog |
-| **Logs** | 离散的事件记录 | ELK, Loki |
-| **Traces** | 请求的分布式追踪 | Jaeger, Zipkin |
+| 支柱        | 用途             | 工具                |
+| ----------- | ---------------- | ------------------- |
+| **Metrics** | 聚合的数值数据   | Prometheus, Datadog |
+| **Logs**    | 离散的事件记录   | ELK, Loki           |
+| **Traces**  | 请求的分布式追踪 | Jaeger, Zipkin      |
 
 ### 关键指标 (Golden Signals)
 
@@ -276,11 +278,11 @@ USER appuser
 
 ### 密钥管理
 
-| 方案 | 适用场景 | 工具 |
-|------|----------|------|
-| 环境变量 | 开发/简单部署 | .env 文件 |
-| 密钥管理服务 | 生产环境 | AWS Secrets Manager, Vault |
-| K8s Secrets | Kubernetes | kubectl create secret |
+| 方案         | 适用场景      | 工具                       |
+| ------------ | ------------- | -------------------------- |
+| 环境变量     | 开发/简单部署 | .env 文件                  |
+| 密钥管理服务 | 生产环境      | AWS Secrets Manager, Vault |
+| K8s Secrets  | Kubernetes    | kubectl create secret      |
 
 ```bash
 # 创建 K8s Secret
@@ -331,13 +333,13 @@ spec:
 
 ### 日志级别指南
 
-| 级别 | 用途 | 生产环境 |
-|------|------|----------|
-| DEBUG | 详细调试信息 | 关闭 |
-| INFO | 正常操作事件 | 开启 |
-| WARN | 潜在问题 | 开启 |
-| ERROR | 错误但可恢复 | 开启 |
-| FATAL | 致命错误 | 开启 |
+| 级别  | 用途         | 生产环境 |
+| ----- | ------------ | -------- |
+| DEBUG | 详细调试信息 | 关闭     |
+| INFO  | 正常操作事件 | 开启     |
+| WARN  | 潜在问题     | 开启     |
+| ERROR | 错误但可恢复 | 开启     |
+| FATAL | 致命错误     | 开启     |
 
 ---
 

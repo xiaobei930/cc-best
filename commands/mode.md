@@ -1,3 +1,8 @@
+---
+description: "Switch Claude's working mode to adapt behavior for different scenarios"
+allowed-tools: Read, Glob, Grep
+---
+
 # /mode - 工作模式切换
 
 切换 Claude 的工作模式，调整行为风格以适应不同场景。

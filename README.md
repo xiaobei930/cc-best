@@ -1,19 +1,14 @@
-# Claude Code Best Practices
+# CC-Best
 
 <p align="center">
-  <strong>🚀 Install → Configure → Code</strong>
+  <strong>Role-Driven Development Workflow for Claude Code</strong>
 </p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/claude-code-best-practices?include_prereleases" alt="Release"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
-</p>
-
-<p align="center">
   <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/network/members"><img src="https://img.shields.io/github/forks/xiaobei930/claude-code-best-practices?style=social" alt="GitHub forks"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/commits"><img src="https://img.shields.io/github/last-commit/xiaobei930/claude-code-best-practices" alt="Last commit"></a>
 </p>
 
 <p align="center">
@@ -22,220 +17,129 @@
 
 ---
 
-> **Install as plugin and start coding with Claude in minutes, not hours.**
-
-A production-ready Claude Code plugin & template for development teams. Includes **35 commands**, **17 skills**, **6 agents**, and **safety hooks** with support for **Python / Vue / TypeScript / C++ / Java / C# / Go / Swift**.
-
-### ✨ Highlights
-
-- 🎭 **Role-based workflow**: PM → Lead → Designer → Dev → QA pipeline
-- 🔄 **Autonomous mode**: `/iterate` runs tasks without intervention
-- 🛡️ **Safety hooks**: Blocks dangerous commands, protects files
-- 📝 **Memory bank**: Persists progress across sessions with auto-archive
-- 🌍 **Bilingual**: Full documentation in English & Chinese
-
-## 📑 Table of Contents
-
-- [Why This Template?](#why-this-template)
-- [Quick Start](#-quick-start)
-- [Core Features](#-core-features)
-- [Directory Structure](#-directory-structure)
-- [Workflow](#-workflow)
-- [Command Reference](#-command-reference)
-- [Skills](#-skills)
-- [Agents](#-agents)
-- [Plugin Compatibility](#-plugin-compatibility)
-- [Customization Guide](#-customization-guide)
-- [Best Practices](#-best-practices)
-- [FAQ](#-faq)
-- [Requirements](#-requirements)
-- [References](#-references)
-
----
-
-## Why This Template?
-
-| Without Template                      | With Template                        |
-| ------------------------------------- | ------------------------------------ |
-| ❌ Configure Claude Code from scratch | ✅ Ready to use out of the box       |
-| ❌ Inconsistent code style            | ✅ Enforced coding standards         |
-| ❌ Manual repetitive workflows        | ✅ Role-based automation (PM→Dev→QA) |
-| ❌ Risk of dangerous commands         | ✅ Safety hooks protect your system  |
-| ❌ Context lost between sessions      | ✅ Memory bank persists progress     |
-
-### CC-Best vs Superpowers
-
-Both are excellent Claude Code enhancement tools. Choose based on your needs:
-
-| Scenario                 | Recommended | Why                                    |
-| ------------------------ | ----------- | -------------------------------------- |
-| **Solo developer**       | Superpowers | Lighter, git worktree automation       |
-| **Team collaboration**   | CC-Best     | Role workflow (PM→Lead→Dev→QA)         |
-| **Multi-language stack** | CC-Best     | 7+ language coding standards           |
-| **Chinese team**         | CC-Best     | Bilingual docs, Chinese internal files |
-| **Need git worktree**    | Superpowers | Auto-creates isolated branches         |
-| **Need Memory Bank**     | CC-Best     | progress.md persists across sessions   |
-
-> 💡 **They can coexist!** Install both and use CC-Best for team workflows, Superpowers for git automation.
-
-### Demo
+> **Transform Claude into a complete development team.**
+> From product requirements to code review — one plugin, full workflow.
 
 <p align="center">
-  <img src="assets/setup.gif" alt="Setup Demo" width="80%">
-  <br>
-  <em>Plugin commands in action</em>
+  <code>35 commands</code> · <code>17 skills</code> · <code>6 agents</code> · <code>7 language standards</code>
 </p>
 
----
+<p align="center">
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-core-features">Features</a> •
+  <a href="#-workflow">Workflow</a> •
+  <a href="#-command-reference">Commands</a> •
+  <a href="#-faq">FAQ</a>
+</p>
 
-## 🚀 Quick Start
+### Why CC-Best?
 
-### Option 1: Install as Plugin (Recommended)
+🎯 **The Problem**: Claude Code is powerful, but configuring workflows, coding standards, and safety rules from scratch takes hours.
 
-The easiest way to use this repo - install as a Claude Code plugin:
+✨ **The Solution**: Pre-configured roles (PM → Lead → Designer → Dev → QA) that mirror real team collaboration, with safety guardrails built-in.
 
-```bash
-# In Claude Code, run:
-/plugin
-
-# Select "Add Marketplace", then enter:
-xiaobei930/claude-code-best-practices
-
-# Then select "Install Plugin" and choose:
-cc-best
-```
-
-Or use direct commands:
+## ⚡ Quick Start
 
 ```bash
-# Add this repo as a marketplace
+# Add marketplace and install
 /plugin marketplace add xiaobei930/claude-code-best-practices
-
-# Install the plugin
 /plugin install cc-best@xiaobei930
+
+# Verify installation (30 seconds)
+/cc-best:status
+
+# Start using
+/cc-best:iterate "implement user authentication"
 ```
-
-Or add directly to your `~/.claude/settings.json`:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "claude-code-best-practices": {
-      "source": {
-        "source": "github",
-        "repo": "xiaobei930/claude-code-best-practices"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "cc-best@xiaobei930": true
-  }
-}
-```
-
-This gives you instant access to all commands, agents, skills, and hooks.
 
 <details>
-<summary>📹 See installation in action</summary>
+<summary>📹 See it in action</summary>
 <br>
 <p align="center">
-  <img src="assets/install.gif" alt="Install Demo" width="80%">
+  <img src="assets/setup.gif" alt="Setup Demo" width="80%">
 </p>
 </details>
 
-#### Update Plugin
+<details>
+<summary>📦 Alternative: Clone for full customization</summary>
 
 ```bash
-# Update to the latest version
-/plugin update cc-best@xiaobei930
-```
-
-> **Note**: `/plugin marketplace update` only refreshes the available plugins list, it does NOT update installed plugins. Use `/plugin update` to get the latest version.
-
-#### Plugin Configuration
-
-After installing as a plugin:
-
-1. **Override plugin settings** by creating local files:
-   - Create `commands/` in your project to add/override commands
-   - Create `rules/` to add project-specific rules
-
-2. **Memory bank**: Plugin doesn't include memory-bank. Create manually if needed:
-
-```bash
-mkdir -p memory-bank
-touch memory-bank/progress.md
-touch memory-bank/architecture.md
-```
-
-3. **Hookify rules**: Plugin's hookify rules (`.claude/hookify.*.local.md`) won't auto-apply to your project. The core safety features are provided by `hooks/hooks.json` instead.
-
----
-
-### Option 2: Clone Template (Full Customization)
-
-For new projects where you want full control:
-
-```bash
-# 1. Clone the template
 git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
-cd my-project
-
-# 2. Run initialization
-bash scripts/shell/init.sh
-
-# 3. Edit CLAUDE.md and replace placeholders
-#    {{PROJECT_NAME}} → Your project name
-#    {{PROJECT_DESCRIPTION}} → Project description
-#    {{DATE}} → Current date
-
-# 4. Start developing
-/pm   # Begin with the Product Manager role for your first requirement
+cd my-project && bash scripts/shell/init.sh
 ```
 
-#### Copy to Existing Project
+Use clone when you need to customize all files in your repo.
+
+</details>
+
+### Plugin vs Clone: Command Format
+
+| Installation | Command format     | Example                          |
+| ------------ | ------------------ | -------------------------------- |
+| **Plugin**   | `/cc-best:command` | `/cc-best:iterate "add feature"` |
+| **Clone**    | `/command`         | `/iterate "add feature"`         |
+
+> 💡 This README uses short format (`/iterate`) for readability. Plugin users: add `cc-best:` prefix.
+
+<details>
+<summary>🗑️ Uninstall</summary>
 
 ```bash
-# Copy configuration files to your project
-cp -r claude-code-best-practices/.claude /path/to/your/project/
-cp -r claude-code-best-practices/commands /path/to/your/project/
-cp -r claude-code-best-practices/skills /path/to/your/project/
-cp -r claude-code-best-practices/agents /path/to/your/project/
-cp -r claude-code-best-practices/rules /path/to/your/project/
-cp -r claude-code-best-practices/scripts /path/to/your/project/
-cp -r claude-code-best-practices/hooks /path/to/your/project/
-cp -r claude-code-best-practices/memory-bank /path/to/your/project/
-cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
+# Remove the plugin
+/plugin uninstall cc-best@xiaobei930
 
-# Navigate to your project and initialize
-cd /path/to/your/project
-bash scripts/shell/init.sh
+# Remove marketplace (optional)
+/plugin marketplace remove xiaobei930/claude-code-best-practices
 ```
 
-> **Windows Users**: Use Git Bash to run scripts, or use `robocopy` to copy files.
+No files are left behind.
 
----
+</details>
 
-### Plugin vs Clone: When to Use Which
+### What Happens Next?
 
-| Method             | Best For          | What You Get                                    |
-| ------------------ | ----------------- | ----------------------------------------------- |
-| **Install Plugin** | Existing projects | Commands, skills, agents, hooks added instantly |
-| **Clone Template** | New projects      | Full customization, all files in your repo      |
+After running `/iterate "implement user authentication"`, Claude will:
 
-> **Note**: Don't install the plugin in a project that was cloned from this template - it will cause duplicate commands and hooks.
+```
+1. 📋 /pm     → Analyze requirements, create task breakdown
+2. 🏗️ /lead   → Design technical solution
+3. 💻 /dev    → Write code, create tests
+4. 🧪 /qa     → Run tests, verify quality
+5. ✅ /commit → Commit changes with proper message
+```
+
+You just watch. Intervene only when needed.
+
+### Common Workflows
+
+| I want to...       | Command                              | What Claude does                           |
+| ------------------ | ------------------------------------ | ------------------------------------------ |
+| Build a feature    | `/iterate "add dark mode toggle"`    | Full cycle: plan → code → test → commit    |
+| Fix a bug          | `/iterate "fix login timeout issue"` | Investigate → fix → verify → commit        |
+| Review code        | `/pm "review recent changes"`        | Analyze code, suggest improvements         |
+| Learn the codebase | `/pair`                              | Step-by-step exploration with explanations |
+
+### Who Is This For?
+
+| You are...                   | Recommended mode | Why                                       |
+| ---------------------------- | ---------------- | ----------------------------------------- |
+| **Team with multiple roles** | Full workflow    | PM → Lead → Dev → QA mirrors your process |
+| **Solo developer**           | `/iterate`       | Let Claude handle the boring parts        |
+| **Learning Claude Code**     | `/pair`          | Understand each step before proceeding    |
+| **Need quick fixes**         | Direct commands  | `/dev "fix the typo"` for simple tasks    |
 
 ---
 
 ## ✨ Core Features
 
-### 🎭 Role-Based Workflow
-
-PM → Lead → Dev → QA → Commit complete development cycle, each role with clear responsibilities.
-
-### 🔄 Autonomous Iteration Mode
-
-`/iterate` mode lets Claude autonomously complete task lists without frequent intervention.
+| Feature                         | What it does                                                    |
+| ------------------------------- | --------------------------------------------------------------- |
+| 🎭 **Role-Based Workflow**      | PM → Lead → Designer → Dev → QA — complete development cycle    |
+| 🔄 **Autonomous Mode**          | `/iterate` runs tasks without intervention until completion     |
+| 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands |
+| 📐 **Multi-Language Standards** | Coding conventions for Python, Vue/TS, C++, Java, C#, Go, Swift |
+| 🧠 **Memory Bank**              | Persists progress and decisions across sessions                 |
+| 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager            |
 
 <details>
 <summary>📹 See /iterate in action</summary>
@@ -245,101 +149,36 @@ PM → Lead → Dev → QA → Commit complete development cycle, each role with
 </p>
 </details>
 
-### 🛡️ Safety Hooks
-
-Pre-configured guards against dangerous operations: blocks `rm -rf /`, `git push --force`, and other risky commands.
-
-### 📐 Multi-Language Standards
-
-Coding standards for 7+ languages: Python, Vue/TS, C++, Java, C#, Go, and more.
-
-### 🧠 Memory Bank
-
-`memory-bank/` directory persists project progress, architecture decisions, and tech stack choices.
-
-**Auto-archiving**: `progress.md` uses rolling window strategy to prevent file bloat:
-
-- Keeps only recent 5 completed tasks, 5 decisions, 5 checkpoints
-- Old records auto-archive to `progress-archive.md`
-- Run `/checkpoint --archive` when file exceeds 300 lines
-
-### 🌐 Cross-Platform Support
-
-Node.js-based hooks and utilities for Windows/macOS/Linux compatibility. Auto-detects package manager (npm/pnpm/yarn/bun).
-
-### 🔌 MCP Integration
-
-Ready-to-use MCP server configurations supporting memory, playwright, firecrawl, and more.
-
 ---
 
 ## 📁 Directory Structure
 
 ```
 your-project/
-├── CLAUDE.md                   # Project constitution (must keep)
-├── memory-bank/                # Project memory bank
-│   ├── progress.md             # Progress tracking (rolling window)
-│   ├── progress-archive.md     # Historical records archive
-│   ├── architecture.md         # Architecture documentation
-│   └── tech-stack.md           # Technology choices
-│
-├── commands/                   # Slash commands (35)
-│   ├── pm.md, lead.md          # Role commands
-│   ├── iterate.md, pair.md     # Mode commands
-│   └── build.md, test.md       # Tool commands
-│
-├── rules/                      # Coding standards (13 files)
-│   ├── methodology.md          # Development methodology
-│   ├── coding-standards.md     # Universal standards
-│   ├── code-style.md           # Python style
-│   ├── frontend-style.md       # Vue/TS/JS style
-│   └── security.md             # Security rules
-│
-├── skills/                     # Development skills (17 categories)
-│   ├── backend/                # Backend patterns (5 languages)
-│   ├── frontend/               # Frontend patterns (4 frameworks)
-│   ├── testing/                # Testing (TDD, E2E)
-│   └── security/               # Security review
-│
-├── agents/                     # Sub-agents (6)
-│   ├── code-reviewer.md        # Code review
-│   └── security-reviewer.md    # Security review
-│
-├── scripts/                    # Automation scripts (by language)
-│   ├── shell/                  # Bash scripts (10)
-│   │   ├── init.sh, cleanup.sh
-│   │   └── session-start.sh, session-end.sh
-│   ├── python/                 # Python scripts (9)
-│   │   ├── validate-command.py, protect-files.py
-│   │   └── format-file.py, check-console-log.py
-│   └── node/                   # Node.js (default, cross-platform)
-│       ├── lib/                # Utilities
-│       │   ├── utils.js        # 27 helper functions
-│       │   └── package-manager.js
-│       ├── verify-hooks.js     # Hook configuration verifier
-│       ├── archive-progress.js # Progress file archiver
-│       └── hooks/              # 14 lifecycle hooks
-│           ├── validate-command.js, protect-files.js
-│           ├── session-start.js, session-end.js
-│           └── format-file.js, typescript-check.js
-│
-├── hooks/                      # Hook configuration
-│   ├── hooks.json              # Plugin hooks config
-│   └── README.md               # Hooks documentation
-│
-├── .claude-plugin/             # Plugin marketplace metadata
-│   ├── plugin.json             # Plugin manifest
-│   └── marketplace.json        # Marketplace listing
-│
-└── .claude/                    # Claude Code configuration
-    ├── settings.json           # Base permissions (commit to Git)
-    ├── settings.local.json     # Local config + Hooks (don't commit)
-    ├── tools.md                # Scripts and tools inventory
-    ├── mcp-configs/            # MCP server configurations
-    ├── ralph-prompts/          # Ralph Loop prompts
-    └── learned/                # Continuous learning storage
+├── CLAUDE.md          # Project constitution
+├── commands/          # 35 slash commands
+├── skills/            # 17 development skills
+├── agents/            # 6 specialized agents
+├── rules/             # Coding standards
+├── hooks/             # Safety hooks
+├── scripts/           # Automation (node/python/shell)
+├── memory-bank/       # Progress & architecture docs
+└── .claude/           # Claude Code config
 ```
+
+<details>
+<summary>📂 Detailed structure</summary>
+
+| Directory      | Contents                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `commands/`    | Role commands (`pm`, `lead`, `dev`, `qa`), Mode commands (`iterate`, `pair`), Tool commands (`build`, `test`, `commit`) |
+| `skills/`      | Backend, Frontend, Testing, Security, DevOps, Architecture, Git                                                         |
+| `agents/`      | `code-reviewer`, `code-simplifier`, `planner`, `security-reviewer`, `tdd-guide`, `requirement-validator`                |
+| `rules/`       | Language-specific coding standards (Python, Vue/TS, C++, Java, C#, Go)                                                  |
+| `scripts/`     | Cross-platform hooks in Node.js (default), with Python/Bash alternatives                                                |
+| `memory-bank/` | `progress.md` (rolling window), `architecture.md`, `tech-stack.md`                                                      |
+
+</details>
 
 ---
 
@@ -362,11 +201,11 @@ flowchart LR
 
 ### Three Development Modes
 
-| Mode                     | Command       | Use Case                       | Characteristics                                |
-| ------------------------ | ------------- | ------------------------------ | ---------------------------------------------- |
-| **Autonomous Iteration** | `/iterate`    | Clear task list                | Fully autonomous, no intervention needed       |
-| **Pair Programming**     | `/pair`       | Learning, sensitive operations | Confirm each step, human-machine collaboration |
-| **Long-Running Loop**    | `/ralph-loop` | Hour-level batch tasks         | Requires plugin installation                   |
+| Mode                     | Command     | Use Case                       | Characteristics                                |
+| ------------------------ | ----------- | ------------------------------ | ---------------------------------------------- |
+| **Autonomous Iteration** | `/iterate`  | Clear task list                | Fully autonomous, no intervention needed       |
+| **Pair Programming**     | `/pair`     | Learning, sensitive operations | Confirm each step, human-machine collaboration |
+| **Long-Running Loop**    | `/cc-ralph` | Hour-level batch tasks         | Requires ralph-loop plugin                     |
 
 ---
 
@@ -392,13 +231,13 @@ flowchart LR
 
 **17 development skills** organized by domain:
 
-| Domain           | Skills                               | Coverage                       |
-| ---------------- | ------------------------------------ | ------------------------------ |
-| **Backend**      | `backend`, `api`, `database`         | Python, TS, Java, Go, C#, Rust |
-| **Frontend**     | `frontend`                           | Vue, React, Svelte, Angular    |
-| **Quality**      | `testing`, `security`, `debug`       | TDD, OWASP, profiling          |
-| **Architecture** | `architecture`, `devops`, `git`      | ADR, CI/CD, branching          |
-| **Session**      | `learning`, `compact`, `exploration` | Knowledge management           |
+| Domain           | Skills                               | Coverage                    |
+| ---------------- | ------------------------------------ | --------------------------- |
+| **Backend**      | `backend`, `api`, `database`         | Python, TS, Java, Go, C#    |
+| **Frontend**     | `frontend`                           | Vue, React, Svelte, Angular |
+| **Quality**      | `testing`, `security`, `debug`       | TDD, OWASP, profiling       |
+| **Architecture** | `architecture`, `devops`, `git`      | ADR, CI/CD, branching       |
+| **Session**      | `learning`, `compact`, `exploration` | Knowledge management        |
 
 > 📖 **Full reference**: See [skills/README](skills/README) for detailed skill documentation.
 
@@ -407,6 +246,34 @@ flowchart LR
 ## 🏗️ Architecture Overview
 
 This template uses a **three-tier architecture**:
+
+```mermaid
+flowchart TB
+    subgraph User["👤 You"]
+        CMD["/iterate 'add feature'"]
+    end
+
+    subgraph Commands["📋 Commands (35)"]
+        PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
+    end
+
+    subgraph Skills["🛠️ Skills (17)"]
+        S1["backend"]
+        S2["frontend"]
+        S3["testing"]
+        S4["security"]
+    end
+
+    subgraph Agents["🤖 Agents (6)"]
+        A1["code-reviewer"]
+        A2["planner"]
+        A3["security-reviewer"]
+    end
+
+    CMD --> Commands
+    Commands -.->|"auto-inject"| Skills
+    Commands -.->|"delegate"| Agents
+```
 
 | Layer        | Trigger              | Purpose                                  |
 | ------------ | -------------------- | ---------------------------------------- |
@@ -433,7 +300,7 @@ This template is designed to work seamlessly with official Claude Code plugins. 
 | `code-reviewer` agent     | `code-review` plugin | Template: lightweight local version; Plugin: more powerful with auto-trigger |
 | `security-reviewer` agent | `security-guidance`  | Template: OWASP checklist; Plugin: automatic security analysis               |
 | `code-simplifier` agent   | `code-simplifier`    | Similar function; plugin has more context                                    |
-| `/iterate` command        | `ralph-loop` plugin  | Template: single session; Plugin: cross-session persistence                  |
+| `/cc-ralph` command       | `ralph-loop` plugin  | CC-Best wrapper; requires plugin for cross-session persistence               |
 | `hookify` examples        | `hookify` plugin     | Template: examples; Plugin: full hook management                             |
 
 ### Recommended Plugin Configuration
@@ -636,6 +503,34 @@ Run `/setup --verify` to diagnose. Common fixes:
 </details>
 
 <details>
+<summary><strong>How to stop /iterate?</strong></summary>
+
+- **Interrupt**: Press `Ctrl+C` (or `Esc` in some terminals)
+- **Pause**: Type anything — Claude will wait for your input
+- **Resume**: Just continue the conversation
+
+Claude saves progress to `memory-bank/progress.md`, so you can always resume later.
+
+</details>
+
+<details>
+<summary><strong>What if /qa fails?</strong></summary>
+
+Claude will:
+
+1. Analyze the failure
+2. Return to `/dev` to fix the issue
+3. Re-run `/qa` to verify
+
+If stuck after 3 attempts, Claude will ask for your input. You can:
+
+- Provide hints: "Try checking the database connection"
+- Skip the test: "Skip this test for now"
+- Take over: "I'll fix this manually"
+
+</details>
+
+<details>
 <summary><strong>MCP configuration?</strong></summary>
 
 Edit `.claude/settings.local.json`:
@@ -645,6 +540,23 @@ Edit `.claude/settings.local.json`:
 ```
 
 Best practice: Enable ≤10 MCP servers per project.
+
+</details>
+
+<details>
+<summary><strong>CC-Best vs Superpowers?</strong></summary>
+
+Both are excellent. Choose based on your needs:
+
+| Scenario             | Recommended | Why                              |
+| -------------------- | ----------- | -------------------------------- |
+| Team collaboration   | CC-Best     | Role workflow (PM→Lead→Dev→QA)   |
+| Multi-language stack | CC-Best     | 7 language coding standards      |
+| Chinese team         | CC-Best     | Bilingual docs                   |
+| Solo developer       | Superpowers | Lighter, git worktree automation |
+| Need git worktree    | Superpowers | Auto-creates isolated branches   |
+
+> 💡 They can coexist! Use CC-Best for workflows, Superpowers for git automation.
 
 </details>
 
@@ -681,6 +593,7 @@ Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 | Java      | `java-style.md`     | google-java-format | JUnit          |
 | C#        | `csharp-style.md`   | dotnet format      | xUnit/NUnit    |
 | Go        | `backend/go.md`     | gofmt              | testing        |
+| Swift     | `native/ios.md`     | swift-format       | XCTest         |
 
 ---
 

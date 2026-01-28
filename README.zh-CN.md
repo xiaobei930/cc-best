@@ -1,19 +1,14 @@
-# Claude Code 最佳实践
+# CC-Best
 
 <p align="center">
-  <strong>🚀 安装 → 配置 → 开始编码</strong>
+  <strong>角色驱动的 Claude Code 开发工作流</strong>
 </p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/claude-code-best-practices?include_prereleases" alt="Release"></a>
   <a href="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
-</p>
-
-<p align="center">
   <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/network/members"><img src="https://img.shields.io/github/forks/xiaobei930/claude-code-best-practices?style=social" alt="GitHub forks"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/commits"><img src="https://img.shields.io/github/last-commit/xiaobei930/claude-code-best-practices" alt="Last commit"></a>
 </p>
 
 <p align="center">
@@ -22,212 +17,123 @@
 
 ---
 
-> **安装插件即用，几分钟内开始与 Claude 协作编程。**
-
-Claude Code 插件 & 模板，支持 **Python / Vue / TypeScript / C++ / Java / C# / Go / Swift** 多语言开发。
-
-## 📑 目录
-
-- [为什么使用这个模板？](#为什么使用这个模板)
-- [快速开始](#-快速开始)
-- [核心特性](#-核心特性)
-- [目录结构](#-目录结构)
-- [工作流程](#-工作流程)
-- [命令速查](#-命令速查)
-- [技能说明](#-技能说明)
-- [智能体](#-智能体)
-- [插件配合](#-插件配合)
-- [自定义指南](#-自定义指南)
-- [最佳实践](#-最佳实践)
-- [常见问题](#-常见问题)
-- [环境要求](#-环境要求)
-- [参考资源](#-参考资源)
-
----
-
-## 为什么使用这个模板？
-
-| 没有模板                | 使用模板                     |
-| ----------------------- | ---------------------------- |
-| ❌ 从零配置 Claude Code | ✅ 开箱即用                  |
-| ❌ 代码风格不一致       | ✅ 强制执行编码规范          |
-| ❌ 手动重复工作流       | ✅ 角色化自动化（PM→Dev→QA） |
-| ❌ 危险命令风险         | ✅ 安全钩子保护系统          |
-| ❌ 会话间上下文丢失     | ✅ 记忆库持久化进度          |
-
-### CC-Best vs Superpowers
-
-两者都是优秀的 Claude Code 增强工具，根据需求选择：
-
-| 场景                | 推荐        | 原因                        |
-| ------------------- | ----------- | --------------------------- |
-| **个人开发者**      | Superpowers | 更轻量，git 工作树自动化    |
-| **团队协作**        | CC-Best     | 角色工作流 (PM→Lead→Dev→QA) |
-| **多语言技术栈**    | CC-Best     | 7+ 语言编码规范             |
-| **中文团队**        | CC-Best     | 双语文档，中文内部文件      |
-| **需要 git 工作树** | Superpowers | 自动创建隔离分支            |
-| **需要记忆库**      | CC-Best     | progress.md 跨会话持久化    |
-
-> 💡 **可以共存！** 同时安装两个，CC-Best 用于团队工作流，Superpowers 用于 git 自动化。
-
-### 演示
+> **把 Claude 变成完整的开发团队。**
+> 从产品需求到代码审查 — 一个插件，完整工作流。
 
 <p align="center">
-  <img src="assets/setup.gif" alt="Setup 演示" width="80%">
-  <br>
-  <em>插件命令展示</em>
+  <code>35 命令</code> · <code>17 技能</code> · <code>6 智能体</code> · <code>7 语言规范</code>
 </p>
 
----
+<p align="center">
+  <a href="#-快速开始">快速开始</a> •
+  <a href="#-核心特性">核心特性</a> •
+  <a href="#-工作流程">工作流程</a> •
+  <a href="#-命令速查">命令速查</a> •
+  <a href="#-常见问题">常见问题</a>
+</p>
 
-## 🚀 快速开始
+### 为什么选择 CC-Best？
 
-### 方式一：作为插件安装（推荐）
+🎯 **问题**：Claude Code 很强大，但从零配置工作流、编码规范和安全规则需要数小时。
 
-最简单的使用方式 - 直接安装为 Claude Code 插件：
+✨ **方案**：预配置的角色（PM → Lead → Designer → Dev → QA）模拟真实团队协作，内置安全保护。
 
-```bash
-# 在 Claude Code 中运行：
-/plugin
-
-# 选择 "Add Marketplace"，然后输入：
-xiaobei930/claude-code-best-practices
-
-# 然后选择 "Install Plugin"，选择：
-cc-best
-```
-
-或者使用命令行方式：
+## ⚡ 快速开始
 
 ```bash
-# 添加 marketplace
+# 添加 marketplace 并安装
 /plugin marketplace add xiaobei930/claude-code-best-practices
-
-# 安装插件
 /plugin install cc-best@xiaobei930
+
+# 验证安装（30 秒）
+/cc-best:status
+
+# 开始使用
+/cc-best:iterate "实现用户认证功能"
 ```
 
-或者直接添加到 `~/.claude/settings.json`：
+### 插件 vs Clone：命令格式
 
-```json
-{
-  "extraKnownMarketplaces": {
-    "claude-code-best-practices": {
-      "source": {
-        "source": "github",
-        "repo": "xiaobei930/claude-code-best-practices"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "cc-best@xiaobei930": true
-  }
-}
-```
+| 安装方式  | 命令格式           | 示例                          |
+| --------- | ------------------ | ----------------------------- |
+| **插件**  | `/cc-best:command` | `/cc-best:iterate "添加功能"` |
+| **Clone** | `/command`         | `/iterate "添加功能"`         |
 
-安装后即可使用所有命令、智能体、技能和 hooks。
+> 💡 本文档使用短格式（`/iterate`）方便阅读。插件用户请添加 `cc-best:` 前缀。
 
 <details>
-<summary>📹 查看安装演示</summary>
+<summary>📹 演示效果</summary>
 <br>
 <p align="center">
-  <img src="assets/install.gif" alt="安装演示" width="80%">
+  <img src="assets/setup.gif" alt="Setup 演示" width="80%">
 </p>
 </details>
 
-#### 更新插件
+<details>
+<summary>📦 替代方案：克隆完整仓库</summary>
 
 ```bash
-# 更新到最新版本
-/plugin update cc-best@xiaobei930
-```
-
-> **注意**：`/plugin marketplace update` 只刷新可用插件列表，**不会更新已安装的插件**。使用 `/plugin update` 获取最新版本。
-
-#### 插件配置
-
-安装为插件后：
-
-1. **覆盖插件设置**，创建本地文件：
-   - 在项目中创建 `commands/` 来添加/覆盖命令
-   - 创建 `rules/` 来添加项目特定规则
-
-2. **记忆库**：插件不包含 memory-bank，如需要请手动创建：
-
-```bash
-mkdir -p memory-bank
-touch memory-bank/progress.md
-touch memory-bank/architecture.md
-```
-
-3. **Hookify 规则**：插件中的 hookify 规则（`.claude/hookify.*.local.md`）不会自动应用到你的项目。核心安全功能由 `hooks/hooks.json` 提供。
-
----
-
-### 方式二：Clone 模板（完全定制）
-
-适用于需要完全控制的新项目：
-
-```bash
-# 1. 克隆模板
 git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
-cd my-project
-
-# 2. 运行初始化
-bash scripts/shell/init.sh
-
-# 3. 编辑 CLAUDE.md，替换占位符
-#    {{PROJECT_NAME}} → 项目名称
-#    {{PROJECT_DESCRIPTION}} → 项目描述
-#    {{DATE}} → 当前日期
-
-# 4. 开始开发
-/pm   # 从产品经理角色开始第一个需求
+cd my-project && bash scripts/shell/init.sh
 ```
 
-#### 复制到现有项目
+当你需要完全自定义所有文件时使用克隆方式。
+
+</details>
+
+<details>
+<summary>🗑️ 卸载</summary>
 
 ```bash
-# 复制配置文件到你的项目
-cp -r claude-code-best-practices/.claude /path/to/your/project/
-cp -r claude-code-best-practices/commands /path/to/your/project/
-cp -r claude-code-best-practices/skills /path/to/your/project/
-cp -r claude-code-best-practices/agents /path/to/your/project/
-cp -r claude-code-best-practices/rules /path/to/your/project/
-cp -r claude-code-best-practices/scripts /path/to/your/project/
-cp -r claude-code-best-practices/hooks /path/to/your/project/
-cp -r claude-code-best-practices/memory-bank /path/to/your/project/
-cp claude-code-best-practices/CLAUDE.md /path/to/your/project/
-
-# 进入项目并初始化
-cd /path/to/your/project
-bash scripts/shell/init.sh
+/plugin uninstall cc-best@xiaobei930
 ```
 
-> **Windows 用户**：使用 Git Bash 运行脚本，或使用 `robocopy` 复制文件。
+</details>
 
----
+### 接下来会发生什么？
 
-### 插件 vs Clone：何时使用哪种方式
+运行 `/iterate "实现用户认证功能"` 后，Claude 会：
 
-| 方式           | 适用场景 | 获得内容                           |
-| -------------- | -------- | ---------------------------------- |
-| **安装插件**   | 现有项目 | 命令、技能、智能体、hooks 即时可用 |
-| **Clone 模板** | 新项目   | 完全可定制，所有文件在你的仓库中   |
+```
+1. 📋 /pm     → 分析需求，创建任务分解
+2. 🏗️ /lead   → 设计技术方案
+3. 💻 /dev    → 编写代码，创建测试
+4. 🧪 /qa     → 运行测试，验证质量
+5. ✅ /commit → 提交代码，生成规范的提交信息
+```
 
-> **注意**：不要在从此模板 clone 的项目中安装此插件——会导致命令和 hooks 重复。
+你只需要看着，必要时介入即可。
+
+### 常用工作流
+
+| 我想要...  | 命令                          | Claude 会做什么                     |
+| ---------- | ----------------------------- | ----------------------------------- |
+| 开发新功能 | `/iterate "添加暗黑模式切换"` | 完整流程：规划 → 编码 → 测试 → 提交 |
+| 修复 Bug   | `/iterate "修复登录超时问题"` | 排查 → 修复 → 验证 → 提交           |
+| 代码审查   | `/pm "审查最近的改动"`        | 分析代码，提出改进建议              |
+| 学习代码库 | `/pair`                       | 逐步探索，每步都有解释              |
+
+### 适合谁？
+
+| 你是...              | 推荐模式   | 原因                                   |
+| -------------------- | ---------- | -------------------------------------- |
+| **多角色团队**       | 完整工作流 | PM → Lead → Dev → QA 映射你的流程      |
+| **独立开发者**       | `/iterate` | 让 Claude 处理繁琐工作                 |
+| **学习 Claude Code** | `/pair`    | 每一步都理解后再继续                   |
+| **快速修复**         | 直接命令   | `/dev "修复这个拼写错误"` 处理简单任务 |
 
 ---
 
 ## ✨ 核心特性
 
-### 🎭 角色化工作流
-
-PM → Lead → Designer → Dev → QA → Commit 完整开发循环，每个角色有明确职责。
-
-### 🔄 自主迭代模式
-
-`/iterate` 模式让 Claude 自主完成任务列表，无需频繁干预。
+| 特性                | 说明                                              |
+| ------------------- | ------------------------------------------------- |
+| 🎭 **角色化工作流** | PM → Lead → Designer → Dev → QA — 完整开发循环    |
+| 🔄 **自主迭代模式** | `/iterate` 自动完成任务，无需干预                 |
+| 🛡️ **安全钩子**     | 阻止 `rm -rf /`、`git push --force` 等危险命令    |
+| 📐 **多语言规范**   | Python、Vue/TS、C++、Java、C#、Go、Swift 编码规范 |
+| 🧠 **记忆库**       | 跨会话持久化进度和决策                            |
+| 🌐 **跨平台**       | Windows、macOS、Linux — 自动检测包管理器          |
 
 <details>
 <summary>📹 查看 /iterate 运行演示</summary>
@@ -237,101 +143,36 @@ PM → Lead → Designer → Dev → QA → Commit 完整开发循环，每个�
 </p>
 </details>
 
-### 🛡️ 安全钩子
-
-预配置的危险操作防护：阻止 `rm -rf /`、`git push --force` 等危险命令。
-
-### 📐 多语言规范
-
-7+ 种语言的编码规范：Python、Vue/TS、C++、Java、C#、Go 等。
-
-### 🧠 记忆库
-
-`memory-bank/` 目录持久化项目进度、架构决策、技术选型。
-
-**自动归档**: `progress.md` 采用滚动窗口策略防止文件膨胀：
-
-- 只保留最近 5 项完成任务、5 条决策、5 个检查点
-- 旧记录自动归档到 `progress-archive.md`
-- 文件超过 300 行时执行 `/checkpoint --archive`
-
-### 🌐 跨平台支持
-
-基于 Node.js 的 hooks 和工具库，支持 Windows/macOS/Linux。自动检测包管理器（npm/pnpm/yarn/bun）。
-
-### 🔌 MCP 集成
-
-开箱即用的 MCP 服务器配置，支持 memory、playwright、firecrawl 等。
-
 ---
 
 ## 📁 目录结构
 
 ```
 your-project/
-├── CLAUDE.md                   # 项目宪法（必须保留）
-├── memory-bank/                # 项目记忆库
-│   ├── progress.md             # 进度跟踪（滚动窗口）
-│   ├── progress-archive.md     # 历史记录归档
-│   ├── architecture.md         # 架构文档
-│   └── tech-stack.md           # 技术选型
-│
-├── commands/                   # Slash 命令（35）
-│   ├── pm.md, lead.md          # 角色命令
-│   ├── iterate.md, pair.md     # 模式命令
-│   └── build.md, test.md       # 工具命令
-│
-├── rules/                      # 编码规范（13 个文件）
-│   ├── methodology.md          # 开发方法论
-│   ├── coding-standards.md     # 通用标准
-│   ├── code-style.md           # Python 风格
-│   ├── frontend-style.md       # Vue/TS/JS 风格
-│   └── security.md             # 安全规则
-│
-├── skills/                     # 开发技能（17 类）
-│   ├── backend/                # 后端模式（5 种语言）
-│   ├── frontend/               # 前端模式（4 种框架）
-│   ├── testing/                # 测试（TDD、E2E）
-│   └── security/               # 安全审查
-│
-├── agents/                     # 子智能体（6 个）
-│   ├── code-reviewer.md        # 代码审查
-│   └── security-reviewer.md    # 安全审查
-│
-├── scripts/                    # 自动化脚本（按语言分类）
-│   ├── shell/                  # Bash 脚本 (10)
-│   │   ├── init.sh, cleanup.sh
-│   │   └── session-start.sh, session-end.sh
-│   ├── python/                 # Python 脚本 (9)
-│   │   ├── validate-command.py, protect-files.py
-│   │   └── format-file.py, check-console-log.py
-│   └── node/                   # Node.js（默认，跨平台）
-│       ├── lib/                # 工具库
-│       │   ├── utils.js        # 27 个辅助函数
-│       │   └── package-manager.js
-│       ├── verify-hooks.js     # Hooks 配置验证器
-│       ├── archive-progress.js # 进度文件归档器
-│       └── hooks/              # 14 个生命周期钩子
-│           ├── validate-command.js, protect-files.js
-│           ├── session-start.js, session-end.js
-│           └── format-file.js, typescript-check.js
-│
-├── hooks/                      # Hook 配置
-│   ├── hooks.json              # 插件 hooks 配置
-│   └── README.md               # Hooks 使用文档
-│
-├── .claude-plugin/             # 插件市场元数据
-│   ├── plugin.json             # 插件清单
-│   └── marketplace.json        # 市场列表信息
-│
-└── .claude/                    # Claude Code 配置
-    ├── settings.json           # 基础权限（提交到 Git）
-    ├── settings.local.json     # 本地配置 + Hooks（不提交）
-    ├── tools.md                # 脚本和工具清单
-    ├── mcp-configs/            # MCP 服务器配置
-    ├── ralph-prompts/          # Ralph Loop 提示词
-    └── learned/                # 持续学习存储
+├── CLAUDE.md          # 项目宪法
+├── commands/          # 35 个命令
+├── skills/            # 17 个技能
+├── agents/            # 6 个智能体
+├── rules/             # 编码规范
+├── hooks/             # 安全钩子
+├── scripts/           # 自动化脚本 (node/python/shell)
+├── memory-bank/       # 进度 & 架构文档
+└── .claude/           # Claude Code 配置
 ```
+
+<details>
+<summary>📂 详细结构</summary>
+
+| 目录           | 内容                                                                                                     |
+| -------------- | -------------------------------------------------------------------------------------------------------- |
+| `commands/`    | 角色命令 (`pm`, `lead`, `dev`, `qa`)，模式命令 (`iterate`, `pair`)，工具命令 (`build`, `test`, `commit`) |
+| `skills/`      | 后端、前端、测试、安全、DevOps、架构、Git                                                                |
+| `agents/`      | `code-reviewer`, `code-simplifier`, `planner`, `security-reviewer`, `tdd-guide`, `requirement-validator` |
+| `rules/`       | 语言编码规范 (Python, Vue/TS, C++, Java, C#, Go)                                                         |
+| `scripts/`     | Node.js 跨平台钩子（默认），Python/Bash 备选                                                             |
+| `memory-bank/` | `progress.md`（滚动窗口），`architecture.md`，`tech-stack.md`                                            |
+
+</details>
 
 ---
 
@@ -354,11 +195,11 @@ flowchart LR
 
 ### 三种开发模式
 
-| 模式         | 命令          | 适用场景       | 特点               |
-| ------------ | ------------- | -------------- | ------------------ |
-| **自主迭代** | `/iterate`    | 任务清单明确   | 完全自主，无需干预 |
-| **结对编程** | `/pair`       | 学习、敏感操作 | 每步确认，人机协作 |
-| **长时循环** | `/ralph-loop` | 小时级批量任务 | 需安装插件         |
+| 模式         | 命令        | 适用场景       | 特点               |
+| ------------ | ----------- | -------------- | ------------------ |
+| **自主迭代** | `/iterate`  | 任务清单明确   | 完全自主，无需干预 |
+| **结对编程** | `/pair`     | 学习、敏感操作 | 每步确认，人机协作 |
+| **长时循环** | `/cc-ralph` | 小时级批量任务 | 需安装插件         |
 
 ---
 
@@ -384,13 +225,13 @@ flowchart LR
 
 **17 个开发技能**，按领域组织：
 
-| 领域     | 技能                                 | 覆盖范围                       |
-| -------- | ------------------------------------ | ------------------------------ |
-| **后端** | `backend`, `api`, `database`         | Python, TS, Java, Go, C#, Rust |
-| **前端** | `frontend`                           | Vue, React, Svelte, Angular    |
-| **质量** | `testing`, `security`, `debug`       | TDD, OWASP, 性能分析           |
-| **架构** | `architecture`, `devops`, `git`      | ADR, CI/CD, 分支策略           |
-| **会话** | `learning`, `compact`, `exploration` | 知识管理                       |
+| 领域     | 技能                                 | 覆盖范围                    |
+| -------- | ------------------------------------ | --------------------------- |
+| **后端** | `backend`, `api`, `database`         | Python, TS, Java, Go, C#    |
+| **前端** | `frontend`                           | Vue, React, Svelte, Angular |
+| **质量** | `testing`, `security`, `debug`       | TDD, OWASP, 性能分析        |
+| **架构** | `architecture`, `devops`, `git`      | ADR, CI/CD, 分支策略        |
+| **会话** | `learning`, `compact`, `exploration` | 知识管理                    |
 
 > 📖 **完整参考**: 查看 [skills/README](skills/README) 了解技能详细文档。
 
@@ -399,6 +240,34 @@ flowchart LR
 ## 🏗️ 架构概览
 
 本模板采用**三层架构**：
+
+```mermaid
+flowchart TB
+    subgraph User["👤 你"]
+        CMD["/iterate '添加功能'"]
+    end
+
+    subgraph Commands["📋 命令 (35)"]
+        PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
+    end
+
+    subgraph Skills["🛠️ 技能 (17)"]
+        S1["backend"]
+        S2["frontend"]
+        S3["testing"]
+        S4["security"]
+    end
+
+    subgraph Agents["🤖 智能体 (6)"]
+        A1["code-reviewer"]
+        A2["planner"]
+        A3["security-reviewer"]
+    end
+
+    CMD --> Commands
+    Commands -.->|"自动注入"| Skills
+    Commands -.->|"委派"| Agents
+```
 
 | 层级         | 触发方式        | 用途                     |
 | ------------ | --------------- | ------------------------ |
@@ -425,7 +294,7 @@ flowchart LR
 | `code-reviewer` 智能体     | `code-review` 插件  | 模板：轻量级本地版；插件：功能更强大，自动触发 |
 | `security-reviewer` 智能体 | `security-guidance` | 模板：OWASP 检查清单；插件：自动安全分析       |
 | `code-simplifier` 智能体   | `code-simplifier`   | 功能相似；插件拥有更多上下文                   |
-| `/iterate` 命令            | `ralph-loop` 插件   | 模板：单会话循环；插件：跨会话持久化           |
+| `/cc-ralph` 命令           | `ralph-loop` 插件   | CC-Best 封装；需插件支持跨会话持久化           |
 | `hookify` 示例             | `hookify` 插件      | 模板：示例配置；插件：完整钩子管理             |
 
 ### 推荐的插件配置
@@ -628,6 +497,29 @@ bash scripts/shell/cleanup.sh --all
 </details>
 
 <details>
+<summary><strong>如何停止 /iterate？</strong></summary>
+
+- **Ctrl+C** 或 **Escape** — 立即中断当前操作
+- Claude 会保留 `memory-bank/progress.md` 中的进度
+- 之后输入 `/iterate` 可从断点继续
+
+</details>
+
+<details>
+<summary><strong>如果 /qa 失败怎么办？</strong></summary>
+
+Claude 会自动：
+
+1. 分析失败原因
+2. 回到 `/dev` 修复问题
+3. 重新运行 `/qa`
+4. 循环直到通过或达到最大重试次数（默认 3 次）
+
+如果仍然失败，Claude 会暂停并请求你的输入。
+
+</details>
+
+<details>
 <summary><strong>MCP 配置？</strong></summary>
 
 编辑 `.claude/settings.local.json`：
@@ -637,6 +529,23 @@ bash scripts/shell/cleanup.sh --all
 ```
 
 最佳实践：每个项目启用 ≤10 个 MCP 服务器。
+
+</details>
+
+<details>
+<summary><strong>CC-Best vs Superpowers？</strong></summary>
+
+两者都很优秀，根据需求选择：
+
+| 场景            | 推荐        | 原因                        |
+| --------------- | ----------- | --------------------------- |
+| 团队协作        | CC-Best     | 角色工作流 (PM→Lead→Dev→QA) |
+| 多语言技术栈    | CC-Best     | 7 种语言编码规范            |
+| 中文团队        | CC-Best     | 双语文档                    |
+| 个人开发者      | Superpowers | 更轻量，git 工作树自动化    |
+| 需要 git 工作树 | Superpowers | 自动创建隔离分支            |
+
+> 💡 可以共存！CC-Best 用于工作流，Superpowers 用于 git 自动化。
 
 </details>
 
@@ -673,6 +582,7 @@ bash scripts/shell/cleanup.sh --all
 | Java      | `java-style.md`     | google-java-format | JUnit       |
 | C#        | `csharp-style.md`   | dotnet format      | xUnit/NUnit |
 | Go        | `backend/go.md`     | gofmt              | testing     |
+| Swift     | `native/ios.md`     | swift-format       | XCTest      |
 
 ---
 
