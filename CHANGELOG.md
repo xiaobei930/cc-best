@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.5] - 2026-01-29
+
+### Added / 新增
+
+- **Skills 输出标准** - 为所有 skills 添加 DO/DON'T 示例
+  - 明确的输出格式规范
+  - 正确/错误示例对比
+  - 提高 AI 输出的一致性和质量
+
+### Changed / 变更
+
+- **README 优化** - 全面审计并优化文档
+  - 移除重复内容，改用链接引用详细文档
+  - 统一文档标题为双语格式
+  - 改进安装和使用说明
+
+### Fixed / 修复
+
+- **插件加载失败** - 修复 plugin.json 格式导致的加载错误
+  - `commands` 和 `skills` 改为数组格式：`["./commands/"]`
+  - `agents` 改为显式列出每个文件的数组格式
+  - 移除 `hooks` 字段（标准位置 `hooks/hooks.json` 会自动加载）
+  - 移除 lifecycle hooks 中的 matcher 字段
+  - 问题原因：plugin.json schema 要求特定格式
+
+---
+
 ## [0.5.4] - 2026-01-27
 
 ### Added / 新增
