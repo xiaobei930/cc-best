@@ -207,6 +207,8 @@ flowchart LR
 | **Pair Programming**     | `/pair`     | Learning, sensitive operations | Confirm each step, human-machine collaboration |
 | **Long-Running Loop**    | `/cc-ralph` | Hour-level batch tasks         | Requires ralph-loop plugin                     |
 
+> 📖 **Detailed usage guide**: See [MODES.md](.claude-plugin/MODES.md) for comprehensive documentation on each mode, including when to use, how to control, and best practices.
+
 ---
 
 ## 📋 Command Reference
