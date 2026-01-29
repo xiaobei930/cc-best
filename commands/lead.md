@@ -193,7 +193,7 @@ Phase N: Polish（跨 Story 优化）
 
 ### 设计文档格式 (DES-XXX.md)
 
-```markdown
+````markdown
 # DES-XXX: [设计名称]
 
 ## 元信息
@@ -228,7 +228,41 @@ Phase N: Polish（跨 Story 优化）
 
 ## 接口定义
 
-[API 和数据模型]
+### API 端点
+
+| 端点       | 方法 | 请求体             | 响应体        | 错误码      |
+| ---------- | ---- | ------------------ | ------------- | ----------- |
+| `/api/xxx` | POST | `CreateXxxRequest` | `XxxResponse` | 400/401/500 |
+
+### 数据模型
+
+```typescript
+// 请求模型
+interface CreateXxxRequest {
+  field1: string;
+  field2?: number;
+}
+
+// 响应模型
+interface XxxResponse {
+  id: string;
+  createdAt: string;
+}
+
+// 实体模型
+interface XxxEntity {
+  id: string;
+  // ...
+}
+```
+````
+
+### 错误处理
+
+| 错误码 | 场景         | 响应格式                              |
+| ------ | ------------ | ------------------------------------- |
+| 400    | 参数校验失败 | `{ error: string, fields: string[] }` |
+| 401    | 未授权       | `{ error: "Unauthorized" }`           |
 
 ## 任务分解
 
@@ -242,7 +276,8 @@ Phase N: Polish（跨 Story 优化）
 | 风险    | 影响   | 缓解措施 |
 | ------- | ------ | -------- |
 | [风险1] | [影响] | [措施]   |
-```
+
+````
 
 ### 任务文档格式 (TSK-XXX.md)
 
@@ -272,14 +307,44 @@ Phase N: Polish（跨 Story 优化）
 
 - `path/to/file.py`
 
+## 任务契约
+
+<!-- 明确任务的输入输出，确保任务独立性 -->
+
+- **输入依赖**: [从哪个任务/模块获取什么] 或 "无"
+- **输出产物**: [产出什么接口/数据供后续使用] 或 "无"
+
 ## 依赖任务
 
-- TSK-XXX（如有）
+<!-- 必填：无依赖写"无"，有依赖必须说明原因 -->
+
+- 无 / TSK-XXX: [依赖原因]
+
+## TDD 规格
+
+### 测试用例
+
+<!-- 从 REQ 的验收场景转化，Dev 按此编写测试 -->
+
+- [ ] `test_xxx_when_yyy_should_zzz` - [对应验收场景]
+- [ ] `test_xxx_edge_case` - [边界情况]
+
+### Mock 依赖
+
+| 依赖模块 | Mock 方式 | 返回值示例 |
+| -------- | --------- | ---------- |
+| `XxxRepository` | `MockXxxRepository` | `{ id: "1", ... }` |
+
+### 测试数据
+
+- 正常场景: `fixtures/xxx_valid.json` 或内联数据
+- 边界场景: `fixtures/xxx_edge.json`
+- 错误场景: `fixtures/xxx_error.json`
 
 ## 检查点
 
 完成后，该 User Story 应可独立验证：[验证方式]
-```
+````
 
 ### 任务列表格式（按 User Story 组织）
 
