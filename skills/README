@@ -10,9 +10,11 @@ Claude Code 技能系统允许你定义可复用的专业知识、工作流和�
 | ----------------- | ---------------------- | -------------------------- |
 | 后端开发 (Python) | `backend` → python.md  | `/backend` 然后选 Python   |
 | 后端开发 (Java)   | `backend` → java.md    | `/backend` 然后选 Java     |
+| 后端开发 (Rust)   | `backend` → rust.md    | `/backend` 然后选 Rust     |
 | 前端开发 (Vue)    | `frontend` → vue.md    | `/frontend` 然后选 Vue     |
 | 前端开发 (React)  | `frontend` → react.md  | `/frontend` 然后选 React   |
 | iOS/macOS 开发    | `native` → ios.md      | `/native` 然后选 iOS       |
+| Tauri 桌面应用    | `native` → tauri.md    | `/native` 然后选 Tauri     |
 | API 设计          | `api`                  | `/api`                     |
 | 数据库设计        | `database`             | `/database`                |
 
@@ -69,7 +71,7 @@ Skill 是一个包含 `SKILL.md` 文件的文件夹，可以包含：
 
 | 技能           | 描述                             |
 | -------------- | -------------------------------- |
-| `backend`      | 后端开发模式（Python, TS, Java, Go, C#） |
+| `backend`      | 后端开发模式（Python, TS, Java, Go, C#, Rust） |
 | `frontend`     | 前端开发模式（Vue, React, Svelte, Angular）|
 | `database`     | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）|
 | `devops`       | DevOps 模式（Docker, CI/CD）       |
@@ -114,9 +116,9 @@ Skill 是一个包含 `SKILL.md` 文件的文件夹，可以包含：
 
 | 技能     | 描述                               |
 | -------- | ---------------------------------- |
-| `native` | 原生应用开发策略（iOS/macOS）      |
+| `native` | 原生/桌面应用开发策略（iOS/macOS、Tauri） |
 
-子文件：`ios.md`、`swift-concurrency.md`、`swiftui-performance.md`
+子文件：`ios.md`、`swift-concurrency.md`、`swiftui-performance.md`、`tauri.md`
 
 > **未来计划**: `native` 将包含 `android.md` 子文件
 
@@ -137,7 +139,8 @@ skills/
 │   ├── typescript.md            # TypeScript 特定模式
 │   ├── java.md                  # Java 特定模式
 │   ├── go.md                    # Go 特定模式
-│   └── csharp.md                # C# 特定模式
+│   ├── csharp.md                # C# 特定模式
+│   └── rust.md                  # Rust 特定模式
 ├── database/
 │   ├── SKILL.md                 # 数据库通用模式
 │   ├── postgres.md              # PostgreSQL 最佳实践
@@ -195,7 +198,8 @@ skills/
     ├── SKILL.md                 # 原生应用开发策略
     ├── ios.md                   # iOS/macOS 开发指南
     ├── swift-concurrency.md     # Swift 并发模式
-    └── swiftui-performance.md   # SwiftUI 性能优化
+    ├── swiftui-performance.md   # SwiftUI 性能优化
+    └── tauri.md                 # Tauri 跨平台桌面应用
 ```
 
 ## SKILL.md Frontmatter 字段
@@ -424,7 +428,7 @@ description: 使用扩展思考进行深度分析
 | --------------------- | ------------ | ------------------------------------------------ |
 | `api`                 | 单文件       | RESTful API 设计                                 |
 | `architecture`        | 单文件       | 架构设计（ADR、设计检查清单）                    |
-| `backend`             | 主+5语言     | 后端开发模式（Python, TS, Java, Go, C#）         |
+| `backend`             | 主+6语言     | 后端开发模式（Python, TS, Java, Go, C#, Rust）   |
 | `database`            | 主+4数据库   | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）  |
 | `devops`              | 主+2平台     | DevOps 模式（Docker, CI/CD）                     |
 | `frontend`            | 主+4框架     | 前端开发模式（Vue, React, Svelte, Angular）      |
@@ -438,4 +442,4 @@ description: 使用扩展思考进行深度分析
 | `learning`            | 子+脚本      | 知识提取（parent: session）                      |
 | `compact`             | 子+脚本      | 上下文压缩（parent: session）                    |
 | `exploration`         | 主+2文件     | 代码库探索（隔离研究、迭代检索）                 |
-| `native`              | 主+3文件     | 原生应用开发（iOS、Swift 并发、SwiftUI）         |
+| `native`              | 主+4文件     | 原生/桌面应用开发（iOS、Swift、SwiftUI、Tauri）  |

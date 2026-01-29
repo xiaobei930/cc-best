@@ -27,8 +27,9 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 | Java               | `java.md`       | Spring Boot, Quarkus     |
 | Go                 | `go.md`         | Gin, Echo, Fiber         |
 | C#                 | `csharp.md`     | ASP.NET Core             |
+| Rust               | `rust.md`       | Axum, Actix-web, Rocket  |
 
-**加载方式**: 检测项目中的 `pyproject.toml`/`package.json`/`pom.xml`/`go.mod` 等文件确定技术栈。
+**加载方式**: 检测项目中的 `pyproject.toml`/`package.json`/`pom.xml`/`go.mod`/`Cargo.toml` 等文件确定技术栈。
 
 ---
 
