@@ -420,6 +420,11 @@ API 请求 → Query Library（TanStack Query）
 - **Svelte**: [svelte.md](./svelte.md) - Svelte/SvelteKit
 - **Angular**: [angular.md](./angular.md) - Angular 17+
 
+## 专项优化
+
+- **性能优化**: [performance.md](./performance.md) - Core Web Vitals (LCP/INP/CLS)
+- **Tailwind CSS**: [tailwind.md](./tailwind.md) - Tailwind 最佳实践 + v4 迁移指南
+
 ---
 
 ## Maintenance

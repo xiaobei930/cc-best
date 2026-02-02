@@ -561,3 +561,178 @@ pip install -e ".[dev]"
 poetry install
 pdm install
 ```
+
+---
+
+## Django 验证循环
+
+Django 项目专属验证流程，用于 PR 前、重大变更后、部署前的质量检查。
+
+### 验证阶段
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Django 验证循环                               │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 1: 环境检查                                               │
+│  ├─ Python 版本验证                                              │
+│  ├─ 虚拟环境确认                                                 │
+│  └─ 环境变量检查                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 2: 代码质量                                               │
+│  ├─ mypy 类型检查                                                │
+│  ├─ ruff/black 格式检查                                          │
+│  ├─ isort 导入排序                                               │
+│  └─ manage.py check --deploy                                    │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 3: 数据库迁移                                             │
+│  ├─ 未应用迁移检查                                               │
+│  ├─ 迁移冲突检测                                                 │
+│  └─ 模型变更验证                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 4: 测试 + 覆盖率                                          │
+│  ├─ pytest 全量测试                                              │
+│  └─ 覆盖率报告                                                   │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 5: 安全扫描                                               │
+│  ├─ pip-audit 依赖漏洞                                           │
+│  ├─ bandit 安全检查                                              │
+│  └─ 密钥泄露检测                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│  Phase 6: 配置审查                                               │
+│  ├─ DEBUG = False                                               │
+│  ├─ SECRET_KEY 配置                                              │
+│  ├─ ALLOWED_HOSTS 设置                                           │
+│  └─ HTTPS/HSTS 启用                                              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 验证命令
+
+```bash
+# Phase 1: 环境检查
+python --version
+which python
+pip list --outdated
+
+# Phase 2: 代码质量
+mypy . --config-file pyproject.toml
+ruff check . --fix
+black . --check
+isort . --check-only
+python manage.py check --deploy
+
+# Phase 3: 数据库迁移
+python manage.py showmigrations
+python manage.py makemigrations --check
+python manage.py migrate --plan
+
+# Phase 4: 测试 + 覆盖率
+pytest --cov=apps --cov-report=html --cov-report=term-missing --reuse-db
+
+# Phase 5: 安全扫描
+pip-audit
+bandit -r . -f json -o bandit-report.json
+# 密钥检测由 hooks/check-secrets.js 自动执行
+
+# Phase 6: 配置审查
+python manage.py shell -c "from django.conf import settings; print('DEBUG:', settings.DEBUG)"
+```
+
+### 覆盖率目标
+
+| 组件        | 目标 |
+| ----------- | ---- |
+| Models      | 90%+ |
+| Serializers | 85%+ |
+| Views       | 80%+ |
+| Services    | 90%+ |
+| 总体        | 80%+ |
+
+### 配置审查脚本
+
+```python
+# 在 Django shell 中执行
+from django.conf import settings
+
+checks = {
+    'DEBUG is False': not settings.DEBUG,
+    'SECRET_KEY set': bool(settings.SECRET_KEY and len(settings.SECRET_KEY) > 30),
+    'ALLOWED_HOSTS set': len(settings.ALLOWED_HOSTS) > 0,
+    'HTTPS enabled': getattr(settings, 'SECURE_SSL_REDIRECT', False),
+    'HSTS enabled': getattr(settings, 'SECURE_HSTS_SECONDS', 0) > 0,
+    'Database configured': settings.DATABASES['default']['ENGINE'] != 'django.db.backends.sqlite3',
+}
+
+for check, result in checks.items():
+    status = '✓' if result else '✗'
+    print(f"{status} {check}")
+```
+
+### 输出模板
+
+```
+DJANGO VERIFICATION REPORT
+══════════════════════════════════════════════════════════════════
+
+Phase 1: Environment Check
+────────────────────────────────────────────────────────────────
+  ✓ Python 3.11.5
+  ✓ Virtual environment active
+  ✓ All environment variables set
+
+Phase 2: Code Quality
+────────────────────────────────────────────────────────────────
+  ✓ mypy: No type errors
+  ✗ ruff: 3 issues found (auto-fixed)
+  ✓ black: No formatting issues
+  ✓ isort: Imports properly sorted
+  ✓ manage.py check: No issues
+
+Phase 3: Migrations
+────────────────────────────────────────────────────────────────
+  ✓ No unapplied migrations
+  ✓ No migration conflicts
+  ✓ All models have migrations
+
+Phase 4: Tests + Coverage
+────────────────────────────────────────────────────────────────
+  Tests: 247 passed, 0 failed, 5 skipped
+  Coverage:
+    Overall: 87%
+    users: 92%
+    products: 89%
+    orders: 85%
+
+Phase 5: Security Scan
+────────────────────────────────────────────────────────────────
+  ✗ pip-audit: 2 vulnerabilities found (fix required)
+  ✓ bandit: No security issues
+  ✓ No secrets detected
+
+Phase 6: Configuration
+────────────────────────────────────────────────────────────────
+  ✓ DEBUG = False
+  ✓ SECRET_KEY configured
+  ✓ ALLOWED_HOSTS set
+  ✓ HTTPS enabled
+
+══════════════════════════════════════════════════════════════════
+RECOMMENDATION: ⚠️ Fix pip-audit vulnerabilities before deploying
+══════════════════════════════════════════════════════════════════
+```
+
+### 部署前检查清单
+
+- [ ] 所有测试通过
+- [ ] 覆盖率 ≥ 80%
+- [ ] 无安全漏洞
+- [ ] 无未应用迁移
+- [ ] DEBUG = False
+- [ ] SECRET_KEY 正确配置
+- [ ] ALLOWED_HOSTS 设置正确
+- [ ] 数据库备份已启用
+- [ ] 静态文件已收集
+- [ ] 日志配置正常
+- [ ] 错误监控（Sentry 等）已配置
+- [ ] HTTPS/SSL 已配置
