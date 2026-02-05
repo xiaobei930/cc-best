@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 🚀 Roadmap / 路线图
 
-### v0.5.x ✅ (Released 2025-01-25 ~ 2026-02-02) - 质量保证与架构优化
+### v0.5.x ✅ (Released 2025-01-25 ~ 2026-02-05) - 质量保证与架构优化
 
 **核心目标**: 提升可靠性、扩大受众、完善架构
 
@@ -53,6 +53,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.5.9] - 2026-02-05
+
+#### Added / 新增
+
+- **Python 进阶技能** - 新增 3 个 Python 子文件
+  - `python-patterns.md` - 设计模式（KISS、组合、策略模式）
+  - `python-types.md` - 高级类型提示（Protocol、泛型、TypeGuard）
+  - `python-observability.md` - 可观测性（日志、指标、追踪）
+- **代码健康评估技能** - 新增 `skills/quality/code-health.md`
+  - 技术债务量化公式
+  - 热点文件检测命令
+  - CRITICAL/HIGH/MEDIUM/LOW 优先级分级
+
+#### Changed / 变更
+
+- **session-start Hook 增强** - 添加 Memory Bank 状态检测
+  - 显示可用的 memory-bank 文件
+  - 提示使用 `/cc-best:catchup` 恢复上下文
+- **quality 技能扩展** - 新增 code-health 子技能
+
+---
 
 ### [0.5.8] - 2026-02-02
 
@@ -243,6 +265,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.5.9]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.6...v0.5.7
 [0.5.6]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.5...v0.5.6

@@ -736,3 +736,13 @@ RECOMMENDATION: ⚠️ Fix pip-audit vulnerabilities before deploying
 - [ ] 日志配置正常
 - [ ] 错误监控（Sentry 等）已配置
 - [ ] HTTPS/SSL 已配置
+
+---
+
+## 进阶主题
+
+以下子文件提供更深入的专题指南：
+
+- **设计模式**: [python-patterns.md](./python-patterns.md) - KISS、组合优于继承、策略模式
+- **类型提示**: [python-types.md](./python-types.md) - Protocol、泛型、TypeGuard
+- **可观测性**: [python-observability.md](./python-observability.md) - 日志、指标、追踪

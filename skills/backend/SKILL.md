@@ -210,10 +210,17 @@ GET /health
 - **Java**: [java.md](./java.md) - Spring Boot
 - **Go**: [go.md](./go.md) - Gin/Echo
 - **C#**: [csharp.md](./csharp.md) - ASP.NET Core
+- **Rust**: [rust.md](./rust.md) - Axum/Actix-web/Rocket
 
 ## 专项优化
 
 - **性能优化**: [performance.md](./performance.md) - 数据库、缓存、并发优化
+
+## Python 进阶
+
+- **设计模式**: [python-patterns.md](./python-patterns.md) - KISS、组合、策略模式
+- **类型提示**: [python-types.md](./python-types.md) - Protocol、泛型、TypeGuard
+- **可观测性**: [python-observability.md](./python-observability.md) - 日志、指标、追踪
 
 ---
 

@@ -30,9 +30,27 @@ const { detect, getAvailableManagers } = require("../lib/package-manager");
 async function main() {
   const memoryBank = getMemoryBankDir();
   const progressFile = path.join(memoryBank, "progress.md");
+  const archFile = path.join(memoryBank, "architecture.md");
 
-  // 检查 progress.md
-  if (fileExists(progressFile)) {
+  // Memory Bank 状态检测
+  const hasProgress = fileExists(progressFile);
+  const hasArch = fileExists(archFile);
+
+  if (hasProgress || hasArch) {
+    const files = [];
+    if (hasProgress) files.push("progress.md");
+    if (hasArch) files.push("architecture.md");
+    log(`[SessionStart] Memory Bank: ${files.join(", ")} 可用`);
+
+    if (hasProgress && hasArch) {
+      log("[SessionStart] 提示: 使用 /cc-best:catchup 快速恢复上下文");
+    }
+  } else {
+    log("[SessionStart] Memory Bank: 空 - 考虑运行 /cc-best:setup 初始化");
+  }
+
+  // 检查 progress.md 详情
+  if (hasProgress) {
     const content = readFile(progressFile);
     if (content) {
       // 统计待完成任务

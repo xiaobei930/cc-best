@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.5.8 | Last Updated: 2026-02-02
+> Version: 0.5.9 | Last Updated: 2026-02-05
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -8,12 +8,12 @@
 
 ## 1. 组件概览 | Component Overview
 
-| 组件         | 数量 | 位置                  | 触发方式                |
-| ------------ | ---- | --------------------- | ----------------------- |
-| **Commands** | 35   | `commands/`           | 用户输入 `/xxx`         |
-| **Skills**   | 17   | `skills/`             | Agent 预加载 / 自动注入 |
-| **Agents**   | 8    | `agents/`             | Task tool 委派          |
-| **Hooks**    | 17   | `scripts/node/hooks/` | 生命周期自动触发        |
+| 组件         | 数量  | 位置                  | 触发方式                           |
+| ------------ | ----- | --------------------- | ---------------------------------- |
+| **Commands** | 35    | `commands/`           | 用户输入 `/xxx`                    |
+| **Skills**   | 17    | `skills/`             | Agent 预加载 / 自动注入            |
+| **Agents**   | 8     | `agents/`             | Task tool 委派                     |
+| **Hooks**    | 17/10 | `scripts/node/hooks/` | 生命周期自动触发 (17 脚本/10 配置) |
 
 ---
 
@@ -58,11 +58,13 @@
                        │ 触发
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                       Hooks (17)                            │
-│  SessionStart  → session-check, session-start               │
-│  PreToolUse    → validate-command, protect-files...         │
-│  PostToolUse   → format-file, typescript-check...           │
-│  SessionEnd    → session-end, evaluate-session              │
+│                  Hooks (17 脚本/10 配置)                     │
+│  SessionStart  → session-check                              │
+│  PreToolUse    → validate-command, pause-before-push,       │
+│                  check-secrets, protect-files               │
+│  PostToolUse   → format-file, auto-archive, suggest-compact │
+│  PreCompact    → pre-compact                                │
+│  SessionEnd    → evaluate-session                           │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -131,8 +133,35 @@
 | architect             | `architecture` `exploration` `api`  | 架构设计 + 探索 + API 设计 |
 | code-reviewer         | `security` `quality` `architecture` | 安全 + 质量 + 架构合规检查 |
 | code-simplifier       | `quality` `architecture`            | 质量 + 架构感知简化        |
-| planner               | `architecture`                      | 任务分解时参考架构         |
-| requirement-validator | -                                   | 独立运行                   |
+| planner               | `architecture` `exploration`        | 任务分解 + 代码库探索      |
+| requirement-validator | `architecture`                      | 需求验证时参考架构         |
+
+### 调用链可视化 | Call Chain Visualization
+
+```
+Commands (角色)              Agents                      Skills
+────────────────────────────────────────────────────────────────────
+/cc-best:pm ──────────────► requirement-validator ─────► architecture
+       ↓
+/cc-best:clarify ─────────► [requirement-validator]────► (可选调用)
+       ↓
+/cc-best:lead ────────────► architect ─────────────────► architecture, exploration, api
+                         └► planner ──────────────────► architecture, exploration
+       ↓
+/cc-best:designer ────────► [code-reviewer]────────────► (可选调用)
+       ↓
+/cc-best:designer ────────► (frontend-design Skill)────► frontend
+       ↓
+/cc-best:dev ─────────────► tdd-guide ─────────────────► testing, security
+                         ├► code-simplifier ───────────► quality, architecture
+                         └► code-reviewer ─────────────► security, quality, architecture
+       ↓
+/cc-best:qa ──────────────► code-reviewer ─────────────► security, quality, architecture
+       ↓
+/cc-best:verify ──────────► security-reviewer ─────────► security
+       ↓
+/cc-best:build|fix ───────► build-error-resolver ──────► debug, devops
+```
 
 ---
 
@@ -230,7 +259,7 @@ hooks/
 | `CLAUDE.md`                       | 头部 Version |
 | `CHANGELOG.md`                    | 最新条目     |
 
-当前版本: **0.5.8**
+当前版本: **0.5.9**
 
 ---
 
@@ -313,6 +342,7 @@ tools: Read, Grep, Glob
 ```
                     ┌───────────────────────┐
                     │ requirement-validator │
+                    │  └──▶ architecture    │
                     └───────────┬───────────┘
                                 │ 需求验证后
                                 ▼
@@ -320,11 +350,14 @@ tools: Read, Grep, Glob
                     │      architect        │
                     │  └──▶ architecture    │
                     │  └──▶ exploration     │
+                    │  └──▶ api             │
                     └───────────┬───────────┘
                                 │ 架构确定后
                                 ▼
                     ┌───────────────────────┐
                     │       planner         │
+                    │  └──▶ architecture    │
+                    │  └──▶ exploration     │
                     └───────────┬───────────┘
                                 │ 任务分解后
                 ┌───────────────┼───────────────┐
@@ -378,7 +411,7 @@ tools: Read, Grep, Glob
 | Commands             | 35                                          |
 | Skills               | 17                                          |
 | Agents               | 8                                           |
-| Hooks Scripts        | 17                                          |
+| Hooks Scripts        | 17 脚本 / 10 已配置                         |
 | Language Support     | 5 (Python, TS, Java, Go, C#)                |
 | Framework Support    | 8 (React, Vue, Angular, Svelte, FastAPI...) |
 | Database Support     | 4 (MySQL, PostgreSQL, Oracle, SQLite)       |

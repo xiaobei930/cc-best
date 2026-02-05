@@ -3,7 +3,8 @@ name: requirement-validator
 description: "Performs 'unit tests for requirements': validates completeness, clarity, and consistency of requirement documents. Use after /cc-best:pm completes REQ document or when validating requirement quality before design phase."
 model: opus
 tools: Read, Grep, Glob
-skills: []
+skills:
+  - architecture
 color: magenta
 ---
 

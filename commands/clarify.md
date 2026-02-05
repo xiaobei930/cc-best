@@ -141,7 +141,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, WebSearch, WebFetch, As
 
 | 场景                 | 决策                             |
 | -------------------- | -------------------------------- |
-| 无待澄清项           | 直接通知，建议进入 /cc-best:lead         |
+| 无待澄清项           | 直接通知，建议进入 /cc-best:lead |
 | 待澄清项都有合理默认 | 询问是否需要确认，否则使用默认值 |
 | 用户拒绝回答某问题   | 使用推荐答案，标注为"默认值"     |
 | 问题 > 5 个          | 选择最重要的 5 个，其他用默认值  |
@@ -160,6 +160,30 @@ allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, WebSearch, WebFetch, As
 REQ-XXX 已更新，待澄清项已清除。
 
 调用 /cc-best:lead 进行技术评审和任务分解
+```
+
+---
+
+## Agent 集成
+
+### requirement-validator
+
+澄清完成后，可调用 requirement-validator Agent 验证需求质量：
+
+```
+使用场景：
+- 澄清项较多（≥ 3 个）
+- 需求变更较大
+- 进入设计前的质量把关
+
+调用方式：
+澄清完成后提示 "建议调用 requirement-validator 验证需求完整性"
+```
+
+### 调用链
+
+```
+/cc-best:pm → /cc-best:clarify → [requirement-validator（推荐）] → /cc-best:lead
 ```
 
 ---

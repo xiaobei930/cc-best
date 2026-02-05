@@ -21,7 +21,7 @@
 > From product requirements to code review — one plugin, full workflow.
 
 <p align="center">
-  <code>35 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>7 language standards</code>
+  <code>35 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>6 language standards</code>
 </p>
 
 <p align="center">
@@ -83,7 +83,7 @@ Use clone when you need to customize all files in your repo.
 | Installation  | Command format     | Example                          |
 | ------------- | ------------------ | -------------------------------- |
 | **Plugin** ⭐ | `/cc-best:command` | `/cc-best:iterate "add feature"` |
-| **Clone**     | `/command`         | `/cc-best:iterate "add feature"`         |
+| **Clone**     | `/command`         | `/iterate "add feature"`         |
 
 > 💡 **Recommended**: Install via plugin for automatic updates and easier management.
 > All documentation uses plugin format (`/cc-best:xxx`). Clone users: run `convert-to-local.js`.
@@ -119,8 +119,8 @@ You just watch. Intervene only when needed.
 
 ### Common Workflows
 
-| I want to...       | Command                              | What Claude does                           |
-| ------------------ | ------------------------------------ | ------------------------------------------ |
+| I want to...       | Command                                      | What Claude does                           |
+| ------------------ | -------------------------------------------- | ------------------------------------------ |
 | Build a feature    | `/cc-best:iterate "add dark mode toggle"`    | Full cycle: plan → code → test → commit    |
 | Fix a bug          | `/cc-best:iterate "fix login timeout issue"` | Investigate → fix → verify → commit        |
 | Review code        | `/cc-best:pm "review recent changes"`        | Analyze code, suggest improvements         |
@@ -128,25 +128,25 @@ You just watch. Intervene only when needed.
 
 ### Who Is This For?
 
-| You are...                   | Recommended mode | Why                                       |
-| ---------------------------- | ---------------- | ----------------------------------------- |
-| **Team with multiple roles** | Full workflow    | PM → Lead → Dev → QA mirrors your process |
-| **Solo developer**           | `/cc-best:iterate`       | Let Claude handle the boring parts        |
-| **Learning Claude Code**     | `/cc-best:pair`          | Understand each step before proceeding    |
-| **Need quick fixes**         | Direct commands  | `/cc-best:dev "fix the typo"` for simple tasks    |
+| You are...                   | Recommended mode   | Why                                            |
+| ---------------------------- | ------------------ | ---------------------------------------------- |
+| **Team with multiple roles** | Full workflow      | PM → Lead → Dev → QA mirrors your process      |
+| **Solo developer**           | `/cc-best:iterate` | Let Claude handle the boring parts             |
+| **Learning Claude Code**     | `/cc-best:pair`    | Understand each step before proceeding         |
+| **Need quick fixes**         | Direct commands    | `/cc-best:dev "fix the typo"` for simple tasks |
 
 ---
 
 ## ✨ Core Features
 
-| Feature                         | What it does                                                    |
-| ------------------------------- | --------------------------------------------------------------- |
-| 🎭 **Role-Based Workflow**      | PM → Lead → Designer → Dev → QA — complete development cycle    |
-| 🔄 **Autonomous Mode**          | `/cc-best:iterate` runs tasks without intervention until completion     |
-| 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands |
-| 📐 **Multi-Language Standards** | Coding conventions for Python, Vue/TS, C++, Java, C#, Go, Swift |
-| 🧠 **Memory Bank**              | Persists progress and decisions across sessions                 |
-| 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager            |
+| Feature                         | What it does                                                        |
+| ------------------------------- | ------------------------------------------------------------------- |
+| 🎭 **Role-Based Workflow**      | PM → Lead → Designer → Dev → QA — complete development cycle        |
+| 🔄 **Autonomous Mode**          | `/cc-best:iterate` runs tasks without intervention until completion |
+| 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands     |
+| 📐 **Multi-Language Standards** | Coding conventions for Python, Vue/TS, C++, Java, C#, Go, Swift     |
+| 🧠 **Memory Bank**              | Persists progress and decisions across sessions                     |
+| 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager                |
 
 <details>
 <summary>📹 See /cc-best:iterate in action</summary>
@@ -208,8 +208,8 @@ flowchart LR
 
 ### Three Development Modes
 
-| Mode                     | Command     | Use Case                       | Characteristics                                |
-| ------------------------ | ----------- | ------------------------------ | ---------------------------------------------- |
+| Mode                     | Command             | Use Case                       | Characteristics                                |
+| ------------------------ | ------------------- | ------------------------------ | ---------------------------------------------- |
 | **Autonomous Iteration** | `/cc-best:iterate`  | Clear task list                | Fully autonomous, no intervention needed       |
 | **Pair Programming**     | `/cc-best:pair`     | Learning, sensitive operations | Confirm each step, human-machine collaboration |
 | **Long-Running Loop**    | `/cc-best:cc-ralph` | Hour-level batch tasks         | Requires ralph-loop plugin                     |
@@ -222,15 +222,15 @@ flowchart LR
 
 **35 commands** organized into categories:
 
-| Category    | Commands                                                          | Purpose                           |
-| ----------- | ----------------------------------------------------------------- | --------------------------------- |
-| **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | Development workflow roles        |
-| **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                         | Autonomous/cc-best:pair programming modes |
-| **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                 | Build and test automation         |
-| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                          | Version control                   |
-| **Context** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`      | Session management                |
-| **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`              | Code quality & knowledge          |
-| **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                   | Configuration                     |
+| Category    | Commands                                                                                                                  | Purpose                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | Development workflow roles                |
+| **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | Autonomous/cc-best:pair programming modes |
+| **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | Build and test automation                 |
+| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | Version control                           |
+| **Context** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | Session management                        |
+| **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | Code quality & knowledge                  |
+| **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | Configuration                             |
 
 > 📖 **Full reference**: See [COMMANDS.md](.claude-plugin/COMMANDS.md) for all parameters and usage examples.
 
@@ -304,13 +304,13 @@ This template is designed to work seamlessly with official Claude Code plugins. 
 
 ### Relationship with Official Plugins
 
-| Template Content          | Official Plugin      | Relationship                                                                 |
-| ------------------------- | -------------------- | ---------------------------------------------------------------------------- |
-| `code-reviewer` agent     | `code-review` plugin | Template: lightweight local version; Plugin: more powerful with auto-trigger |
-| `security-reviewer` agent | `security-guidance`  | Template: OWASP checklist; Plugin: automatic security analysis               |
-| `code-simplifier` agent   | `code-simplifier`    | Similar function; plugin has more context                                    |
-| `/cc-best:cc-ralph` command       | `ralph-loop` plugin  | CC-Best wrapper; requires plugin for cross-session persistence               |
-| `hookify` examples        | `hookify` plugin     | Template: examples; Plugin: full hook management                             |
+| Template Content            | Official Plugin      | Relationship                                                                 |
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| `code-reviewer` agent       | `code-review` plugin | Template: lightweight local version; Plugin: more powerful with auto-trigger |
+| `security-reviewer` agent   | `security-guidance`  | Template: OWASP checklist; Plugin: automatic security analysis               |
+| `code-simplifier` agent     | `code-simplifier`    | Similar function; plugin has more context                                    |
+| `/cc-best:cc-ralph` command | `ralph-loop` plugin  | CC-Best wrapper; requires plugin for cross-session persistence               |
+| `hookify` examples          | `hookify` plugin     | Template: examples; Plugin: full hook management                             |
 
 ### Recommended Plugin Configuration
 
@@ -504,8 +504,8 @@ Run `/cc-best:setup --verify` to diagnose. Common fixes:
 <details>
 <summary><strong>/cc-best:iterate vs /pair?</strong></summary>
 
-| Mode       | Control           | Use Case                |
-| ---------- | ----------------- | ----------------------- |
+| Mode               | Control           | Use Case                |
+| ------------------ | ----------------- | ----------------------- |
 | `/cc-best:iterate` | Fully autonomous  | Clear task list         |
 | `/cc-best:pair`    | Confirm each step | Learning, sensitive ops |
 
@@ -584,10 +584,10 @@ Both are excellent. Choose based on your needs:
 
 Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 
-| MCP Server | Used By                    | Purpose                                           |
-| ---------- | -------------------------- | ------------------------------------------------- |
+| MCP Server | Used By                                            | Purpose                                           |
+| ---------- | -------------------------------------------------- | ------------------------------------------------- |
 | Playwright | `/cc-best:designer`, `/cc-best:dev`, `/cc-best:pm` | Browser automation for UI testing and screenshots |
-| Firecrawl  | `/cc-best:pm`, `/cc-best:lead`             | Web scraping for requirement research             |
+| Firecrawl  | `/cc-best:pm`, `/cc-best:lead`                     | Web scraping for requirement research             |
 
 > **Note**: These are optional. Commands work without MCP servers but with reduced functionality.
 > Install via Claude Code settings: `Settings > MCP Servers`

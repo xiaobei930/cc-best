@@ -5,6 +5,7 @@ model: opus
 tools: Read, Grep, Glob
 skills:
   - architecture
+  - exploration
 color: cyan
 ---
 
