@@ -242,7 +242,7 @@ once: true
 | `model`                    | string  | 指定使用的模型（sonnet、opus、haiku）                         |
 | `context`                  | string  | 设为 `fork` 在隔离的子代理上下文中运行                        |
 | `agent`                    | string  | `context: fork` 时使用的子代理类型                            |
-| `parent-skill`             | string  | **父技能名称**（用于主子技能结构）                            |
+| `parent`                   | string  | **父技能名称**（用于主子技能结构）                            |
 | `hooks`                    | object  | 技能生命周期钩子                                              |
 | `once`                     | boolean | 设为 `true` 每个会话只运行一次                                |
 

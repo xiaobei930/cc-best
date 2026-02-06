@@ -7,6 +7,7 @@ skills:
   - architecture
   - exploration
   - api
+  - database
 color: blue
 ---
 

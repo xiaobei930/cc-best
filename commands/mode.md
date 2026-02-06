@@ -1,5 +1,5 @@
 ---
-description: "Switch Claude's working mode to adapt behavior for different scenarios"
+description: "切换工作模式以适应不同场景（dev/research/review/planning）"
 allowed-tools: Read, Glob, Grep
 ---
 
@@ -112,11 +112,11 @@ allowed-tools: Read, Glob, Grep
 
 模式是"怎么做"，角色是"做什么"，两者正交互补。
 
-| 模式     | 推荐角色      |
-| -------- | ------------- |
-| dev      | `/cc-best:dev`        |
+| 模式     | 推荐角色                      |
+| -------- | ----------------------------- |
+| dev      | `/cc-best:dev`                |
 | research | `/cc-best:lead` `/cc-best:pm` |
-| review   | `/cc-best:qa`         |
+| review   | `/cc-best:qa`                 |
 | planning | `/cc-best:lead` `/cc-best:pm` |
 
 ## 示例用法

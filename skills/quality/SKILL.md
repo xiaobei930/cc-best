@@ -6,6 +6,8 @@ allowed-tools: Read, Grep, Glob
 
 # 代码质量保障
 
+> 关联 Agent: `code-reviewer`（代码质量审查）、`code-simplifier`（简化重构）、`security-reviewer`（安全与质量交叉）
+
 本技能提供代码质量保障策略，整合安全审查和系统化调试方法。
 
 ## 质量保障维度

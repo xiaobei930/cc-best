@@ -24,18 +24,22 @@ allowed-tools: Read, Write, Edit, Bash, Glob
 
 # 验证 hooks 配置是否正确
 /cc-best:setup --verify
+
+# 交互式配置向导
+/cc-best:setup --interactive
 ```
 
 ---
 
 ## 参数说明
 
-| 参数        | 说明                                     |
-| ----------- | ---------------------------------------- |
-| `--hooks`   | 仅配置 hooks，跳过其他初始化步骤         |
-| `--global`  | 配置到全局 `~/.claude/settings.json`     |
-| `--project` | 配置到项目 `.claude/settings.local.json` |
-| `--verify`  | 验证 hooks 配置是否正确（诊断模式）      |
+| 参数            | 说明                                     |
+| --------------- | ---------------------------------------- |
+| `--hooks`       | 仅配置 hooks，跳过其他初始化步骤         |
+| `--global`      | 配置到全局 `~/.claude/settings.json`     |
+| `--project`     | 配置到项目 `.claude/settings.local.json` |
+| `--verify`      | 验证 hooks 配置是否正确（诊断模式）      |
+| `--interactive` | 交互式配置向导，按需选择安装组件         |
 
 ---
 
@@ -257,3 +261,95 @@ Hooks 配置：
 
 - **安全类 hooks**（validate-command, protect-files）→ 全局配置
 - **格式化 hooks**（format-file）→ 项目配置（不同项目可能有不同格式化规则）
+
+---
+
+## --interactive 交互式配置向导
+
+交互模式提供分步引导，按需选择安装组件。
+
+### 第 1 步：选择安装级别
+
+```
+请选择安装级别:
+  [1] 全局安装 (~/.claude/settings.json) - 所有项目生效
+  [2] 项目安装 (.claude/settings.local.json) - 仅当前项目
+  [3] 两者都安装 - 安全 hooks 全局 + 格式化 hooks 项目
+```
+
+### 第 2 步：选择 Rules 集
+
+根据项目技术栈选择要启用的规则集（多选）：
+
+```
+通用规范（默认启用）:
+  [✓] common/ - 方法论、编码标准、代码风格、安全、测试、性能
+
+语言专属规范（根据项目选择）:
+  [ ] frontend/  - 前端: 样式、测试、安全、性能
+  [ ] java/      - Java: 样式、测试、安全、性能
+  [ ] csharp/    - C#: 样式、测试、安全、性能
+  [ ] cpp/       - C++: 样式、测试、安全、性能
+  [ ] embedded/  - 嵌入式: ESP32 样式、测试、安全、性能
+  [ ] ui/        - UI 设计: 设计规范、无障碍
+```
+
+**自动检测**: 根据项目文件自动推荐：
+
+| 检测文件                   | 推荐 Rules 集 |
+| -------------------------- | ------------- |
+| `package.json`             | frontend/     |
+| `pom.xml` / `build.gradle` | java/         |
+| `*.csproj` / `*.sln`       | csharp/       |
+| `CMakeLists.txt`           | cpp/          |
+| `sdkconfig` / `*.ino`      | embedded/     |
+
+### 第 3 步：选择 Skills 集
+
+按领域选择要加载的技能集（多选）：
+
+```
+开发类:
+  [ ] architecture  - 架构设计模式
+  [ ] api           - API 设计与文档
+  [ ] database      - 数据库设计与优化
+  [ ] frontend      - 前端开发框架
+  [ ] backend       - 后端开发框架
+
+质量类:
+  [ ] testing       - 测试策略 (TDD/E2E)
+  [ ] security      - 安全审查
+  [ ] quality       - 代码质量保障
+  [ ] debug         - 系统化调试
+
+工程类:
+  [ ] devops        - CI/CD 与部署
+  [ ] git           - Git 高级用法
+  [ ] exploration   - 代码探索分析
+```
+
+### 第 4 步：验证安装
+
+自动执行以下检查：
+
+- ✅ 所选 Rules 文件路径存在
+- ✅ 所选 Skills 目录包含 SKILL.md
+- ✅ Hooks 配置语法正确
+- ✅ settings.json 路径正确
+- ✅ 不存在版本冲突
+
+### 输出示例
+
+```
+✅ 交互式配置完成！
+
+安装级别: 全局 + 项目
+Rules 集: common/ + frontend/ + ui/ (13 个文件)
+Skills 集: architecture, api, testing, security, frontend (5 个)
+Hooks: 全局 5 个 + 项目 2 个
+
+下一步:
+1. 编辑 CLAUDE.md 定义项目信息
+2. 运行 /cc-best:setup --verify 验证配置
+3. 运行 /cc-best:pm 开始第一个需求
+```

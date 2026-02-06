@@ -81,6 +81,18 @@
         "description": "压缩提醒: 工具调用达到阈值时提醒压缩上下文 (官方 auto-compact bug 的 workaround)"
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/user-prompt-submit.js\"",
+            "timeout": 3
+          }
+        ],
+        "description": "上下文注入: 用户提交提示时注入项目状态信息"
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
@@ -91,6 +103,30 @@
           }
         ],
         "description": "会话检查: 启动时检查文件更新状态和项目配置"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/stop-check.js\"",
+            "timeout": 5
+          }
+        ],
+        "description": "遗漏检查: 响应完成时检查 progress.md 中未完成任务"
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/subagent-stop.js\"",
+            "timeout": 3
+          }
+        ],
+        "description": "子代理追踪: 子代理完成时记录任务状态"
       }
     ],
     "PreCompact": [

@@ -7,6 +7,8 @@ parent: quality
 
 # 安全审查技能
 
+> 关联 Agent: `security-reviewer`（安全审查主力）、`code-reviewer`（代码审查中的安全维度）
+
 本技能确保所有代码遵循安全最佳实践，识别潜在漏洞。
 
 ## 触发条件

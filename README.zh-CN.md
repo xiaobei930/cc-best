@@ -21,7 +21,7 @@
 > 从产品需求到代码审查 — 一个插件，完整工作流。
 
 <p align="center">
-  <code>35 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>7 语言规范</code>
+  <code>38 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>7 语言规范</code>
 </p>
 
 <p align="center">
@@ -92,8 +92,14 @@ node scripts/node/convert-to-local.js
 <summary>🗑️ 卸载</summary>
 
 ```bash
+# 卸载插件
 /plugin uninstall cc-best@xiaobei930
+
+# 卸载 Marketplace（可选）
+/plugin marketplace remove xiaobei930/claude-code-best-practices
 ```
+
+不会留下任何残留文件。
 
 </details>
 
@@ -133,14 +139,14 @@ node scripts/node/convert-to-local.js
 
 ## ✨ 核心特性
 
-| 特性                | 说明                                              |
-| ------------------- | ------------------------------------------------- |
-| 🎭 **角色化工作流** | PM → Lead → Designer → Dev → QA — 完整开发循环    |
-| 🔄 **自主迭代模式** | `/cc-best:iterate` 自动完成任务，无需干预         |
-| 🛡️ **安全钩子**     | 阻止 `rm -rf /`、`git push --force` 等危险命令    |
-| 📐 **多语言规范**   | Python、Vue/TS、C++、Java、C#、Go、Swift 编码规范 |
-| 🧠 **记忆库**       | 跨会话持久化进度和决策                            |
-| 🌐 **跨平台**       | Windows、macOS、Linux — 自动检测包管理器          |
+| 特性                | 说明                                               |
+| ------------------- | -------------------------------------------------- |
+| 🎭 **角色化工作流** | PM → Lead → Designer → Dev → QA — 完整开发循环     |
+| 🔄 **自主迭代模式** | `/cc-best:iterate` 自动完成任务，无需干预          |
+| 🛡️ **安全钩子**     | 阻止 `rm -rf /`、`git push --force` 等危险命令     |
+| 📐 **多语言规范**   | 7 目录分层：通用 + 前端/Java/C#/C++/嵌入式/UI 规范 |
+| 🧠 **记忆库**       | 跨会话持久化进度和决策                             |
+| 🌐 **跨平台**       | Windows、macOS、Linux — 自动检测包管理器           |
 
 <details>
 <summary>📹 查看 /cc-best:iterate 运行演示</summary>
@@ -157,10 +163,10 @@ node scripts/node/convert-to-local.js
 ```
 your-project/
 ├── CLAUDE.md          # 项目宪法
-├── commands/          # 35 个命令
+├── commands/          # 38 个命令
 ├── skills/            # 17 个技能
 ├── agents/            # 8 个智能体
-├── rules/             # 编码规范
+├── rules/             # 30 条编码规范 (7 目录分层)
 ├── hooks/             # 安全钩子
 ├── scripts/           # 自动化脚本 (node/python/shell)
 ├── memory-bank/       # 进度 & 架构文档
@@ -170,14 +176,14 @@ your-project/
 <details>
 <summary>📂 详细结构</summary>
 
-| 目录           | 内容                                                                                                     |
-| -------------- | -------------------------------------------------------------------------------------------------------- |
-| `commands/`    | 角色命令 (`pm`, `lead`, `dev`, `qa`)，模式命令 (`iterate`, `pair`)，工具命令 (`build`, `test`, `commit`) |
-| `skills/`      | 后端、前端、测试、安全、DevOps、架构、Git                                                                |
-| `agents/`      | `code-reviewer`, `code-simplifier`, `planner`, `security-reviewer`, `tdd-guide`, `requirement-validator` |
-| `rules/`       | 语言编码规范 (Python, Vue/TS, C++, Java, C#, Go)                                                         |
-| `scripts/`     | Node.js 跨平台钩子（默认），Python/Bash 备选                                                             |
-| `memory-bank/` | `progress.md`（滚动窗口），`architecture.md`，`tech-stack.md`                                            |
+| 目录           | 内容                                                                                                                                          |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `commands/`    | 角色命令 (`pm`, `lead`, `dev`, `qa`)，模式命令 (`iterate`, `pair`)，工具命令 (`build`, `test`, `commit`)                                      |
+| `skills/`      | 后端、前端、测试、安全、DevOps、架构、Git                                                                                                     |
+| `agents/`      | `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide` |
+| `rules/`       | 30 条规则，7 目录: `common/` + `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                                    |
+| `scripts/`     | Node.js 跨平台钩子（默认），Python/Bash 备选                                                                                                  |
+| `memory-bank/` | `progress.md`（滚动窗口），`architecture.md`，`tech-stack.md`                                                                                 |
 
 </details>
 
@@ -214,17 +220,18 @@ flowchart LR
 
 ## 📋 命令速查
 
-**35 个命令**，按类别组织：
+**38 个命令**，按类别组织：
 
-| 类别       | 命令                                                                                                                      | 用途           |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | 开发工作流角色 |
-| **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | 自主/结对模式  |
-| **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | 构建测试自动化 |
-| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | 版本控制       |
-| **上下文** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | 会话管理       |
-| **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | 代码质量&知识  |
-| **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | 配置诊断       |
+| 类别       | 命令                                                                                                                      | 用途                      |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | 开发工作流角色            |
+| **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | 自主/结对模式             |
+| **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | 构建测试自动化            |
+| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | 版本控制                  |
+| **上下文** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | 会话管理                  |
+| **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | 代码质量&知识             |
+| **运维**   | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue修复、发版、服务管理 |
+| **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | 配置诊断                  |
 
 > 📖 **完整参考**: 查看 [COMMANDS.md](.claude-plugin/COMMANDS.md) 了解所有参数和用法示例。
 
@@ -256,7 +263,7 @@ flowchart TB
         CMD["/cc-best:iterate '添加功能'"]
     end
 
-    subgraph Commands["📋 命令 (35)"]
+    subgraph Commands["📋 命令 (38)"]
         PM["/cc-best:pm"] --> Lead["/cc-best:lead"] --> Dev["/cc-best:dev"] --> QA["/cc-best:qa"]
     end
 
@@ -405,21 +412,22 @@ allowed_tools:
 >
 > 此命令会配置使用绝对路径的 hooks。详见 [FAQ](#钩子问题)。
 
-> 默认使用 Node.js 版本，支持 Windows/macOS/Linux 跨平台运行。
+默认使用 Node.js 版本，支持 Windows/macOS/Linux 跨平台运行。Python/Bash 替代版本见 `scripts/`。
 
-| 触发时机     | 功能              | 脚本 (Node.js)                       |
-| ------------ | ----------------- | ------------------------------------ |
-| PreToolUse   | 验证危险命令      | `node/hooks/validate-command.js`     |
-| PreToolUse   | Git push 前确认   | `node/hooks/pause-before-push.js`    |
-| PreToolUse   | 保护敏感文件      | `node/hooks/protect-files.js`        |
-| PreToolUse   | 阻止随机 .md 文件 | `node/hooks/block-random-md.js`      |
-| PreToolUse   | 长时间运行警告    | `node/hooks/long-running-warning.js` |
-| PostToolUse  | 自动格式化        | `node/hooks/format-file.js`          |
-| PostToolUse  | TypeScript 检查   | `node/hooks/typescript-check.js`     |
-| PostToolUse  | console.log 检查  | `node/hooks/check-console-log.js`    |
-| SessionStart | 会话健康检查      | `node/hooks/session-check.js`        |
-| SessionStart | 会话启动初始化    | `node/hooks/session-start.js`        |
-| SessionEnd   | 会话结束持久化    | `node/hooks/session-end.js`          |
+| 触发时机     | 功能                | 脚本 (Node.js)            |
+| ------------ | ------------------- | ------------------------- |
+| PreToolUse   | 验证危险命令        | `validate-command.js`     |
+| PreToolUse   | Git push 前确认     | `pause-before-push.js`    |
+| PreToolUse   | 保护敏感文件        | `protect-files.js`        |
+| PreToolUse   | 阻止随机 .md 文件   | `block-random-md.js`      |
+| PreToolUse   | 长时间运行警告      | `long-running-warning.js` |
+| PostToolUse  | 自动格式化          | `format-file.js`          |
+| PostToolUse  | console.log 检查    | `check-console-log.js`    |
+| PostToolUse  | TypeScript 类型检查 | `typescript-check.js`     |
+| SessionStart | 会话健康检查        | `session-check.js`        |
+| SessionStart | 加载上次上下文      | `session-start.js`        |
+| PreCompact   | 压缩前保存状态      | `pre-compact.js`          |
+| SessionEnd   | 会话结束持久化      | `session-end.js`          |
 
 ---
 
@@ -508,9 +516,11 @@ bash scripts/shell/cleanup.sh --all
 <details>
 <summary><strong>如何停止 /iterate？</strong></summary>
 
-- **Ctrl+C** 或 **Escape** — 立即中断当前操作
-- Claude 会保留 `memory-bank/progress.md` 中的进度
-- 之后输入 `/cc-best:iterate` 可从断点继续
+- **中断**: 按 `Ctrl+C`（部分终端支持 `Esc`）
+- **暂停**: 输入任何内容 — Claude 会等待你的输入
+- **恢复**: 继续对话即可
+
+Claude 会将进度保存到 `memory-bank/progress.md`，你随时可以恢复。
 
 </details>
 
@@ -521,10 +531,13 @@ Claude 会自动：
 
 1. 分析失败原因
 2. 回到 `/cc-best:dev` 修复问题
-3. 重新运行 `/cc-best:qa`
-4. 循环直到通过或达到最大重试次数（默认 3 次）
+3. 重新运行 `/cc-best:qa` 验证
 
-如果仍然失败，Claude 会暂停并请求你的输入。
+如果 3 次尝试后仍然失败，Claude 会请求你的输入。你可以：
+
+- 提供提示："试试检查数据库连接"
+- 跳过测试："暂时跳过这个测试"
+- 手动接管："我来手动修复"
 
 </details>
 

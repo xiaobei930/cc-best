@@ -6,6 +6,8 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 
 # 数据库模式技能
 
+> 关联 Agent: `architect` — 架构设计时加载数据库约束上下文
+
 本技能提供数据库设计和操作的最佳实践，支持多数据库按需加载。
 
 ## 触发条件

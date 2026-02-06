@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **核心目标**: 降低上手门槛 + 灵活配置
 
 - [ ] **Lite 模式** - 精简版插件
-- [ ] 增强 `/setup` 交互式配置向导
+- [x] 增强 `/setup` 交互式配置向导
 - [ ] 模型策略配置（质量优先/速度优先/均衡）
 - [ ] 常见错误诊断与修复建议
 - [ ] 示例项目（完整工作流演示）
@@ -54,10 +54,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Recent Changes / 近期变更
 
-### [0.5.9] - 2026-02-05
+### [0.5.9] - 2026-02-06
 
 #### Added / 新增
 
+- **3 个新 Commands** - 扩展命令体系（35 → 38）
+  - `fix-issue` - GitHub Issue 端到端修复闭环（分析→修复→测试→提交→关闭）
+  - `release` - 版本发布管理（版本号同步、CHANGELOG 更新、Git Tag）
+  - `service` - 开发服务管理（自动检测 6 种运行时，支持 --stop/--restart/--logs）
+- **16 个新 Rules 文件** - 语言专属 testing/security/performance 规范
+  - frontend: 前端测试、安全、性能规范
+  - java: JUnit 5/Mockito、Spring Security、JVM 调优
+  - csharp: xUnit/NUnit、ASP.NET Identity、async/await 模式
+  - cpp: Google Test/Catch2、缓冲区安全、SIMD/缓存优化
+  - embedded: HIL 测试、Secure Boot/OTA、RTOS 调度
+  - ui: WCAG 2.1 无障碍规范
+- **Agent Skills 增强** - 4 个 Agent 新增技能预加载
+  - architect + `database`（架构设计时加载数据库约束）
+  - code-reviewer + `testing`（代码审查评估可测试性）
+  - security-reviewer + `quality`（安全与代码质量交叉）
+  - build-error-resolver + `testing`（修复后测试验证）
+- **`/setup --interactive` 交互模式** - 分步引导选择安装级别、Rules 集、Skills 集
+- **Skill → Agent 交叉引用** - database/testing/security/quality SKILL.md 添加关联 Agent 注释
+- **3 个新 Hook 事件** - 扩展生命周期覆盖（5/10 → 8/10 事件）
+  - `UserPromptSubmit` - 用户提交时注入项目上下文（memory-bank 状态、当前阶段）
+  - `SubagentStop` - 子代理完成时记录任务状态
+  - `Stop` - 响应完成时检查 progress.md 中遗漏任务
 - **Python 进阶技能** - 新增 3 个 Python 子文件
   - `python-patterns.md` - 设计模式（KISS、组合、策略模式）
   - `python-types.md` - 高级类型提示（Protocol、泛型、TypeGuard）
@@ -69,6 +91,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed / 变更
 
+- **Rules 目录分层重构** - 从扁平结构重组为 7 个子目录
+  - `common/` (8) + `frontend/` (4) + `java/` (4) + `csharp/` (4) + `cpp/` (4) + `embedded/` (4) + `ui/` (2) = 30 文件
+  - 每个语言目录文件引用 common/ 中的通用规范
+- **组件交叉引用增强** - Command↔Agent↔Skill 协同关系梳理
+- **ARCHITECTURE.md 兼容性更新** - 同步最新官方特性评估
+  - `context: fork` 从"未采用"升级为"已采用"（exploration Skill 已使用）
+  - Agent skills 预加载数量 6 → 8（全部 agents 已配置）
+  - Language Support 5 → 6（+ Rust）
+  - Hooks 统计 17 脚本/10 配置 → 20 脚本/13 配置
 - **session-start Hook 增强** - 添加 Memory Bank 状态检测
   - 显示可用的 memory-bank 文件
   - 提示使用 `/cc-best:catchup` 恢复上下文

@@ -21,7 +21,7 @@
 > From product requirements to code review — one plugin, full workflow.
 
 <p align="center">
-  <code>35 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>6 language standards</code>
+  <code>38 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>7 language standards</code>
 </p>
 
 <p align="center">
@@ -139,14 +139,14 @@ You just watch. Intervene only when needed.
 
 ## ✨ Core Features
 
-| Feature                         | What it does                                                        |
-| ------------------------------- | ------------------------------------------------------------------- |
-| 🎭 **Role-Based Workflow**      | PM → Lead → Designer → Dev → QA — complete development cycle        |
-| 🔄 **Autonomous Mode**          | `/cc-best:iterate` runs tasks without intervention until completion |
-| 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands     |
-| 📐 **Multi-Language Standards** | Coding conventions for Python, Vue/TS, C++, Java, C#, Go, Swift     |
-| 🧠 **Memory Bank**              | Persists progress and decisions across sessions                     |
-| 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager                |
+| Feature                         | What it does                                                             |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| 🎭 **Role-Based Workflow**      | PM → Lead → Designer → Dev → QA — complete development cycle             |
+| 🔄 **Autonomous Mode**          | `/cc-best:iterate` runs tasks without intervention until completion      |
+| 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands          |
+| 📐 **Multi-Language Standards** | 7-dir layered structure: common + frontend/Java/C#/C++/embedded/UI rules |
+| 🧠 **Memory Bank**              | Persists progress and decisions across sessions                          |
+| 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager                     |
 
 <details>
 <summary>📹 See /cc-best:iterate in action</summary>
@@ -163,10 +163,10 @@ You just watch. Intervene only when needed.
 ```
 your-project/
 ├── CLAUDE.md          # Project constitution
-├── commands/          # 35 slash commands
+├── commands/          # 38 slash commands
 ├── skills/            # 17 development skills
 ├── agents/            # 8 specialized agents
-├── rules/             # Coding standards
+├── rules/             # 30 coding standards (7 dirs)
 ├── hooks/             # Safety hooks
 ├── scripts/           # Automation (node/python/shell)
 ├── memory-bank/       # Progress & architecture docs
@@ -176,14 +176,14 @@ your-project/
 <details>
 <summary>📂 Detailed structure</summary>
 
-| Directory      | Contents                                                                                                                |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `commands/`    | Role commands (`pm`, `lead`, `dev`, `qa`), Mode commands (`iterate`, `pair`), Tool commands (`build`, `test`, `commit`) |
-| `skills/`      | Backend, Frontend, Testing, Security, DevOps, Architecture, Git                                                         |
-| `agents/`      | `code-reviewer`, `code-simplifier`, `planner`, `security-reviewer`, `tdd-guide`, `requirement-validator`                |
-| `rules/`       | Language-specific coding standards (Python, Vue/TS, C++, Java, C#, Go)                                                  |
-| `scripts/`     | Cross-platform hooks in Node.js (default), with Python/Bash alternatives                                                |
-| `memory-bank/` | `progress.md` (rolling window), `architecture.md`, `tech-stack.md`                                                      |
+| Directory      | Contents                                                                                                                                      |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `commands/`    | Role commands (`pm`, `lead`, `dev`, `qa`), Mode commands (`iterate`, `pair`), Tool commands (`build`, `test`, `commit`)                       |
+| `skills/`      | Backend, Frontend, Testing, Security, DevOps, Architecture, Git                                                                               |
+| `agents/`      | `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide` |
+| `rules/`       | 30 rules in 7 dirs: `common/` + `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                                   |
+| `scripts/`     | Cross-platform hooks in Node.js (default), with Python/Bash alternatives                                                                      |
+| `memory-bank/` | `progress.md` (rolling window), `architecture.md`, `tech-stack.md`                                                                            |
 
 </details>
 
@@ -220,7 +220,7 @@ flowchart LR
 
 ## 📋 Command Reference
 
-**35 commands** organized into categories:
+**38 commands** organized into categories:
 
 | Category    | Commands                                                                                                                  | Purpose                                   |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
@@ -230,6 +230,7 @@ flowchart LR
 | **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | Version control                           |
 | **Context** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | Session management                        |
 | **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | Code quality & knowledge                  |
+| **Ops**     | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue fix, release, service management    |
 | **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | Configuration                             |
 
 > 📖 **Full reference**: See [COMMANDS.md](.claude-plugin/COMMANDS.md) for all parameters and usage examples.
@@ -262,7 +263,7 @@ flowchart TB
         CMD["/cc-best:iterate 'add feature'"]
     end
 
-    subgraph Commands["📋 Commands (35)"]
+    subgraph Commands["📋 Commands (38)"]
         PM["/cc-best:pm"] --> Lead["/cc-best:lead"] --> Dev["/cc-best:dev"] --> QA["/cc-best:qa"]
     end
 
@@ -411,21 +412,22 @@ Edit `.claude/settings.local.json`:
 >
 > This command configures hooks with absolute paths. See the [FAQ](#hook-issues) for more details.
 
-All hooks default to Node.js for cross-platform compatibility. Python/Bash alternatives available.
+All hooks default to Node.js for cross-platform compatibility. Python/Bash alternatives available in `scripts/`.
 
-| Trigger      | Function                    | Script (Node.js)       |
-| ------------ | --------------------------- | ---------------------- |
-| PreToolUse   | Validate dangerous commands | `validate-command.js`  |
-| PreToolUse   | Confirm before git push     | `pause-before-push.js` |
-| PreToolUse   | Protect sensitive files     | `protect-files.js`     |
-| PreToolUse   | Block random .md creation   | `block-random-md.js`   |
-| PostToolUse  | Auto-format code            | `format-file.js`       |
-| PostToolUse  | Check console.log           | `check-console-log.js` |
-| PostToolUse  | TypeScript type check       | `typescript-check.js`  |
-| SessionStart | Session health check        | `session-check.js`     |
-| SessionStart | Load previous context       | `session-start.js`     |
-| PreCompact   | Save state before compact   | `pre-compact.js`       |
-| SessionEnd   | Session end persistence     | `session-end.js`       |
+| Trigger      | Function                    | Script (Node.js)          |
+| ------------ | --------------------------- | ------------------------- |
+| PreToolUse   | Validate dangerous commands | `validate-command.js`     |
+| PreToolUse   | Confirm before git push     | `pause-before-push.js`    |
+| PreToolUse   | Protect sensitive files     | `protect-files.js`        |
+| PreToolUse   | Block random .md creation   | `block-random-md.js`      |
+| PreToolUse   | Long-running task warning   | `long-running-warning.js` |
+| PostToolUse  | Auto-format code            | `format-file.js`          |
+| PostToolUse  | Check console.log           | `check-console-log.js`    |
+| PostToolUse  | TypeScript type check       | `typescript-check.js`     |
+| SessionStart | Session health check        | `session-check.js`        |
+| SessionStart | Load previous context       | `session-start.js`        |
+| PreCompact   | Save state before compact   | `pre-compact.js`          |
+| SessionEnd   | Session end persistence     | `session-end.js`          |
 
 ---
 
@@ -560,7 +562,7 @@ Both are excellent. Choose based on your needs:
 | Scenario             | Recommended | Why                              |
 | -------------------- | ----------- | -------------------------------- |
 | Team collaboration   | CC-Best     | Role workflow (PM→Lead→Dev→QA)   |
-| Multi-language stack | CC-Best     | 7 language coding standards      |
+| Multi-language stack | CC-Best     | 7 language coding standard dirs  |
 | Chinese team         | CC-Best     | Bilingual docs                   |
 | Solo developer       | Superpowers | Lighter, git worktree automation |
 | Need git worktree    | Superpowers | Auto-creates isolated branches   |

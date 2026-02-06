@@ -30,39 +30,44 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ### 安全防护 (PreToolUse)
 
-| 脚本 (Node.js)            | 功能             | 阻止内容                |
-| ------------------------- | ---------------- | ----------------------- |
-| `validate-command.js`     | 验证危险命令     | `rm -rf /`, `format` 等 |
-| `pause-before-push.js`    | git push 前暂停  | 给予审查时间            |
-| `protect-files.js`        | 保护敏感文件     | `.env`, `.key`, `.git/` |
-| `block-random-md.js`      | 阻止随机创建 .md | 非必要文档              |
-| `long-running-warning.js` | 长时间运行警告   | dev server 等           |
+| 脚本 (Node.js)            | 功能             | 阻止内容                | 已配置 |
+| ------------------------- | ---------------- | ----------------------- | ------ |
+| `validate-command.js`     | 验证危险命令     | `rm -rf /`, `format` 等 | ✅     |
+| `pause-before-push.js`    | git push 前暂停  | 给予审查时间            | ✅     |
+| `check-secrets.js`        | 检查敏感信息     | API 密钥、Token 等      | ✅     |
+| `protect-files.js`        | 保护敏感文件     | `.env`, `.key`, `.git/` | ✅     |
+| `block-random-md.js`      | 阻止随机创建 .md | 非必要文档              | 可选   |
+| `long-running-warning.js` | 长时间运行警告   | dev server 等           | 可选   |
 
 ### 代码质量 (PostToolUse)
 
-| 脚本 (Node.js)         | 功能                 | 触发条件               |
-| ---------------------- | -------------------- | ---------------------- |
-| `format-file.js`       | 自动格式化代码       | Write/Edit             |
-| `check-console-log.js` | 检查 console.log     | Edit                   |
-| `typescript-check.js`  | TypeScript 类型检查  | Write/Edit on .ts/.tsx |
-| `auto-archive.js`      | Memory Bank 归档提醒 | Write/Edit progress.md |
+| 脚本 (Node.js)         | 功能                 | 触发条件               | 已配置 |
+| ---------------------- | -------------------- | ---------------------- | ------ |
+| `format-file.js`       | 自动格式化代码       | Write/Edit             | ✅     |
+| `auto-archive.js`      | Memory Bank 归档提醒 | Write/Edit progress.md | ✅     |
+| `suggest-compact.js`   | 建议压缩时机         | 工具调用达阈值         | ✅     |
+| `check-console-log.js` | 检查 console.log     | Edit                   | 可选   |
+| `typescript-check.js`  | TypeScript 类型检查  | Write/Edit on .ts/.tsx | 可选   |
 
-### 会话生命周期
+### 上下文与追踪 (UserPromptSubmit / Stop / SubagentStop)
 
-| 钩子         | 脚本 (Node.js)        | 触发时机         |
-| ------------ | --------------------- | ---------------- |
-| SessionStart | `session-check.js`    | 新会话启动       |
-| SessionStart | `session-start.js`    | 加载上次上下文   |
-| PreCompact   | `pre-compact.js`      | 上下文压缩前     |
-| SessionEnd   | `session-end.js`      | 会话终止         |
-| SessionEnd   | `evaluate-session.js` | 自动学习模式提取 |
+| 钩子             | 脚本 (Node.js)          | 功能                 |
+| ---------------- | ----------------------- | -------------------- |
+| UserPromptSubmit | `user-prompt-submit.js` | 注入项目状态上下文   |
+| Stop             | `stop-check.js`         | 检查遗漏的未完成任务 |
+| SubagentStop     | `subagent-stop.js`      | 记录子代理完成状态   |
 
-### 策略性钩子
+### 会话生命周期 (SessionStart / PreCompact / SessionEnd)
 
-| 脚本                  | 功能         | 位置               |
-| --------------------- | ------------ | ------------------ |
-| `suggest-compact.sh`  | 建议压缩时机 | `skills/compact/`  |
-| `evaluate-session.sh` | 提取模式     | `skills/learning/` |
+| 钩子         | 脚本 (Node.js)        | 触发时机         | 已配置 |
+| ------------ | --------------------- | ---------------- | ------ |
+| SessionStart | `session-check.js`    | 新会话启动       | ✅     |
+| SessionStart | `session-start.js`    | 加载上次上下文   | 可选   |
+| PreCompact   | `pre-compact.js`      | 上下文压缩前     | ✅     |
+| SessionEnd   | `evaluate-session.js` | 自动学习模式提取 | ✅     |
+| SessionEnd   | `session-end.js`      | 会话终止清理     | 可选   |
+
+> **已配置** = 在 `hooks/hooks.json` 中默认启用；**可选** = 脚本已提供，用户可按需配置
 
 ## 配置方式
 
@@ -272,7 +277,7 @@ echo $?  # 检查退出码
 │       ├── lib/
 │       │   ├── utils.js                         # 27 个辅助函数
 │       │   └── package-manager.js               # 包管理器检测
-│       └── hooks/                               # 14 个生命周期钩子
+│       └── hooks/                               # 17 个生命周期钩子
 │           ├── validate-command.js              # 命令验证
 │           ├── protect-files.js                 # 文件保护
 │           ├── format-file.js                   # 自动格式化
@@ -286,7 +291,10 @@ echo $?  # 检查退出码
 │           ├── session-start.js                 # 会话启动
 │           ├── session-end.js                   # 会话结束
 │           ├── pre-compact.js                   # 压缩前处理
-│           └── init.js                          # 项目初始化
+│           ├── init.js                          # 项目初始化
+│           ├── user-prompt-submit.js            # 用户提交时上下文注入
+│           ├── stop-check.js                    # 响应完成时遗漏检查
+│           └── subagent-stop.js                 # 子代理完成追踪
 │
 └── hooks/
     ├── hooks.json                               # 插件兼容配置

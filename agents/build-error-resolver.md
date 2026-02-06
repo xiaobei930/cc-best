@@ -6,6 +6,7 @@ tools: Read, Edit, Grep, Glob, Bash
 skills:
   - debug
   - devops
+  - testing
 color: yellow
 ---
 

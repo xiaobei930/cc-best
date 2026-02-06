@@ -6,6 +6,8 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 
 # 测试策略
 
+> 关联 Agent: `tdd-guide`（测试驱动开发）、`code-reviewer`（可测试性评估）、`build-error-resolver`（修复后测试验证）
+
 本技能提供测试策略选择指南，整合 TDD（测试驱动开发）和 E2E（端到端测试）最佳实践。
 
 ## 子文件

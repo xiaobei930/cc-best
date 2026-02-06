@@ -7,6 +7,7 @@ skills:
   - security
   - quality
   - architecture
+  - testing
 color: yellow
 ---
 

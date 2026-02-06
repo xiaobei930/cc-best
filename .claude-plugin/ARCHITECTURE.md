@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.5.9 | Last Updated: 2026-02-05
+> Version: 0.5.9 | Last Updated: 2026-02-06
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -10,10 +10,11 @@
 
 | 组件         | 数量  | 位置                  | 触发方式                           |
 | ------------ | ----- | --------------------- | ---------------------------------- |
-| **Commands** | 35    | `commands/`           | 用户输入 `/xxx`                    |
+| **Commands** | 38    | `commands/`           | 用户输入 `/xxx`                    |
 | **Skills**   | 17    | `skills/`             | Agent 预加载 / 自动注入            |
 | **Agents**   | 8     | `agents/`             | Task tool 委派                     |
-| **Hooks**    | 17/10 | `scripts/node/hooks/` | 生命周期自动触发 (17 脚本/10 配置) |
+| **Rules**    | 30    | `rules/`              | 路径匹配自动注入 (7 目录分层)      |
+| **Hooks**    | 20/13 | `scripts/node/hooks/` | 生命周期自动触发 (20 脚本/13 配置) |
 
 ---
 
@@ -21,11 +22,12 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      Commands (35)                          │
+│                      Commands (38)                          │
 │  角色: pm, clarify, lead, designer, dev, qa, verify         │
 │  工具: build, test, run, status, commit, compact...         │
 │  模式: iterate, pair, cc-ralph, mode                        │
 │  知识: learn, analyze, evolve                               │
+│  新增: fix-issue, release, service                          │
 └──────────────────────┬──────────────────────────────────────┘
                        │ 调用
                        ▼
@@ -58,13 +60,17 @@
                        │ 触发
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Hooks (17 脚本/10 配置)                     │
-│  SessionStart  → session-check                              │
-│  PreToolUse    → validate-command, pause-before-push,       │
-│                  check-secrets, protect-files               │
-│  PostToolUse   → format-file, auto-archive, suggest-compact │
-│  PreCompact    → pre-compact                                │
-│  SessionEnd    → evaluate-session                           │
+│                  Hooks (20 脚本/13 配置)                     │
+│  SessionStart      → session-check                          │
+│  UserPromptSubmit  → user-prompt-submit                     │
+│  PreToolUse        → validate-command, pause-before-push,   │
+│                      check-secrets, protect-files           │
+│  PostToolUse       → format-file, auto-archive,             │
+│                      suggest-compact                        │
+│  Stop              → stop-check                             │
+│  SubagentStop      → subagent-stop                          │
+│  PreCompact        → pre-compact                            │
+│  SessionEnd        → evaluate-session                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -106,35 +112,38 @@
 
 ## 4. Commands → Agents/Skills 引用关系
 
-| Command             | Agent(s)                                  | Skills       | 用途                     |
-| ------------------- | ----------------------------------------- | ------------ | ------------------------ |
-| `/cc-best:pm`       | requirement-validator                     | -            | 需求文档质量验证         |
-| `/cc-best:clarify`  | (可选)                                    | -            | 需求澄清                 |
-| `/cc-best:lead`     | architect, planner                        | architecture | 架构设计和任务规划       |
-| `/cc-best:designer` | -                                         | -            | UI/UX 设计               |
-| `/cc-best:dev`      | tdd-guide, code-simplifier, code-reviewer | -            | 开发实现                 |
-| `/cc-best:build`    | build-error-resolver                      | debug        | 构建错误修复             |
-| `/cc-best:qa`       | code-reviewer                             | -            | 代码审查                 |
-| `/cc-best:verify`   | security-reviewer                         | security     | 安全审查                 |
-| `/cc-best:fix`      | build-error-resolver                      | debug        | 修复编译/类型错误        |
-| `/cc-best:learn`    | -                                         | learning     | 会话知识提取             |
-| `/cc-best:analyze`  | -                                         | learning     | 代码库模式分析           |
-| `/cc-best:evolve`   | -                                         | learning     | 知识演化为 skills/agents |
+| Command              | Agent(s)                                  | Skills       | 用途                     |
+| -------------------- | ----------------------------------------- | ------------ | ------------------------ |
+| `/cc-best:pm`        | requirement-validator                     | -            | 需求文档质量验证         |
+| `/cc-best:clarify`   | (可选)                                    | -            | 需求澄清                 |
+| `/cc-best:lead`      | architect, planner                        | architecture | 架构设计和任务规划       |
+| `/cc-best:designer`  | -                                         | -            | UI/UX 设计               |
+| `/cc-best:dev`       | tdd-guide, code-simplifier, code-reviewer | -            | 开发实现                 |
+| `/cc-best:build`     | build-error-resolver                      | debug        | 构建错误修复             |
+| `/cc-best:qa`        | code-reviewer                             | -            | 代码审查                 |
+| `/cc-best:verify`    | security-reviewer                         | security     | 安全审查                 |
+| `/cc-best:fix`       | build-error-resolver                      | debug        | 修复编译/类型错误        |
+| `/cc-best:learn`     | -                                         | learning     | 会话知识提取             |
+| `/cc-best:analyze`   | -                                         | learning     | 代码库模式分析           |
+| `/cc-best:evolve`    | -                                         | learning     | 知识演化为 skills/agents |
+| `/cc-best:fix-issue` | tdd-guide, build-error-resolver           | exploration  | GitHub Issue 端到端修复  |
+| `/cc-best:release`   | -                                         | -            | 版本发布管理             |
+| `/cc-best:service`   | -                                         | -            | 开发服务管理             |
 
 ---
 
 ## 5. Agents → Skills 预加载关系
 
-| Agent                 | 预加载 Skills                       | 说明                       |
-| --------------------- | ----------------------------------- | -------------------------- |
-| security-reviewer     | `security`                          | OWASP 安全检查清单         |
-| tdd-guide             | `testing` `security`                | TDD 工作流 + 安全测试      |
-| build-error-resolver  | `debug` `devops`                    | 构建诊断 + CI/CD 问题      |
-| architect             | `architecture` `exploration` `api`  | 架构设计 + 探索 + API 设计 |
-| code-reviewer         | `security` `quality` `architecture` | 安全 + 质量 + 架构合规检查 |
-| code-simplifier       | `quality` `architecture`            | 质量 + 架构感知简化        |
-| planner               | `architecture` `exploration`        | 任务分解 + 代码库探索      |
-| requirement-validator | `architecture`                      | 需求验证时参考架构         |
+| Agent                 | 预加载 Skills                                 | 说明                          |
+| --------------------- | --------------------------------------------- | ----------------------------- |
+| security-reviewer     | `security` `quality`                          | OWASP 安全检查 + 代码质量交叉 |
+| tdd-guide             | `testing` `security`                          | TDD 工作流 + 安全测试         |
+| build-error-resolver  | `debug` `devops` `testing`                    | 构建诊断 + CI/CD + 测试验证   |
+| architect             | `architecture` `exploration` `api` `database` | 架构 + 探索 + API + 数据库    |
+| code-reviewer         | `security` `quality` `architecture` `testing` | 安全 + 质量 + 架构 + 可测试性 |
+| code-simplifier       | `quality` `architecture`                      | 质量 + 架构感知简化           |
+| planner               | `architecture` `exploration`                  | 任务分解 + 代码库探索         |
+| requirement-validator | `architecture`                                | 需求验证时参考架构            |
 
 ### 调用链可视化 | Call Chain Visualization
 
@@ -145,7 +154,7 @@ Commands (角色)              Agents                      Skills
        ↓
 /cc-best:clarify ─────────► [requirement-validator]────► (可选调用)
        ↓
-/cc-best:lead ────────────► architect ─────────────────► architecture, exploration, api
+/cc-best:lead ────────────► architect ─────────────────► architecture, exploration, api, database
                          └► planner ──────────────────► architecture, exploration
        ↓
 /cc-best:designer ────────► [code-reviewer]────────────► (可选调用)
@@ -154,13 +163,15 @@ Commands (角色)              Agents                      Skills
        ↓
 /cc-best:dev ─────────────► tdd-guide ─────────────────► testing, security
                          ├► code-simplifier ───────────► quality, architecture
-                         └► code-reviewer ─────────────► security, quality, architecture
+                         └► code-reviewer ─────────────► security, quality, architecture, testing
        ↓
-/cc-best:qa ──────────────► code-reviewer ─────────────► security, quality, architecture
+/cc-best:qa ──────────────► code-reviewer ─────────────► security, quality, architecture, testing
        ↓
-/cc-best:verify ──────────► security-reviewer ─────────► security
+/cc-best:verify ──────────► security-reviewer ─────────► security, quality
        ↓
-/cc-best:build|fix ───────► build-error-resolver ──────► debug, devops
+/cc-best:build|fix ───────► build-error-resolver ──────► debug, devops, testing
+       ↓
+/cc-best:fix-issue ───────► tdd-guide + build-error-resolver ► exploration, testing
 ```
 
 ---
@@ -406,22 +417,23 @@ tools: Read, Grep, Glob
 
 ## 12. 统计数据 | Statistics
 
-| 类别                 | 数量                                        |
-| -------------------- | ------------------------------------------- |
-| Commands             | 35                                          |
-| Skills               | 17                                          |
-| Agents               | 8                                           |
-| Hooks Scripts        | 17 脚本 / 10 已配置                         |
-| Language Support     | 5 (Python, TS, Java, Go, C#)                |
-| Framework Support    | 8 (React, Vue, Angular, Svelte, FastAPI...) |
-| Database Support     | 4 (MySQL, PostgreSQL, Oracle, SQLite)       |
-| Total Markdown Lines | ~22,000                                     |
+| 类别                 | 数量                                                     |
+| -------------------- | -------------------------------------------------------- |
+| Commands             | 38                                                       |
+| Skills               | 17                                                       |
+| Agents               | 8                                                        |
+| Rules                | 30 (7 目录: common/frontend/java/csharp/cpp/embedded/ui) |
+| Hooks Scripts        | 20 脚本 / 13 已配置                                      |
+| Language Support     | 6 (Python, TS, Java, Go, C#, Rust)                       |
+| Framework Support    | 8 (React, Vue, Angular, Svelte, FastAPI...)              |
+| Database Support     | 4 (MySQL, PostgreSQL, Oracle, SQLite)                    |
+| Total Markdown Lines | ~25,000                                                  |
 
 ---
 
 ## 13. 官方特性兼容性 | Official Feature Compatibility
 
-> 基于 Claude Code v2.1.31 评估（2026-02-05）
+> 基于 Claude Code v2.1.31 评估（2026-02-06 更新）
 
 ### 已采用特性 | Adopted Features
 
@@ -429,9 +441,13 @@ tools: Read, Grep, Glob
 | ----------------------- | --------------------------- | ---- |
 | YAML Frontmatter        | 全部 agents/commands/skills | ✅   |
 | Agent `model` 字段      | 8 个 agents                 | ✅   |
-| Agent `skills` 预加载   | 6 个 agents                 | ✅   |
+| Agent `skills` 预加载   | 8 个 agents                 | ✅   |
 | Wildcard Permissions    | `Skill(*)`                  | ✅   |
+| `context: fork`         | exploration Skill           | ✅   |
 | SessionEnd Lifecycle    | hooks                       | ✅   |
+| UserPromptSubmit 事件   | hooks 配置                  | ✅   |
+| Stop 事件               | hooks 配置                  | ✅   |
+| SubagentStop 事件       | hooks 配置                  | ✅   |
 | `${CLAUDE_PLUGIN_ROOT}` | hooks 路径                  | ✅   |
 
 ### 兼容但未采用 | Compatible but Not Adopted
@@ -439,7 +455,6 @@ tools: Read, Grep, Glob
 | 官方特性          | 说明                      | 计划     |
 | ----------------- | ------------------------- | -------- |
 | Skill Hot Reload  | 开发时自动重载 skill 文件 | 自动支持 |
-| `context: fork`   | agent 运行在独立上下文    | v0.6.x   |
 | Frontmatter Hooks | 在 YAML 中声明 hooks      | 评估中   |
 | Async Hooks       | `async: true` 非阻塞执行  | 部分采用 |
 | `$ARGUMENTS` 变量 | 命令参数传递              | v0.6.x   |
