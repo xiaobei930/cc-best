@@ -122,10 +122,11 @@ jobs:
         run: |
           echo "🔍 Checking rule files..."
 
+          # Core rules now live in rules/common/ (v0.5.9 restructure)
           core_rules=(
-            "methodology.md"
-            "coding-standards.md"
-            "security.md"
+            "common/methodology.md"
+            "common/coding-standards.md"
+            "common/security.md"
           )
 
           cd rules
@@ -144,7 +145,7 @@ jobs:
             exit 1
           fi
 
-          total=$(ls -1 *.md 2>/dev/null | wc -l)
+          total=$(find . -name "*.md" 2>/dev/null | wc -l)
           echo "📊 Total rules: $total"
 
       - name: Check Scripts Syntax
@@ -332,7 +333,7 @@ jobs:
           ACTUAL_COMMANDS=$(ls -1 commands/*.md 2>/dev/null | wc -l | tr -d ' ')
           ACTUAL_SKILLS=$(find skills -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
           ACTUAL_AGENTS=$(ls -1 agents/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-          ACTUAL_RULES=$(ls -1 rules/*.md 2>/dev/null | wc -l | tr -d ' ')
+          ACTUAL_RULES=$(find rules -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
           echo "📊 Component counts:"
           echo "   Commands: $ACTUAL_COMMANDS"
@@ -340,12 +341,12 @@ jobs:
           echo "   Agents: $ACTUAL_AGENTS"
           echo "   Rules: $ACTUAL_RULES"
 
-          # Verify plugin.json description matches
-          EXPECTED_DESC="35 commands, 17 skills, 8 agents"
+          # Verify plugin.json description reflects actual counts
+          EXPECTED_DESC="${ACTUAL_COMMANDS} commands"
           if grep -q "$EXPECTED_DESC" .claude-plugin/plugin.json; then
-            echo "✅ plugin.json description matches component counts"
+            echo "✅ plugin.json description matches command count"
           else
-            echo "⚠️ plugin.json description may be outdated (expected: $ACTUAL_COMMANDS commands, $ACTUAL_SKILLS skills, $ACTUAL_AGENTS agents)"
+            echo "⚠️ plugin.json description may be outdated (actual: $ACTUAL_COMMANDS commands, $ACTUAL_SKILLS skills, $ACTUAL_AGENTS agents)"
           fi
 
           echo "✅ Version sync check completed"
@@ -364,7 +365,7 @@ jobs:
           echo "| Category | Count |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Commands | $(ls -1 commands/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Rules | $(ls -1 rules/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Rules | $(find rules -name '*.md' 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Skills | $(find skills -name "SKILL.md" 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Agents | $(ls -1 agents/*.md 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
           echo "| Node.js Scripts | $(find scripts/node -name "*.js" 2>/dev/null | wc -l) |" >> $GITHUB_STEP_SUMMARY
