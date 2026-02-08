@@ -13,7 +13,7 @@
  * - 0: 正常完成
  */
 
-const { readStdinJson, log, output } = require("../lib/utils");
+const { readStdinJson, log } = require("../lib/utils");
 
 /**
  * 主函数
@@ -29,13 +29,10 @@ async function main() {
     // 输出追踪日志到 stderr（用户可见）
     log(`[AgentTracker] Agent "${agentName}" 完成 (${stopReason})`);
 
-    // 返回 continue 决策，不阻止后续流程
-    output({ decision: "continue" });
-
+    // 不阻止停止，只提供追踪信息
     process.exit(0);
   } catch {
     // 静默失败，不影响主流程
-    output({});
     process.exit(0);
   }
 }

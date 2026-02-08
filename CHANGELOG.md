@@ -76,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Fixed / 修复
 
+- **Stop hook 输出格式**: 修复 stop-check.js 和 subagent-stop.js 输出无效 `decision` 值（`"stop"`/`"continue"`），改为标准的 exit(0) 放行
 - **GitHub 仓库元数据**: 更新描述（38 commands + 8 agents + 30 rules）、优化 topics、设置 homepage
 - **.gitignore**: 添加 `memory-bank/observations.jsonl` 排除运行时数据
 

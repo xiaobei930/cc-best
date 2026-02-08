@@ -21,7 +21,6 @@ const {
   fileExists,
   getMemoryBankDir,
   log,
-  output,
 } = require("../lib/utils");
 
 // 配置
@@ -62,12 +61,9 @@ async function main() {
     }
 
     // 不阻止停止，只提供信息
-    output({ decision: "stop" });
-
     process.exit(0);
   } catch {
     // 静默失败
-    output({ decision: "stop" });
     process.exit(0);
   }
 }
