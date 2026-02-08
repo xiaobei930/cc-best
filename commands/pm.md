@@ -120,7 +120,8 @@ allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, Task, WebSearch, WebFet
    └─ 更新 docs/requirements/index.md
 
 4. 更新进度
-   └─ 更新 memory-bank/progress.md
+   ├─ 更新 memory-bank/progress.md
+   └─ 在"进行中"写入: `REQ-XXX: [名称] → 待 Lead 评审 (docs/requirements/REQ-XXX.md)`
 
 5. 交接下游
    └─ 调用 /cc-best:lead 进行技术评审

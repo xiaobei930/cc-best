@@ -8,6 +8,7 @@ CLAUDE.local.md
 
 # Memory Bank 运行时状态文件
 memory-bank/.pre-compact-state.json
+memory-bank/observations.jsonl
 
 # MCP 临时目录（由各 MCP 工具自动创建）
 .playwright-mcp/
