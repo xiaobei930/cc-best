@@ -1,5 +1,6 @@
 ---
 description: 知识演化，将学习内容聚类生成 Skills/Agents/Commands
+argument-hint: "[--execute] [--dry-run] [--domain name]"
 allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite
 ---
 

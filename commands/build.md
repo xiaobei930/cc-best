@@ -1,5 +1,5 @@
 ---
-description: 构建项目并检查错误
+description: 构建项目并检查错误（修复错误见 /cc-best:fix）
 allowed-tools: Read, Glob, Grep, Bash, Task
 ---
 

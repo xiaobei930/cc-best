@@ -1,6 +1,7 @@
 ---
 description: 结对编程模式，与用户协作开发
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Task, WebSearch, WebFetch, AskUserQuestion, Skill, mcp__*
+argument-hint: "[--learn]"
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Task, WebSearch, WebFetch, Skill, mcp__*
 ---
 
 # /pair - 结对编程模式

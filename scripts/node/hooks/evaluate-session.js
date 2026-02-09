@@ -15,6 +15,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { readStdinJson, log } = require("../lib/utils");
 
 // 配置
 const MIN_SESSION_LENGTH = 10; // 最小会话消息数
@@ -28,32 +29,6 @@ const PATTERN_TYPES = {
   project_specific: "项目知识 Project Knowledge",
   user_corrections: "用户纠正 User Corrections",
 };
-
-/**
- * 从 stdin 读取 JSON
- */
-async function readStdinJson() {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    process.stdin.setEncoding("utf8");
-    process.stdin.on("data", (chunk) => (data += chunk));
-    process.stdin.on("end", () => {
-      try {
-        resolve(data.trim() ? JSON.parse(data) : {});
-      } catch (err) {
-        reject(err);
-      }
-    });
-    process.stdin.on("error", reject);
-  });
-}
-
-/**
- * 输出到 stderr（用户可见）
- */
-function log(message) {
-  console.error(message);
-}
 
 /**
  * 获取会话统计信息

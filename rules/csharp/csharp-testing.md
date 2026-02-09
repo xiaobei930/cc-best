@@ -1,6 +1,7 @@
 ---
 paths:
   - "**/*.cs"
+  - "**/*.csx"
 ---
 
 # C# 测试规范 | C# Testing Rules

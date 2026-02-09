@@ -17,8 +17,8 @@ Claude Code 官方的自动压缩功能存在已知问题：
 
 | Issue                                                            | 版本     | 状态     | 问题描述                            |
 | ---------------------------------------------------------------- | -------- | -------- | ----------------------------------- |
-| [#18211](https://github.com/anthropics/claude-code/issues/18211) | v2.1.7+  | 已关闭   | `/cc-best:compact` 和 auto-compact 同时损坏 |
-| [#21853](https://github.com/anthropics/claude-code/issues/21853) | v2.1.23+ | **开放** | `/cc-best:compact` 始终失败（回归 bug）     |
+| [#18211](https://github.com/anthropics/claude-code/issues/18211) | v2.1.7+  | 已关闭   | `/cc-best:compact-context` 和 auto-compact 同时损坏 |
+| [#21853](https://github.com/anthropics/claude-code/issues/21853) | v2.1.23+ | **开放** | `/cc-best:compact-context` 始终失败（回归 bug）     |
 | [#16349](https://github.com/anthropics/claude-code/issues/16349) | -        | -        | 警告和错误阈值相同，无预警          |
 
 **问题根因**：
@@ -105,7 +105,7 @@ Claude Code 官方的自动压缩功能存在已知问题：
 ### 手动触发
 
 ```
-/cc-best:compact
+/cc-best:compact-context
 ```
 
 ### 自动建议
@@ -179,7 +179,7 @@ export COMPACT_INTERVAL=20   # 后续提醒间隔
 ## 与其他命令配合
 
 ```
-/cc-best:compact     # 保存状态 + 生成摘要
+/cc-best:compact-context     # 保存状态 + 生成摘要
 /cc-best:checkpoint  # 创建检查点
 /cc-best:catchup     # 恢复上下文
 /cc-best:status      # 查看当前状态
@@ -189,7 +189,7 @@ export COMPACT_INTERVAL=20   # 后续提醒间隔
 ### 推荐流程
 
 ```
-1. /cc-best:compact    → 保存状态、生成摘要
+1. /cc-best:compact-context    → 保存状态、生成摘要
 2. /clear              → 官方命令清除上下文
 3. /cc-best:catchup    → 恢复上下文继续工作
 ```

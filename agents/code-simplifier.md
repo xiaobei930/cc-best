@@ -1,8 +1,19 @@
 ---
 name: code-simplifier
-description: "Cleans and simplifies code architecture after feature completion, eliminating redundancy and improving maintainability. Use when code maintenance, refactoring, or dead code cleanup is needed. Invoked after feature completion for code quality improvement."
+description: |
+  Cleans and simplifies code architecture after feature completion, eliminating redundancy and improving maintainability. Use when code maintenance, refactoring, or dead code cleanup is needed. Invoked after feature completion for code quality improvement.
+  <example>
+  user: "简化用户服务模块的代码，消除重复"
+  assistant: (invokes code-simplifier agent to identify and eliminate redundancy)
+  </example>
 model: opus
-tools: Read, Edit, Grep, Glob
+maxTurns: 15
+tools:
+  - Read
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 skills:
   - quality
   - architecture

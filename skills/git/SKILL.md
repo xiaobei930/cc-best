@@ -1,6 +1,6 @@
 ---
 name: git
-description: "Git version control best practices including branching strategies, commit conventions, merge strategies, and conflict resolution. Use when: managing branches, creating commits, merging code, resolving conflicts, creating PRs, or code review workflows. Auto-activates when users mention: git, commit, branch, merge, rebase, cherry-pick, PR, pull request, conflict, stash, gitflow, conventional commits."
+description: "Git version control best practices: branching, commits, merging, conflict resolution, PR workflows. Use when managing branches, creating commits, merging code, or resolving conflicts."
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -9,6 +9,10 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 本技能提供 Git 版本控制的最佳实践。
 
 ## 触发条件
+
+当用户提及以下关键词时自动激活：`git`, `commit`, `branch`, `merge`, `rebase`, `cherry-pick`, `PR`, `pull request`, `conflict`, `stash`, `gitflow`, `conventional commits`
+
+常见场景：
 
 - 管理 Git 分支
 - 创建提交
@@ -153,113 +157,7 @@ BREAKING CHANGE: API 响应格式从 {data} 改为 {success, data, error}"
 
 ## 常用命令
 
-### 分支操作
-
-```bash
-# 创建并切换分支
-git checkout -b feature/new-feature
-
-# 从远程创建本地分支
-git checkout -b feature/xxx origin/feature/xxx
-
-# 删除本地分支
-git branch -d feature/xxx
-
-# 删除远程分支
-git push origin --delete feature/xxx
-
-# 重命名分支
-git branch -m old-name new-name
-```
-
-### 提交操作
-
-```bash
-# 暂存特定文件
-git add src/user.ts src/auth.ts
-
-# 交互式暂存
-git add -p
-
-# 修改最后一次提交（未推送）
-git commit --amend
-
-# 修改提交信息
-git commit --amend -m "新的提交信息"
-```
-
-### 同步操作
-
-```bash
-# 拉取并变基
-git pull --rebase origin main
-
-# 推送
-git push origin feature/xxx
-
-# 强制推送（谨慎！）
-git push --force-with-lease origin feature/xxx
-```
-
-### 查看历史
-
-```bash
-# 简洁日志
-git log --oneline -20
-
-# 图形化日志
-git log --graph --oneline --all
-
-# 查看文件历史
-git log -p -- path/to/file
-
-# 查看某人的提交
-git log --author="name"
-
-# 搜索提交内容
-git log -S "search term"
-```
-
-### 撤销操作
-
-```bash
-# 撤销工作区修改
-git checkout -- file.ts
-
-# 取消暂存
-git reset HEAD file.ts
-
-# 撤销最后一次提交（保留修改）
-git reset --soft HEAD~1
-
-# 撤销最后一次提交（丢弃修改）
-git reset --hard HEAD~1
-
-# 创建反向提交
-git revert commit-hash
-```
-
-### 储藏操作
-
-```bash
-# 储藏当前修改
-git stash
-
-# 储藏并命名
-git stash save "WIP: 用户功能"
-
-# 查看储藏列表
-git stash list
-
-# 应用最近储藏
-git stash pop
-
-# 应用特定储藏
-git stash apply stash@{2}
-
-# 删除储藏
-git stash drop stash@{0}
-```
+> 详细内容参见 [commands-reference.md](commands-reference.md)
 
 ## 合并策略
 
@@ -353,95 +251,11 @@ git rebase --abort
 
 ## Pull Request 流程
 
-### 创建 PR
-
-```bash
-# 推送分支
-git push -u origin feature/xxx
-
-# 使用 GitHub CLI 创建 PR
-gh pr create --title "feat: 添加用户功能" --body "
-## 变更说明
-- 添加用户注册
-- 添加用户登录
-
-## 测试
-- [x] 单元测试通过
-- [x] 本地测试通过
-"
-```
-
-### PR 模板
-
-```markdown
-## 变更类型
-
-- [ ] 新功能
-- [ ] Bug 修复
-- [ ] 重构
-- [ ] 文档更新
-
-## 变更说明
-
-[描述本次变更的内容]
-
-## 相关 Issue
-
-Closes #xxx
-
-## 测试
-
-- [ ] 添加了新测试
-- [ ] 所有测试通过
-- [ ] 本地验证通过
-
-## 截图（如适用）
-
-[UI 变更截图]
-
-## 检查清单
-
-- [ ] 代码符合规范
-- [ ] 已更新文档
-- [ ] 无敏感信息提交
-```
+> 详细内容参见 [pr-workflow.md](pr-workflow.md)
 
 ## Git Hooks
 
-### pre-commit
-
-```bash
-#!/bin/sh
-# .git/hooks/pre-commit
-
-# 运行 lint
-npm run lint
-
-# 运行测试
-npm test
-
-# 检查敏感信息
-if git diff --cached | grep -E "(api_key|password|secret)" > /dev/null; then
-  echo "警告：检测到可能的敏感信息"
-  exit 1
-fi
-```
-
-### commit-msg
-
-```bash
-#!/bin/sh
-# .git/hooks/commit-msg
-
-# 验证提交信息格式
-commit_regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\(.+\))?: .{1,50}'
-
-if ! grep -qE "$commit_regex" "$1"; then
-  echo "错误：提交信息不符合规范"
-  echo "格式：type(scope): description"
-  exit 1
-fi
-```
+> 详细内容参见 [hooks-guide.md](hooks-guide.md)
 
 ## .gitignore 最佳实践
 
@@ -541,44 +355,4 @@ git rebase --continue
 
 ## 委派到专业 Agent | Delegation to Agents
 
-当遇到以下复杂场景时，应委派给专业 Agent 处理：
-
-### 代码审查
-
-```
-委派给 @code-reviewer:
-- PR 代码质量审查
-- 安全漏洞检查
-- 架构合规性验证
-```
-
-### 安全审查
-
-```
-委派给 @security-reviewer:
-- 检测敏感信息泄露
-- 验证 .gitignore 配置
-- 审查提交历史中的安全问题
-```
-
-### 任务规划
-
-```
-委派给 @planner:
-- 复杂的分支策略规划
-- 大型重构的 Git 工作流设计
-- 多人协作流程设计
-```
-
-### 使用示例
-
-```
-用户: "帮我审查这个 PR 的代码质量"
-→ 委派给 @code-reviewer 进行深度审查
-
-用户: "检查提交历史中是否有敏感信息"
-→ 委派给 @security-reviewer 进行安全审查
-
-用户: "规划一下我们团队的 Git 工作流"
-→ 委派给 @planner 进行流程设计
-```
+> 详细内容参见 [delegation.md](delegation.md)

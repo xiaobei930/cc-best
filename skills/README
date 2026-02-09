@@ -75,9 +75,9 @@ Skill 是一个包含 `SKILL.md` 文件的文件夹，可以包含：
 | `frontend`     | 前端开发模式（Vue, React, Svelte, Angular）|
 | `database`     | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）|
 | `devops`       | DevOps 模式（Docker, CI/CD）       |
-| `api`          | RESTful API 设计                  |
+| `api`          | RESTful API 设计（Express, FastAPI, Next.js）|
 | `git`          | Git 工作流最佳实践                |
-| `architecture` | 架构设计（ADR、设计检查清单）     |
+| `architecture` | 架构设计（ADR、设计检查清单、角色方法论）|
 | `second-opinion` | 第二意见/多模型交叉验证         |
 
 ### 测试技能
@@ -86,7 +86,7 @@ Skill 是一个包含 `SKILL.md` 文件的文件夹，可以包含：
 | --------- | ---------------------------------- |
 | `testing` | 测试策略和方法论（含 TDD、E2E）    |
 
-子文件：`tdd.md`、`e2e.md`、`tdd-example.md`、`frameworks.md`
+子文件：`tdd.md`、`e2e.md`、`tdd-example.md`、`frameworks.md`、`qa-methodology.md`
 
 ### 质量技能（父子结构）
 
@@ -130,17 +130,26 @@ skills/
 │
 ├── # === 独立技能 ===
 ├── api/
-│   └── SKILL.md                 # RESTful API 设计
+│   ├── SKILL.md                 # RESTful API 设计
+│   ├── express.md               # Express.js API 模式
+│   ├── fastapi.md               # FastAPI 模式
+│   └── nextjs.md                # Next.js API 路由
 ├── architecture/
-│   └── SKILL.md                 # 架构设计（ADR、设计检查清单）
+│   ├── SKILL.md                 # 架构设计（ADR、设计检查清单）
+│   ├── lead-methodology.md      # Lead 角色方法论
+│   └── pm-methodology.md        # PM 角色方法论
 ├── backend/
 │   ├── SKILL.md                 # 后端通用模式
 │   ├── python.md                # Python 特定模式
+│   ├── python-patterns.md       # Python 设计模式
+│   ├── python-types.md          # Python 类型系统
+│   ├── python-observability.md  # Python 可观测性
 │   ├── typescript.md            # TypeScript 特定模式
 │   ├── java.md                  # Java 特定模式
 │   ├── go.md                    # Go 特定模式
 │   ├── csharp.md                # C# 特定模式
-│   └── rust.md                  # Rust 特定模式
+│   ├── rust.md                  # Rust 特定模式
+│   └── performance.md           # 后端性能优化
 ├── database/
 │   ├── SKILL.md                 # 数据库通用模式
 │   ├── postgres.md              # PostgreSQL 最佳实践
@@ -156,11 +165,18 @@ skills/
 │   ├── vue.md                   # Vue 特定模式
 │   ├── react.md                 # React 特定模式
 │   ├── svelte.md                # Svelte 特定模式
-│   └── angular.md               # Angular 特定模式
+│   ├── angular.md               # Angular 特定模式
+│   ├── performance.md           # 前端性能优化
+│   ├── tailwind.md              # Tailwind CSS 最佳实践
+│   └── design-guide.md          # Designer 角色设计方法论
 ├── git/
-│   └── SKILL.md                 # Git 工作流最佳实践
+│   ├── SKILL.md                 # Git 工作流最佳实践
+│   ├── pr-workflow.md           # PR 创建与模板
+│   ├── hooks-guide.md           # Git Hooks 配置
+│   ├── delegation.md            # Agent 委派指南
+│   └── commands-reference.md    # Git 命令速查
 ├── second-opinion/
-│   └── SKILL.md                 # 第二意见/交叉验证
+│   └── SKILL.md                 # 第二意见/多模型交叉验证
 │
 ├── # === 测试技能 ===
 ├── testing/
@@ -168,22 +184,29 @@ skills/
 │   ├── tdd.md                   # TDD 工作流
 │   ├── e2e.md                   # E2E 测试指南
 │   ├── tdd-example.md           # 完整 TDD 会话示例
-│   └── frameworks.md            # 测试框架配置与 Mock 模式
+│   ├── frameworks.md            # 测试框架配置与 Mock 模式
+│   └── qa-methodology.md        # QA 角色方法论
 │
 ├── # === 质量技能族 ===
 ├── quality/
-│   └── SKILL.md                 # [父] 代码质量策略总览
+│   ├── SKILL.md                 # [父] 代码质量策略总览
+│   └── code-health.md           # 代码健康度指标
 ├── security/
 │   ├── SKILL.md                 # [子] 安全审查 (parent: quality)
-│   └── cloud-security.md        # 云基础设施安全
+│   ├── cloud-security.md        # 云基础设施安全
+│   └── verify-checklist.md      # 安全验证检查清单
 ├── debug/
-│   └── SKILL.md                 # [子] 系统化调试 (parent: quality)
+│   ├── SKILL.md                 # [子] 系统化调试 (parent: quality)
+│   ├── frontend-debug.md        # 前端调试方法
+│   ├── network-debug.md         # 网络调试方法
+│   └── performance-debug.md     # 性能调试方法
 │
 ├── # === 会话技能族 ===
 ├── session/
 │   └── SKILL.md                 # [父] 会话生命周期管理
 ├── learning/
-│   └── SKILL.md                 # [子] 知识提取 (parent: session)
+│   ├── SKILL.md                 # [子] 知识提取 (parent: session)
+│   └── extraction-guide.md      # 会话学习方法论
 ├── compact/
 │   └── SKILL.md                 # [子] 上下文压缩 (parent: session)
 │
@@ -217,7 +240,7 @@ allowed-tools: Read, Grep, Glob
 model: sonnet
 context: fork
 agent: Explore
-parent-skill: parent-name
+parent: parent-name
 hooks:
   PreToolUse:
     - matcher: "Bash"
@@ -426,20 +449,20 @@ description: 使用扩展思考进行深度分析
 
 | 技能                  | 结构         | 用途                                             |
 | --------------------- | ------------ | ------------------------------------------------ |
-| `api`                 | 单文件       | RESTful API 设计                                 |
-| `architecture`        | 单文件       | 架构设计（ADR、设计检查清单）                    |
-| `backend`             | 主+6语言     | 后端开发模式（Python, TS, Java, Go, C#, Rust）   |
+| `api`                 | 主+3文件     | RESTful API 设计（Express, FastAPI, Next.js）    |
+| `architecture`        | 主+2文件     | 架构设计（ADR、角色方法论）                      |
+| `backend`             | 主+10文件    | 后端开发模式（Python, TS, Java, Go, C#, Rust）   |
 | `database`            | 主+4数据库   | 数据库模式（PostgreSQL, MySQL, Oracle, SQLite）  |
 | `devops`              | 主+2平台     | DevOps 模式（Docker, CI/CD）                     |
-| `frontend`            | 主+4框架     | 前端开发模式（Vue, React, Svelte, Angular）      |
-| `git`                 | 单文件       | Git 工作流最佳实践                               |
+| `frontend`            | 主+7文件     | 前端开发模式（Vue, React, Svelte, Angular）      |
+| `git`                 | 主+4文件     | Git 工作流最佳实践                               |
 | `second-opinion`      | 单文件       | 第二意见/多模型交叉验证                          |
-| `testing`             | 主+4文件     | 测试策略（TDD、E2E、框架配置）                   |
-| `quality`             | **父**       | 代码质量策略总览                                 |
-| `security`            | 子+1文件     | 安全审查（parent: quality）                      |
-| `debug`               | 子           | 系统化调试（parent: quality）                    |
+| `testing`             | 主+5文件     | 测试策略（TDD、E2E、QA 方法论）                  |
+| `quality`             | **父**+1文件 | 代码质量策略总览                                 |
+| `security`            | 子+2文件     | 安全审查（parent: quality）                      |
+| `debug`               | 子+3文件     | 系统化调试（parent: quality）                    |
 | `session`             | **父**       | 会话生命周期管理                                 |
-| `learning`            | 子+脚本      | 知识提取（parent: session）                      |
-| `compact`             | 子+脚本      | 上下文压缩（parent: session）                    |
+| `learning`            | 子+1文件     | 知识提取（parent: session）                      |
+| `compact`             | 子           | 上下文压缩（parent: session）                    |
 | `exploration`         | 主+2文件     | 代码库探索（隔离研究、迭代检索）                 |
 | `native`              | 主+4文件     | 原生/桌面应用开发（iOS、Swift、SwiftUI、Tauri）  |

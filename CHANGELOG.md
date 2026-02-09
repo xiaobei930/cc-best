@@ -22,22 +22,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] 文档审计与一致性修复
 - [ ] ~~核心命令英文版~~ → 等待官方 i18n 支持 (#7233)
 
-### v0.6.x ✅ (Released 2026-02-08 ~ 2026-02-09) - 审计修复 + 学习管线 + 架构增强
+### v0.6.x ✅ (Released 2026-02-08 ~ 2026-02-09) - 综合审计 + 学习管线 + 架构增强
 
-**核心目标**: 修复已知 bug + 自动学习闭环 + CI 自动发布
+**核心目标**: 修复已知 bug + 全面审计规范化 + 自动学习闭环 + CI 自动发布
 
 - [x] 修复 16 个 rules frontmatter `alwaysApply` bug
 - [x] 学习管线闭环（observe-patterns.js → observations.jsonl → /learn）
 - [x] CI 自动发布（tag push → GitHub Release）
 - [x] Agent 能力增强（exploration/learning 技能扩展）
 - [x] 脚本黑盒化（5 个 hook 脚本 --help 支持）
+- [x] Python Rules 补齐（testing/security/performance 3 个规则文件）
+- [x] Skill 子文件提取（6 个命令知识内容→独立子文件，减少命令体积）
+- [x] Git Skill 拆分（SKILL.md → 3 个子文件，584→<480 行）
+- [x] 综合审计修复（Agent 格式规范化、Commands argument-hint/交叉引用、Rules 路径扩展、Legacy 脚本清理、SKILL.md 引用补全）
 
 ### v0.7.0 (Planned) - 易用性与配置化
 
 **核心目标**: 降低上手门槛 + 灵活配置
 
-- [ ] **Lite 模式** - 精简版插件
-- [x] 增强 `/setup` 交互式配置向导
+- [ ] **Lite 模式** - 精简版插件（核心命令+规则子集）
 - [ ] 模型策略配置（质量优先/速度优先/均衡）
 - [ ] 常见错误诊断与修复建议
 - [ ] 示例项目（完整工作流演示）
@@ -63,6 +66,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.6.2] - 2026-02-09
+
+#### Added / 新增
+
+- **Python Rules 补齐**: 新增 3 个 Python 规则文件（30 → 33 rules）
+  - `python-testing.md` — pytest, fixtures, parametrize, coverage
+  - `python-security.md` — SQL 注入, 输入验证, 密钥管理, 依赖安全
+  - `python-performance.md` — asyncio, GIL, profiling, 缓存策略
+- **Skill 子文件新增**: 6 个命令知识提取为独立 Skill 子文件
+  - `skills/architecture/lead-methodology.md` — 技术方案设计方法论
+  - `skills/architecture/pm-methodology.md` — 需求分析方法论
+  - `skills/frontend/design-guide.md` — UI/UX 设计原则
+  - `skills/testing/qa-methodology.md` — 测试策略和检查清单
+  - `skills/security/verify-checklist.md` — 安全验证维度
+  - `skills/learning/extraction-guide.md` — 模式提取流程
+- **Git Skill 拆分**: SKILL.md 拆分为 3 个子文件（584 → <480 行）
+  - `skills/git/pr-workflow.md` — PR 创建和模板
+  - `skills/git/hooks-guide.md` — pre-commit/commit-msg 钩子
+  - `skills/git/delegation.md` — Agent 委派指南
+- **Hook 注册补全**: 3 个孤儿脚本注册到 hooks.json（14 → 17 已配置）
+  - `long-running-warning.js` → PreToolUse (Bash) 长时间命令警告
+  - `check-console-log.js` → PostToolUse (Write|Edit) 调试日志检查
+  - `typescript-check.js` → PostToolUse (Write|Edit) TypeScript 类型检查
+
+#### Changed / 变更
+
+- **Rules frontmatter 规范化**: 移除所有非官方字段（`alwaysApply`、`description`），common/ 规则改为无条件加载
+- **Agent 模型统一**: build-error-resolver haiku → sonnet，requirement-validator opus → sonnet
+- **Agent 工具补全**: architect 添加 Bash，code-simplifier 添加 Bash，build-error-resolver 添加 Write
+- **Agent maxTurns**: 全部 8 个 Agent 添加 maxTurns 限制（10-25）
+- **超大命令重构**: 6 个命令知识内容提取到 Skill 子文件（lead 656→~150, learn 597→~120, qa 533→~150, verify 401→~120, designer 399→~120, pm 360→~120）
+- **命令重命名**: `git.md` → `git-guide.md`、`compact.md` → `compact-context.md`（避免与同名 Skill 冲突）
+- **plugin.json 优化**: agents 改为目录引用 `["./agents/"]`，添加 `hooks` 显式声明
+- **Rules 路径补齐**: csharp 添加 `*.csx`，frontend 添加 `*.css`/`*.html`
+- **code-reviewer Agent**: 重写 prompt 移除 Bash 命令引用，保持只读安全
+- **Agent 格式规范化（审计修复）**: 全部 8 个 Agent 添加 `<example>` 自动触发块、tools 改为 YAML 数组格式、修复非标准颜色（orange→yellow, pink→magenta, purple→magenta）
+- **Commands argument-hint 补齐（审计修复）**: 8 个接受参数的命令添加 `argument-hint`（checkpoint、context、evolve、memory、pair、service、setup、setup-pm）
+- **Commands 交叉引用（审计修复）**: 7 个功能重叠命令添加互相引用说明（context↔memory、commit↔git-guide、run↔service、build↔fix）
+- **Frontend Rules 路径扩展（审计修复）**: 4 个前端规则文件新增 `*.scss`/`*.less`/`*.svelte` 路径匹配
+- **Hooks 错误处理（审计修复）**: suggest-compact.js、user-prompt-submit.js 添加顶层 try/catch 静默失败
+- **Skills README 完整同步（审计修复）**: 更新目录树（补齐 15+ 缺失子文件）、修正技能概览表文件计数
+
+#### Fixed / 修复
+
+- **pause-before-push.js**: `--force`/`-f` 推送现在被阻止（exit 2），与 CLAUDE.md 禁止操作一致
+- **session-check.js**: 修复双重转义 `\\n` → `\n` 导致的输出格式错误
+- **check-secrets.js**: 修复注释中退出码 `process.exit(1)` → `process.exit(2)`
+- **evaluate-session.js**: 移除本地重复函数定义，改为从 utils.js 导入
+- **typescript-check.js**: 添加 Windows `npx.cmd` 兼容处理
+- **hooks.json**: 为 6 个非工具事件补齐 `matcher: ".*"` 字段
+- **git-workflow rule**: 移除无效 `paths: ["**/.git/**"]`（永不触发）
+- **commands/setup-pm.md**: 移除无效字段 `disable-model-invocation`
+- **commands/catchup.md**: `/init` → `/cc-best:setup`
+- **commands/iterate.md**: `/ralph-loop` → `/cc-best:cc-ralph`
+- **commands/train.md**: `data/cc-best:train` → `data/train`
+- **skills/exploration/SKILL.md**: `/debug` → `/cc-best:debug`
+- **skills/README**: `parent-skill:` → `parent:`
+- **commands/dev.md（审计修复）**: 工作流交接 `/cc-best:qa` → `/cc-best:verify`，与 CLAUDE.md 流程定义一致
+- **rules/common/testing.md（审计修复）**: 移除 common/ 规则中无效的 `paths` 字段（common 规则应无条件加载）
+- **commands/setup.md（审计修复）**: 版本号 `0.5.8` → `0.6.2`（4 处）
+- **SKILL.md 子文件引用（审计修复）**: 4 个技能主文件补齐对孤儿子文件的引用（architecture→lead/pm-methodology、frontend→design-guide、testing→qa-methodology、learning→extraction-guide）
+- **Legacy 脚本清理（审计修复）**: 删除 2 个已被 Node.js Hook 替代的 bash 脚本（`compact/suggest-compact.sh`、`learning/evaluate-session.sh`）
+- **learning/SKILL.md（审计修复）**: bash 脚本引用改为 Node.js Hook 引用（evaluate-session.js）
 
 ### [0.6.1] - 2026-02-09
 
@@ -345,6 +412,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.6.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.1...v0.6.2
+[0.6.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.9...v0.6.0
 [0.5.9]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.6...v0.5.7

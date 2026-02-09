@@ -46,7 +46,7 @@ training:
   learning_rate: 1e-4
 
 data:
-  train_path: "data/cc-best:train"
+  train_path: "data/train"
   val_path: "data/val"
 ```
 

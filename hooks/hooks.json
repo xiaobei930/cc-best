@@ -29,7 +29,8 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/check-secrets.js\"",
-            "timeout": 10
+            "timeout": 10,
+            "statusMessage": "检查密钥泄露..."
           }
         ],
         "description": "密钥检测: 检查命令中是否包含 API 密钥等敏感信息"
@@ -44,6 +45,17 @@
           }
         ],
         "description": "文件保护: 阻止修改敏感文件 (.env, .key, .git/ 等)"
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/long-running-warning.js\"",
+            "timeout": 5
+          }
+        ],
+        "description": "长时间命令警告: 检测开发服务器、watch 等长时间运行命令"
       }
     ],
     "PostToolUse": [
@@ -53,7 +65,8 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/format-file.js\"",
-            "timeout": 60
+            "timeout": 60,
+            "statusMessage": "格式化代码..."
           }
         ],
         "description": "自动格式化: 文件写入后自动格式化代码"
@@ -90,10 +103,34 @@
           }
         ],
         "description": "压缩提醒: 工具调用达到阈值时提醒压缩上下文 (官方 auto-compact bug 的 workaround)"
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/check-console-log.js\"",
+            "timeout": 3
+          }
+        ],
+        "description": "调试日志检查: 检查 JS/TS 文件中的 console.log 语句"
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/typescript-check.js\"",
+            "timeout": 30,
+            "statusMessage": "TypeScript 类型检查..."
+          }
+        ],
+        "description": "TypeScript 类型检查: .ts 文件编辑后运行 tsc --noEmit"
       }
     ],
     "UserPromptSubmit": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
@@ -106,6 +143,7 @@
     ],
     "SessionStart": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
@@ -118,6 +156,7 @@
     ],
     "Stop": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
@@ -130,6 +169,7 @@
     ],
     "SubagentStop": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
@@ -142,11 +182,13 @@
     ],
     "PreCompact": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/pre-compact.js\"",
-            "timeout": 10
+            "timeout": 10,
+            "statusMessage": "保存压缩前状态..."
           }
         ],
         "description": "压缩前保存: 压缩前保存 git 状态、任务列表等到 .pre-compact-state.json"
@@ -154,6 +196,7 @@
     ],
     "SessionEnd": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",

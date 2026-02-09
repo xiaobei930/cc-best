@@ -1,5 +1,5 @@
 ---
-description: Git 提交命令，生成规范的 commit message
+description: Git 提交命令，生成规范的 commit message（另见 /cc-best:git 操作指南）
 allowed-tools: Read, Glob, Grep, Bash
 ---
 

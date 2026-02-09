@@ -1,6 +1,6 @@
 # CC-Best Commands Reference | 命令参考
 
-> Version: 0.6.1 | 38 Commands
+> Version: 0.6.2 | 38 Commands
 
 快速查阅所有命令的参数和用法。
 
@@ -63,7 +63,7 @@
 | -------------------- | ----------------- | ----------------------------------------- |
 | `/cc-best:commit`    | Git 提交          | `<提交信息>`                              |
 | `/cc-best:pr`        | 创建 Pull Request | -                                         |
-| `/cc-best:git`       | Git 操作指南      | -                                         |
+| `/cc-best:git-guide` | Git 操作指南      | -                                         |
 | `/cc-best:fix-issue` | Issue 修复闭环    | `#<number>` / `--no-close`                |
 | `/cc-best:release`   | 版本发布管理      | `patch` / `minor` / `major` / `--dry-run` |
 
@@ -84,13 +84,13 @@
 
 ### 上下文管理
 
-| 命令                  | 用途         | 参数 |
-| --------------------- | ------------ | ---- |
-| `/cc-best:compact`    | 上下文压缩   | -    |
-| `/cc-best:checkpoint` | 检查点保存   | -    |
-| `/cc-best:catchup`    | 恢复上下文   | -    |
-| `/cc-best:context`    | 上下文管理   | -    |
-| `/cc-best:memory`     | 项目记忆管理 | -    |
+| 命令                       | 用途         | 参数 |
+| -------------------------- | ------------ | ---- |
+| `/cc-best:compact-context` | 上下文压缩   | -    |
+| `/cc-best:checkpoint`      | 检查点保存   | -    |
+| `/cc-best:catchup`         | 恢复上下文   | -    |
+| `/cc-best:context`         | 上下文管理   | -    |
+| `/cc-best:memory`          | 项目记忆管理 | -    |
 
 ### 代码质量
 
@@ -145,7 +145,7 @@
 
 **低频（特定场景）**
 
-- `/cc-best:setup`, `/cc-best:compact`, `/cc-best:cleanup`, `/cc-best:train`, `/cc-best:service`
+- `/cc-best:setup`, `/cc-best:compact-context`, `/cc-best:cleanup`, `/cc-best:train`, `/cc-best:service`
 
 ### 按工作阶段
 
@@ -156,7 +156,7 @@
 | 编码实现 | `/cc-best:dev`, `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:fix-issue` |
 | 质量验证 | `/cc-best:qa`, `/cc-best:test`, `/cc-best:verify`                         |
 | 代码提交 | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:release`                      |
-| 维护清理 | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:compact`                   |
+| 维护清理 | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:compact-context`           |
 | 知识管理 | `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                   |
 
 ---
@@ -194,7 +194,7 @@
 
 ```bash
 /cc-best:checkpoint                 # 保存当前状态
-/cc-best:compact                    # 压缩上下文
+/cc-best:compact-context                    # 压缩上下文
 /cc-best:catchup                    # 恢复上下文
 ```
 

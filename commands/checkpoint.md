@@ -1,5 +1,6 @@
 ---
 description: 检查点管理，保存和恢复进度
+argument-hint: "[save|restore|list] [--archive]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite
 ---
 

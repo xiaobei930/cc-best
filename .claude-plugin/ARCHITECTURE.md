@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.6.1 | Last Updated: 2026-02-09
+> Version: 0.6.2 | Last Updated: 2026-02-09
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -13,8 +13,8 @@
 | **Commands** | 38    | `commands/`           | 用户输入 `/xxx`                    |
 | **Skills**   | 17    | `skills/`             | Agent 预加载 / 自动注入            |
 | **Agents**   | 8     | `agents/`             | Task tool 委派                     |
-| **Rules**    | 30    | `rules/`              | 路径匹配自动注入 (8 目录分层)      |
-| **Hooks**    | 21/14 | `scripts/node/hooks/` | 生命周期自动触发 (21 脚本/14 配置) |
+| **Rules**    | 33    | `rules/`              | 路径匹配自动注入 (8 目录分层)      |
+| **Hooks**    | 18/17 | `scripts/node/hooks/` | 生命周期自动触发 (18 脚本/17 配置) |
 
 ---
 
@@ -60,13 +60,15 @@
                        │ 触发
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Hooks (20 脚本/13 配置)                     │
+│                  Hooks (18 脚本/17 配置)                     │
 │  SessionStart      → session-check                          │
 │  UserPromptSubmit  → user-prompt-submit                     │
 │  PreToolUse        → validate-command, pause-before-push,   │
-│                      check-secrets, protect-files           │
+│                      check-secrets, protect-files,          │
+│                      long-running-warning                   │
 │  PostToolUse       → format-file, auto-archive,             │
-│                      suggest-compact                        │
+│                      observe-patterns, suggest-compact,     │
+│                      check-console-log, typescript-check    │
 │  Stop              → stop-check                             │
 │  SubagentStop      → subagent-stop                          │
 │  PreCompact        → pre-compact                            │
@@ -134,16 +136,16 @@
 
 ## 5. Agents → Skills 预加载关系
 
-| Agent                 | 预加载 Skills                                 | 说明                          |
-| --------------------- | --------------------------------------------- | ----------------------------- |
-| security-reviewer     | `security` `quality`                          | OWASP 安全检查 + 代码质量交叉 |
-| tdd-guide             | `testing` `security`                          | TDD 工作流 + 安全测试         |
-| build-error-resolver  | `debug` `devops` `testing`                    | 构建诊断 + CI/CD + 测试验证   |
-| architect             | `architecture` `exploration` `api` `database` | 架构 + 探索 + API + 数据库    |
-| code-reviewer         | `security` `quality` `architecture` `testing` | 安全 + 质量 + 架构 + 可测试性 |
-| code-simplifier       | `quality` `architecture`                      | 质量 + 架构感知简化           |
-| planner               | `architecture` `exploration`                  | 任务分解 + 代码库探索         |
-| requirement-validator | `architecture`                                | 需求验证时参考架构            |
+| Agent                 | 预加载 Skills                                                          | 说明                                    |
+| --------------------- | ---------------------------------------------------------------------- | --------------------------------------- |
+| security-reviewer     | `security` `quality` `exploration`                                     | OWASP 安全检查 + 代码质量 + 探索        |
+| tdd-guide             | `testing` `security`                                                   | TDD 工作流 + 安全测试                   |
+| build-error-resolver  | `debug` `devops` `testing` `exploration`                               | 构建诊断 + CI/CD + 测试 + 探索          |
+| architect             | `architecture` `exploration` `api` `database`                          | 架构 + 探索 + API + 数据库              |
+| code-reviewer         | `security` `quality` `architecture` `testing` `exploration` `learning` | 安全 + 质量 + 架构 + 测试 + 探索 + 学习 |
+| code-simplifier       | `quality` `architecture`                                               | 质量 + 架构感知简化                     |
+| planner               | `architecture` `exploration`                                           | 任务分解 + 代码库探索                   |
+| requirement-validator | `architecture`                                                         | 需求验证时参考架构                      |
 
 ### 调用链可视化 | Call Chain Visualization
 
@@ -163,13 +165,13 @@ Commands (角色)              Agents                      Skills
        ↓
 /cc-best:dev ─────────────► tdd-guide ─────────────────► testing, security
                          ├► code-simplifier ───────────► quality, architecture
-                         └► code-reviewer ─────────────► security, quality, architecture, testing
+                         └► code-reviewer ─────────────► security, quality, architecture, testing, exploration, learning
        ↓
-/cc-best:qa ──────────────► code-reviewer ─────────────► security, quality, architecture, testing
+/cc-best:qa ──────────────► code-reviewer ─────────────► security, quality, architecture, testing, exploration, learning
        ↓
-/cc-best:verify ──────────► security-reviewer ─────────► security, quality
+/cc-best:verify ──────────► security-reviewer ─────────► security, quality, exploration
        ↓
-/cc-best:build|fix ───────► build-error-resolver ──────► debug, devops, testing
+/cc-best:build|fix ───────► build-error-resolver ──────► debug, devops, testing, exploration
        ↓
 /cc-best:fix-issue ───────► tdd-guide + build-error-resolver ► exploration, testing
 ```
@@ -213,30 +215,37 @@ Skills (17)
 ```
 Session 生命周期:
 ┌─ SessionStart
-│  └─ session-check.js   (验证项目状态)
-│  └─ session-start.js   (初始化上下文)
+│  └─ session-check.js       [验证项目状态]
+│
+├─ UserPromptSubmit
+│  └─ user-prompt-submit.js  [注入项目上下文]
 │
 ├─ PreToolUse
-│  ├─ validate-command.js     (Bash)     [验证命令安全]
-│  ├─ pause-before-push.js    (Bash)     [推送前确认]
-│  ├─ long-running-warning.js (Bash)     [长运行预警]
+│  ├─ validate-command.js     (Bash)       [验证命令安全]
+│  ├─ pause-before-push.js    (Bash)       [推送前确认+force阻止]
+│  ├─ check-secrets.js        (Bash)       [密钥泄露检测 30+提供商]
 │  ├─ protect-files.js        (Write|Edit) [保护重要文件]
-│  ├─ block-random-md.js      (Write)    [阻止随机文件]
-│  └─ suggest-compact.sh      (Edit|Write) [建议压缩]
+│  └─ long-running-warning.js (Bash)       [长运行预警]
 │
 ├─ PostToolUse
-│  ├─ format-file.js      (Write|Edit) [代码格式化]
-│  ├─ check-console-log.js (Edit)      [检查日志+生产分支保护]
-│  ├─ check-secrets.js    (Bash)       [密钥泄露检测 30+提供商]
-│  ├─ typescript-check.js  (Edit|Write) [TS 类型检查]
-│  └─ auto-archive.js      (Write|Edit) [自动存档]
+│  ├─ format-file.js       (Write|Edit)      [代码格式化]
+│  ├─ auto-archive.js      (Write|Edit)      [自动存档]
+│  ├─ observe-patterns.js  (Write|Edit|Bash) [模式观察]
+│  ├─ suggest-compact.js   (.*)              [建议压缩]
+│  ├─ check-console-log.js (Write|Edit)      [检查调试日志]
+│  └─ typescript-check.js  (Write|Edit)      [TS 类型检查]
+│
+├─ Stop
+│  └─ stop-check.js          [遗漏任务检查]
+│
+├─ SubagentStop
+│  └─ subagent-stop.js       [子代理状态记录]
 │
 ├─ PreCompact
-│  └─ pre-compact.js      [压缩前状态保存]
+│  └─ pre-compact.js         [压缩前状态保存]
 │
 └─ SessionEnd
-   ├─ session-end.js       [会话结束处理]
-   └─ evaluate-session.sh  [学习提取]
+   └─ evaluate-session.js    [学习提取]
 ```
 
 ---
@@ -270,7 +279,7 @@ hooks/
 | `CLAUDE.md`                       | 头部 Version |
 | `CHANGELOG.md`                    | 最新条目     |
 
-当前版本: **0.5.9**
+当前版本: **0.6.2**
 
 ---
 
@@ -422,8 +431,8 @@ tools: Read, Grep, Glob
 | Commands             | 38                                                              |
 | Skills               | 17                                                              |
 | Agents               | 8                                                               |
-| Rules                | 30 (8 目录: common/python/frontend/java/csharp/cpp/embedded/ui) |
-| Hooks Scripts        | 21 脚本 / 14 已配置                                             |
+| Rules                | 33 (8 目录: common/python/frontend/java/csharp/cpp/embedded/ui) |
+| Hooks Scripts        | 18 脚本 / 17 已配置                                             |
 | Language Support     | 6 (Python, TS, Java, Go, C#, Rust)                              |
 | Framework Support    | 8 (React, Vue, Angular, Svelte, FastAPI...)                     |
 | Database Support     | 4 (MySQL, PostgreSQL, Oracle, SQLite)                           |
@@ -470,9 +479,9 @@ tools: Read, Grep, Glob
 
 **当前策略: 质量优先**
 
-| 模型   | 使用场景                   | 当前 Agents                                                                                  |
-| ------ | -------------------------- | -------------------------------------------------------------------------------------------- |
-| opus   | 需要深度理解和创造性的任务 | architect, planner, code-reviewer, code-simplifier, security-reviewer, requirement-validator |
-| sonnet | 执行性任务和快速响应       | tdd-guide, build-error-resolver                                                              |
+| 模型   | 使用场景                   | 当前 Agents                                                           |
+| ------ | -------------------------- | --------------------------------------------------------------------- |
+| opus   | 需要深度理解和创造性的任务 | architect, planner, code-reviewer, code-simplifier, security-reviewer |
+| sonnet | 执行性任务和快速响应       | tdd-guide, build-error-resolver, requirement-validator                |
 
 > 模型策略配置（质量/速度/均衡）计划在 v0.6.x 版本实现

@@ -1,12 +1,24 @@
 ---
 name: tdd-guide
-description: "Guides test-driven development, helps write test cases, and ensures code quality. Use PROACTIVELY when writing new features, fixing bugs, or refactoring code. Ensures 80%+ test coverage with write-tests-first methodology."
+description: |
+  Guides test-driven development, helps write test cases, and ensures code quality. Use PROACTIVELY when writing new features, fixing bugs, or refactoring code. Ensures 80%+ test coverage with write-tests-first methodology.
+  <example>
+  user: "用 TDD 方式实现购物车功能"
+  assistant: (invokes tdd-guide agent to write failing tests first, then implement code)
+  </example>
 model: sonnet
-tools: Read, Write, Edit, Grep, Glob, Bash
+maxTurns: 25
+tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 skills:
   - testing
   - security
-color: green
+color: magenta
 ---
 
 # TDD Guide Agent

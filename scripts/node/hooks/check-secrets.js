@@ -414,7 +414,7 @@ async function main() {
     log("");
 
     // 不阻止提交，只是警告
-    // 如果需要阻止，改为 process.exit(1)
+    // 如果需要阻止，改为 process.exit(2)
   }
 
   process.exit(0);

@@ -3,7 +3,7 @@ description: 上下文压缩，减少 token 消耗
 allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite
 ---
 
-# /compact - 上下文压缩
+# /compact-context - 上下文压缩
 
 智能压缩当前对话上下文，保留关键信息，释放 token 空间。
 
@@ -82,17 +82,17 @@ allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite
 
 ## 与官方命令的区别
 
-| 命令             | 来源   | 行为                   | 适用场景             |
-| ---------------- | ------ | ---------------------- | -------------------- |
-| `/clear`         | 官方   | 完全清除上下文         | 任务完成，开始新任务 |
-| 官方 `/cc-best:compact`  | 官方   | 自动压缩（**有 bug**） | 不推荐使用           |
-| 本插件 `compact` | 本插件 | 保存状态 + 生成摘要    | 压缩前的准备工作     |
-| 本插件 `catchup` | 本插件 | 恢复上下文             | `/clear` 后恢复      |
+| 命令                     | 来源   | 行为                   | 适用场景             |
+| ------------------------ | ------ | ---------------------- | -------------------- |
+| `/clear`                 | 官方   | 完全清除上下文         | 任务完成，开始新任务 |
+| 官方 `/compact`          | 官方   | 自动压缩（**有 bug**） | 不推荐使用           |
+| 本插件 `compact-context` | 本插件 | 保存状态 + 生成摘要    | 压缩前的准备工作     |
+| 本插件 `catchup`         | 本插件 | 恢复上下文             | `/clear` 后恢复      |
 
 > **命令格式说明**：根据安装方式不同，命令格式也不同：
 >
-> - 通过 `/plugin install` 安装：使用 `/cc-best:compact`、`/cc-best:catchup`
-> - 直接 clone 到 `.claude/`：使用 `/cc-best:compact`、`/cc-best:catchup`
+> - 通过 `/plugin install` 安装：使用 `/cc-best:compact-context`、`/cc-best:catchup`
+> - 直接 clone 到 `.claude/`：使用 `/cc-best:compact-context`、`/cc-best:catchup`
 
 ## 输出格式
 

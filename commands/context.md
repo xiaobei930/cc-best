@@ -1,5 +1,6 @@
 ---
-description: 上下文管理，加载项目信息
+description: 上下文管理，加载项目信息（会话级，另见 /cc-best:memory 管理持久记忆）
+argument-hint: "[load|save|show]"
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---
 

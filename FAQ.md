@@ -166,7 +166,7 @@ Check these locations:
 
 - After completing each task
 - When making important decisions
-- Before context compression (`/cc-best:compact`)
+- Before context compression (`/cc-best:compact-context`)
 - At session end
 
 #### Q: memory-bank files are empty
@@ -392,7 +392,7 @@ git commit -m "Initial commit from Claude Code template"
 
 - 每个任务完成后
 - 做出重要决策时
-- 上下文压缩前（`/cc-best:compact`）
+- 上下文压缩前（`/cc-best:compact-context`）
 - 会话结束时
 
 #### Q: memory-bank 文件是空的

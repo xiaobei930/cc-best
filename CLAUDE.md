@@ -52,8 +52,8 @@
 /cc-best:pm → /cc-best:clarify(if needed) → /cc-best:lead → /cc-best:designer(frontend) → /cc-best:dev → /cc-best:qa → /cc-best:verify → /cc-best:commit → /clear → loop
 ```
 
-**Role Commands 角色命令**: `/cc-best:pm` `/cc-best:clarify` `/cc-best:lead` `/cc-best:designer` `/cc-best:dev` `/cc-best:qa`
-**Tool Commands 工具命令**: `/cc-best:build` `/cc-best:test` `/cc-best:run` `/cc-best:status` `/cc-best:commit` `/cc-best:compact` `/cc-best:checkpoint`
+**Role Commands 角色命令**: `/cc-best:pm` `/cc-best:clarify` `/cc-best:lead` `/cc-best:designer` `/cc-best:dev` `/cc-best:qa` `/cc-best:verify`
+**Tool Commands 工具命令**: `/cc-best:build` `/cc-best:test` `/cc-best:run` `/cc-best:status` `/cc-best:commit` `/cc-best:compact-context` `/cc-best:checkpoint`
 **Mode Commands 模式命令**: `/cc-best:iterate` (autonomous) `/cc-best:pair` (pair programming)
 
 > 📝 Clone users: remove `cc-best:` prefix or run `scripts/node/convert-to-local.js`

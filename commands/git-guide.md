@@ -1,9 +1,9 @@
 ---
-description: Git 提交规范和操作指南
+description: Git 提交规范和操作指南（参考文档，提交请用 /cc-best:commit）
 allowed-tools: Read, Glob, Grep, Bash
 ---
 
-# /git - Git 提交规范
+# /git-guide - Git 提交规范
 
 定义提交时机、频率和规范。
 

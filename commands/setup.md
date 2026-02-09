@@ -1,6 +1,7 @@
 ---
 description: 项目初始化，配置 Claude Code 项目和 Hooks
-allowed-tools: Read, Write, Edit, Bash, Glob
+argument-hint: "[--hooks|--global|--project] [--verify]"
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, TodoWrite
 ---
 
 # /setup - 项目初始化
@@ -106,7 +107,7 @@ fi
 
 ### 3. 清理旧版本 Hooks 配置
 
-> ⚠️ **v0.5.8 升级**: 如果从旧版本升级，全局 settings.json 可能有冗余的 hooks 配置需要清理。
+> ⚠️ **v0.6.2 升级**: 如果从旧版本升级，全局 settings.json 可能有冗余的 hooks 配置需要清理。
 
 **检查并清理**：
 
@@ -134,7 +135,7 @@ if (settings.hooks) {
 
 ### 4. 配置 Hooks（Plugin 模式）
 
-> ℹ️ **v0.5.8+**: Hooks 现在通过插件内置 `hooks/hooks.json` 自动生效，无需手动配置。
+> ℹ️ **v0.6.2+**: Hooks 现在通过插件内置 `hooks/hooks.json` 自动生效，无需手动配置。
 > 如果需要自定义或覆盖，可以使用 `/cc-best:setup --hooks` 手动配置。
 
 **自动生效的 Hooks**：
@@ -166,15 +167,15 @@ const path = require("path");
 
 // 获取插件绝对路径
 const homeDir = os.homedir();
-const pluginVersion = "0.5.8"; // 当前版本
+const pluginVersion = "0.6.2"; // 当前版本
 const pluginPath = path.join(
   homeDir,
   ".claude/plugins/cache/claude-code-best-practices/cc-best",
   pluginVersion,
 );
-// Windows: C:\Users\<user>\.claude\plugins\cache\claude-code-best-practices\cc-best\0.5.8
-// macOS:   /Users/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.5.8
-// Linux:   /home/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.5.8
+// Windows: C:\Users\<user>\.claude\plugins\cache\claude-code-best-practices\cc-best\0.6.2
+// macOS:   /Users/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.6.2
+// Linux:   /home/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.6.2
 ```
 
 **Hooks 配置模板**：

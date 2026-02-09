@@ -5,6 +5,11 @@ paths:
   - "**/*.js"
   - "**/*.jsx"
   - "**/*.vue"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.less"
+  - "**/*.svelte"
+  - "**/*.html"
 ---
 
 # 前端性能优化规范 | Frontend Performance Rules

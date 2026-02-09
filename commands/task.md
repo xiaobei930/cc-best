@@ -1,6 +1,6 @@
 ---
 description: 任务粒度管理，分解和追踪任务
-allowed-tools: Read, Glob, Grep, TodoWrite
+allowed-tools: Read, Glob, Grep, Bash, TodoWrite
 ---
 
 # /task - 任务粒度管理

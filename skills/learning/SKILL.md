@@ -9,6 +9,10 @@ parent: session
 
 本技能用于从开发会话中提取可复用的模式和知识，实现持续学习和改进。
 
+## 子文件
+
+- [extraction-guide.md](extraction-guide.md) - 会话学习方法论（知识分类、置信度系统）
+
 ## 触发条件
 
 - 会话结束时评估
@@ -220,36 +224,15 @@ updated: YYYY-MM-DD
 [使用时需要注意的点]
 ```
 
-## 自动化脚本
+## 自动化集成
 
-### 会话评估脚本
+### 会话评估 Hook
 
-```bash
-#!/bin/bash
-# evaluate-session.sh
-# 在会话结束时评估是否有可提取的模式
+会话评估已通过 Node.js Hook 自动化，无需手动触发：
 
-LEARNED_PATH="${HOME}/.claude/learned"
-MIN_SESSION_LENGTH=${MIN_SESSION_LENGTH:-10}
-
-# 获取会话消息数
-message_count=$(grep -c '"type":"user"' "$CLAUDE_TRANSCRIPT_PATH" 2>/dev/null || echo "0")
-
-# 短会话跳过
-if [ "$message_count" -lt "$MIN_SESSION_LENGTH" ]; then
-  echo "[Learning] 会话过短 ($message_count 消息), 跳过评估" >&2
-  exit 0
-fi
-
-# 提示评估
-echo "[Learning] 会话有 $message_count 消息 - 考虑提取可复用模式" >&2
-echo "[Learning] 检查是否有:" >&2
-echo "[Learning]   - 解决的复杂 Bug" >&2
-echo "[Learning]   - 新的调试技巧" >&2
-echo "[Learning]   - 可复用的代码模式" >&2
-echo "[Learning]   - 项目特定知识" >&2
-echo "[Learning] 保存位置: $LEARNED_PATH" >&2
-```
+- **脚本**: `scripts/node/hooks/evaluate-session.js`（运行 `--help` 查看详情）
+- **触发时机**: Stop 事件（会话结束时）
+- **功能**: 自动评估会话长度，提示提取可复用模式
 
 ### 配置文件
 

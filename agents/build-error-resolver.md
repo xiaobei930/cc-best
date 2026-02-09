@@ -1,8 +1,20 @@
 ---
 name: build-error-resolver
-description: "Analyzes build/compile errors and provides minimal targeted fixes. Use PROACTIVELY when build fails, type errors occur, or compilation issues arise. Integrates with /cc-best:verify and /cc-best:fix commands."
-model: haiku
-tools: Read, Edit, Grep, Glob, Bash
+description: |
+  Analyzes build/compile errors and provides minimal targeted fixes. Use PROACTIVELY when build fails, type errors occur, or compilation issues arise. Integrates with /cc-best:verify and /cc-best:fix commands.
+  <example>
+  user: "构建失败了，有 TypeScript 类型错误"
+  assistant: (invokes build-error-resolver agent to diagnose and fix the type errors)
+  </example>
+model: sonnet
+maxTurns: 15
+tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 skills:
   - debug
   - devops

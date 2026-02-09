@@ -1,6 +1,7 @@
 ---
-description: 启动开发服务或应用
-allowed-tools: Read, Glob, Bash
+description: 启动开发服务或应用（快捷启动，完整管理见 /cc-best:service）
+argument-hint: "[api|frontend|all]"
+allowed-tools: Read, Glob, Grep, Bash
 ---
 
 # /run - 启动服务

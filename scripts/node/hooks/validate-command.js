@@ -55,12 +55,13 @@ const DANGEROUS_PATTERNS = [
   { pattern: /del\s+\/s\s+\/q\s+[A-Z]:\\/, desc: "Windows 危险删除" },
   { pattern: /rmdir\s+\/s\s+\/q\s+[A-Z]:\\/, desc: "Windows 危险删除" },
   { pattern: /format\s+[A-Z]:/, desc: "Windows 格式化" },
+  { pattern: /git\s+reset\s+--hard/, desc: "hard reset（CLAUDE.md 禁止操作）" },
 ];
 
 // 需要警告的敏感操作
 const SENSITIVE_PATTERNS = [
   { pattern: /git\s+push.*--force/, desc: "force push" },
-  { pattern: /git\s+reset\s+--hard/, desc: "hard reset" },
+  { pattern: /git\s+commit\s+.*--amend/, desc: "commit amend（已推送时禁止）" },
   { pattern: /drop\s+database/i, desc: "drop database" },
   { pattern: /truncate\s+table/i, desc: "truncate table" },
 ];

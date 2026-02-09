@@ -1,8 +1,4 @@
 ---
-paths:
-  - "**/.git/**"
-  - "**/COMMIT_EDITMSG"
-alwaysApply: true
 ---
 
 # Git 工作流规则

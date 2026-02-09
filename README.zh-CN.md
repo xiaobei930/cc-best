@@ -166,7 +166,7 @@ your-project/
 ├── commands/          # 38 个命令
 ├── skills/            # 17 个技能
 ├── agents/            # 8 个智能体
-├── rules/             # 30 条编码规范 (8 目录分层)
+├── rules/             # 33 条编码规范 (8 目录分层)
 ├── hooks/             # 安全钩子
 ├── scripts/           # 自动化脚本 (node/python/shell)
 ├── memory-bank/       # 进度 & 架构文档
@@ -181,7 +181,7 @@ your-project/
 | `commands/`    | 角色命令 (`pm`, `lead`, `dev`, `qa`)，模式命令 (`iterate`, `pair`)，工具命令 (`build`, `test`, `commit`)                                      |
 | `skills/`      | 后端、前端、测试、安全、DevOps、架构、Git                                                                                                     |
 | `agents/`      | `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide` |
-| `rules/`       | 30 条规则，8 目录: `common/` + `python/`, `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                         |
+| `rules/`       | 33 条规则，8 目录: `common/` + `python/`, `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                         |
 | `scripts/`     | Node.js 跨平台钩子（默认），Python/Bash 备选                                                                                                  |
 | `memory-bank/` | `progress.md`（滚动窗口），`architecture.md`，`tech-stack.md`                                                                                 |
 
@@ -227,8 +227,8 @@ flowchart LR
 | **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | 开发工作流角色            |
 | **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | 自主/结对模式             |
 | **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | 构建测试自动化            |
-| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | 版本控制                  |
-| **上下文** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | 会话管理                  |
+| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                          | 版本控制                  |
+| **上下文** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | 会话管理                  |
 | **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | 代码质量&知识             |
 | **运维**   | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue修复、发版、服务管理 |
 | **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | 配置诊断                  |

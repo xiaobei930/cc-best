@@ -1,6 +1,7 @@
 ---
 description: "切换工作模式以适应不同场景（dev/research/review/planning）"
-allowed-tools: Read, Glob, Grep
+argument-hint: "[dev|research|review|planning]"
+allowed-tools: Read, Write, Edit, Glob, Grep
 ---
 
 # /mode - 工作模式切换

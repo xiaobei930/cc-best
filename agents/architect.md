@@ -1,8 +1,20 @@
 ---
 name: architect
-description: "System architecture specialist for design decisions, ADR creation, and scalability assessment. Use PROACTIVELY when designing new systems, making architectural decisions, or evaluating technical approaches."
+description: |
+  System architecture specialist for design decisions, ADR creation, and scalability assessment. Use PROACTIVELY when designing new systems, making architectural decisions, or evaluating technical approaches.
+  <example>
+  user: "我们需要设计一个支持高并发的订单系统"
+  assistant: (invokes architect agent to analyze requirements and design system architecture)
+  </example>
 model: opus
-tools: Read, Write, Edit, Grep, Glob
+maxTurns: 20
+tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 skills:
   - architecture
   - exploration

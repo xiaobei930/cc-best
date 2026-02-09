@@ -41,6 +41,15 @@ async function main() {
     log("[GitPush] 检测到 git push 命令，确认推送...");
   }
 
+  // 阻止 force push（CLAUDE.md 禁止操作）
+  if (
+    /git\s+push\s+.*--force/i.test(command) ||
+    /git\s+push\s+-f\b/i.test(command)
+  ) {
+    log("[GitPush] ❌ 阻止: git push --force 是禁止操作");
+    process.exit(2);
+  }
+
   // 检查是否有未暂存的更改
   const diffResult = runCommand("git diff --quiet");
   if (!diffResult.success) {

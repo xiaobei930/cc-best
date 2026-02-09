@@ -91,7 +91,6 @@ function main() {
   if (context.length > 0) {
     output({
       hookSpecificOutput: {
-        hookEventName: "UserPromptSubmit",
         additionalContext: context.join("\n"),
       },
     });
@@ -102,4 +101,9 @@ function main() {
   process.exit(0);
 }
 
-main();
+try {
+  main();
+} catch {
+  // Hook 应静默失败，不阻止用户操作
+  process.exit(0);
+}

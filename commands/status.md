@@ -1,5 +1,6 @@
 ---
 description: 项目状态与诊断信息
+argument-hint: "[--full|--conflicts]"
 allowed-tools: Read, Glob, Grep, Bash
 ---
 
@@ -50,11 +51,11 @@ allowed-tools: Read, Glob, Grep, Bash
 ```
 📊 CC-Best 组件统计
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Commands:  33 个 (commands/*.md)
+Commands:  38 个 (commands/*.md)
 Skills:    17 个 (skills/*/SKILL.md)
-Agents:     6 个 (agents/*.md)
-Hooks:     27 个 (scripts/node/hooks/*.js)
-Rules:     13 个 (rules/*.md)
+Agents:     8 个 (agents/*.md)
+Hooks:     24 个 (scripts/node/hooks/*.js)
+Rules:     33 个 (rules/**/*.md)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

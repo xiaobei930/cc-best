@@ -2,8 +2,6 @@
 name: exploration
 description: "Code exploration strategies for understanding unfamiliar codebases. Use when exploring unknown code, debugging, or analyzing architecture."
 allowed-tools: Read, Grep, Glob, Task
-context: fork
-agent: Explore
 ---
 
 # 代码库探索
@@ -129,13 +127,13 @@ agent: Explore
 
 ## 与角色系统配合
 
-| 角色     | 探索场景           | 推荐策略            |
-| -------- | ------------------ | ------------------- |
+| 角色             | 探索场景           | 推荐策略            |
+| ---------------- | ------------------ | ------------------- |
 | `/cc-best:pm`    | 理解现有功能       | isolated-research   |
 | `/cc-best:lead`  | 架构分析、技术设计 | iterative-retrieval |
 | `/cc-best:dev`   | 实现前了解相关代码 | isolated-research   |
 | `/cc-best:qa`    | 理解测试范围       | isolated-research   |
-| `/debug` | 追踪 Bug 根因      | iterative-retrieval |
+| `/cc-best:debug` | 追踪 Bug 根因      | iterative-retrieval |
 
 ---
 

@@ -1,5 +1,6 @@
 ---
 description: 快速恢复上下文，了解项目当前状态
+argument-hint: "[session-id]"
 allowed-tools: Read, Glob, Grep, Bash
 ---
 
@@ -87,8 +88,8 @@ allowed-tools: Read, Glob, Grep, Bash
 
 ## 使用场景
 
-| 场景         | 命令组合                           |
-| ------------ | ---------------------------------- |
+| 场景         | 命令组合                                   |
+| ------------ | ------------------------------------------ |
 | 新会话开始   | `/cc-best:catchup` → 了解状态 → 继续工作   |
 | 切换任务后   | `/clear` → `/cc-best:catchup` → 开始新任务 |
 | 长时间中断后 | `/cc-best:catchup` → 回顾进度 → 继续       |
@@ -196,7 +197,7 @@ allowed-tools: Read, Glob, Grep, Bash
 
 ### Q: progress.md 不存在怎么办？
 
-A: 提示用户执行 `/cc-best:setup` 或 `/init` 初始化项目。
+A: 提示用户执行 `/cc-best:setup` 初始化项目。
 
 ### Q: Git 仓库不存在怎么办？
 

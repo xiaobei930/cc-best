@@ -1,8 +1,17 @@
 ---
 name: security-reviewer
-description: "Checks code for security vulnerabilities including OWASP Top 10, secret leaks, and injection attacks. Use PROACTIVELY before commits when working with authentication, user input, secrets, or API endpoints. Critical for security-sensitive changes."
+description: |
+  Checks code for security vulnerabilities including OWASP Top 10, secret leaks, and injection attacks. Use PROACTIVELY before commits when working with authentication, user input, secrets, or API endpoints. Critical for security-sensitive changes.
+  <example>
+  user: "检查登录模块的安全性"
+  assistant: (invokes security-reviewer agent to scan for OWASP vulnerabilities and secret leaks)
+  </example>
 model: opus
-tools: Read, Grep, Glob
+maxTurns: 15
+tools:
+  - Read
+  - Grep
+  - Glob
 skills:
   - security
   - quality

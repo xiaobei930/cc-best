@@ -166,7 +166,7 @@ your-project/
 ├── commands/          # 38 slash commands
 ├── skills/            # 17 development skills
 ├── agents/            # 8 specialized agents
-├── rules/             # 30 coding standards (8 dirs)
+├── rules/             # 33 coding standards (8 dirs)
 ├── hooks/             # Safety hooks
 ├── scripts/           # Automation (node/python/shell)
 ├── memory-bank/       # Progress & architecture docs
@@ -181,7 +181,7 @@ your-project/
 | `commands/`    | Role commands (`pm`, `lead`, `dev`, `qa`), Mode commands (`iterate`, `pair`), Tool commands (`build`, `test`, `commit`)                       |
 | `skills/`      | Backend, Frontend, Testing, Security, DevOps, Architecture, Git                                                                               |
 | `agents/`      | `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide` |
-| `rules/`       | 30 rules in 8 dirs: `common/` + `python/`, `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                        |
+| `rules/`       | 33 rules in 8 dirs: `common/` + `python/`, `frontend/`, `java/`, `csharp/`, `cpp/`, `embedded/`, `ui/`                                        |
 | `scripts/`     | Cross-platform hooks in Node.js (default), with Python/Bash alternatives                                                                      |
 | `memory-bank/` | `progress.md` (rolling window), `architecture.md`, `tech-stack.md`                                                                            |
 
@@ -227,8 +227,8 @@ flowchart LR
 | **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | Development workflow roles                |
 | **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | Autonomous/cc-best:pair programming modes |
 | **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | Build and test automation                 |
-| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git`                                                                          | Version control                           |
-| **Context** | `/cc-best:compact`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | Session management                        |
+| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                          | Version control                           |
+| **Context** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | Session management                        |
 | **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | Code quality & knowledge                  |
 | **Ops**     | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue fix, release, service management    |
 | **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | Configuration                             |

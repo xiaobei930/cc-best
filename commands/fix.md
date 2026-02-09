@@ -1,5 +1,5 @@
 ---
-description: 快速修复构建/类型/编译错误，最小化 diff
+description: 快速修复构建/类型/编译错误，最小化 diff（构建检查见 /cc-best:build）
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep, TodoWrite, Task
 ---
 

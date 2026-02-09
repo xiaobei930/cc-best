@@ -122,11 +122,10 @@ function main() {
   // 参考：https://github.com/anthropics/claude-code/issues/12671
   if (allIssues.length > 0) {
     const context =
-      "[Session Check]\\n" + allIssues.map((i) => `- ${i}`).join("\\n");
+      "[Session Check]\n" + allIssues.map((i) => `- ${i}`).join("\n");
     console.log(
       JSON.stringify({
         hookSpecificOutput: {
-          hookEventName: "SessionStart",
           additionalContext: context,
         },
       }),

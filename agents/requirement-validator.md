@@ -1,8 +1,17 @@
 ---
 name: requirement-validator
-description: "Performs 'unit tests for requirements': validates completeness, clarity, and consistency of requirement documents. Use after /cc-best:pm completes REQ document or when validating requirement quality before design phase."
-model: opus
-tools: Read, Grep, Glob
+description: |
+  Performs 'unit tests for requirements': validates completeness, clarity, and consistency of requirement documents. Use after /cc-best:pm completes REQ document or when validating requirement quality before design phase.
+  <example>
+  user: "验证需求文档的完整性和一致性"
+  assistant: (invokes requirement-validator agent to check requirement quality)
+  </example>
+model: sonnet
+maxTurns: 10
+tools:
+  - Read
+  - Grep
+  - Glob
 skills:
   - architecture
 color: magenta

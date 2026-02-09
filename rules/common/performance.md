@@ -1,8 +1,4 @@
 ---
-paths:
-  - "**/*"
-description: 模型选择和上下文管理的性能优化策略
-alwaysApply: true
 ---
 
 # 性能优化策略

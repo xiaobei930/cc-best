@@ -43,7 +43,10 @@ async function main() {
   log(`[TSCheck] 检查 TypeScript 类型: ${path.basename(filePath)}`);
 
   // 使用 tsc --noEmit 进行类型检查
-  const result = runCommand(`npx tsc --noEmit --skipLibCheck "${filePath}"`);
+  const npxCmd = process.platform === "win32" ? "npx.cmd" : "npx";
+  const result = runCommand(
+    `${npxCmd} tsc --noEmit --skipLibCheck "${filePath}"`,
+  );
 
   if (!result.success) {
     log("[TSCheck] 类型错误:");

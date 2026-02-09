@@ -53,13 +53,7 @@ function checkAndWarn(progressFile) {
       log(`[Auto-Archive] 建议运行 /checkpoint --archive 进行归档`);
       log(`[Auto-Archive] 或手动将历史记录移至 memory-bank/archive/\n`);
 
-      // 输出到 stdout，返回给 Claude
-      console.log(
-        JSON.stringify({
-          warning: `progress.md 超过 ${MAX_LINES} 行 (当前 ${lineCount} 行)，建议归档`,
-          suggestion: "运行 /checkpoint --archive 或手动归档历史记录",
-        }),
-      );
+      // stderr 已通过 log() 输出警告给用户
     }
   } catch (err) {
     // 读取失败时静默退出，不影响主流程

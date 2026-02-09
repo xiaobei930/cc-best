@@ -1,8 +1,4 @@
 ---
-paths:
-  - "**/*"
-description: 通用编码标准，适用于所有语言和项目
-alwaysApply: true
 ---
 
 # 通用编码标准

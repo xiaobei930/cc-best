@@ -1,7 +1,7 @@
 ---
 description: 配置项目首选包管理器 (npm/pnpm/yarn/bun)
+argument-hint: "[--detect|--project pm|--global pm|--list]"
 allowed-tools: Read, Bash
-disable-model-invocation: true
 ---
 
 # /setup-pm - 包管理器配置

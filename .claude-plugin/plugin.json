@@ -1,7 +1,7 @@
 {
   "name": "cc-best",
-  "version": "0.6.1",
-  "description": "Production-ready Claude Code configuration with role-based workflows (PM→Lead→Designer→Dev→QA), safety hooks, 38 commands, 17 skills, 8 agents, 30 rules, auto-learning pipeline, and multi-language coding standards",
+  "version": "0.6.2",
+  "description": "Production-ready Claude Code configuration with role-based workflows (PM→Lead→Designer→Dev→QA), safety hooks, 38 commands, 17 skills, 8 agents, 33 rules, auto-learning pipeline, and multi-language coding standards",
   "author": {
     "name": "xiaobei930",
     "url": "https://github.com/xiaobei930"
@@ -32,14 +32,6 @@
   ],
   "commands": ["./commands/"],
   "skills": ["./skills/"],
-  "agents": [
-    "./agents/architect.md",
-    "./agents/build-error-resolver.md",
-    "./agents/code-reviewer.md",
-    "./agents/code-simplifier.md",
-    "./agents/planner.md",
-    "./agents/requirement-validator.md",
-    "./agents/security-reviewer.md",
-    "./agents/tdd-guide.md"
-  ]
+  "agents": ["./agents/"],
+  "hooks": "./hooks/hooks.json"
 }

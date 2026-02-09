@@ -16,6 +16,7 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 - [e2e.md](e2e.md) - Playwright E2E 测试指南
 - [tdd-example.md](tdd-example.md) - 完整 TDD 会话示例
 - [frameworks.md](frameworks.md) - 测试框架配置与 Mock 模式
+- [qa-methodology.md](qa-methodology.md) - QA 角色方法论与验证流程
 
 ## 测试金字塔
 

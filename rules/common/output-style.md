@@ -1,8 +1,4 @@
 ---
-paths:
-  - "**/*"
-description: 命令和 Agent 输出的统一规范
-alwaysApply: true
 ---
 
 # 输出风格规范

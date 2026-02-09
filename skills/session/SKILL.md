@@ -14,7 +14,7 @@ allowed-tools: Read, Grep, Glob
 会话开始 ──→ 工作阶段 ──→ 检查点 ──→ 会话结束
     │           │           │           │
     │           │           │           └─→ 提取模式 (/learning)
-    │           │           └─→ 上下文压缩 (/cc-best:compact)
+    │           │           └─→ 上下文压缩 (/cc-best:compact-context)
     │           └─→ 持续工作
     └─→ 加载上次上下文
 ```
@@ -23,8 +23,8 @@ allowed-tools: Read, Grep, Glob
 
 | 场景             | 推荐策略       | 子技能      |
 | ---------------- | -------------- | ----------- |
-| 上下文接近限制   | 策略性压缩     | `/cc-best:compact`  |
-| 完成重要任务节点 | 主动压缩       | `/cc-best:compact`  |
+| 上下文接近限制   | 策略性压缩     | `/cc-best:compact-context`  |
+| 完成重要任务节点 | 主动压缩       | `/cc-best:compact-context`  |
 | 会话结束时       | 提取可复用模式 | `/learning` |
 | 解决了复杂问题   | 记录解决方案   | `/learning` |
 | 发现项目特定知识 | 记录到知识库   | `/learning` |
@@ -51,7 +51,7 @@ allowed-tools: Read, Grep, Glob
 - 切换工作主题前
 - 需要释放上下文空间
 
-**使用方式**：`/cc-best:compact` 或参阅 `skills/compact/SKILL.md`
+**使用方式**：`/cc-best:compact-context` 或参阅 `skills/compact/SKILL.md`
 
 ## 最佳实践
 

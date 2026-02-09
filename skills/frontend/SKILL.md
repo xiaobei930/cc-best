@@ -424,6 +424,7 @@ API 请求 → Query Library（TanStack Query）
 
 - **性能优化**: [performance.md](./performance.md) - Core Web Vitals (LCP/INP/CLS)
 - **Tailwind CSS**: [tailwind.md](./tailwind.md) - Tailwind 最佳实践 + v4 迁移指南
+- **设计指南**: [design-guide.md](./design-guide.md) - Designer 角色设计方法论与审查清单
 
 ---
 

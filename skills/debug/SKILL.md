@@ -35,40 +35,16 @@ parent: quality
 
 ## 问题描述模板
 
-```markdown
-## 问题描述
+记录时包含以下要素:
 
-[简要描述问题现象]
-
-## 预期行为
-
-[期望的正确行为]
-
-## 实际行为
-
-[实际观察到的行为]
-
-## 复现步骤
-
-1. [步骤1]
-2. [步骤2]
-3. [步骤3]
-
-## 环境信息
-
-- OS: [操作系统]
-- Node/Python 版本: [版本]
-- 相关依赖版本: [版本]
-
-## 错误信息
-
-[完整的错误堆栈或日志]
-
-## 已尝试的方案
-
-- [ ] 方案1 - 结果
-- [ ] 方案2 - 结果
-```
+| 要素         | 内容                     |
+| ------------ | ------------------------ |
+| 问题描述     | 简要描述问题现象         |
+| 预期 vs 实际 | 期望行为与实际行为的差异 |
+| 复现步骤     | 可稳定复现的最小步骤     |
+| 环境信息     | OS、语言版本、依赖版本   |
+| 错误信息     | 完整的错误堆栈或日志     |
+| 已尝试方案   | 每个方案及其结果         |
 
 ## 日志调试
 
@@ -123,293 +99,39 @@ logger.error(f"[create_user] 创建失败: error={str(e)}", exc_info=True)
 
 ## 断点调试
 
-### VS Code 调试配置
+### VS Code 调试配置 (`.vscode/launch.json`)
 
-```json
-// .vscode/launch.json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug Node.js",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/src/index.ts",
-      "preLaunchTask": "tsc: build",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
-    },
-    {
-      "name": "Debug Python",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Debug Jest Tests",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand", "${file}"]
-    }
-  ]
-}
-```
+| 场景      | type     | 关键配置                                   |
+| --------- | -------- | ------------------------------------------ |
+| Node.js   | `node`   | `program`, `preLaunchTask`, `outFiles`     |
+| Python    | `python` | `program: "${file}"`, `integratedTerminal` |
+| Jest 测试 | `node`   | `program: jest`, `args: ["--runInBand"]`   |
 
 ### 条件断点
 
-```typescript
-// 在循环中只在特定条件暂停
-for (const item of items) {
-  // 条件断点: item.id === 'target-id'
-  processItem(item);
-}
-```
+在循环中设置条件表达式 (如 `item.id === 'target-id'`)，仅在满足条件时暂停。
 
-## 网络调试
+## 网络与数据库调试
 
-### 请求/响应日志
+> 详见 [network-debug.md](network-debug.md)
 
-```typescript
-// Axios 拦截器
-axios.interceptors.request.use((config) => {
-  console.log("[HTTP Request]", {
-    method: config.method,
-    url: config.url,
-    data: config.data,
-  });
-  return config;
-});
-
-axios.interceptors.response.use(
-  (response) => {
-    console.log("[HTTP Response]", {
-      status: response.status,
-      url: response.config.url,
-      data: response.data,
-    });
-    return response;
-  },
-  (error) => {
-    console.error("[HTTP Error]", {
-      status: error.response?.status,
-      url: error.config?.url,
-      message: error.message,
-    });
-    throw error;
-  },
-);
-```
-
-### cURL 调试
-
-```bash
-# 详细输出
-curl -v https://api.example.com/users
-
-# 只显示响应头
-curl -I https://api.example.com/users
-
-# 带认证
-curl -H "Authorization: Bearer TOKEN" https://api.example.com/users
-
-# POST JSON
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"name": "test"}' \
-  https://api.example.com/users
-```
-
-## 数据库调试
-
-### 查询日志
-
-```typescript
-// Prisma 查询日志
-const prisma = new PrismaClient({
-  log: [
-    { emit: "event", level: "query" },
-    { emit: "stdout", level: "info" },
-    { emit: "stdout", level: "warn" },
-    { emit: "stdout", level: "error" },
-  ],
-});
-
-prisma.$on("query", (e) => {
-  console.log("Query:", e.query);
-  console.log("Params:", e.params);
-  console.log("Duration:", e.duration, "ms");
-});
-```
-
-```python
-# SQLAlchemy 查询日志
-import logging
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-```
-
-### 慢查询分析
-
-```sql
--- PostgreSQL 查询计划
-EXPLAIN ANALYZE
-SELECT * FROM orders WHERE user_id = '123';
-
--- MySQL 慢查询
-SHOW FULL PROCESSLIST;
-SHOW STATUS LIKE 'Slow_queries';
-```
+- **网络调试**: Axios 拦截器日志、cURL 调试技巧
+- **数据库调试**: Prisma/SQLAlchemy 查询日志、慢查询分析 (EXPLAIN ANALYZE)
 
 ## 性能调试
 
-### 时间测量
+> 详见 [performance-debug.md](performance-debug.md)
 
-```typescript
-// 简单计时
-const start = performance.now();
-await someOperation();
-console.log(`耗时: ${performance.now() - start}ms`);
+- **时间测量**: `performance.now()` / `console.time` / Python `timeit` 装饰器
+- **内存分析**: Node.js `process.memoryUsage()` / Python `tracemalloc`
 
-// 使用 console.time
-console.time("operation");
-await someOperation();
-console.timeEnd("operation");
-```
+## 前端调试与常见问题
 
-```python
-import time
-from functools import wraps
+> 详见 [frontend-debug.md](frontend-debug.md)
 
-def timeit(func):
-    @wraps(func)
-    async def wrapper(*args, **kwargs):
-        start = time.perf_counter()
-        result = await func(*args, **kwargs)
-        duration = (time.perf_counter() - start) * 1000
-        print(f"{func.__name__} 耗时: {duration:.2f}ms")
-        return result
-    return wrapper
-
-@timeit
-async def slow_operation():
-    pass
-```
-
-### 内存分析
-
-```typescript
-// Node.js 内存使用
-const used = process.memoryUsage();
-console.log({
-  heapUsed: `${Math.round(used.heapUsed / 1024 / 1024)}MB`,
-  heapTotal: `${Math.round(used.heapTotal / 1024 / 1024)}MB`,
-  rss: `${Math.round(used.rss / 1024 / 1024)}MB`,
-});
-```
-
-```python
-import tracemalloc
-
-tracemalloc.start()
-# 执行代码
-snapshot = tracemalloc.take_snapshot()
-top_stats = snapshot.statistics('lineno')
-for stat in top_stats[:10]:
-    print(stat)
-```
-
-## 前端调试
-
-### Console 方法
-
-```typescript
-// 分组输出
-console.group("用户数据");
-console.log("ID:", user.id);
-console.log("Name:", user.name);
-console.groupEnd();
-
-// 表格输出
-console.table(users);
-
-// 条件断言
-console.assert(user.age > 0, "年龄必须大于0");
-
-// 堆栈跟踪
-console.trace("调用堆栈");
-
-// 计数
-console.count("render"); // render: 1, render: 2, ...
-```
-
-### React DevTools
-
-```typescript
-// 添加 displayName
-const MyComponent = () => { ... }
-MyComponent.displayName = 'MyComponent'
-
-// 使用 useDebugValue
-function useCustomHook() {
-  const [value, setValue] = useState(null)
-  useDebugValue(value ? 'Has Value' : 'Empty')
-  return [value, setValue]
-}
-```
-
-## 常见问题排查
-
-### 异步问题
-
-```typescript
-// ❌ 忘记 await
-async function fetchData() {
-  const data = fetch("/api/data"); // 缺少 await
-  return data.json(); // data 是 Promise，不是 Response
-}
-
-// ✅ 正确
-async function fetchData() {
-  const response = await fetch("/api/data");
-  return await response.json();
-}
-```
-
-### 闭包陷阱
-
-```typescript
-// ❌ 闭包捕获变量
-for (var i = 0; i < 5; i++) {
-  setTimeout(() => console.log(i), 100); // 全部输出 5
-}
-
-// ✅ 使用 let
-for (let i = 0; i < 5; i++) {
-  setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4
-}
-```
-
-### this 指向
-
-```typescript
-// ❌ this 丢失
-class Handler {
-  name = "handler";
-  handle() {
-    console.log(this.name);
-  }
-}
-const h = new Handler();
-const fn = h.handle;
-fn(); // undefined
-
-// ✅ 绑定 this
-const fn = h.handle.bind(h);
-// 或使用箭头函数
-handle = () => {
-  console.log(this.name);
-};
-```
+- **Console 高级方法**: `group` / `table` / `assert` / `trace` / `count`
+- **React DevTools**: `displayName` / `useDebugValue`
+- **常见 JS 陷阱**: 忘记 await、闭包捕获、this 丢失
 
 ## 调试清单
 

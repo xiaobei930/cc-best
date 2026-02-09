@@ -4,7 +4,6 @@ paths:
   - "**/components/**/*.h"
   - "**/main/**/*.c"
   - "**/main/**/*.h"
-description: "ESP32 项目专用规则，仅在 ESP-IDF 项目结构中生效"
 ---
 
 # ESP32 C 代码风格规则
@@ -12,21 +11,24 @@ description: "ESP32 项目专用规则，仅在 ESP-IDF 项目结构中生效"
 本项目是 ESP32 嵌入式 C 语言项目，遵循 ESP-IDF 编码规范。
 
 ## 格式化
+
 - 使用 clang-format 格式化
 - 配置基于 ESP-IDF 推荐风格
 
 ## 命名规范
-| 类型 | 规范 | 示例 |
-|------|------|------|
-| 函数 | snake_case | `wifi_init()`, `adc_read_value()` |
-| 局部变量 | snake_case | `buffer_size`, `retry_count` |
-| 全局变量 | g_ 前缀 | `g_wifi_connected`, `g_oilwell_data` |
-| 静态变量 | s_ 前缀 | `s_retry_count`, `s_mutex` |
-| 常量/宏 | UPPER_SNAKE | `MAX_BUFFER_SIZE`, `UART2_TXD` |
-| 类型定义 | snake_case_t | `oilwell_data_t`, `wifi_config_t` |
-| 枚举值 | UPPER_SNAKE | `WIFI_STATE_CONNECTED` |
+
+| 类型     | 规范         | 示例                                 |
+| -------- | ------------ | ------------------------------------ |
+| 函数     | snake_case   | `wifi_init()`, `adc_read_value()`    |
+| 局部变量 | snake_case   | `buffer_size`, `retry_count`         |
+| 全局变量 | g\_ 前缀     | `g_wifi_connected`, `g_oilwell_data` |
+| 静态变量 | s\_ 前缀     | `s_retry_count`, `s_mutex`           |
+| 常量/宏  | UPPER_SNAKE  | `MAX_BUFFER_SIZE`, `UART2_TXD`       |
+| 类型定义 | snake_case_t | `oilwell_data_t`, `wifi_config_t`    |
+| 枚举值   | UPPER_SNAKE  | `WIFI_STATE_CONNECTED`               |
 
 ## 头文件规范
+
 ```c
 #pragma once  // 或 #ifndef _MODULE_NAME_H_
 
@@ -46,6 +48,7 @@ description: "ESP32 项目专用规则，仅在 ESP-IDF 项目结构中生效"
 ```
 
 ## 禁止事项
+
 ```c
 // ❌ 禁止 include .c 文件
 #include "wlan.c"           // 错误！
@@ -55,6 +58,7 @@ description: "ESP32 项目专用规则，仅在 ESP-IDF 项目结构中生效"
 ```
 
 ## 错误处理
+
 ```c
 // ✅ 使用 ESP-IDF 错误检查宏
 ESP_ERROR_CHECK(mbc_slave_init(MB_PORT_SERIAL_SLAVE, &handler));
@@ -79,6 +83,7 @@ if (result == NULL) {
 ```
 
 ## 日志规范
+
 ```c
 static const char *TAG = "WIFI";  // 模块标签
 
@@ -89,6 +94,7 @@ ESP_LOGD(TAG, "调试数据: %d", value);       // 调试
 ```
 
 ## FreeRTOS 任务规范
+
 ```c
 // 任务函数签名
 void task_name(void *pvParameters)
@@ -116,6 +122,7 @@ xTaskCreate(
 ```
 
 ## 互斥锁使用
+
 ```c
 static SemaphoreHandle_t s_uart_mutex = NULL;
 
@@ -130,6 +137,7 @@ if (xSemaphoreTake(s_uart_mutex, pdMS_TO_TICKS(1000)) == pdTRUE) {
 ```
 
 ## 函数文档
+
 ```c
 /**
  * @brief 读取 ADC 通道值
@@ -142,12 +150,14 @@ esp_err_t adc_read_channel(uint8_t channel, int16_t *value);
 ```
 
 ## 复杂度控制
+
 - 函数行数 ≤ 100 行
 - 圈复杂度 ≤ 10
 - 嵌套深度 ≤ 3 层
 - 参数个数 ≤ 5 个（超过时使用结构体）
 
 ## NVS 使用规范
+
 ```c
 // 打开 → 操作 → 提交 → 关闭
 nvs_handle_t handle;

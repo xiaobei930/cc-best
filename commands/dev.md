@@ -123,7 +123,7 @@ def process_data(data):
 6. 完成任务
    ├─ 更新 TSK-XXX 状态为 completed
    ├─ 更新 memory-bank/progress.md
-   └─ 调用 /cc-best:qa 验证
+   └─ 调用 /cc-best:verify 综合验证
 ```
 
 ## 编码规范

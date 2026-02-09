@@ -1,6 +1,7 @@
 ---
 description: 开发服务管理（自动检测运行时、启动/停止/重启服务）
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+argument-hint: "[--stop|--restart|--logs] [--port num]"
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, TodoWrite
 ---
 
 # /service - 开发服务管理

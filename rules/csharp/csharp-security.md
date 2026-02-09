@@ -1,6 +1,7 @@
 ---
 paths:
   - "**/*.cs"
+  - "**/*.csx"
 ---
 
 # C# 安全规范 | C# Security Rules

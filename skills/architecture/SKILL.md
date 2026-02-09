@@ -8,6 +8,11 @@ allowed-tools: Read, Write, Edit, Grep, Glob
 
 本技能提供架构设计的完整指南，包括 ADR 记录、设计检查清单、可扩展性评估、架构模式速查等最佳实践。
 
+## 子文件
+
+- [lead-methodology.md](lead-methodology.md) - Lead 角色方法论（技术设计、任务分解）
+- [pm-methodology.md](pm-methodology.md) - PM 角色方法论（需求分析、决策框架）
+
 ## 架构决策记录 (ADR)
 
 对于重要的架构决策，创建 ADR 记录：

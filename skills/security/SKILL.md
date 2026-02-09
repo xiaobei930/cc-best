@@ -403,60 +403,11 @@ file_path = os.path.join("/uploads", safe_name)
 
 ## 安全测试
 
-```typescript
-// 测试认证
-test("需要认证", async () => {
-  const response = await fetch("/api/protected");
-  expect(response.status).toBe(401);
-});
-
-// 测试授权
-test("需要管理员角色", async () => {
-  const response = await fetch("/api/admin", {
-    headers: { Authorization: `Bearer ${userToken}` },
-  });
-  expect(response.status).toBe(403);
-});
-
-// 测试输入验证
-test("拒绝无效输入", async () => {
-  const response = await fetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify({ email: "非邮箱" }),
-  });
-  expect(response.status).toBe(400);
-});
-
-// 测试速率限制
-test("强制速率限制", async () => {
-  const requests = Array(101)
-    .fill(null)
-    .map(() => fetch("/api/endpoint"));
-  const responses = await Promise.all(requests);
-  const tooMany = responses.filter((r) => r.status === 429);
-  expect(tooMany.length).toBeGreaterThan(0);
-});
-```
+> 详见 [verify-checklist.md](./verify-checklist.md#安全测试示例) — 包含认证、授权、输入验证、速率限制的测试示例。
 
 ## 部署前安全检查清单
 
-任何生产部署前：
-
-- [ ] **密钥**: 无硬编码密钥，全在环境变量
-- [ ] **输入验证**: 所有用户输入已验证
-- [ ] **SQL 注入**: 所有查询参数化
-- [ ] **XSS**: 用户内容已净化
-- [ ] **CSRF**: 防护已启用
-- [ ] **认证**: Token 处理正确
-- [ ] **授权**: 角色检查到位
-- [ ] **速率限制**: 所有端点已启用
-- [ ] **HTTPS**: 生产环境强制
-- [ ] **安全头**: CSP、X-Frame-Options 已配置
-- [ ] **错误处理**: 错误中无敏感数据
-- [ ] **日志**: 无敏感数据记录
-- [ ] **依赖**: 最新，无漏洞
-- [ ] **CORS**: 正确配置
-- [ ] **文件上传**: 已验证（大小、类型）
+> 详见 [verify-checklist.md](./verify-checklist.md#部署前安全检查清单) — 15 项生产部署前必查项。
 
 ## 专题安全指南
 

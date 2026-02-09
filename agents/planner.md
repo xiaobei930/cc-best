@@ -1,8 +1,17 @@
 ---
 name: planner
-description: "Analyzes task complexity, creates implementation plans, and breaks down into minimal executable units. Use PROACTIVELY when users request feature implementation, architectural changes, or complex refactoring. Automatically activated for planning tasks."
+description: |
+  Analyzes task complexity, creates implementation plans, and breaks down into minimal executable units. Use PROACTIVELY when users request feature implementation, architectural changes, or complex refactoring. Automatically activated for planning tasks.
+  <example>
+  user: "实现用户权限管理模块"
+  assistant: (invokes planner agent to analyze complexity and create implementation plan)
+  </example>
 model: opus
-tools: Read, Grep, Glob
+maxTurns: 10
+tools:
+  - Read
+  - Grep
+  - Glob
 skills:
   - architecture
   - exploration
