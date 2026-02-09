@@ -22,33 +22,77 @@ const VALID_MODELS = ["opus", "sonnet", "haiku"];
 
 /**
  * 解析 YAML frontmatter
+ * 支持: 单行值、内联数组 [a, b]、多行数组 (- item)、多行字符串 (|/>)
  */
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
   if (!match) return null;
 
-  const yaml = match[1];
+  const lines = match[1].split("\n");
   const data = {};
+  let currentKey = null;
+  let multilineMode = null; // 'array' | 'string' | null
 
-  yaml.split("\n").forEach((line) => {
+  for (const line of lines) {
+    // 多行数组项: "  - value"
+    if (multilineMode === "array" && /^\s+-\s+/.test(line)) {
+      const item = line.replace(/^\s+-\s+/, "").trim();
+      if (!Array.isArray(data[currentKey])) data[currentKey] = [];
+      data[currentKey].push(item);
+      continue;
+    }
+
+    // 多行字符串续行: 以空格开头的非数组行
+    if (
+      multilineMode === "string" &&
+      /^\s+/.test(line) &&
+      !/^\s+-\s+/.test(line)
+    ) {
+      data[currentKey] += " " + line.trim();
+      continue;
+    }
+
+    // 遇到新的顶层 key，结束多行模式
+    multilineMode = null;
+
     const colonIndex = line.indexOf(":");
-    if (colonIndex === -1) return;
+    if (colonIndex === -1) continue;
 
     const key = line.slice(0, colonIndex).trim();
+    if (!key || /^\s/.test(line.charAt(0))) continue; // 跳过缩进行
     let value = line.slice(colonIndex + 1).trim();
 
-    // 处理数组格式 (简单解析)
+    currentKey = key;
+
+    // 内联数组: [a, b, c]
     if (value.startsWith("[") && value.endsWith("]")) {
-      value = value
+      data[key] = value
         .slice(1, -1)
         .split(",")
         .map((s) => s.trim().replace(/['"]/g, ""));
-    } else if (value.startsWith('"') || value.startsWith("'")) {
-      value = value.slice(1, -1);
     }
-
-    data[key] = value;
-  });
+    // 多行字符串指示符: | 或 >
+    else if (value === "|" || value === ">") {
+      data[key] = "";
+      multilineMode = "string";
+    }
+    // 空值 → 后续可能是多行数组
+    else if (value === "") {
+      data[key] = [];
+      multilineMode = "array";
+    }
+    // 带引号的字符串
+    else if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      data[key] = value.slice(1, -1);
+    }
+    // 普通值
+    else {
+      data[key] = value;
+    }
+  }
 
   return data;
 }

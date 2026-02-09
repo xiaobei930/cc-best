@@ -8,13 +8,7 @@ description: |
   </example>
 model: sonnet
 maxTurns: 15
-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - Bash
+tools: Read, Write, Edit, Grep, Glob, Bash
 skills:
   - debug
   - devops

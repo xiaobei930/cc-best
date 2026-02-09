@@ -8,13 +8,7 @@ description: |
   </example>
 model: opus
 maxTurns: 20
-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - Bash
+tools: Read, Write, Edit, Grep, Glob, Bash
 skills:
   - architecture
   - exploration

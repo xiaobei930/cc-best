@@ -8,10 +8,7 @@ description: |
   </example>
 model: opus
 maxTurns: 10
-tools:
-  - Read
-  - Grep
-  - Glob
+tools: Read, Grep, Glob
 skills:
   - architecture
   - exploration
