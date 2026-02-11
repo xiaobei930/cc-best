@@ -9,10 +9,11 @@
   <a href="https://github.com/xiaobei930/cc-best/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/cc-best?include_prereleases" alt="Release"></a>
   <a href="https://github.com/xiaobei930/cc-best/actions/workflows/validate-plugin.yml"><img src="https://github.com/xiaobei930/cc-best/actions/workflows/validate-plugin.yml/badge.svg" alt="Validate Plugin"></a>
   <a href="https://github.com/xiaobei930/cc-best/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/cc-best?style=social" alt="GitHub stars"></a>
+  <a href="https://xiaobei930.github.io/cc-best/"><img src="https://img.shields.io/badge/Homepage-cc--best-8b5cf6?style=flat&logo=github-pages" alt="Homepage"></a>
 </p>
 
 <p align="center">
-  <strong>English</strong> | <a href="README.zh-CN.md">中文</a>
+  <strong>English</strong> | <a href="README.zh-CN.md">中文</a> | <a href="https://xiaobei930.github.io/cc-best/">🌐 Homepage</a>
 </p>
 
 ---
@@ -748,6 +749,10 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 [MIT License](LICENSE) - Free to use and modify
 
 ---
+
+<p align="center">
+  <a href="https://xiaobei930.github.io/cc-best/">🌐 Visit Homepage</a> · <a href="https://github.com/xiaobei930/cc-best">⭐ Star on GitHub</a>
+</p>
 
 <p align="center">
   <strong>If CC-Best helps you, please give it a ⭐ Star!</strong>

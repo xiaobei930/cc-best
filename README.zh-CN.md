@@ -9,10 +9,11 @@
   <a href="https://github.com/xiaobei930/cc-best/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/cc-best?include_prereleases" alt="Release"></a>
   <a href="https://github.com/xiaobei930/cc-best/actions/workflows/validate-plugin.yml"><img src="https://github.com/xiaobei930/cc-best/actions/workflows/validate-plugin.yml/badge.svg" alt="Validate Plugin"></a>
   <a href="https://github.com/xiaobei930/cc-best/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/cc-best?style=social" alt="GitHub stars"></a>
+  <a href="https://xiaobei930.github.io/cc-best/"><img src="https://img.shields.io/badge/官网-cc--best-8b5cf6?style=flat&logo=github-pages" alt="Homepage"></a>
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> | <strong>中文</strong>
+  <a href="README.md">English</a> | <strong>中文</strong> | <a href="https://xiaobei930.github.io/cc-best/">🌐 官网</a>
 </p>
 
 ---
@@ -736,6 +737,10 @@ Claude 会自动：
 [MIT License](LICENSE) - 可自由使用和修改
 
 ---
+
+<p align="center">
+  <a href="https://xiaobei930.github.io/cc-best/">🌐 访问官网</a> · <a href="https://github.com/xiaobei930/cc-best">⭐ Star on GitHub</a>
+</p>
 
 <p align="center">
   <strong>如果 CC-Best 对你有帮助，请给它一个 ⭐ Star！</strong>
