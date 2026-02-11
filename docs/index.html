@@ -131,12 +131,12 @@
             position: fixed;
             width: 3px;
             height: 3px;
-            background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+            background: #8b5cf6;
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
             animation: float 15s infinite ease-in-out;
-            box-shadow: 0 0 10px #8b5cf6;
+            will-change: transform, opacity;
         }
 
         @keyframes float {
@@ -169,6 +169,7 @@
             text-shadow: 0 0 6px rgba(139, 92, 246, 0.6);
             opacity: 0.5;
             animation: matrix-fall linear infinite;
+            will-change: transform;
         }
 
         .matrix-char {
@@ -192,7 +193,7 @@
             pointer-events: none;
             z-index: 0;
             opacity: 0.6;
-            animation: orb-pulse 8s ease-in-out infinite;
+            will-change: transform, opacity;
         }
 
         @keyframes orb-pulse {
@@ -1356,7 +1357,7 @@
         // 生成动态粒子
         function createParticles() {
             var container = document.getElementById('particles');
-            var particleCount = 80;
+            var particleCount = 30;
 
             for (var i = 0; i < particleCount; i++) {
                 var particle = document.createElement('div');
@@ -1372,8 +1373,9 @@
         // 生成黑客帝国代码流 - 使用安全的 DOM 方法
         function createMatrixRain() {
             var container = document.getElementById('matrix-container');
-            var columns = 18;
+            var columns = 10;
             var charSet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var allCharSpans = [];
 
             for (var i = 0; i < columns; i++) {
                 var column = document.createElement('div');
@@ -1383,33 +1385,29 @@
                 column.style.animationDuration = (80 + Math.random() * 60) + 's';
                 column.style.animationDelay = (-Math.random() * 80) + 's';
 
-                var length = Math.floor(25 + Math.random() * 35);
+                var length = Math.floor(20 + Math.random() * 20);
                 for (var j = 0; j < length; j++) {
                     var charSpan = document.createElement('span');
                     charSpan.className = 'matrix-char';
                     charSpan.textContent = charSet[Math.floor(Math.random() * charSet.length)];
                     charSpan.style.opacity = (0.2 + Math.random() * 0.6).toFixed(2);
                     column.appendChild(charSpan);
+                    allCharSpans.push(charSpan);
                 }
 
                 container.appendChild(column);
             }
 
-            // 动态更新字符和透明度
+            // 动态更新 - 每次只随机更新少量字符，降低 DOM 操作
             setInterval(function() {
-                var allColumns = document.querySelectorAll('.matrix-column');
-                allColumns.forEach(function(col) {
-                    var charSpans = col.querySelectorAll('.matrix-char');
-                    charSpans.forEach(function(span) {
-                        if (Math.random() > 0.6) {
-                            span.textContent = charSet[Math.floor(Math.random() * charSet.length)];
-                        }
-                        if (Math.random() > 0.7) {
-                            span.style.opacity = (0.1 + Math.random() * 0.7).toFixed(2);
-                        }
-                    });
-                });
-            }, 80);
+                var count = Math.min(8, allCharSpans.length);
+                for (var i = 0; i < count; i++) {
+                    var idx = Math.floor(Math.random() * allCharSpans.length);
+                    var span = allCharSpans[idx];
+                    span.textContent = charSet[Math.floor(Math.random() * charSet.length)];
+                    span.style.opacity = (0.1 + Math.random() * 0.7).toFixed(2);
+                }
+            }, 200);
         }
 
         // 从 GitHub API 动态获取最新版本号
