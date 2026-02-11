@@ -30,14 +30,13 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ### 安全防护 (PreToolUse)
 
-| 脚本 (Node.js)            | 功能             | 阻止内容                | 已配置 |
-| ------------------------- | ---------------- | ----------------------- | ------ |
-| `validate-command.js`     | 验证危险命令     | `rm -rf /`, `format` 等 | ✅     |
-| `pause-before-push.js`    | git push 前暂停  | 给予审查时间            | ✅     |
-| `check-secrets.js`        | 检查敏感信息     | API 密钥、Token 等      | ✅     |
-| `protect-files.js`        | 保护敏感文件     | `.env`, `.key`, `.git/` | ✅     |
-| `block-random-md.js`      | 阻止随机创建 .md | 非必要文档              | 可选   |
-| `long-running-warning.js` | 长时间运行警告   | dev server 等           | 可选   |
+| 脚本 (Node.js)            | 功能            | 阻止内容                | 已配置 |
+| ------------------------- | --------------- | ----------------------- | ------ |
+| `validate-command.js`     | 验证危险命令    | `rm -rf /`, `format` 等 | ✅     |
+| `pause-before-push.js`    | git push 前暂停 | 给予审查时间            | ✅     |
+| `check-secrets.js`        | 检查敏感信息    | API 密钥、Token 等      | ✅     |
+| `protect-files.js`        | 保护敏感文件    | `.env`, `.key`, `.git/` | ✅     |
+| `long-running-warning.js` | 长时间运行警告  | dev server 等           | ✅     |
 
 ### 代码质量 (PostToolUse)
 
@@ -47,8 +46,8 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | `auto-archive.js`      | Memory Bank 归档提醒 | Write/Edit progress.md | ✅     |
 | `suggest-compact.js`   | 建议压缩时机         | 工具调用达阈值         | ✅     |
 | `observe-patterns.js`  | 自动观察工具调用模式 | Write/Edit/Bash        | ✅     |
-| `check-console-log.js` | 检查 console.log     | Edit                   | 可选   |
-| `typescript-check.js`  | TypeScript 类型检查  | Write/Edit on .ts/.tsx | 可选   |
+| `check-console-log.js` | 检查 console.log     | Edit                   | ✅     |
+| `typescript-check.js`  | TypeScript 类型检查  | Write/Edit on .ts/.tsx | ✅     |
 
 ### 上下文与追踪 (UserPromptSubmit / Stop / SubagentStop)
 
@@ -63,10 +62,8 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | 钩子         | 脚本 (Node.js)        | 触发时机         | 已配置 |
 | ------------ | --------------------- | ---------------- | ------ |
 | SessionStart | `session-check.js`    | 新会话启动       | ✅     |
-| SessionStart | `session-start.js`    | 加载上次上下文   | 可选   |
 | PreCompact   | `pre-compact.js`      | 上下文压缩前     | ✅     |
 | SessionEnd   | `evaluate-session.js` | 自动学习模式提取 | ✅     |
-| SessionEnd   | `session-end.js`      | 会话终止清理     | 可选   |
 
 > **已配置** = 在 `hooks/hooks.json` 中默认启用；**可选** = 脚本已提供，用户可按需配置
 
@@ -278,19 +275,19 @@ echo $?  # 检查退出码
 │       ├── lib/
 │       │   ├── utils.js                         # 27 个辅助函数
 │       │   └── package-manager.js               # 包管理器检测
-│       └── hooks/                               # 18 个生命周期钩子
+│       └── hooks/                               # 17 个生命周期钩子 + init.js 工具脚本
 │           ├── validate-command.js              # 命令验证
 │           ├── protect-files.js                 # 文件保护
 │           ├── format-file.js                   # 自动格式化
 │           ├── check-console-log.js             # console.log 检查
 │           ├── typescript-check.js              # TypeScript 检查
 │           ├── pause-before-push.js             # Push 前确认
-│           ├── block-random-md.js               # 阻止随机 .md
+│           ├── check-secrets.js                 # 密钥检测
 │           ├── long-running-warning.js          # 长时间运行警告
 │           ├── auto-archive.js                  # Memory Bank 归档提醒
 │           ├── session-check.js                 # 会话检查
-│           ├── session-start.js                 # 会话启动
-│           ├── session-end.js                   # 会话结束
+│           ├── evaluate-session.js              # 会话评估
+│           ├── suggest-compact.js               # 压缩提醒
 │           ├── pre-compact.js                   # 压缩前处理
 │           ├── init.js                          # 项目初始化
 │           ├── user-prompt-submit.js            # 用户提交时上下文注入

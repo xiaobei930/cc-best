@@ -98,34 +98,130 @@ refactor(scripts): simplify timeout configuration
 4. **Follow existing patterns** - Match the style of existing files
 5. **Write clear descriptions** - Explain what and why
 
+### Local Plugin Testing
+
+To test changes locally before submitting a PR:
+
+```bash
+# Option 1: Symlink (recommended)
+# macOS/Linux:
+ln -s /path/to/claude-code-best-practices ~/.claude/plugins/cc-best
+# Windows (PowerShell as Admin):
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\claude-code-best-practices"
+
+# Option 2: Run CI validation locally
+node scripts/ci/validate-agents.js
+node scripts/ci/validate-skills.js
+node scripts/ci/validate-commands.js
+```
+
 ### File Structure Guidelines
 
 #### Adding a New Command
 
-```
-commands/your-command.md
+Create `commands/your-command.md`:
+
+```markdown
+---
+description: Brief description of the command
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite
+---
+
+# /your-command - Command Name
+
+## Role Definition
+
+...
+
+## Workflow
+
+1. Step 1
+2. Step 2
 ```
 
-- Include YAML frontmatter with `allowed-tools`
-- Define clear role and responsibilities
-- Add usage examples
+- File name: `kebab-case.md`
+- `description` is required in frontmatter
+- `allowed-tools` lists permitted tools
+- Avoid name conflicts with existing skills
 
 #### Adding a New Rule
 
-```
-rules/your-rule.md
+Create `rules/<directory>/your-rule.md`:
+
+```markdown
+---
+paths:
+  - "**/*.py"
+---
+
+# Rule Title
 ```
 
-- Specify `paths` in frontmatter for auto-matching
-- Keep rules focused and actionable
+- `common/` rules: No `paths` (always loaded)
+- Language rules: Must have `paths` with glob patterns
+- Only `paths` is a valid frontmatter field
+
+#### Adding a New Language (4 Steps)
+
+1. Create directory: `rules/your-lang/`
+2. Add style file with `paths` frontmatter
+3. Add optional: testing, security, performance files
+4. Update `.claude-plugin/ARCHITECTURE.md`
 
 #### Adding a New Skill
 
+Create `skills/your-skill/SKILL.md`:
+
+```markdown
+---
+name: your-skill
+description: What this skill provides
+---
 ```
-skills/your-skill/
-├── SKILL.md           # Main skill file
-└── language.md        # Optional language-specific file
+
+- Main file must be `SKILL.md` (uppercase)
+- `name` and `description` required
+- Child files (e.g., `sub-topic.md`) auto-load with parent
+
+#### Adding a New Agent
+
+Create `agents/your-agent.md`:
+
+```markdown
+---
+name: your-agent
+description: What this agent does (min 20 chars)
+tools: [Read, Glob, Grep, Bash]
+model: opus
+---
 ```
+
+- `name` must match filename (without `.md`)
+- `tools` is required
+- `model` is optional: `opus`/`sonnet`/`haiku`
+- Must also add path to `plugin.json` `agents` array
+
+#### Hook Script Conventions
+
+```javascript
+#!/usr/bin/env node
+if (process.argv.includes("--help")) {
+  console.log("Hook description");
+  process.exit(0);
+}
+const { readStdinJson } = require("../lib/utils.js");
+
+async function main() {
+  const input = await readStdinJson();
+  // To block: output { "decision": "block", "reason": "..." }
+  // To allow: exit 0 with no output
+}
+main();
+```
+
+- Use `readStdinJson()` from `scripts/node/lib/utils.js`
+- Handle `--help` flag for documentation
+- Timeout configured in `hooks/hooks.json`
 
 ### Code of Conduct
 
@@ -234,34 +330,130 @@ refactor(scripts): simplify timeout configuration
 4. **遵循现有模式** - 与现有文件风格保持一致
 5. **写清楚描述** - 说明改了什么以及为什么
 
+### 本地插件测试
+
+提交 PR 前本地测试：
+
+```bash
+# 方式 1：符号链接（推荐）
+# macOS/Linux:
+ln -s /path/to/claude-code-best-practices ~/.claude/plugins/cc-best
+# Windows (管理员 PowerShell):
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\claude-code-best-practices"
+
+# 方式 2：本地运行 CI 验证
+node scripts/ci/validate-agents.js
+node scripts/ci/validate-skills.js
+node scripts/ci/validate-commands.js
+```
+
 ### 文件结构指南
 
 #### 添加新命令
 
-```
-commands/your-command.md
+创建 `commands/your-command.md`：
+
+```markdown
+---
+description: 命令简述
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite
+---
+
+# /your-command - 命令名称
+
+## 角色定义
+
+...
+
+## 工作流程
+
+1. 步骤 1
+2. 步骤 2
 ```
 
-- 包含 YAML frontmatter，指定 `allowed-tools`
-- 定义清晰的角色和职责
-- 添加使用示例
+- 文件名：`kebab-case.md`
+- `description` 必填
+- `allowed-tools` 列出允许的工具
+- 避免与现有 skill 同名冲突
 
 #### 添加新规则
 
-```
-rules/your-rule.md
+创建 `rules/<目录>/your-rule.md`：
+
+```markdown
+---
+paths:
+  - "**/*.py"
+---
+
+# 规则标题
 ```
 
-- 在 frontmatter 中指定 `paths` 用于自动匹配
-- 保持规则聚焦和可操作
+- `common/` 规则：不设 `paths`（始终加载）
+- 语言规则：必须有 `paths` glob 模式
+- `paths` 是唯一合法的 frontmatter 字段
+
+#### 添加新语言（4 步）
+
+1. 创建目录：`rules/your-lang/`
+2. 添加带 `paths` frontmatter 的风格文件
+3. 可选添加：testing、security、performance 文件
+4. 更新 `.claude-plugin/ARCHITECTURE.md`
 
 #### 添加新技能
 
+创建 `skills/your-skill/SKILL.md`：
+
+```markdown
+---
+name: your-skill
+description: 技能说明
+---
 ```
-skills/your-skill/
-├── SKILL.md           # 主技能文件
-└── language.md        # 可选的语言特定文件
+
+- 主文件必须命名为 `SKILL.md`（大写）
+- `name` 和 `description` 必填
+- 子文件（如 `sub-topic.md`）随父技能自动加载
+
+#### 添加新智能体
+
+创建 `agents/your-agent.md`：
+
+```markdown
+---
+name: your-agent
+description: 智能体说明（至少 20 字符）
+tools: [Read, Glob, Grep, Bash]
+model: opus
+---
 ```
+
+- `name` 必须与文件名一致（去掉 `.md`）
+- `tools` 必填
+- `model` 可选：`opus`/`sonnet`/`haiku`
+- 必须同时将路径添加到 `plugin.json` 的 `agents` 数组
+
+#### Hook 脚本规范
+
+```javascript
+#!/usr/bin/env node
+if (process.argv.includes("--help")) {
+  console.log("钩子描述");
+  process.exit(0);
+}
+const { readStdinJson } = require("../lib/utils.js");
+
+async function main() {
+  const input = await readStdinJson();
+  // 阻止：输出 { "decision": "block", "reason": "..." }
+  // 允许：exit 0 且无输出
+}
+main();
+```
+
+- 使用 `scripts/node/lib/utils.js` 的 `readStdinJson()`
+- 必须处理 `--help` 参数
+- 超时在 `hooks/hooks.json` 中配置
 
 ### 行为准则
 

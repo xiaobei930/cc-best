@@ -162,6 +162,72 @@ function validateAgent(filePath) {
 }
 
 /**
+ * 验证 plugin.json 中的 agents 字段格式
+ * 防止 v0.6.2 的格式 bug 再次发生（目录路径 vs 文件路径）
+ */
+function validatePluginAgents(agentFiles) {
+  const errors = [];
+  const warnings = [];
+  const pluginPath = path.join(__dirname, "../../.claude-plugin/plugin.json");
+
+  if (!fs.existsSync(pluginPath)) {
+    // 非插件模式（Clone 用户），跳过
+    return { errors, warnings };
+  }
+
+  let plugin;
+  try {
+    plugin = JSON.parse(fs.readFileSync(pluginPath, "utf-8"));
+  } catch (err) {
+    errors.push(`plugin.json 解析失败: ${err.message}`);
+    return { errors, warnings };
+  }
+
+  const agents = plugin.agents;
+
+  // agents 必须是数组
+  if (!Array.isArray(agents)) {
+    errors.push("plugin.json agents 字段必须是数组");
+    return { errors, warnings };
+  }
+
+  // 每个元素必须以 .md 结尾（不能是目录路径）
+  for (const entry of agents) {
+    if (typeof entry !== "string") {
+      errors.push(`agents 元素必须是字符串，实际: ${typeof entry}`);
+      continue;
+    }
+    if (entry.endsWith("/")) {
+      errors.push(`agents 不支持目录路径: "${entry}"，必须列出每个 .md 文件`);
+    }
+    if (!entry.endsWith(".md")) {
+      errors.push(`agents 路径必须以 .md 结尾: "${entry}"`);
+    }
+  }
+
+  // agents 数量与实际 agents/ 目录中的 .md 文件数量一致
+  const pluginCount = agents.length;
+  const actualCount = agentFiles.length;
+  if (pluginCount !== actualCount) {
+    errors.push(
+      `plugin.json 声明 ${pluginCount} 个 agents，实际目录有 ${actualCount} 个`,
+    );
+  }
+
+  // 每个路径对应的文件必须存在
+  const pluginRoot = path.join(__dirname, "../../");
+  for (const entry of agents) {
+    if (typeof entry !== "string") continue;
+    const resolved = path.join(pluginRoot, entry);
+    if (!fs.existsSync(resolved)) {
+      errors.push(`plugin.json 引用的文件不存在: "${entry}"`);
+    }
+  }
+
+  return { errors, warnings };
+}
+
+/**
  * 主函数
  */
 function main() {
@@ -182,6 +248,7 @@ function main() {
   let hasErrors = false;
   let totalWarnings = 0;
 
+  // 验证每个 agent 文件的 frontmatter
   for (const file of files) {
     const filePath = path.join(AGENTS_DIR, file);
     const { errors, warnings } = validateAgent(filePath);
@@ -203,8 +270,22 @@ function main() {
     }
   }
 
+  // 验证 plugin.json agents 字段格式
+  console.log("🔍 验证 plugin.json agents 字段...\n");
+  const { errors: pluginErrors, warnings: pluginWarnings } =
+    validatePluginAgents(files);
+
+  for (const error of pluginErrors) {
+    console.log(`   ❌ ${error}`);
+    hasErrors = true;
+  }
+  for (const warning of pluginWarnings) {
+    console.log(`   ⚠️  ${warning}`);
+    totalWarnings++;
+  }
+
   // 输出汇总
-  console.log("─".repeat(50));
+  console.log("\n" + "─".repeat(50));
   if (hasErrors) {
     console.log(`❌ 验证失败: ${files.length} 个文件中存在错误`);
     process.exit(1);

@@ -21,7 +21,7 @@
 > From product requirements to code review — one plugin, full workflow.
 
 <p align="center">
-  <code>38 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>7 language standards</code>
+  <code>38 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>33 rules</code> · <code>18 hooks</code>
 </p>
 
 <p align="center">
@@ -52,6 +52,19 @@
 /cc-best:iterate "implement user authentication"
 ```
 
+> 💡 **Enable Hooks**: After installation, run `/cc-best:setup --hooks` to activate safety guards and automation hooks.
+> See [Hooks Configuration](#pre-configured-hooks) for details.
+
+### Plugin vs Clone: Command Format
+
+| Installation  | Command format     | Example                          |
+| ------------- | ------------------ | -------------------------------- |
+| **Plugin** ⭐ | `/cc-best:command` | `/cc-best:iterate "add feature"` |
+| **Clone**     | `/command`         | `/iterate "add feature"`         |
+
+> 💡 **Recommended**: Install via plugin for automatic updates and easier management.
+> All documentation uses plugin format (`/cc-best:xxx`). Clone users: run `convert-to-local.js`.
+
 <details>
 <summary>📹 See it in action</summary>
 <br>
@@ -77,16 +90,6 @@ Use clone when you need to customize all files in your repo.
 > Run the conversion script to update to local format (`/xxx`).
 
 </details>
-
-### Plugin vs Clone: Command Format
-
-| Installation  | Command format     | Example                          |
-| ------------- | ------------------ | -------------------------------- |
-| **Plugin** ⭐ | `/cc-best:command` | `/cc-best:iterate "add feature"` |
-| **Clone**     | `/command`         | `/iterate "add feature"`         |
-
-> 💡 **Recommended**: Install via plugin for automatic updates and easier management.
-> All documentation uses plugin format (`/cc-best:xxx`). Clone users: run `convert-to-local.js`.
 
 <details>
 <summary>🗑️ Uninstall</summary>
@@ -146,6 +149,8 @@ You just watch. Intervene only when needed.
 | 🛡️ **Safety Hooks**             | Blocks `rm -rf /`, `git push --force`, and other risky commands                 |
 | 📐 **Multi-Language Standards** | 8-dir layered structure: common + Python/frontend/Java/C#/C++/embedded/UI rules |
 | 🧠 **Memory Bank**              | Persists progress and decisions across sessions                                 |
+| 👥 **Pair Programming**         | `/cc-best:pair` — step-by-step collaboration with 5 confirmation checkpoints    |
+| 🔗 **Knowledge Pipeline**       | observe → analyze → learn → evolve — self-improving knowledge loop              |
 | 🌐 **Cross-Platform**           | Windows, macOS, Linux — auto-detects package manager                            |
 
 <details>
@@ -154,6 +159,55 @@ You just watch. Intervene only when needed.
 <p align="center">
   <img src="assets/iterate.gif" alt="Iterate Demo" width="80%">
 </p>
+</details>
+
+> While CC-Best is built for Claude Code, the methodology (Dao-Fa-Shu-Qi) and role-driven patterns are framework-agnostic and can be adapted for other AI coding assistants.
+
+### What Makes CC-Best Different
+
+<details>
+<summary><strong>🎭 Role-Driven Development Pipeline</strong></summary>
+
+Not just a prompt template collection — CC-Best simulates real team collaboration:
+
+- **7 roles** with clear boundaries: PM → Lead → Designer → Dev → QA → Verify → Commit
+- Each role has explicit **MUST/SHOULD/NEVER** rules, output templates, and handoff protocols
+- **Automatic flow**: PM creates REQ → Lead reviews & creates DES/TSK → Dev implements → QA validates
+- **Downstream correction (A3)**: Lead can adjust PM decisions; QA distinguishes implementation bugs from requirement assumption errors
+- **Document traceability**: REQ-XXX → DES-XXX → TSK-XXX numbered chain
+
+</details>
+
+<details>
+<summary><strong>🔄 Autonomous Iteration Engine</strong></summary>
+
+`/cc-best:iterate` enables fully autonomous development:
+
+```
+Read progress.md → Select role → Execute → Verify → Commit → Next task (no waiting)
+```
+
+- **Smart role selection**: 8 state conditions determine which role activates
+- **A1-A5 decision principles**: Context inference (A1), decision recording (A2), downstream correction (A3), MVP fallback (A4), issue classification (A5)
+- **4 strict stop conditions**: All tasks done, user interrupt, fatal error, external dependency
+- **Cross-session continuity**: memory-bank + progress.md rolling window
+
+</details>
+
+<details>
+<summary><strong>🔗 Self-Evolving Knowledge Pipeline</strong></summary>
+
+CC-Best learns from your development patterns:
+
+```
+observe → analyze → learn → evolve
+```
+
+- **observe**: `observe-patterns.js` hook automatically tracks tool usage patterns
+- **analyze**: `/cc-best:analyze` mines git history and usage data
+- **learn**: `/cc-best:learn` extracts reusable knowledge
+- **evolve**: `/cc-best:evolve` generates new commands, skills, or agents from learned patterns
+
 </details>
 
 ---
@@ -208,11 +262,49 @@ flowchart LR
 
 ### Three Development Modes
 
-| Mode                     | Command             | Use Case                       | Characteristics                                |
-| ------------------------ | ------------------- | ------------------------------ | ---------------------------------------------- |
-| **Autonomous Iteration** | `/cc-best:iterate`  | Clear task list                | Fully autonomous, no intervention needed       |
-| **Pair Programming**     | `/cc-best:pair`     | Learning, sensitive operations | Confirm each step, human-machine collaboration |
-| **Long-Running Loop**    | `/cc-best:cc-ralph` | Hour-level batch tasks         | Requires ralph-loop plugin                     |
+| Mode                     | Command             | Use Case                       | Characteristics                                                                                                                                    |
+| ------------------------ | ------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Autonomous Iteration** | `/cc-best:iterate`  | Clear task list                | Fully autonomous, no intervention needed                                                                                                           |
+| **Pair Programming**     | `/cc-best:pair`     | Learning, sensitive operations | Confirm each step, human-machine collaboration                                                                                                     |
+| **Long-Running Loop**    | `/cc-best:cc-ralph` | Hour-level batch tasks         | Requires [`ralph-loop`](.claude-plugin/MODES.md#cc-bestcc-ralph---long-running-loop) plugin (`/plugin install ralph-loop@claude-plugins-official`) |
+
+<details>
+<summary><strong>How /cc-best:iterate selects roles automatically</strong></summary>
+
+| Current State                | Role Selected       | Action                                |
+| ---------------------------- | ------------------- | ------------------------------------- |
+| No requirements doc          | `/cc-best:pm`       | Requirement analysis                  |
+| REQ has low-confidence items | `/cc-best:clarify`  | Requirement clarification             |
+| Has REQ, no design           | `/cc-best:lead`     | Technical design                      |
+| Has design, frontend tasks   | `/cc-best:designer` | UI design guidance                    |
+| Has tasks to implement       | `/cc-best:dev`      | Coding implementation                 |
+| Code ready for verification  | `/cc-best:verify`   | Build + type + lint + test + security |
+| Verification passed          | `/cc-best:qa`       | Functional acceptance                 |
+
+**Core behavior**: Task complete → Update progress.md → Read next task → **Execute immediately** (no waiting).
+
+**Stop conditions**: All tasks done | User interrupt (Ctrl+C) | Fatal error | External dependency needed.
+
+</details>
+
+<details>
+<summary><strong>How /cc-best:pair collaboration works</strong></summary>
+
+5 mandatory confirmation checkpoints:
+
+| Checkpoint         | Example                                   |
+| ------------------ | ----------------------------------------- |
+| Understanding      | "I understand you need X. Correct?"       |
+| Design choice      | "Option A or B? I recommend A because..." |
+| Destructive action | "About to delete X. Confirm?"             |
+| External call      | "Will call production API. Proceed?"      |
+| Commit             | "Commit message: '...'. OK?"              |
+
+**Learning mode**: `/cc-best:pair --learn "teach me unit testing"` — Claude explains every step in detail.
+
+**Safe autonomy**: Even in pair mode, Claude can freely read files, search code, run tests, and format code.
+
+</details>
 
 > 📖 **Detailed usage guide**: See [MODES.md](.claude-plugin/MODES.md) for comprehensive documentation on each mode, including when to use, how to control, and best practices.
 
@@ -227,8 +319,8 @@ flowchart LR
 | **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | Development workflow roles                |
 | **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | Autonomous/cc-best:pair programming modes |
 | **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | Build and test automation                 |
-| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                          | Version control                           |
-| **Context** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | Session management                        |
+| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                    | Version control                           |
+| **Context** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`              | Session management                        |
 | **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | Code quality & knowledge                  |
 | **Ops**     | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue fix, release, service management    |
 | **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | Configuration                             |
@@ -255,7 +347,7 @@ flowchart LR
 
 ## 🏗️ Architecture Overview
 
-This template uses a **three-tier architecture**:
+This template uses a **four-tier architecture**:
 
 ```mermaid
 flowchart TB
@@ -264,32 +356,38 @@ flowchart TB
     end
 
     subgraph Commands["📋 Commands (38)"]
-        PM["/cc-best:pm"] --> Lead["/cc-best:lead"] --> Dev["/cc-best:dev"] --> QA["/cc-best:qa"]
+        PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
     end
 
     subgraph Skills["🛠️ Skills (17)"]
-        S1["backend"]
-        S2["frontend"]
-        S3["testing"]
-        S4["security"]
+        S1["backend · frontend · testing · security"]
+        S2["architecture · devops · git"]
+        S3["learning · compact · exploration"]
     end
 
-    subgraph Agents["🤖 Agents (6)"]
-        A1["code-reviewer"]
-        A2["planner"]
-        A3["security-reviewer"]
+    subgraph Agents["🤖 Agents (8)"]
+        A1["architect · planner · code-reviewer"]
+        A2["code-simplifier · security-reviewer"]
+        A3["tdd-guide · build-error-resolver · requirement-validator"]
+    end
+
+    subgraph Safety["🛡️ Safety Hooks (17)"]
+        H1["PreToolUse: validate, secrets, protect"]
+        H2["PostToolUse: format, typecheck, observe"]
     end
 
     CMD --> Commands
     Commands -.->|"auto-inject"| Skills
     Commands -.->|"delegate"| Agents
+    Commands -.->|"guard"| Safety
 ```
 
-| Layer        | Trigger              | Purpose                                  |
-| ------------ | -------------------- | ---------------------------------------- |
-| **Commands** | User types `/xxx`    | Role workflow, user-initiated actions    |
-| **Skills**   | Auto-injected        | Best practices, coding standards         |
-| **Agents**   | Task tool delegation | Specialized sub-tasks (review, planning) |
+| Layer        | Trigger              | Purpose                                      |
+| ------------ | -------------------- | -------------------------------------------- |
+| **Commands** | User types `/xxx`    | Role workflow, user-initiated actions        |
+| **Skills**   | Auto-injected        | Best practices, coding standards             |
+| **Agents**   | Task tool delegation | Specialized sub-tasks (review, planning)     |
+| **Hooks**    | Lifecycle events     | Safety guards, auto-format, pattern learning |
 
 **8 specialized agents**: `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide`
 
@@ -614,6 +712,11 @@ Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 
 - [Anthropic Official Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)
 - [CLAUDE.md Complete Guide](https://www.builder.io/blog/claude-md-guide)
+
+### Plugin Documentation
+
+- [Quick Start Guide](docs/guides/quickstart.md) - Get started in 5 minutes
+- [Advanced Guide](docs/guides/advanced.md) - Deep dive into methodology and architecture
 
 ### Community Projects
 

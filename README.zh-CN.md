@@ -21,7 +21,7 @@
 > 从产品需求到代码审查 — 一个插件，完整工作流。
 
 <p align="center">
-  <code>38 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>7 语言规范</code>
+  <code>38 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>33 规则</code> · <code>18 hooks</code>
 </p>
 
 <p align="center">
@@ -51,6 +51,9 @@
 # 开始使用
 /cc-best:iterate "实现用户认证功能"
 ```
+
+> 💡 **启用 Hooks**：安装后运行 `/cc-best:setup --hooks` 开启安全防护和自动化功能。
+> 详见 [Hooks 配置](#预配置的-hooks)。
 
 ### 插件 vs Clone：命令格式
 
@@ -146,6 +149,8 @@ node scripts/node/convert-to-local.js
 | 🛡️ **安全钩子**     | 阻止 `rm -rf /`、`git push --force` 等危险命令            |
 | 📐 **多语言规范**   | 8 目录分层：通用 + Python/前端/Java/C#/C++/嵌入式/UI 规范 |
 | 🧠 **记忆库**       | 跨会话持久化进度和决策                                    |
+| 👥 **结对编程**     | `/cc-best:pair` — 5 个确认节点的逐步协作                  |
+| 🔗 **知识进化管线** | observe → analyze → learn → evolve 自我进化闭环           |
 | 🌐 **跨平台**       | Windows、macOS、Linux — 自动检测包管理器                  |
 
 <details>
@@ -154,6 +159,55 @@ node scripts/node/convert-to-local.js
 <p align="center">
   <img src="assets/iterate.gif" alt="迭代演示" width="80%">
 </p>
+</details>
+
+> CC-Best 专为 Claude Code 构建，但其方法论（道法术器）和角色驱动模式与框架无关，可适配其他 AI 编码助手。
+
+### CC-Best 的独特之处
+
+<details>
+<summary><strong>🎭 角色驱动开发管线</strong></summary>
+
+不是简单的 prompt 模板集合 — CC-Best 模拟真实团队协作：
+
+- **7 个角色**，职责边界清晰：PM → Lead → Designer → Dev → QA → Verify → Commit
+- 每个角色有明确的 **MUST/SHOULD/NEVER** 规则、输出物模板和交接协议
+- **自动流转**：PM 创建 REQ → Lead 评审并创建 DES/TSK → Dev 实现 → QA 验收
+- **下游纠偏（A3）**：Lead 可调整 PM 决策；QA 可区分实现 Bug 和需求假设错误
+- **文档追溯链**：REQ-XXX → DES-XXX → TSK-XXX 编号关联
+
+</details>
+
+<details>
+<summary><strong>🔄 自主迭代引擎</strong></summary>
+
+`/cc-best:iterate` 实现完全自主开发：
+
+```
+读取 progress.md → 选择角色 → 执行 → 验证 → 提交 → 下一个任务（不等待）
+```
+
+- **智能角色选择**：8 种状态条件决定激活哪个角色
+- **A1-A5 决策原则**：上下文推断（A1）、决策记录（A2）、下游纠偏（A3）、MVP 兜底（A4）、问题分类（A5）
+- **4 种严格停止条件**：任务全部完成、用户中断、致命错误、外部依赖
+- **跨会话连续性**：memory-bank + progress.md 滚动窗口
+
+</details>
+
+<details>
+<summary><strong>🔗 知识自进化管线</strong></summary>
+
+CC-Best 从你的开发模式中学习：
+
+```
+observe → analyze → learn → evolve
+```
+
+- **observe**：`observe-patterns.js` 钩子自动追踪工具使用模式
+- **analyze**：`/cc-best:analyze` 挖掘 git 历史和使用数据
+- **learn**：`/cc-best:learn` 提取可复用知识
+- **evolve**：`/cc-best:evolve` 从学到的模式生成新的命令、技能或智能体
+
 </details>
 
 ---
@@ -208,11 +262,49 @@ flowchart LR
 
 ### 三种开发模式
 
-| 模式         | 命令                | 适用场景       | 特点               |
-| ------------ | ------------------- | -------------- | ------------------ |
-| **自主迭代** | `/cc-best:iterate`  | 任务清单明确   | 完全自主，无需干预 |
-| **结对编程** | `/cc-best:pair`     | 学习、敏感操作 | 每步确认，人机协作 |
-| **长时循环** | `/cc-best:cc-ralph` | 小时级批量任务 | 需安装插件         |
+| 模式         | 命令                | 适用场景       | 特点                                                                                                                                     |
+| ------------ | ------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **自主迭代** | `/cc-best:iterate`  | 任务清单明确   | 完全自主，无需干预                                                                                                                       |
+| **结对编程** | `/cc-best:pair`     | 学习、敏感操作 | 每步确认，人机协作                                                                                                                       |
+| **长时循环** | `/cc-best:cc-ralph` | 小时级批量任务 | 需安装 [`ralph-loop`](.claude-plugin/MODES.md#cc-bestcc-ralph---长时间循环) 插件（`/plugin install ralph-loop@claude-plugins-official`） |
+
+<details>
+<summary><strong>/cc-best:iterate 如何自动选择角色</strong></summary>
+
+| 当前状态           | 选择角色            | 执行动作                         |
+| ------------------ | ------------------- | -------------------------------- |
+| 无需求文档         | `/cc-best:pm`       | 需求分析                         |
+| REQ 有低置信度项   | `/cc-best:clarify`  | 需求澄清                         |
+| 有 REQ，无设计     | `/cc-best:lead`     | 技术方案设计                     |
+| 有设计，含前端任务 | `/cc-best:designer` | UI 设计指导                      |
+| 有待实现任务       | `/cc-best:dev`      | 编码实现                         |
+| 代码待验证         | `/cc-best:verify`   | 构建 + 类型 + lint + 测试 + 安全 |
+| 验证通过           | `/cc-best:qa`       | 功能验收                         |
+
+**核心行为**：任务完成 → 更新 progress.md → 读取下一个任务 → **立即执行**（不等待）。
+
+**停止条件**：任务全部完成 | 用户中断（Ctrl+C）| 致命错误 | 需要外部依赖。
+
+</details>
+
+<details>
+<summary><strong>/cc-best:pair 结对协作机制</strong></summary>
+
+5 个必须确认的节点：
+
+| 确认节点   | 示例                          |
+| ---------- | ----------------------------- |
+| 需求理解   | "我理解你需要 X，对吗？"      |
+| 方案选择   | "方案 A/B？我建议 A，因为..." |
+| 破坏性操作 | "即将删除 X，确认吗？"        |
+| 外部调用   | "即将调用生产 API，确认吗？"  |
+| 提交代码   | "提交信息：'...'，确认吗？"   |
+
+**学习模式**：`/cc-best:pair --learn "教我写单元测试"` — Claude 详细解释每一步。
+
+**安全自主**：即使在结对模式下，Claude 也可以自由读取文件、搜索代码、运行测试和格式化代码。
+
+</details>
 
 > 📖 **详细使用指南**: 参见 [MODES.md](.claude-plugin/MODES.md)，包含各模式的使用场景、控制方法和最佳实践。
 
@@ -227,8 +319,8 @@ flowchart LR
 | **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify` | 开发工作流角色            |
 | **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                 | 自主/结对模式             |
 | **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                         | 构建测试自动化            |
-| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                          | 版本控制                  |
-| **上下文** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                      | 会话管理                  |
+| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                    | 版本控制                  |
+| **上下文** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`              | 会话管理                  |
 | **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                              | 代码质量&知识             |
 | **运维**   | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                              | Issue修复、发版、服务管理 |
 | **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`                                           | 配置诊断                  |
@@ -255,7 +347,7 @@ flowchart LR
 
 ## 🏗️ 架构概览
 
-本模板采用**三层架构**：
+本模板采用**四层架构**：
 
 ```mermaid
 flowchart TB
@@ -264,32 +356,38 @@ flowchart TB
     end
 
     subgraph Commands["📋 命令 (38)"]
-        PM["/cc-best:pm"] --> Lead["/cc-best:lead"] --> Dev["/cc-best:dev"] --> QA["/cc-best:qa"]
+        PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
     end
 
     subgraph Skills["🛠️ 技能 (17)"]
-        S1["backend"]
-        S2["frontend"]
-        S3["testing"]
-        S4["security"]
+        S1["backend · frontend · testing · security"]
+        S2["architecture · devops · git"]
+        S3["learning · compact · exploration"]
     end
 
-    subgraph Agents["🤖 智能体 (6)"]
-        A1["code-reviewer"]
-        A2["planner"]
-        A3["security-reviewer"]
+    subgraph Agents["🤖 智能体 (8)"]
+        A1["architect · planner · code-reviewer"]
+        A2["code-simplifier · security-reviewer"]
+        A3["tdd-guide · build-error-resolver · requirement-validator"]
+    end
+
+    subgraph Safety["🛡️ 安全钩子 (17)"]
+        H1["PreToolUse: 命令验证, 密钥检测, 文件保护"]
+        H2["PostToolUse: 自动格式化, 类型检查, 模式观察"]
     end
 
     CMD --> Commands
     Commands -.->|"自动注入"| Skills
     Commands -.->|"委派"| Agents
+    Commands -.->|"守护"| Safety
 ```
 
-| 层级         | 触发方式        | 用途                     |
-| ------------ | --------------- | ------------------------ |
-| **Commands** | 用户输入 `/xxx` | 角色工作流，用户主动操作 |
-| **Skills**   | 自动注入        | 最佳实践，编码规范       |
-| **Agents**   | Task 工具委派   | 专业子任务（审查、规划） |
+| 层级         | 触发方式        | 用途                           |
+| ------------ | --------------- | ------------------------------ |
+| **Commands** | 用户输入 `/xxx` | 角色工作流，用户主动操作       |
+| **Skills**   | 自动注入        | 最佳实践，编码规范             |
+| **Agents**   | Task 工具委派   | 专业子任务（审查、规划）       |
+| **Hooks**    | 生命周期事件    | 安全守护、自动格式化、模式学习 |
 
 **8 个专业智能体**: `architect`, `build-error-resolver`, `code-reviewer`, `code-simplifier`, `planner`, `requirement-validator`, `security-reviewer`, `tdd-guide`
 
@@ -614,6 +712,11 @@ Claude 会自动：
 
 - [Anthropic 官方最佳实践](https://www.anthropic.com/engineering/claude-code-best-practices)
 - [CLAUDE.md 完整指南](https://www.builder.io/blog/claude-md-guide)
+
+### 插件文档
+
+- [快速上手指南](docs/guides/quickstart.zh-CN.md) - 5 分钟入门
+- [深度指南](docs/guides/advanced.zh-CN.md) - 方法论与架构深度解析
 
 ### 社区项目
 

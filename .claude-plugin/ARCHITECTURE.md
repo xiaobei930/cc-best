@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.6.2 | Last Updated: 2026-02-09
+> Version: 0.6.3 | Last Updated: 2026-02-10
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -279,7 +279,7 @@ hooks/
 | `CLAUDE.md`                       | 头部 Version |
 | `CHANGELOG.md`                    | 最新条目     |
 
-当前版本: **0.6.2**
+当前版本: **0.6.3**
 
 ---
 

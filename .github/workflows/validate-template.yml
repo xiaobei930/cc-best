@@ -213,7 +213,10 @@ jobs:
           python << 'EOF'
           import json
           import sys
+          import os
+          import glob
 
+          errors = []
           required_fields = ["name", "version", "description"]
 
           with open(".claude-plugin/plugin.json") as f:
@@ -221,8 +224,7 @@ jobs:
 
           missing = [f for f in required_fields if f not in plugin]
           if missing:
-              print(f"❌ Missing required fields: {missing}")
-              sys.exit(1)
+              errors.append(f"Missing required fields: {missing}")
 
           # Version format check (semver)
           version = plugin.get("version", "")
@@ -230,7 +232,42 @@ jobs:
           if len(parts) != 3 or not all(p.isdigit() for p in parts):
               print(f"⚠️ Version '{version}' may not follow semver")
 
+          # Validate agents field format (prevent v0.6.2 directory-path bug)
+          agents = plugin.get("agents", [])
+          if isinstance(agents, list):
+              for entry in agents:
+                  if not isinstance(entry, str):
+                      errors.append(f"agents entry must be string: {entry}")
+                  elif entry.endswith("/"):
+                      errors.append(f"agents must not use directory paths: '{entry}'")
+                  elif not entry.endswith(".md"):
+                      errors.append(f"agents path must end with .md: '{entry}'")
+                  elif not os.path.exists(entry):
+                      errors.append(f"agents references missing file: '{entry}'")
+
+              # Cross-check count with actual agents/ directory
+              actual_agents = glob.glob("agents/*.md")
+              if len(agents) != len(actual_agents):
+                  errors.append(
+                      f"plugin.json declares {len(agents)} agents, "
+                      f"but agents/ has {len(actual_agents)} .md files"
+                  )
+          elif agents:
+              errors.append("agents field must be an array")
+
+          # Validate hooks field if present (must point to existing file)
+          hooks = plugin.get("hooks")
+          if hooks is not None:
+              if isinstance(hooks, str) and not os.path.exists(hooks):
+                  errors.append(f"hooks file not found: '{hooks}'")
+
+          if errors:
+              for e in errors:
+                  print(f"❌ {e}")
+              sys.exit(1)
+
           print(f"✅ Plugin: {plugin['name']} v{plugin['version']}")
+          print(f"   Agents: {len(agents)} (validated)")
           EOF
 
       - name: Check Node.js Scripts Syntax

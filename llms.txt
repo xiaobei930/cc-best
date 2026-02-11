@@ -1,0 +1,86 @@
+# CC-Best
+
+> Role-driven Claude Code development workflow plugin.
+
+CC-Best transforms Claude Code into a complete development team with role-based workflows (PM → Lead → Designer → Dev → QA), safety hooks, and a self-evolving knowledge pipeline.
+
+## Overview
+
+- Name: cc-best
+- Version: 0.6.3
+- License: MIT
+- Repository: https://github.com/xiaobei930/claude-code-best-practices
+
+## Components
+
+- 38 commands (role, mode, build, git, context, quality, ops, setup)
+- 17 skills (backend, frontend, testing, security, architecture, devops, git, learning)
+- 8 agents (architect, planner, code-reviewer, code-simplifier, security-reviewer, tdd-guide, build-error-resolver, requirement-validator)
+- 33 rules across 8 directories (common + python, frontend, java, csharp, cpp, embedded, ui)
+- 18 hook scripts across 8 lifecycle events
+
+## Key Concepts
+
+### Role Pipeline
+PM → Lead → Designer → Dev → QA → Verify → Commit
+Each role has MUST/SHOULD/NEVER boundaries and creates numbered documents (REQ-XXX → DES-XXX → TSK-XXX).
+
+### Autonomous Decision Principles (A1-A5)
+- A1: Context inference (don't interrupt to ask)
+- A2: Decision recording (rationale + confidence)
+- A3: Downstream correction (Lead reviews PM, QA classifies bugs)
+- A4: MVP fallback (minimal viable approach when uncertain)
+- A5: Issue classification (implementation bugs vs requirement assumption errors)
+
+### Three Development Modes
+- `/cc-best:iterate` — Fully autonomous development loop
+- `/cc-best:pair` — Step-by-step collaboration with confirmation checkpoints
+- `/cc-best:cc-ralph` — Long-running loop (requires ralph-loop plugin)
+
+### Knowledge Evolution Pipeline
+observe (hook) → analyze (command) → learn (command) → evolve (command)
+
+### Dao-Fa-Shu-Qi Philosophy (道法术器)
+Four-layer architecture: Philosophy → Method → Practice → Tools
+
+## Installation
+
+```
+/plugin marketplace add xiaobei930/claude-code-best-practices
+/plugin install cc-best@xiaobei930
+/cc-best:status
+```
+
+## Core Commands
+
+- `/cc-best:iterate "task"` — Autonomous full-pipeline development
+- `/cc-best:pair` — Collaborative development with confirmation
+- `/cc-best:pm` — Requirement analysis
+- `/cc-best:lead` — Technical design
+- `/cc-best:dev` — Coding implementation
+- `/cc-best:qa` — Quality verification
+- `/cc-best:commit` — Conventional commit
+- `/cc-best:status` — Plugin status check
+- `/cc-best:checkpoint` — Save context
+- `/cc-best:catchup` — Restore context
+
+## Documentation
+
+- Quick Start: docs/guides/quickstart.md
+- Advanced Guide: docs/guides/advanced.md
+- Commands Reference: .claude-plugin/COMMANDS.md
+- Architecture: .claude-plugin/ARCHITECTURE.md
+- Mode Guide: .claude-plugin/MODES.md
+- FAQ: FAQ.md
+
+## File Index
+
+- CLAUDE.md — Project constitution template
+- commands/ — 38 command definitions
+- skills/ — 17 skill definitions
+- agents/ — 8 agent definitions
+- rules/ — 33 coding rules (8 directories)
+- hooks/hooks.json — Hook configuration
+- scripts/node/hooks/ — 18 hook scripts
+- memory-bank/ — Progress and architecture docs
+- .claude-plugin/ — Plugin metadata and reference docs

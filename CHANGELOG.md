@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] 文档审计与一致性修复
 - [ ] ~~核心命令英文版~~ → 等待官方 i18n 支持 (#7233)
 
-### v0.6.x ✅ (Released 2026-02-08 ~ 2026-02-09) - 综合审计 + 学习管线 + 架构增强
+### v0.6.x ✅ (Released 2026-02-08 ~ 2026-02-10) - 综合审计 + 学习管线 + 架构增强 + 文档升级
 
 **核心目标**: 修复已知 bug + 全面审计规范化 + 自动学习闭环 + CI 自动发布
 
@@ -66,6 +66,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.6.3] - 2026-02-10
+
+#### Added / 新增
+
+- **Quick Start Guide（双语）**: 新建 `docs/guides/quickstart.md` + `quickstart.zh-CN.md`，5 分钟上手三大核心特色
+- **Advanced Guide（双语）**: 新建 `docs/guides/advanced.md` + `advanced.zh-CN.md`，10 章深度方法论解析（道法术器、A1-A5、iterate/pair 精通、知识进化管线、Hook 系统、Agent 策略）
+- **llms.txt**: 新建 LLM 可读项目摘要，遵循 llms-txt.org 标准
+
+#### Changed / 变更
+
+- **README 核心特色强化（双语）**: 新增 "What Makes CC-Best Different" 章节（角色驱动管线、自主迭代引擎、知识自进化管线）、iterate 角色选择表 + pair 确认节点折叠块、架构图修正（Agents 6→8、新增 Safety Hooks 层）
+- **CI 防护增强**: `validate-agents.js` 新增 plugin.json agents 字段格式验证（数组检查、.md 后缀、文件存在、数量一致）；`validate-template.yml` 新增 agents/hooks 交叉验证
+- **CONTRIBUTING.md 增强（双语）**: 新增本地测试指南、新增语言规则 4 步模板、新增命令/技能/智能体添加规范、Hook 脚本编写约定
+
+#### Fixed / 修复
+
+- **plugin.json**: 移除导致插件无法加载的 `hooks` 字段（v0.6.2 hotfix 已单独提交）
+- **README 架构图**: Agents 数量 6→8 修正，补全 Safety Hooks 展示层
+- **README 统计数据**: 补齐 `33 rules` · `18 hooks` · `8 lifecycle events`
 
 ### [0.6.2] - 2026-02-09
 
@@ -412,6 +432,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.6.3]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.9...v0.6.0

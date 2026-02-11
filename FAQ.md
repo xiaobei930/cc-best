@@ -147,8 +147,8 @@ To resume: Run `/cc-best:iterate` again, it reads from `progress.md`.
 
 #### Q: What's the difference between /cc-best:iterate and /pair?
 
-| Mode       | Control                   | Use Case                        |
-| ---------- | ------------------------- | ------------------------------- |
+| Mode               | Control                   | Use Case                        |
+| ------------------ | ------------------------- | ------------------------------- |
 | `/cc-best:iterate` | Fully autonomous          | Clear task list, single session |
 | `/cc-best:pair`    | Step-by-step confirmation | Learning, sensitive operations  |
 
@@ -373,8 +373,8 @@ git commit -m "Initial commit from Claude Code template"
 
 #### Q: /cc-best:iterate 和 /cc-best:pair 有什么区别？
 
-| 模式       | 控制方式 | 适用场景                 |
-| ---------- | -------- | ------------------------ |
+| 模式               | 控制方式 | 适用场景                 |
+| ------------------ | -------- | ------------------------ |
 | `/cc-best:iterate` | 完全自主 | 任务清单明确，单 session |
 | `/cc-best:pair`    | 每步确认 | 学习新技术、敏感操作     |
 
@@ -560,6 +560,61 @@ set PYTHONUTF8=1
 
 - 使用 `/cc-best:iterate` 命令进行自主循环（cc-best 内置，无需 ralph-loop）
 - 使用 WSL (Windows Subsystem for Linux)
+
+---
+
+## General / 通用问题
+
+### Q: How to update the plugin? / 如何更新插件？
+
+**Plugin installation / 插件安装方式**:
+
+```bash
+# Reinstall to get the latest version / 重新安装获取最新版本
+/plugin install cc-best@xiaobei930
+```
+
+**Clone installation / 克隆安装方式**:
+
+```bash
+cd .claude
+git pull origin main
+```
+
+### Q: How to use with an existing project? / 已有项目如何使用？
+
+CC-Best works with any existing project. After installing the plugin:
+
+CC-Best 适用于任何已有项目。安装插件后：
+
+1. **Initialize project configuration / 初始化项目配置**:
+
+   ```bash
+   /cc-best:setup
+   ```
+
+   This creates `CLAUDE.md`, `memory-bank/` and other project files. Existing files will NOT be overwritten.
+
+   这会创建 `CLAUDE.md`、`memory-bank/` 等项目文件。已有文件不会被覆盖。
+
+2. **Enable hooks (optional but recommended) / 启用 hooks（可选但推荐）**:
+
+   ```bash
+   /cc-best:setup --hooks
+   ```
+
+3. **Start working / 开始使用**:
+
+   ```bash
+   # Autonomous mode / 自主模式
+   /cc-best:iterate "add dark mode support"
+
+   # Or pair programming / 或结对编程
+   /cc-best:pair
+   ```
+
+> 💡 **Tip / 提示**: Run `/cc-best:status` at any time to check your project configuration status.
+> 随时运行 `/cc-best:status` 检查项目配置状态。
 
 ---
 
