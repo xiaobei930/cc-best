@@ -339,7 +339,7 @@ flowchart LR
 
 ## 🏗️ 架构概览
 
-本模板采用**四层架构**：
+CC-Best 采用**四层架构**：
 
 ```mermaid
 flowchart TB
@@ -391,17 +391,17 @@ flowchart TB
 
 ## 🔌 插件配合
 
-本模板设计为与官方 Claude Code 插件无缝配合。我们内置的智能体和技能是对官方插件的补充（而非替代）。
+CC-Best 设计为与官方 Claude Code 插件无缝配合。我们内置的智能体和技能是对官方插件的补充（而非替代）。
 
 ### 与官方插件的关系
 
-| 模板内容                   | 官方插件            | 关系说明                                       |
+| CC-Best 内容               | 官方插件            | 关系说明                                       |
 | -------------------------- | ------------------- | ---------------------------------------------- |
-| `code-reviewer` 智能体     | `code-review` 插件  | 模板：轻量级本地版；插件：功能更强大，自动触发 |
-| `security-reviewer` 智能体 | `security-guidance` | 模板：OWASP 检查清单；插件：自动安全分析       |
-| `code-simplifier` 智能体   | `code-simplifier`   | 功能相似；插件拥有更多上下文                   |
+| `code-reviewer` 智能体     | `code-review` 插件  | 内置：轻量级本地版；官方：功能更强大，自动触发 |
+| `security-reviewer` 智能体 | `security-guidance` | 内置：OWASP 检查清单；官方：自动安全分析       |
+| `code-simplifier` 智能体   | `code-simplifier`   | 功能相似；官方插件拥有更多上下文               |
 | `/cc-best:cc-ralph` 命令   | `ralph-loop` 插件   | CC-Best 封装；需插件支持跨会话持久化           |
-| `hookify` 示例             | `hookify` 插件      | 模板：示例配置；插件：完整钩子管理             |
+| `hookify` 示例             | `hookify` 插件      | 内置：示例配置；官方：完整钩子管理             |
 
 ### 推荐的插件配置
 
@@ -417,9 +417,9 @@ flowchart TB
 
 ### 使用建议
 
-- **未安装插件时**：模板智能体/技能可独立工作
-- **已安装插件时**：插件用于高级功能，模板用于快速本地检查
-- **最佳实践**：安装插件，使用模板智能体获得即时反馈，使用插件进行深度分析
+- **未安装插件时**：内置智能体/技能可独立工作
+- **已安装插件时**：官方插件用于高级功能，CC-Best 用于快速本地检查
+- **最佳实践**：安装官方插件，使用内置智能体获得即时反馈，使用官方插件进行深度分析
 
 ---
 
@@ -557,7 +557,7 @@ MCP 工具会在项目中自动创建临时目录：
 | `.playwright-mcp/`     | MCP 自动创建 | Playwright MCP 临时文件    |
 | `.claude/mcp-data/`    | MCP 自动创建 | MCP 共享数据               |
 | `*-mcp/`               | MCP 自动创建 | 其他 MCP 工具目录          |
-| `.claude/screenshots/` | 模板预定义   | 手动保存的截图（有意义的） |
+| `.claude/screenshots/` | 插件预定义   | 手动保存的截图（有意义的） |
 
 **清理脚本**：使用 `cleanup.sh` 进行定期维护：
 
@@ -738,7 +738,7 @@ Claude 会自动：
 ---
 
 <p align="center">
-  <strong>如果这个模板对你有帮助，请给它一个 ⭐ Star！</strong>
+  <strong>如果 CC-Best 对你有帮助，请给它一个 ⭐ Star！</strong>
 </p>
 
 ## Star History

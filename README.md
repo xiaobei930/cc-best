@@ -339,7 +339,7 @@ flowchart LR
 
 ## 🏗️ Architecture Overview
 
-This template uses a **four-tier architecture**:
+CC-Best uses a **four-tier architecture**:
 
 ```mermaid
 flowchart TB
@@ -391,17 +391,17 @@ flowchart TB
 
 ## 🔌 Plugin Compatibility
 
-This template is designed to work seamlessly with official Claude Code plugins. Our built-in agents and skills complement (not replace) official plugins.
+CC-Best is designed to work seamlessly with official Claude Code plugins. Our built-in agents and skills complement (not replace) official plugins.
 
 ### Relationship with Official Plugins
 
-| Template Content            | Official Plugin      | Relationship                                                                 |
-| --------------------------- | -------------------- | ---------------------------------------------------------------------------- |
-| `code-reviewer` agent       | `code-review` plugin | Template: lightweight local version; Plugin: more powerful with auto-trigger |
-| `security-reviewer` agent   | `security-guidance`  | Template: OWASP checklist; Plugin: automatic security analysis               |
-| `code-simplifier` agent     | `code-simplifier`    | Similar function; plugin has more context                                    |
-| `/cc-best:cc-ralph` command | `ralph-loop` plugin  | CC-Best wrapper; requires plugin for cross-session persistence               |
-| `hookify` examples          | `hookify` plugin     | Template: examples; Plugin: full hook management                             |
+| CC-Best Content             | Official Plugin      | Relationship                                                                   |
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------ |
+| `code-reviewer` agent       | `code-review` plugin | Built-in: lightweight local version; Official: more powerful with auto-trigger |
+| `security-reviewer` agent   | `security-guidance`  | Built-in: OWASP checklist; Official: automatic security analysis               |
+| `code-simplifier` agent     | `code-simplifier`    | Similar function; official plugin has more context                             |
+| `/cc-best:cc-ralph` command | `ralph-loop` plugin  | CC-Best wrapper; requires plugin for cross-session persistence                 |
+| `hookify` examples          | `hookify` plugin     | Built-in: examples; Official: full hook management                             |
 
 ### Recommended Plugin Configuration
 
@@ -417,9 +417,9 @@ This template is designed to work seamlessly with official Claude Code plugins. 
 
 ### When to Use Which
 
-- **No plugins installed**: Template agents/skills work standalone
-- **With plugins**: Use plugins for advanced features, template for quick local checks
-- **Best practice**: Install plugins, use template agents for immediate feedback, plugins for deep analysis
+- **No plugins installed**: Built-in agents/skills work standalone
+- **With plugins**: Use official plugins for advanced features, CC-Best for quick local checks
+- **Best practice**: Install official plugins, use built-in agents for immediate feedback, official plugins for deep analysis
 
 ---
 
@@ -719,7 +719,7 @@ Some commands use MCP (Model Context Protocol) tools for enhanced functionality:
 
 ## 🌐 Note on Internal Files
 
-This template's internal files (`commands/`, `rules/`, `skills/`) are written in **Chinese**. This is intentional:
+CC-Best's internal files (`commands/`, `rules/`, `skills/`) are written in **Chinese**. This is intentional:
 
 - **Claude understands Chinese** - All Claude models can read and follow Chinese instructions perfectly
 - **No translation burden** - Maintaining dual-language internal files would be impractical
@@ -750,7 +750,7 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ---
 
 <p align="center">
-  <strong>If this template helps you, please give it a ⭐ Star!</strong>
+  <strong>If CC-Best helps you, please give it a ⭐ Star!</strong>
 </p>
 
 ## Star History
