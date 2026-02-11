@@ -33,8 +33,8 @@ Thank you for your interest in contributing! This project aims to build the best
 
 ```bash
 # 1. Fork and clone
-git clone https://github.com/YOUR_USERNAME/claude-code-best-practices.git
-cd claude-code-best-practices
+git clone https://github.com/YOUR_USERNAME/cc-best.git
+cd cc-best
 
 # 2. Create a branch
 git checkout -b feature/your-feature-name
@@ -105,9 +105,9 @@ To test changes locally before submitting a PR:
 ```bash
 # Option 1: Symlink (recommended)
 # macOS/Linux:
-ln -s /path/to/claude-code-best-practices ~/.claude/plugins/cc-best
+ln -s /path/to/cc-best ~/.claude/plugins/cc-best
 # Windows (PowerShell as Admin):
-New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\claude-code-best-practices"
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\cc-best"
 
 # Option 2: Run CI validation locally
 node scripts/ci/validate-agents.js
@@ -265,8 +265,8 @@ main();
 
 ```bash
 # 1. Fork 并克隆
-git clone https://github.com/YOUR_USERNAME/claude-code-best-practices.git
-cd claude-code-best-practices
+git clone https://github.com/YOUR_USERNAME/cc-best.git
+cd cc-best
 
 # 2. 创建分支
 git checkout -b feature/your-feature-name
@@ -337,9 +337,9 @@ refactor(scripts): simplify timeout configuration
 ```bash
 # 方式 1：符号链接（推荐）
 # macOS/Linux:
-ln -s /path/to/claude-code-best-practices ~/.claude/plugins/cc-best
+ln -s /path/to/cc-best ~/.claude/plugins/cc-best
 # Windows (管理员 PowerShell):
-New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\claude-code-best-practices"
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\plugins\cc-best" -Target "C:\path\to\cc-best"
 
 # 方式 2：本地运行 CI 验证
 node scripts/ci/validate-agents.js

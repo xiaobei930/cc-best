@@ -387,7 +387,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Historical Releases / 历史版本
 
-> 以下版本为简要摘要，完整内容参见 [Git History](https://github.com/xiaobei930/claude-code-best-practices/commits/main)
+> 以下版本为简要摘要，完整内容参见 [Git History](https://github.com/xiaobei930/cc-best/commits/main)
 
 ### [0.4.x] - 2025-01-24 ~ 2025-01-25
 
@@ -432,26 +432,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[0.6.3]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.2...v0.6.3
-[0.6.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.1...v0.6.2
-[0.6.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.6.0...v0.6.1
-[0.6.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.9...v0.6.0
-[0.5.9]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.8...v0.5.9
-[0.5.8]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.7...v0.5.8
-[0.5.7]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.6...v0.5.7
-[0.5.6]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.5...v0.5.6
-[0.5.5]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.4...v0.5.5
-[0.5.4]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.3...v0.5.4
-[0.5.3]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.2...v0.5.3
-[0.5.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.1...v0.5.2
-[0.5.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.5...v0.5.0
-[0.4.5]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.4...v0.4.5
-[0.4.4]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.3...v0.4.4
-[0.4.3]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.2...v0.4.3
-[0.4.2]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.1...v0.4.2
-[0.4.1]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/xiaobei930/claude-code-best-practices/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/xiaobei930/claude-code-best-practices/releases/tag/v0.1.0
+[0.6.3]: https://github.com/xiaobei930/cc-best/compare/v0.6.2...v0.6.3
+[0.6.2]: https://github.com/xiaobei930/cc-best/compare/v0.6.1...v0.6.2
+[0.6.1]: https://github.com/xiaobei930/cc-best/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/xiaobei930/cc-best/compare/v0.5.9...v0.6.0
+[0.5.9]: https://github.com/xiaobei930/cc-best/compare/v0.5.8...v0.5.9
+[0.5.8]: https://github.com/xiaobei930/cc-best/compare/v0.5.7...v0.5.8
+[0.5.7]: https://github.com/xiaobei930/cc-best/compare/v0.5.6...v0.5.7
+[0.5.6]: https://github.com/xiaobei930/cc-best/compare/v0.5.5...v0.5.6
+[0.5.5]: https://github.com/xiaobei930/cc-best/compare/v0.5.4...v0.5.5
+[0.5.4]: https://github.com/xiaobei930/cc-best/compare/v0.5.3...v0.5.4
+[0.5.3]: https://github.com/xiaobei930/cc-best/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/xiaobei930/cc-best/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/xiaobei930/cc-best/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/xiaobei930/cc-best/compare/v0.4.5...v0.5.0
+[0.4.5]: https://github.com/xiaobei930/cc-best/compare/v0.4.4...v0.4.5
+[0.4.4]: https://github.com/xiaobei930/cc-best/compare/v0.4.3...v0.4.4
+[0.4.3]: https://github.com/xiaobei930/cc-best/compare/v0.4.2...v0.4.3
+[0.4.2]: https://github.com/xiaobei930/cc-best/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/xiaobei930/cc-best/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/xiaobei930/cc-best/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/xiaobei930/cc-best/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/xiaobei930/cc-best/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/xiaobei930/cc-best/releases/tag/v0.1.0

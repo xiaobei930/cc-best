@@ -9,7 +9,7 @@ CC-Best transforms Claude Code into a complete development team with role-based 
 - Name: cc-best
 - Version: 0.6.3
 - License: MIT
-- Repository: https://github.com/xiaobei930/claude-code-best-practices
+- Repository: https://github.com/xiaobei930/cc-best
 
 ## Components
 
@@ -46,7 +46,7 @@ Four-layer architecture: Philosophy → Method → Practice → Tools
 ## Installation
 
 ```
-/plugin marketplace add xiaobei930/claude-code-best-practices
+/plugin marketplace add xiaobei930/cc-best
 /plugin install cc-best@xiaobei930
 /cc-best:status
 ```

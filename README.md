@@ -6,9 +6,9 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/claude-code-best-practices?include_prereleases" alt="Release"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
+  <a href="https://github.com/xiaobei930/cc-best/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/cc-best?include_prereleases" alt="Release"></a>
+  <a href="https://github.com/xiaobei930/cc-best/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/cc-best/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
+  <a href="https://github.com/xiaobei930/cc-best/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/cc-best?style=social" alt="GitHub stars"></a>
 </p>
 
 <p align="center">
@@ -42,7 +42,7 @@
 
 ```bash
 # Add marketplace and install
-/plugin marketplace add xiaobei930/claude-code-best-practices
+/plugin marketplace add xiaobei930/cc-best
 /plugin install cc-best@xiaobei930
 
 # Verify installation (30 seconds)
@@ -77,7 +77,7 @@
 <summary>📦 Alternative: Clone for full customization</summary>
 
 ```bash
-git clone https://github.com/xiaobei930/claude-code-best-practices.git .claude
+git clone https://github.com/xiaobei930/cc-best.git .claude
 cd .claude && bash scripts/shell/init.sh
 
 # Convert command format from /cc-best:xxx to /xxx
@@ -99,7 +99,7 @@ Use clone when you need to customize all files in your repo.
 /plugin uninstall cc-best@xiaobei930
 
 # Remove marketplace (optional)
-/plugin marketplace remove xiaobei930/claude-code-best-practices
+/plugin marketplace remove xiaobei930/cc-best
 ```
 
 No files are left behind.

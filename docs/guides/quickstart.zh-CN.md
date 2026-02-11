@@ -6,7 +6,7 @@
 
 ```bash
 # 添加 marketplace 并安装
-/plugin marketplace add xiaobei930/claude-code-best-practices
+/plugin marketplace add xiaobei930/cc-best
 /plugin install cc-best@xiaobei930
 
 # 验证安装

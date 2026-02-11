@@ -6,9 +6,9 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/claude-code-best-practices?include_prereleases" alt="Release"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/claude-code-best-practices/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
-  <a href="https://github.com/xiaobei930/claude-code-best-practices/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/claude-code-best-practices?style=social" alt="GitHub stars"></a>
+  <a href="https://github.com/xiaobei930/cc-best/releases"><img src="https://img.shields.io/github/v/release/xiaobei930/cc-best?include_prereleases" alt="Release"></a>
+  <a href="https://github.com/xiaobei930/cc-best/actions/workflows/validate-template.yml"><img src="https://github.com/xiaobei930/cc-best/actions/workflows/validate-template.yml/badge.svg" alt="Validate Plugin"></a>
+  <a href="https://github.com/xiaobei930/cc-best/stargazers"><img src="https://img.shields.io/github/stars/xiaobei930/cc-best?style=social" alt="GitHub stars"></a>
 </p>
 
 <p align="center">
@@ -42,7 +42,7 @@
 
 ```bash
 # 添加 marketplace 并安装
-/plugin marketplace add xiaobei930/claude-code-best-practices
+/plugin marketplace add xiaobei930/cc-best
 /plugin install cc-best@xiaobei930
 
 # 验证安装（30 秒）
@@ -77,7 +77,7 @@
 <summary>📦 替代方案：克隆完整仓库</summary>
 
 ```bash
-git clone https://github.com/xiaobei930/claude-code-best-practices.git .claude
+git clone https://github.com/xiaobei930/cc-best.git .claude
 cd .claude && bash scripts/shell/init.sh
 
 # 将命令格式从 /cc-best:xxx 转换为 /xxx
@@ -99,7 +99,7 @@ node scripts/node/convert-to-local.js
 /plugin uninstall cc-best@xiaobei930
 
 # 卸载 Marketplace（可选）
-/plugin marketplace remove xiaobei930/claude-code-best-practices
+/plugin marketplace remove xiaobei930/cc-best
 ```
 
 不会留下任何残留文件。

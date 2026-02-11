@@ -170,12 +170,12 @@ const homeDir = os.homedir();
 const pluginVersion = "0.6.3"; // 当前版本
 const pluginPath = path.join(
   homeDir,
-  ".claude/plugins/cache/claude-code-best-practices/cc-best",
+  ".claude/plugins/cache/cc-best/cc-best",
   pluginVersion,
 );
-// Windows: C:\Users\<user>\.claude\plugins\cache\claude-code-best-practices\cc-best\0.6.3
-// macOS:   /Users/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.6.3
-// Linux:   /home/<user>/.claude/plugins/cache/claude-code-best-practices/cc-best/0.6.3
+// Windows: C:\Users\<user>\.claude\plugins\cache\cc-best\cc-best\0.6.3
+// macOS:   /Users/<user>/.claude/plugins/cache/cc-best/cc-best/0.6.3
+// Linux:   /home/<user>/.claude/plugins/cache/cc-best/cc-best/0.6.3
 ```
 
 **Hooks 配置模板**：

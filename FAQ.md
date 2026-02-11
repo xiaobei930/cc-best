@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
+git clone https://github.com/xiaobei930/cc-best.git my-project
 
 # 2. Enter your project
 cd my-project
@@ -238,7 +238,7 @@ alias python3=python
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/xiaobei930/claude-code-best-practices.git my-project
+git clone https://github.com/xiaobei930/cc-best.git my-project
 
 # 2. 进入项目
 cd my-project
@@ -620,5 +620,5 @@ CC-Best 适用于任何已有项目。安装插件后：
 
 ## Still Have Questions? / 还有问题？
 
-- [Open an Issue](https://github.com/xiaobei930/claude-code-best-practices/issues/new)
-- [Start a Discussion](https://github.com/xiaobei930/claude-code-best-practices/discussions)
+- [Open an Issue](https://github.com/xiaobei930/cc-best/issues/new)
+- [Start a Discussion](https://github.com/xiaobei930/cc-best/discussions)
