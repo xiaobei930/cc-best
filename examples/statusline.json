@@ -1,29 +1,39 @@
 {
   "$schema": "https://json-schemastore.org/claude-code-settings.json",
   "_description": {
-    "zh": "自定义状态行配置示例 - 显示用户、路径、Git分支、上下文百分比、模型、时间、Todo数量",
-    "en": "Custom status line example - Shows user, path, git branch, context %, model, time, todo count"
+    "zh": "CC-Best 专属状态行 - 显示管线阶段（PM→Lead→Dev→QA）、活跃任务、Git 分支、上下文百分比",
+    "en": "CC-Best pipeline status line - Shows pipeline stage (PM→Lead→Dev→QA), active task, git branch, context %"
   },
   "_usage": {
-    "zh": "将 statusLine 对象复制到 ~/.claude/settings.json 中使用",
-    "en": "Copy the statusLine object to ~/.claude/settings.json to use"
+    "zh": "将 statusLine 对象复制到 ~/.claude/settings.json 或项目 .claude/settings.local.json 中使用",
+    "en": "Copy the statusLine object to ~/.claude/settings.json or project .claude/settings.local.json"
   },
-  "_output_example": "koala:~/projects/myapp main* ctx:73% opus 14:30 todos:3",
+  "_output_example": "koala:~/project main* PM>[Lead]>Dev>QA 73% opus 14:30 TSK-003",
   "_colors": {
     "B": "Blue 蓝色 - directory path 目录路径",
     "G": "Green 绿色 - git branch 分支名",
     "Y": "Yellow 黄色 - dirty status 未提交标记, time 时间",
-    "M": "Magenta 品红 - context remaining 上下文剩余",
-    "C": "Cyan 青色 - username 用户名, todos 待办数",
-    "T": "Gray 灰色 - model name 模型名"
+    "M": "Magenta 品红 - pipeline active stage 管线活跃阶段, context % 上下文百分比",
+    "C": "Cyan 青色 - username 用户名, active task 活跃任务",
+    "T": "Gray 灰色 - model name 模型名, inactive stages 非活跃阶段"
+  },
+  "_features": {
+    "zh": [
+      "显示 cc-best 管线当前阶段（从 memory-bank/progress.md 解析）",
+      "显示活跃任务编号（TSK-XXX）",
+      "跨平台兼容（Node.js，无需 bash/jq）",
+      "自动检测 Git 分支和未提交状态"
+    ],
+    "en": [
+      "Shows cc-best pipeline stage (parsed from memory-bank/progress.md)",
+      "Shows active task ID (TSK-XXX)",
+      "Cross-platform compatible (Node.js, no bash/jq needed)",
+      "Auto-detects git branch and dirty state"
+    ]
   },
   "statusLine": {
     "type": "command",
-    "command": "input=$(cat); user=$(whoami); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir' | sed \"s|$HOME|~|g\"); model=$(echo \"$input\" | jq -r '.model.display_name'); time=$(date +%H:%M); remaining=$(echo \"$input\" | jq -r '.context_window.remaining_percentage // empty'); transcript=$(echo \"$input\" | jq -r '.transcript_path'); todo_count=$([ -f \"$transcript\" ] && grep -c '\"type\":\"todo\"' \"$transcript\" 2>/dev/null || echo 0); cd \"$(echo \"$input\" | jq -r '.workspace.current_dir')\" 2>/dev/null; branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo ''); status=''; [ -n \"$branch\" ] && { [ -n \"$(git status --porcelain 2>/dev/null)\" ] && status='*'; }; B='\\033[38;2;30;102;245m'; G='\\033[38;2;64;160;43m'; Y='\\033[38;2;223;142;29m'; M='\\033[38;2;136;57;239m'; C='\\033[38;2;23;146;153m'; R='\\033[0m'; T='\\033[38;2;76;79;105m'; printf \"${C}${user}${R}:${B}${cwd}${R}\"; [ -n \"$branch\" ] && printf \" ${G}${branch}${Y}${status}${R}\"; [ -n \"$remaining\" ] && printf \" ${M}ctx:${remaining}%%${R}\"; printf \" ${T}${model}${R} ${Y}${time}${R}\"; [ \"$todo_count\" -gt 0 ] && printf \" ${C}todos:${todo_count}${R}\"; echo",
-    "description": "Custom status line 自定义状态行"
-  },
-  "_note": {
-    "zh": "此命令依赖 jq 工具。Windows 用户需要在 Git Bash 或 WSL 中使用。",
-    "en": "This command requires jq. Windows users need Git Bash or WSL."
+    "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/statusline.js\"",
+    "description": "CC-Best pipeline status line CC-Best 管线状态行"
   }
 }
