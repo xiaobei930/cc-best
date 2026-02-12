@@ -18,7 +18,7 @@ CC-Best transforms Claude Code into a complete development team with role-based 
 - 17 skills (backend, frontend, testing, security, architecture, devops, git, learning)
 - 8 agents (architect, planner, code-reviewer, code-simplifier, security-reviewer, tdd-guide, build-error-resolver, requirement-validator)
 - 33 rules across 8 directories (common + python, frontend, java, csharp, cpp, embedded, ui)
-- 18 hook scripts across 8 lifecycle events
+- 21 hook scripts across 8 lifecycle events (17 registered in hooks.json)
 
 ## Key Concepts
 

@@ -51,10 +51,10 @@ allowed-tools: Read, Glob, Grep, Bash
 ```
 📊 CC-Best 组件统计
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Commands:  38 个 (commands/*.md)
+Commands:  40 个 (commands/*.md)
 Skills:    17 个 (skills/*/SKILL.md)
 Agents:     8 个 (agents/*.md)
-Hooks:     24 个 (scripts/node/hooks/*.js)
+Hooks:     21 个 (scripts/node/hooks/*.js)
 Rules:     33 个 (rules/**/*.md)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

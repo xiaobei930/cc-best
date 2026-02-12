@@ -156,16 +156,16 @@ learnings:
 
 ### 建议动作
 
-| 类型 | 动作              | 目标位置               | 优先级 |
-| ---- | ----------------- | ---------------------- | ------ |
-| 规则 | 添加 API 调用规范 | `rules/api-style.md`   | 高     |
-| 约束 | 添加禁止操作项    | `CLAUDE.md`            | 高     |
-| 技能 | 可演化为新技能    | `/cc-best:evolve`      | 中     |
-| 钩子 | 创建自动检测规则  | `.claude/hookify.*.md` | 低     |
+| 类型 | 动作              | 目标位置                    | 优先级 |
+| ---- | ----------------- | --------------------------- | ------ |
+| 规则 | 添加 API 调用规范 | `rules/common/api-style.md` | 高     |
+| 约束 | 添加禁止操作项    | `CLAUDE.md`                 | 高     |
+| 技能 | 可演化为新技能    | `/cc-best:evolve`           | 中     |
+| 钩子 | 创建自动检测规则  | `.claude/hookify.*.md`      | 低     |
 
 ### 更新的文件
 
-1. `rules/api-style.md` - 新增 API 调用规范
+1. `rules/common/api-style.md` - 新增 API 调用规范
 2. `CLAUDE.md` - 新增禁止操作项
 3. `.claude/hookify.config-warning.local.md` - 新增自动检测规则
 

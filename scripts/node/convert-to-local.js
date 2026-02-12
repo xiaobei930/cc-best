@@ -23,7 +23,14 @@ const PLUGIN_PREFIX = "cc-best:";
 const DRY_RUN = process.argv.includes("--dry-run");
 
 // 需要处理的目录
-const DIRS_TO_PROCESS = ["commands", "skills", "agents", ".claude-plugin"];
+const DIRS_TO_PROCESS = [
+  "commands",
+  "skills",
+  "agents",
+  ".claude-plugin",
+  "docs",
+  "rules",
+];
 
 // 需要处理的文件
 const FILES_TO_PROCESS = ["CLAUDE.md", "README.md", "README.zh-CN.md"];

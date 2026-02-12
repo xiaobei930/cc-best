@@ -10,11 +10,11 @@
 
 | 组件         | 数量  | 位置                  | 触发方式                           |
 | ------------ | ----- | --------------------- | ---------------------------------- |
-| **Commands** | 38    | `commands/`           | 用户输入 `/xxx`                    |
+| **Commands** | 40    | `commands/`           | 用户输入 `/xxx`                    |
 | **Skills**   | 17    | `skills/`             | Agent 预加载 / 自动注入            |
 | **Agents**   | 8     | `agents/`             | Task tool 委派                     |
 | **Rules**    | 33    | `rules/`              | 路径匹配自动注入 (8 目录分层)      |
-| **Hooks**    | 18/17 | `scripts/node/hooks/` | 生命周期自动触发 (18 脚本/17 配置) |
+| **Hooks**    | 21/17 | `scripts/node/hooks/` | 生命周期自动触发 (21 脚本/17 配置) |
 
 ---
 
@@ -22,7 +22,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      Commands (38)                          │
+│                      Commands (40)                          │
 │  角色: pm, clarify, lead, designer, dev, qa, verify         │
 │  工具: build, test, run, status, commit, compact...         │
 │  模式: iterate, pair, cc-ralph, mode                        │
@@ -428,11 +428,11 @@ tools: Read, Grep, Glob
 
 | 类别                 | 数量                                                            |
 | -------------------- | --------------------------------------------------------------- |
-| Commands             | 38                                                              |
+| Commands             | 40                                                              |
 | Skills               | 17                                                              |
 | Agents               | 8                                                               |
 | Rules                | 33 (8 目录: common/python/frontend/java/csharp/cpp/embedded/ui) |
-| Hooks Scripts        | 18 脚本 / 17 已配置                                             |
+| Hooks Scripts        | 21 脚本 / 17 已配置                                             |
 | Language Support     | 6 (Python, TS, Java, Go, C#, Rust)                              |
 | Framework Support    | 8 (React, Vue, Angular, Svelte, FastAPI...)                     |
 | Database Support     | 4 (MySQL, PostgreSQL, Oracle, SQLite)                           |

@@ -226,8 +226,8 @@ src/
 ## 生成的知识文件
 
 1. `memory-bank/patterns.md` - 项目模式文档
-2. `rules/naming.md` - 命名规范（建议）
-3. `rules/architecture.md` - 架构规范（建议）
+2. `rules/common/naming.md` - 命名规范（建议）
+3. `rules/common/architecture.md` - 架构规范（建议）
 ```
 
 ---

@@ -36,7 +36,7 @@ async function main() {
     }
 
     // 检查是否有未提交的变更
-    const result = runCommand("git", ["status", "--porcelain"]);
+    const result = runCommand("git status --porcelain");
     if (result.success && result.output) {
       const lines = result.output
         .trim()
