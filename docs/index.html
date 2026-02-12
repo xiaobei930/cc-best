@@ -49,6 +49,8 @@
     }
     </script>
 
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -398,7 +400,10 @@
         /* Hero Install Box */
         .hero-install {
             margin-top: 32px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
 
         .hero-install-label {
@@ -407,14 +412,14 @@
             color: #86868b;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
 
         .hero-install-box {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
+            gap: 8px;
+            padding: 12px 16px;
             background: rgba(29, 29, 31, 0.9);
             border: 1px solid rgba(139, 92, 246, 0.3);
             border-radius: 12px;
@@ -423,6 +428,8 @@
             color: #a78bfa;
             backdrop-filter: blur(10px);
             transition: border-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
         }
 
         .hero-install-box:hover {
@@ -439,6 +446,37 @@
 
         .hero-install-box .install-url {
             color: #a78bfa;
+        }
+
+        .install-copy {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            cursor: pointer;
+            color: #86868b;
+            transition: all 0.2s ease;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        .install-copy:hover {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+
+        .install-copy svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .install-copy.copied {
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.15);
         }
 
         /* Inline CTA */
@@ -1039,8 +1077,8 @@
             <a href="#features" class="nav-link">Features</a>
             <a href="#workflow" class="nav-link">Workflow</a>
             <a href="#install" class="nav-link">Install</a>
-            <a href="https://github.com/xiaobei930/cc-best/blob/main/README.md" class="nav-link" target="_blank">Docs</a>
-            <a href="https://github.com/xiaobei930/cc-best" class="nav-github" target="_blank" title="View on GitHub">
+            <a href="https://github.com/xiaobei930/cc-best/blob/main/README.md" class="nav-link" target="_blank" rel="noopener noreferrer">Docs</a>
+            <a href="https://github.com/xiaobei930/cc-best" class="nav-github" target="_blank" rel="noopener noreferrer" title="View on GitHub">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                 </svg>
@@ -1215,13 +1253,13 @@
             <h1 class="hero-title">CC-Best <span class="hero-badge" id="version-badge">v0.6.3</span></h1>
             <p class="hero-subtitle">Turn Claude Code into a full development team.<br>One plugin. Full workflow. Autonomous.</p>
             <div class="hero-cta-group">
-                <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="hero-cta" target="_blank">
+                <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="hero-cta" target="_blank" rel="noopener noreferrer">
                     Get Started
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 8h10M9 4l4 4-4 4"/>
                     </svg>
                 </a>
-                <a href="https://github.com/xiaobei930/cc-best" class="hero-cta-secondary" target="_blank">
+                <a href="https://github.com/xiaobei930/cc-best" class="hero-cta-secondary" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
@@ -1230,15 +1268,19 @@
             </div>
             <div class="hero-install">
                 <div class="hero-install-label">Quick Install</div>
-                <div class="hero-install-box">
-                    <span class="install-prompt">/</span>
-                    <span class="install-cmd">plugin marketplace add</span>
+                <div class="hero-install-box" onclick="copyCommand(this, '/plugin marketplace add xiaobei930/cc-best')">
+                    <span class="install-prompt">/</span><span class="install-cmd">plugin marketplace add</span>
                     <span class="install-url">xiaobei930/cc-best</span>
+                    <button class="install-copy" title="Copy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </button>
                 </div>
-                <div class="hero-install-box" style="margin-top: 6px;">
-                    <span class="install-prompt">/</span>
-                    <span class="install-cmd">plugin install</span>
+                <div class="hero-install-box" onclick="copyCommand(this, '/plugin install cc-best@xiaobei930')">
+                    <span class="install-prompt">/</span><span class="install-cmd">plugin install</span>
                     <span class="install-url">cc-best@xiaobei930</span>
+                    <button class="install-copy" title="Copy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1346,11 +1388,11 @@
 
     <!-- Inline CTA after Features -->
     <div class="inline-cta">
-        <a href="https://github.com/xiaobei930/cc-best" class="inline-cta-star" target="_blank">
+        <a href="https://github.com/xiaobei930/cc-best" class="inline-cta-star" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             Star on GitHub
         </a>
-        <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="inline-cta-docs" target="_blank">
+        <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="inline-cta-docs" target="_blank" rel="noopener noreferrer">
             Read the Docs
         </a>
     </div>
@@ -1424,12 +1466,12 @@
             </div>
             <div class="code-body">
                 <span class="code-line"><span class="code-comment"># Step 1: Add the marketplace</span></span>
-                <span class="code-line"><span class="code-cmd">/</span> <span class="code-keyword">plugin marketplace add</span> <span class="code-string">xiaobei930/cc-best</span></span>
+                <span class="code-line"><span class="code-cmd">/</span><span class="code-keyword">plugin marketplace add</span> <span class="code-string">xiaobei930/cc-best</span></span>
                 <span class="code-line"><span class="code-comment"># Step 2: Install the plugin</span></span>
-                <span class="code-line"><span class="code-cmd">/</span> <span class="code-keyword">plugin install</span> <span class="code-string">cc-best@xiaobei930</span></span>
+                <span class="code-line"><span class="code-cmd">/</span><span class="code-keyword">plugin install</span> <span class="code-string">cc-best@xiaobei930</span></span>
                 <span class="code-line"></span>
                 <span class="code-line"><span class="code-comment"># Start autonomous development</span></span>
-                <span class="code-line"><span class="code-cmd">$</span> <span class="code-keyword">/cc-best:iterate</span> <span class="code-string">"add user authentication"</span></span>
+                <span class="code-line"><span class="code-cmd">/</span><span class="code-keyword">cc-best:iterate</span> <span class="code-string">"add user authentication"</span></span>
                 <span class="code-line"></span>
                 <span class="code-line"><span class="code-comment"># PM analyzes → Lead designs → Dev codes → QA validates</span></span>
                 <span class="code-line"><span class="code-arg">&#10003;</span> Requirements defined &middot; Architecture designed</span>
@@ -1465,11 +1507,11 @@
 
     <!-- Inline CTA after Comparison -->
     <div class="inline-cta">
-        <a href="https://github.com/xiaobei930/cc-best" class="inline-cta-star" target="_blank">
+        <a href="https://github.com/xiaobei930/cc-best" class="inline-cta-star" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             Star on GitHub
         </a>
-        <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="inline-cta-docs" target="_blank">
+        <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="inline-cta-docs" target="_blank" rel="noopener noreferrer">
             Get Started Now
         </a>
     </div>
@@ -1478,16 +1520,16 @@
     <section class="cta-section">
         <h2 class="fade-in">Ready to transform<br>your development?</h2>
         <p class="fade-in">One plugin turns Claude Code into a full development team.</p>
-        <a href="https://github.com/xiaobei930/cc-best" class="cta-button fade-in" target="_blank">Get CC-Best on GitHub</a>
+        <a href="https://github.com/xiaobei930/cc-best" class="cta-button fade-in" target="_blank" rel="noopener noreferrer">Get CC-Best on GitHub</a>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-links">
-            <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="footer-link" target="_blank">Quick Start</a>
-            <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/advanced.md" class="footer-link" target="_blank">Advanced Guide</a>
-            <a href="https://github.com/xiaobei930/cc-best" class="footer-link" target="_blank">GitHub</a>
-            <a href="https://github.com/xiaobei930/cc-best/issues" class="footer-link" target="_blank">Issues</a>
+            <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/quickstart.md" class="footer-link" target="_blank" rel="noopener noreferrer">Quick Start</a>
+            <a href="https://github.com/xiaobei930/cc-best/blob/main/docs/guides/advanced.md" class="footer-link" target="_blank" rel="noopener noreferrer">Advanced Guide</a>
+            <a href="https://github.com/xiaobei930/cc-best" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/xiaobei930/cc-best/issues" class="footer-link" target="_blank" rel="noopener noreferrer">Issues</a>
         </div>
         <p class="footer-copy">&copy; 2026 CC-Best. Open source under MIT License.</p>
     </footer>
@@ -1533,8 +1575,11 @@
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 var href = this.getAttribute('href');
-                if (href === '#') return;
                 e.preventDefault();
+                if (href === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
                 var target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
@@ -1610,6 +1655,20 @@
                     }
                 })
                 .catch(function() { /* 失败时保持 fallback 版本号 */ });
+        }
+
+        // Copy command to clipboard
+        function copyCommand(box, text) {
+            navigator.clipboard.writeText(text).then(function() {
+                var btn = box.querySelector('.install-copy');
+                if (!btn) return;
+                btn.classList.add('copied');
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>';
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+                }, 2000);
+            });
         }
 
         createParticles();
