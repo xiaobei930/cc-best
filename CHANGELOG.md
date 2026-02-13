@@ -36,24 +36,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Git Skill 拆分（SKILL.md → 3 个子文件，584→<480 行）
 - [x] 综合审计修复（Agent 格式规范化、Commands argument-hint/交叉引用、Rules 路径扩展、Legacy 脚本清理、SKILL.md 引用补全）
 
-### v0.7.0 (Planned) - 易用性与配置化
+### v0.7.0 (Planned) - Lite 模式 + 模型策略
 
-**核心目标**: 降低上手门槛 + 灵活配置
+**核心目标**: 降低上手门槛 + Token 成本控制
 
-- [ ] **Lite 模式** - 精简版插件（核心命令+规则子集）
+- [ ] **Lite 模式** - 精简命令集（iterate + dev + verify + commit + 基础工具）+ 精简 Rules（common + 项目语言）+ 精简 Skill 预加载
+- [ ] **三档模型策略** - Quality（Opus 优先）/ Balanced（设计 Opus + 执行 Sonnet）/ Economy（Sonnet + Haiku），按角色映射模型
 - [ ] **Hotfix 快速通道** - 精简管线（Dev→QA→Commit），跳过 PM/Lead 分析
-- [ ] 模型策略配置（质量优先/速度优先/均衡）
+- [ ] **Mermaid 流程图** - 管线角色决策树、异常回退路径可视化
 - [ ] 常见错误诊断与修复建议
-- [ ] 示例项目（完整工作流演示）
 
-### v0.8.0 (Planned) - 多模型协作
+### v0.8.0 (Planned) - 示例项目与生态扩展
 
-**核心目标**: 发挥不同模型优势
+**核心目标**: 端到端验证 + 社区生态
 
+- [ ] **Example Project** - 完整工作流演示（PM→Commit 端到端）
+- [ ] **社区扩展机制** - 自定义 Skill/Rule/Agent 注册点
 - [ ] multi-model skill（多模型协作协议）
-- [ ] Gemini CLI 集成（长上下文分析）
 - [ ] 扩展 second-opinion（支持更多模型）
-- [ ] 任务路由机制（根据任务类型选模型）
+- [ ] Token 用量追踪与报告
 
 ### v1.0.0 (Future) - 稳定版
 
@@ -62,11 +63,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] 稳定的扩展 API
 - [ ] Memory-bank 云同步（可选）
 - [ ] 团队协作支持
-- [ ] 完整 i18n
+- [ ] 完整 i18n（等待官方支持）
 
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.6.5] - 2026-02-13
+
+#### Added / 新增
+
+- **管线容错机制**: QA↔Dev 熔断保护（fix_count ≤ 3 次上限）+ 各角色异常回退路径
+- **Bugfix 模式**: `/cc-best:dev --bugfix` 正式 bugfix 工作流，区分正常开发和 bug 修复
+- **iterate 自动压缩**: 上下文压力时自动保存状态 + 生成摘要，用户操作缩减为 1 步
+- **Roadmap 更新**: v0.7.0（Lite 模式 + 三档模型策略）/ v0.8.0（示例项目 + 社区扩展）
+
+#### Changed / 变更
+
+- **qa.md**: 问题分类新增"高影响假设回退 PM"，Bug 输出含修复轮次和熔断模板
+- **iterate.md**: 角色选择表新增 bugfix/熔断/假设回退行，上下文管理改为自动压缩
+- **lead.md**: 新增异常回退表（需求模糊/可行性低/熔断升级/技术栈不支持）
+- **verify.md/commit.md**: 新增失败后操作和提交后下一步指引
+- **suggest-compact.js**: Hook 提醒改为 iterate 模式友好格式
 
 ### [0.6.4] - 2026-02-12
 
@@ -451,6 +469,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.6.5]: https://github.com/xiaobei930/cc-best/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/xiaobei930/cc-best/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/xiaobei930/cc-best/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/xiaobei930/cc-best/compare/v0.6.1...v0.6.2

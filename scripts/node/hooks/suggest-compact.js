@@ -73,31 +73,24 @@ function main() {
 
   // 首次达到阈值时提醒
   if (count === THRESHOLD) {
-    log(`[CompactReminder] ⚠️ 已进行 ${THRESHOLD} 次工具调用`);
     log(
-      `[CompactReminder] 💡 建议: 如果正在切换阶段或任务已完成，考虑执行 /cc-best:compact`,
+      `[CompactReminder] ⚠️ 已进行 ${THRESHOLD} 次工具调用，建议在任务完成时执行上下文压缩`,
     );
-    log(
-      `[CompactReminder] 📝 提示: 官方 auto-compact 有已知 bug，建议在 70% 上下文前手动压缩`,
-    );
+    log(`[CompactReminder] 💡 /iterate 模式: 将在下一个任务完成点自动保存状态`);
   }
 
   // 超过阈值后定期提醒
   if (count > THRESHOLD && (count - THRESHOLD) % INTERVAL === 0) {
-    log(`[CompactReminder] ⚠️ 已进行 ${count} 次工具调用`);
-    log(
-      `[CompactReminder] 💡 建议: 考虑执行 /cc-best:compact 或 /cc-best:checkpoint`,
-    );
+    log(`[CompactReminder] ⚠️ 已进行 ${count} 次工具调用，上下文压力较大`);
+    log(`[CompactReminder] 💡 /iterate 模式: 请在当前任务完成后触发自动压缩`);
   }
 
   // 高频提醒（可能接近上下文极限）
   if (count >= THRESHOLD * 2) {
     if ((count - THRESHOLD * 2) % 10 === 0) {
+      log(`[CompactReminder] 🔴 已进行 ${count} 次工具调用，上下文接近极限！`);
       log(
-        `[CompactReminder] 🔴 警告: 已进行 ${count} 次工具调用，上下文可能接近极限！`,
-      );
-      log(
-        `[CompactReminder] 🔴 强烈建议: 立即执行 /cc-best:compact 或 /cc-best:checkpoint`,
+        `[CompactReminder] 🔴 立即保存状态并执行压缩（/cc-best:checkpoint → /clear → /cc-best:catchup）`,
       );
     }
   }
