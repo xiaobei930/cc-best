@@ -13,7 +13,7 @@
 /cc-best:status
 ```
 
-你应该会看到所有已安装组件的摘要（40 命令、17 技能、8 智能体、33 规则）。
+你应该会看到所有已安装组件的摘要（42 命令、17 技能、8 智能体、33 规则）。
 
 ## 2. 第一次 Iterate（2 分钟）
 
@@ -237,6 +237,15 @@ paths:
 
 **如何添加新语言支持？**
 在 `rules/` 下创建新目录（如 `rules/rust/`），添加 style、testing、security、performance 规则文件。
+
+**如何切换模型策略？**
+运行 `/cc-best:model` 交互选择：质量模式（全 Opus）、均衡模式（设计 Opus + 执行 Sonnet）、经济模式（核心 Sonnet + 其余 Haiku）。用 `/cc-best:model --show` 查看当前配置。
+
+**什么是 Lite 模式？**
+Lite 模式将 iterate 管线精简为 Dev → Verify → Commit，跳过 PM/Lead/Designer/QA 角色。在 `memory-bank/config.json` 中配置，或通过 `/cc-best:setup --interactive` 设置。
+
+**如何快速修复 Bug？**
+使用 `/cc-best:hotfix "描述"` 进行紧急修复，直接 Dev → Verify → Commit，不走完整管线。
 
 ---
 

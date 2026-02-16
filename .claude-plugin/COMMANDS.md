@@ -1,6 +1,6 @@
 # CC-Best Commands Reference | 命令参考
 
-> Version: 0.6.5 | 40 Commands
+> Version: 0.7.0 | 42 Commands
 
 快速查阅所有命令的参数和用法。
 
@@ -34,6 +34,8 @@
 | `/cc-best:pair`     | 结对编程模式            | -                             |
 | `/cc-best:cc-ralph` | CC-Best Ralph Loop 集成 | -                             |
 | `/cc-best:mode`     | 切换工作模式            | `dev` / `research` / `review` |
+| `/cc-best:model`    | 切换模型策略            | `--show` / 交互选择           |
+| `/cc-best:hotfix`   | 紧急修复快速通道        | `<描述>`                      |
 
 ### /cc-best:mode 可用模式
 
@@ -143,23 +145,23 @@
 
 **中频（功能开发）**
 
-- `/cc-best:pm`, `/cc-best:lead`, `/cc-best:qa`, `/cc-best:verify`, `/cc-best:status`, `/cc-best:fix-issue`, `/cc-best:release`
+- `/cc-best:pm`, `/cc-best:lead`, `/cc-best:qa`, `/cc-best:verify`, `/cc-best:status`, `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:hotfix`
 
 **低频（特定场景）**
 
-- `/cc-best:setup`, `/cc-best:compact-context`, `/cc-best:cleanup`, `/cc-best:train`, `/cc-best:service`
+- `/cc-best:setup`, `/cc-best:compact-context`, `/cc-best:cleanup`, `/cc-best:train`, `/cc-best:service`, `/cc-best:model`
 
 ### 按工作阶段
 
-| 阶段     | 命令                                                                      |
-| -------- | ------------------------------------------------------------------------- |
-| 需求分析 | `/cc-best:pm`, `/cc-best:clarify`                                         |
-| 技术设计 | `/cc-best:lead`, `/cc-best:designer`                                      |
-| 编码实现 | `/cc-best:dev`, `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:fix-issue` |
-| 质量验证 | `/cc-best:qa`, `/cc-best:test`, `/cc-best:verify`                         |
-| 代码提交 | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:release`                      |
-| 维护清理 | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:compact-context`           |
-| 知识管理 | `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                   |
+| 阶段     | 命令                                                                                         |
+| -------- | -------------------------------------------------------------------------------------------- |
+| 需求分析 | `/cc-best:pm`, `/cc-best:clarify`                                                            |
+| 技术设计 | `/cc-best:lead`, `/cc-best:designer`                                                         |
+| 编码实现 | `/cc-best:dev`, `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:fix-issue`, `/cc-best:hotfix` |
+| 质量验证 | `/cc-best:qa`, `/cc-best:test`, `/cc-best:verify`                                            |
+| 代码提交 | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:release`                                         |
+| 维护清理 | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:compact-context`                              |
+| 知识管理 | `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                                      |
 
 ---
 

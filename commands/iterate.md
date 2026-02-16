@@ -38,6 +38,28 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite, Task, WebSearch, 
 
 ## 执行流程
 
+### Step 0: 检查运行模式
+
+读取 `memory-bank/config.json`（如不存在，默认 `full` 模式）：
+
+| 模式   | 管线                            | 适用场景         |
+| ------ | ------------------------------- | ---------------- |
+| `full` | PM → Lead → Designer → Dev → QA | 完整项目开发     |
+| `lite` | Dev → Verify → Commit           | 快速编码、小改动 |
+
+**Lite 模式**: 跳过 Step 1 的角色判断，直接进入 Dev：
+
+- 无需求文档 → 直接 `/cc-best:dev`
+- 完成后 → `/cc-best:verify` → `/cc-best:commit` → 下一任务
+- 不执行 PM、Lead、Designer、QA 角色
+- 适合已有明确需求的快速编码场景
+
+> 切换模式: `/cc-best:setup --interactive` 或直接编辑 `memory-bank/config.json`
+
+**Full 模式**: 按 Step 1 的角色判断表执行完整管线。
+
+---
+
 ### Step 1: 确定角色
 
 | 当前状态                            | 选择角色                | 动作                                         |

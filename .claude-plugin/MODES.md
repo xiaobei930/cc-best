@@ -8,12 +8,13 @@ This guide explains the different working modes available in CC-Best and helps y
 
 ## Overview | 模式概览
 
-| Mode        | Purpose              | User Involvement            | Best For                          |
-| ----------- | -------------------- | --------------------------- | --------------------------------- |
-| `/cc-best:iterate`  | Autonomous iteration | Minimal (only when blocked) | Clear task lists, batch execution |
-| `/cc-best:pair`     | Pair programming     | Continuous collaboration    | Learning, sensitive operations    |
-| `/cc-best:cc-ralph` | Long-running loop    | Minimal (cross-session)     | Hour-level projects               |
-| `/cc-best:mode`     | Behavior adjustment  | N/A (modifier)              | Fine-tuning Claude's approach     |
+| Mode                | Purpose              | User Involvement            | Best For                           |
+| ------------------- | -------------------- | --------------------------- | ---------------------------------- |
+| `/cc-best:iterate`  | Autonomous iteration | Minimal (only when blocked) | Clear task lists, batch execution  |
+| `/cc-best:pair`     | Pair programming     | Continuous collaboration    | Learning, sensitive operations     |
+| `/cc-best:cc-ralph` | Long-running loop    | Minimal (cross-session)     | Hour-level projects                |
+| `/cc-best:mode`     | Behavior adjustment  | N/A (modifier)              | Fine-tuning Claude's approach      |
+| `/cc-best:model`    | Model strategy       | One-time selection          | Switching quality/balanced/economy |
 
 ### Quick Decision Guide
 
@@ -62,6 +63,17 @@ Do you have a clear task list?
 /cc-best:iterate "implement user authentication"
 ```
 
+### Pipeline Modes
+
+Iterate supports two pipeline modes (configured in `memory-bank/config.json`):
+
+| Mode   | Pipeline                        | Best For            |
+| ------ | ------------------------------- | ------------------- |
+| `full` | PM → Lead → Designer → Dev → QA | Complete projects   |
+| `lite` | Dev → Verify → Commit           | Quick coding, fixes |
+
+**Lite mode** skips role selection and goes straight to Dev → Verify → Commit. Use `/cc-best:setup --interactive` to switch.
+
 ### What Happens
 
 ```
@@ -77,12 +89,12 @@ Do you have a clear task list?
 
 ### How to Control
 
-| Action               | Method                                 |
-| -------------------- | -------------------------------------- |
-| **Pause**            | Press `Ctrl+C` or `Esc`                |
-| **Interrupt**        | Type any message                       |
+| Action               | Method                                         |
+| -------------------- | ---------------------------------------------- |
+| **Pause**            | Press `Ctrl+C` or `Esc`                        |
+| **Interrupt**        | Type any message                               |
 | **Resume**           | Say "continue" or run `/cc-best:iterate` again |
-| **Stop permanently** | Press `Ctrl+C` and don't resume        |
+| **Stop permanently** | Press `Ctrl+C` and don't resume                |
 
 ### Stop Conditions
 
@@ -253,12 +265,12 @@ Look good? Continue with B?
 
 ### /cc-best:cc-ralph vs /cc-best:iterate
 
-| Aspect        | /cc-best:iterate       | /cc-best:cc-ralph           |
-| ------------- | -------------- | ------------------- |
-| Session scope | Single session | Cross-session       |
-| Resume        | Manual         | Automatic           |
-| Best for      | <2h tasks      | Hour-level projects |
-| Requires      | Nothing extra  | ralph-loop plugin   |
+| Aspect        | /cc-best:iterate | /cc-best:cc-ralph   |
+| ------------- | ---------------- | ------------------- |
+| Session scope | Single session   | Cross-session       |
+| Resume        | Manual           | Automatic           |
+| Best for      | <2h tasks        | Hour-level projects |
+| Requires      | Nothing extra    | ralph-loop plugin   |
 
 ### How to Start
 
@@ -379,12 +391,12 @@ Look good? Continue with B?
 
 Modes change HOW Claude works. Roles change WHAT Claude does.
 
-| Mode       | Best Combined With |
-| ---------- | ------------------ |
-| `dev`      | `/cc-best:dev`             |
-| `research` | `/cc-best:lead`, `/cc-best:pm`     |
-| `review`   | `/cc-best:qa`              |
-| `planning` | `/cc-best:lead`, `/cc-best:pm`     |
+| Mode       | Best Combined With             |
+| ---------- | ------------------------------ |
+| `dev`      | `/cc-best:dev`                 |
+| `research` | `/cc-best:lead`, `/cc-best:pm` |
+| `review`   | `/cc-best:qa`                  |
+| `planning` | `/cc-best:lead`, `/cc-best:pm` |
 
 ### Example Workflow
 
@@ -469,12 +481,13 @@ Just run `/cc-best:iterate` again. Claude reads progress.md and continues from w
 
 ## 模式概览
 
-| 模式        | 用途       | 用户参与度       | 适用场景           |
-| ----------- | ---------- | ---------------- | ------------------ |
+| 模式                | 用途       | 用户参与度       | 适用场景           |
+| ------------------- | ---------- | ---------------- | ------------------ |
 | `/cc-best:iterate`  | 自主迭代   | 最低（仅阻塞时） | 明确任务、批量执行 |
 | `/cc-best:pair`     | 结对编程   | 持续协作         | 学习、敏感操作     |
 | `/cc-best:cc-ralph` | 长时间循环 | 最低（跨会话）   | 小时级项目         |
 | `/cc-best:mode`     | 行为调整   | N/A（修饰符）    | 微调工作风格       |
+| `/cc-best:model`    | 模型策略   | 一次性选择       | 切换质量/均衡/经济 |
 
 ### 快速选择指南
 
@@ -523,6 +536,17 @@ Just run `/cc-best:iterate` again. Claude reads progress.md and continues from w
 /cc-best:iterate "实现用户认证功能"
 ```
 
+### 管线模式
+
+Iterate 支持两种管线模式（通过 `memory-bank/config.json` 配置）：
+
+| 模式   | 管线                            | 适用场景         |
+| ------ | ------------------------------- | ---------------- |
+| `full` | PM → Lead → Designer → Dev → QA | 完整项目开发     |
+| `lite` | Dev → Verify → Commit           | 快速编码、小改动 |
+
+**Lite 模式** 跳过角色选择，直接 Dev → Verify → Commit。使用 `/cc-best:setup --interactive` 切换。
+
 ### 执行流程
 
 ```
@@ -538,12 +562,12 @@ Just run `/cc-best:iterate` again. Claude reads progress.md and continues from w
 
 ### 如何控制
 
-| 操作         | 方法                          |
-| ------------ | ----------------------------- |
-| **暂停**     | 按 `Ctrl+C` 或 `Esc`          |
-| **中断**     | 输入任何消息                  |
+| 操作         | 方法                                  |
+| ------------ | ------------------------------------- |
+| **暂停**     | 按 `Ctrl+C` 或 `Esc`                  |
+| **中断**     | 输入任何消息                          |
 | **恢复**     | 说"继续"或重新运行 `/cc-best:iterate` |
-| **永久停止** | 按 `Ctrl+C` 后不恢复          |
+| **永久停止** | 按 `Ctrl+C` 后不恢复                  |
 
 ### 停止条件
 
@@ -705,12 +729,12 @@ Claude: 好的，提取验证逻辑...
 
 ### /cc-best:cc-ralph vs /cc-best:iterate
 
-| 方面     | /cc-best:iterate   | /cc-best:cc-ralph       |
-| -------- | ---------- | --------------- |
-| 会话范围 | 单会话     | 跨会话          |
-| 恢复方式 | 手动       | 自动            |
-| 适合     | <2h 任务   | 小时级项目      |
-| 依赖     | 无额外依赖 | ralph-loop 插件 |
+| 方面     | /cc-best:iterate | /cc-best:cc-ralph |
+| -------- | ---------------- | ----------------- |
+| 会话范围 | 单会话           | 跨会话            |
+| 恢复方式 | 手动             | 自动              |
+| 适合     | <2h 任务         | 小时级项目        |
+| 依赖     | 无额外依赖       | ralph-loop 插件   |
 
 ### 如何启动
 
@@ -822,11 +846,11 @@ Claude: 好的，提取验证逻辑...
 
 模式改变 Claude 的工作方式，角色改变做什么。
 
-| 模式       | 推荐组合       |
-| ---------- | -------------- |
-| `dev`      | `/cc-best:dev`         |
+| 模式       | 推荐组合                       |
+| ---------- | ------------------------------ |
+| `dev`      | `/cc-best:dev`                 |
 | `research` | `/cc-best:lead`, `/cc-best:pm` |
-| `review`   | `/cc-best:qa`          |
+| `review`   | `/cc-best:qa`                  |
 | `planning` | `/cc-best:lead`, `/cc-best:pm` |
 
 ### 示例工作流

@@ -13,7 +13,7 @@
 /cc-best:status
 ```
 
-You should see a summary of all installed components (40 commands, 17 skills, 8 agents, 33 rules).
+You should see a summary of all installed components (42 commands, 17 skills, 8 agents, 33 rules).
 
 ## 2. Your First Iterate (2 minutes)
 
@@ -237,6 +237,15 @@ Yes. Run individual role commands directly: `/cc-best:dev "fix this bug"` skips 
 
 **How do I add a new language?**
 Create a new directory under `rules/` (e.g., `rules/rust/`) with style, testing, security, and performance rule files.
+
+**How do I switch model strategy?**
+Run `/cc-best:model` to interactively select between quality (all Opus), balanced (design Opus + execution Sonnet), or economy (core Sonnet + rest Haiku). Use `/cc-best:model --show` to see current configuration.
+
+**What is Lite mode?**
+Lite mode simplifies the iterate pipeline to Dev → Verify → Commit, skipping PM/Lead/Designer/QA roles. Configure it in `memory-bank/config.json` or during `/cc-best:setup --interactive`.
+
+**How do I make a quick fix?**
+Use `/cc-best:hotfix "description"` for urgent bug fixes. It goes straight to Dev → Verify → Commit without the full pipeline.
 
 ---
 

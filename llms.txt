@@ -7,14 +7,14 @@ CC-Best transforms Claude Code into a complete development team with role-based 
 ## Overview
 
 - Name: cc-best
-- Version: 0.6.5
+- Version: 0.7.0
 - License: MIT
 - Homepage: https://xiaobei930.github.io/cc-best/
 - Repository: https://github.com/xiaobei930/cc-best
 
 ## Components
 
-- 40 commands (role, mode, build, git, context, quality, ops, setup)
+- 42 commands (role, mode, build, git, context, quality, ops, setup)
 - 17 skills (backend, frontend, testing, security, architecture, devops, git, learning)
 - 8 agents (architect, planner, code-reviewer, code-simplifier, security-reviewer, tdd-guide, build-error-resolver, requirement-validator)
 - 33 rules across 8 directories (common + python, frontend, java, csharp, cpp, embedded, ui)
@@ -77,7 +77,7 @@ Four-layer architecture: Philosophy → Method → Practice → Tools
 ## File Index
 
 - CLAUDE.md — Project constitution template
-- commands/ — 38 command definitions
+- commands/ — 42 command definitions
 - skills/ — 17 skill definitions
 - agents/ — 8 agent definitions
 - rules/ — 33 coding rules (8 directories)

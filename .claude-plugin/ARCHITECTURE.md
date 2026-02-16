@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.6.5 | Last Updated: 2026-02-13
+> Version: 0.7.0 | Last Updated: 2026-02-13
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -10,7 +10,7 @@
 
 | 组件         | 数量  | 位置                  | 触发方式                           |
 | ------------ | ----- | --------------------- | ---------------------------------- |
-| **Commands** | 40    | `commands/`           | 用户输入 `/xxx`                    |
+| **Commands** | 42    | `commands/`           | 用户输入 `/xxx`                    |
 | **Skills**   | 17    | `skills/`             | Agent 预加载 / 自动注入            |
 | **Agents**   | 8     | `agents/`             | Task tool 委派                     |
 | **Rules**    | 33    | `rules/`              | 路径匹配自动注入 (8 目录分层)      |
@@ -22,12 +22,12 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      Commands (40)                          │
+│                      Commands (42)                          │
 │  角色: pm, clarify, lead, designer, dev, qa, verify         │
 │  工具: build, test, run, status, commit, compact...         │
-│  模式: iterate, pair, cc-ralph, mode                        │
+│  模式: iterate, pair, cc-ralph, mode, model                 │
 │  知识: learn, analyze, evolve                               │
-│  新增: fix-issue, release, service                          │
+│  新增: fix-issue, release, service, hotfix                  │
 └──────────────────────┬──────────────────────────────────────┘
                        │ 调用
                        ▼
@@ -110,6 +110,34 @@
     └─ agent: security-reviewer + skills: security
 ```
 
+### 3.1 管线角色决策树 | Pipeline Role Decision Tree
+
+```mermaid
+flowchart TD
+    Start[读取 progress.md] --> Check{当前状态?}
+    Check -->|无需求| PM[/cc-best:pm]
+    Check -->|有需求无设计| Lead[/cc-best:lead]
+    Check -->|有设计,前端| Designer[/cc-best:designer]
+    Check -->|有任务待开发| Dev[/cc-best:dev]
+    Check -->|有代码待验证| Verify[/cc-best:verify]
+    Check -->|验证通过| QA[/cc-best:qa]
+    QA -->|通过| Commit[/cc-best:commit]
+    QA -->|Bug, fix<3| DevBug[/cc-best:dev --bugfix]
+    QA -->|fix>=3| LeadReview[/cc-best:lead 熔断重审]
+    DevBug --> Verify
+    Commit --> Start
+```
+
+### 3.2 异常回退路径 | Exception Fallback Paths
+
+```mermaid
+flowchart LR
+    Dev -->|方案不可行| Lead
+    Lead -->|需求模糊| PM
+    QA -->|高影响假设错误| PM
+    QA -->|Bug fix>=3 熔断| Lead
+```
+
 ---
 
 ## 4. Commands → Agents/Skills 引用关系
@@ -131,6 +159,8 @@
 | `/cc-best:fix-issue` | tdd-guide, build-error-resolver           | exploration  | GitHub Issue 端到端修复  |
 | `/cc-best:release`   | -                                         | -            | 版本发布管理             |
 | `/cc-best:service`   | -                                         | -            | 开发服务管理             |
+| `/cc-best:model`     | -                                         | -            | 模型策略切换             |
+| `/cc-best:hotfix`    | -                                         | -            | 紧急修复快速通道         |
 
 ---
 
@@ -279,7 +309,7 @@ hooks/
 | `CLAUDE.md`                       | 头部 Version |
 | `CHANGELOG.md`                    | 最新条目     |
 
-当前版本: **0.6.5**
+当前版本: **0.7.0**
 
 ---
 
@@ -428,7 +458,7 @@ tools: Read, Grep, Glob
 
 | 类别                 | 数量                                                            |
 | -------------------- | --------------------------------------------------------------- |
-| Commands             | 40                                                              |
+| Commands             | 42                                                              |
 | Skills               | 17                                                              |
 | Agents               | 8                                                               |
 | Rules                | 33 (8 目录: common/python/frontend/java/csharp/cpp/embedded/ui) |

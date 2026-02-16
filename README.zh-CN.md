@@ -22,7 +22,7 @@
 > 从产品需求到代码审查 — 一个插件，完整工作流。
 
 <p align="center">
-  <code>40 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>33 规则</code> · <code>18 hooks</code>
+  <code>42 命令</code> · <code>17 技能</code> · <code>8 智能体</code> · <code>33 规则</code> · <code>18 hooks</code>
 </p>
 
 <p align="center">
@@ -210,7 +210,7 @@ observe → analyze → learn → evolve
 ```
 your-project/
 ├── CLAUDE.md          # 项目宪法
-├── commands/          # 40 个命令
+├── commands/          # 42 个命令
 ├── skills/            # 17 个技能
 ├── agents/            # 8 个智能体
 ├── rules/             # 33 条编码规范 (8 目录分层)
@@ -305,18 +305,18 @@ flowchart LR
 
 ## 📋 命令速查
 
-**40 个命令**，按类别组织：
+**42 个命令**，按类别组织：
 
-| 类别       | 命令                                                                                                                                    | 用途                      |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify`               | 开发工作流角色            |
-| **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                               | 自主/结对模式             |
-| **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                                       | 构建测试自动化            |
-| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                                  | 版本控制                  |
-| **上下文** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                            | 会话管理                  |
-| **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                                            | 代码质量&知识             |
-| **运维**   | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                                            | Issue修复、发版、服务管理 |
-| **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`, `/cc-best:confidence-check`, `/cc-best:security-audit` | 配置诊断                  |
+| 类别       | 命令                                                                                                                                    | 用途                    |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| **角色**   | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify`               | 开发工作流角色          |
+| **模式**   | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`, `/cc-best:model`                                             | 自主/结对模式&模型策略  |
+| **构建**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                                       | 构建测试自动化          |
+| **Git**    | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                                  | 版本控制                |
+| **上下文** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                            | 会话管理                |
+| **质量**   | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                                            | 代码质量&知识           |
+| **运维**   | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`, `/cc-best:hotfix`                                                         | Issue修复、发版、Hotfix |
+| **配置**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`, `/cc-best:confidence-check`, `/cc-best:security-audit` | 配置诊断                |
 
 > 📖 **完整参考**: 查看 [COMMANDS.md](.claude-plugin/COMMANDS.md) 了解所有参数和用法示例。
 
@@ -348,7 +348,7 @@ flowchart TB
         CMD["/cc-best:iterate '添加功能'"]
     end
 
-    subgraph Commands["📋 命令 (38)"]
+    subgraph Commands["📋 命令 (42)"]
         PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
     end
 

@@ -22,7 +22,7 @@
 > From product requirements to code review — one plugin, full workflow.
 
 <p align="center">
-  <code>40 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>33 rules</code> · <code>18 hooks</code>
+  <code>42 commands</code> · <code>17 skills</code> · <code>8 agents</code> · <code>33 rules</code> · <code>18 hooks</code>
 </p>
 
 <p align="center">
@@ -210,7 +210,7 @@ observe → analyze → learn → evolve
 ```
 your-project/
 ├── CLAUDE.md          # Project constitution
-├── commands/          # 38 slash commands
+├── commands/          # 42 slash commands
 ├── skills/            # 17 development skills
 ├── agents/            # 8 specialized agents
 ├── rules/             # 33 coding standards (8 dirs)
@@ -305,18 +305,18 @@ flowchart LR
 
 ## 📋 Command Reference
 
-**40 commands** organized into categories:
+**42 commands** organized into categories:
 
-| Category    | Commands                                                                                                                                | Purpose                                   |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify`               | Development workflow roles                |
-| **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`                                                               | Autonomous/cc-best:pair programming modes |
-| **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                                       | Build and test automation                 |
-| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                                  | Version control                           |
-| **Context** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                            | Session management                        |
-| **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                                            | Code quality & knowledge                  |
-| **Ops**     | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`                                                                            | Issue fix, release, service management    |
-| **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`, `/cc-best:confidence-check`, `/cc-best:security-audit` | Configuration & diagnostics               |
+| Category    | Commands                                                                                                                                | Purpose                                |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **Role**    | `/cc-best:pm`, `/cc-best:lead`, `/cc-best:dev`, `/cc-best:qa`, `/cc-best:designer`, `/cc-best:clarify`, `/cc-best:verify`               | Development workflow roles             |
+| **Mode**    | `/cc-best:iterate`, `/cc-best:pair`, `/cc-best:cc-ralph`, `/cc-best:mode`, `/cc-best:model`                                             | Autonomous/pair modes & model strategy |
+| **Build**   | `/cc-best:build`, `/cc-best:test`, `/cc-best:run`, `/cc-best:fix`                                                                       | Build and test automation              |
+| **Git**     | `/cc-best:commit`, `/cc-best:pr`, `/cc-best:git-guide`                                                                                  | Version control                        |
+| **Context** | `/cc-best:compact-context`, `/cc-best:checkpoint`, `/cc-best:catchup`, `/cc-best:context`, `/cc-best:memory`                            | Session management                     |
+| **Quality** | `/cc-best:cleanup`, `/cc-best:docs`, `/cc-best:learn`, `/cc-best:analyze`, `/cc-best:evolve`                                            | Code quality & knowledge               |
+| **Ops**     | `/cc-best:fix-issue`, `/cc-best:release`, `/cc-best:service`, `/cc-best:hotfix`                                                         | Issue fix, release, hotfix, services   |
+| **Setup**   | `/cc-best:setup`, `/cc-best:setup-pm`, `/cc-best:status`, `/cc-best:self-check`, `/cc-best:confidence-check`, `/cc-best:security-audit` | Configuration & diagnostics            |
 
 > 📖 **Full reference**: See [COMMANDS.md](.claude-plugin/COMMANDS.md) for all parameters and usage examples.
 
@@ -348,7 +348,7 @@ flowchart TB
         CMD["/cc-best:iterate 'add feature'"]
     end
 
-    subgraph Commands["📋 Commands (38)"]
+    subgraph Commands["📋 Commands (42)"]
         PM["/pm"] --> Lead["/lead"] --> Dev["/dev"] --> QA["/qa"]
     end
 

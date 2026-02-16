@@ -36,14 +36,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Git Skill 拆分（SKILL.md → 3 个子文件，584→<480 行）
 - [x] 综合审计修复（Agent 格式规范化、Commands argument-hint/交叉引用、Rules 路径扩展、Legacy 脚本清理、SKILL.md 引用补全）
 
-### v0.7.0 (Planned) - Lite 模式 + 模型策略
+### v0.7.0 ✅ (Released 2026-02-13) - Lite 模式 + 模型策略
 
 **核心目标**: 降低上手门槛 + Token 成本控制
 
-- [ ] **Lite 模式** - 精简命令集（iterate + dev + verify + commit + 基础工具）+ 精简 Rules（common + 项目语言）+ 精简 Skill 预加载
-- [ ] **三档模型策略** - Quality（Opus 优先）/ Balanced（设计 Opus + 执行 Sonnet）/ Economy（Sonnet + Haiku），按角色映射模型
-- [ ] **Hotfix 快速通道** - 精简管线（Dev→QA→Commit），跳过 PM/Lead 分析
-- [ ] **Mermaid 流程图** - 管线角色决策树、异常回退路径可视化
+- [x] **Lite 模式** - iterate 管线行为精简（跳过 PM/Lead/Designer/QA，直接 Dev→Verify→Commit）
+- [x] **三档模型策略** - Quality（全 Opus）/ Balanced（设计 Opus + 执行 Sonnet）/ Economy（核心 Sonnet + 其余 Haiku），交互式切换
+- [x] **Hotfix 快速通道** - 精简管线（Dev→Verify→Commit），跳过 PM/Lead 分析
+- [x] **Mermaid 流程图** - 管线角色决策树、异常回退路径可视化
 - [ ] 常见错误诊断与修复建议
 
 ### v0.8.0 (Planned) - 示例项目与生态扩展
@@ -68,6 +68,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.7.0] - 2026-02-13
+
+#### Added / 新增
+
+- **Lite 模式**: iterate 支持 full/lite 两种管线模式，lite 跳过 PM/Lead/Designer/QA 直接 Dev→Verify→Commit
+- **模型策略切换**: `/cc-best:model` 命令，交互式选择 quality/balanced/economy 三档策略，修改 agent frontmatter
+- **Hotfix 快速通道**: `/cc-best:hotfix` 命令，紧急修复直接 Dev→Verify→Commit
+- **Mermaid 流程图**: ARCHITECTURE.md 新增管线角色决策树和异常回退路径可视化
+
+#### Fixed / 修复
+
+- **计数一致性**: 修复 7 处历史遗留计数 bug（.claude-plugin/README.md 35→42, README/index.html 38→42 等）
+
+---
 
 ### [0.6.5] - 2026-02-13
 
@@ -469,6 +484,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[0.7.0]: https://github.com/xiaobei930/cc-best/compare/v0.6.5...v0.7.0
 [0.6.5]: https://github.com/xiaobei930/cc-best/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/xiaobei930/cc-best/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/xiaobei930/cc-best/compare/v0.6.2...v0.6.3

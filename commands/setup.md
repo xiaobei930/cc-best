@@ -167,15 +167,15 @@ const path = require("path");
 
 // 获取插件绝对路径
 const homeDir = os.homedir();
-const pluginVersion = "0.6.5"; // 当前版本
+const pluginVersion = "0.7.0"; // 当前版本
 const pluginPath = path.join(
   homeDir,
   ".claude/plugins/cache/cc-best/cc-best",
   pluginVersion,
 );
-// Windows: C:\Users\<user>\.claude\plugins\cache\cc-best\cc-best\0.6.5
-// macOS:   /Users/<user>/.claude/plugins/cache/cc-best/cc-best/0.6.5
-// Linux:   /home/<user>/.claude/plugins/cache/cc-best/cc-best/0.6.5
+// Windows: C:\Users\<user>\.claude\plugins\cache\cc-best\cc-best\0.7.0
+// macOS:   /Users/<user>/.claude/plugins/cache/cc-best/cc-best/0.7.0
+// Linux:   /home/<user>/.claude/plugins/cache/cc-best/cc-best/0.7.0
 ```
 
 **Hooks 配置模板**：
@@ -211,6 +211,25 @@ const pluginPath = path.join(
 - `{{CURRENT_PHASE}}` → 当前阶段（如"开发中"、"MVP"）
 
 **询问用户**获取这些信息，然后使用 Edit 工具更新 CLAUDE.md。
+
+### 6. 选择运行模式
+
+**询问用户**选择 iterate 运行模式：
+
+| 模式   | 管线                            | 适用场景         |
+| ------ | ------------------------------- | ---------------- |
+| `full` | PM → Lead → Designer → Dev → QA | 完整项目开发     |
+| `lite` | Dev → Verify → Commit           | 快速编码、小改动 |
+
+根据选择写入 `memory-bank/config.json`：
+
+```json
+{
+  "mode": "full"
+}
+```
+
+> **默认**: 如果用户跳过选择，使用 `full` 模式。
 
 ---
 
