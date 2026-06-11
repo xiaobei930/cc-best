@@ -9,9 +9,9 @@ Claude Code 钩子系统允许在特定事件触发时执行自定义脚本，�
 cp .claude/settings.local.json.example .claude/settings.local.json
 ```
 
-## 钩子类型（19 个生命周期事件）
+## 钩子类型（20 个生命周期事件）
 
-> 下表列出核心事件，完整 19 事件列表参见 `.claude-plugin/ARCHITECTURE.md` Section 2。
+> 下表列出核心事件，完整 20 事件列表参见 `.claude-plugin/ARCHITECTURE.md` Section 2。
 
 | 钩子事件            | 触发时机                          | 典型用途                 |
 | ------------------- | --------------------------------- | ------------------------ |
@@ -21,6 +21,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | `PreToolUse`        | 工具执行**前**                    | 允许、拒绝或修改工具调用 |
 | `PermissionRequest` | 权限对话框出现时                  | 自动批准/拒绝权限请求    |
 | `PostToolUse`       | 工具执行**后**                    | 验证结果、运行后检查     |
+| `MessageDisplay`    | 助手消息显示时（v2.1.152+）       | 显示层转换/打码敏感信息  |
 | `Stop`              | Claude 完成响应时                 | 决定是否继续             |
 | `SubagentStop`      | 子代理完成时                      | 评估子代理任务是否完成   |
 | `PreCompact`        | 上下文压缩前                      | 保存重要状态             |
@@ -66,6 +67,12 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | SessionStart | `session-check.js`    | 新会话启动       | ✅     |
 | PreCompact   | `pre-compact.js`      | 上下文压缩前     | ✅     |
 | SessionEnd   | `evaluate-session.js` | 自动学习模式提取 | ✅     |
+
+### 显示层处理 (MessageDisplay, v2.1.152+)
+
+| 钩子           | 脚本 (Node.js)       | 功能                                       | 已配置 |
+| -------------- | -------------------- | ------------------------------------------ | ------ |
+| MessageDisplay | `message-display.js` | 显示时打码助手消息中的密钥（不影响上下文） | ✅     |
 
 > **已配置** = 在 `hooks/hooks.json` 中默认启用；**可选** = 脚本已提供，用户可按需配置
 
@@ -278,7 +285,7 @@ echo $?  # 检查退出码
 │       │   ├── utils.js                         # 27 个辅助函数
 │       │   └── package-manager.js               # 包管理器检测
 │       ├── init.js                               # 项目初始化脚本
-│       └── hooks/                               # 29 个生命周期钩子
+│       └── hooks/                               # 30 个生命周期钩子
 │           ├── validate-command.js              # 命令验证
 │           ├── protect-files.js                 # 文件保护
 │           ├── format-file.js                   # 自动格式化

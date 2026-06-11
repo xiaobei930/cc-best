@@ -29,10 +29,12 @@ const {
   readFile,
   fileExists,
   getMemoryBankDir,
-  log, shouldRunInProfile} = require("../lib/utils");
+  log,
+  shouldRunInProfile,
+} = require("../lib/utils");
 
 // Hook Profile 检查
-if (!shouldRunInProfile('stop-check')) {
+if (!shouldRunInProfile("stop-check")) {
   process.exit(0);
 }
 
@@ -205,6 +207,8 @@ async function main() {
     }
 
     // 不阻止停止，只提供信息
+    // 注：v2.1.145+ Stop hook 支持 hookSpecificOutput.additionalContext 让对话继续，
+    // 但 progress.md 常驻未完成任务会导致每次 Stop 都继续对话（无限循环），故有意不使用
     process.exit(0);
   } catch {
     // 静默失败

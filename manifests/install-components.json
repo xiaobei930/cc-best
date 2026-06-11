@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "CC-Best 组件按需安装清单。用户可在 /cc-best:setup 中选择需要的组件家族。",
-  "version": "0.10.0",
+  "version": "0.11.0",
 
   "families": {
     "baseline": {

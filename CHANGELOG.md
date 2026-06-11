@@ -74,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] **组件按需安装清单** - 15 个组件家族 + 3 个预设 (v0.9.0)
 - [x] **plugin settings.json** - Agent 默认配置 (v0.9.0)
 
-### v0.10.x (Current) - 对齐 Claude Code v2.1.97
+### v0.10.x ✅ (Released 2026-04-09) - 对齐 Claude Code v2.1.97
 
 **核心目标**: 同步 Claude Code v2.1.97 新特性 + 插件规范增强
 
@@ -94,10 +94,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] **角色工具边界** - PM/Lead/Designer 明确禁止修改源代码，仅允许 .md 文档 (v0.10.0)
 - [x] **Token 消耗优化** - coding-standards.md -85%，common rules 总计 -35% (v0.10.0)
 
-### v0.11.x (Next) - 生态扩展 + 质量闭环
+### v0.11.x (Current) - 对齐 Claude Code v2.1.173 + 生态扩展
 
-**核心目标**: npm 分发 + 评估体系 + 持续跟进官方变更
+**核心目标**: 同步 Claude Code v2.1.98→v2.1.173 官方变更 + 生态扩展
 
+- [x] **MessageDisplay Hook 事件** - 显示层敏感信息打码，事件总数 19→20 (v0.11.0)
+- [x] **SessionStart sessionTitle** - 自动以"目录:分支"命名会话 (v0.11.0)
+- [x] **角色命令 disallowed-tools** - pm/lead/designer/clarify 强制移除 Bash (v0.11.0)
+- [x] **模型别名文档更新** - Opus 4.8 默认 high effort、Fable 5 (claude-fable-5) 说明 (v0.11.0)
 - [ ] **npm 分发** - 发布到 npm registry，支持 `npx cc-best` 安装
 - [ ] **Skill 评估体系** - 参考 PluginEval，为 skill/agent 建立质量评分和基准测试
 - [ ] **跨会话学习增强** - Reflexion 模式，错误模式跨会话持久化和自动预防
@@ -118,6 +122,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Recent Changes / 近期变更
+
+### [0.11.0] - 2026-06-11
+
+#### Theme / 主题: 对齐 Claude Code v2.1.173
+
+同步 Claude Code v2.1.98→v2.1.173 的官方变更：新增 MessageDisplay hook 事件、SessionStart 会话自动命名、角色命令 disallowed-tools 强制工具边界，并更新模型别名文档（Opus 4.8 / Fable 5）。
+
+#### Added / 新增
+
+- **MessageDisplay Hook 事件**（v2.1.152+）— 新增 `message-display.js`，在助手消息显示时打码 API 密钥、Token、JWT 等敏感信息（仅影响屏幕显示，不影响 transcript 和 Claude 上下文），Hook 事件从 19 个扩展至 20 个，脚本总数从 29 增加到 30
+- **SessionStart `sessionTitle`**（v2.1.152+）— `session-check.js` 自动以"目录名:分支名"命名会话（等效 /rename，仅 startup/resume 时生效）
+- **角色命令 `disallowed-tools`**（v2.1.152+）— pm/lead/designer/clarify 四个角色命令添加 `disallowed-tools: Bash`，强制执行角色工具边界（官方确认 skills/commands 的 `allowed-tools` 存在不限制工具的 bug，`disallowed-tools` 为有效替代）
+
+#### Changed / 变更
+
+- **兼容性基线** — 从 Claude Code v2.1.97 更新到 v2.1.173
+- **Hook Profile 注册表** — HOOK_PROFILES 新增 message-display（safety 类）
+- **模型别名文档**（/model 命令）— 说明 `opus` 别名当前指向 Opus 4.8（v2.1.154+ 默认 high effort）；Fable 5（`claude-fable-5`，v2.1.170+，1M 上下文/128k 输出）需显式写完整模型 ID
+- **stop-check.js 注释** — 记录 v2.1.145+ Stop hook `additionalContext` 能力及有意不使用的原因（避免常驻未完成任务导致无限继续循环）
+- **文档同步** — plugin.json/marketplace.json/manifests 版本 0.11.0；ARCHITECTURE.md、hooks/README.md、llms.txt×2、docs/index.html、docs/guides/advanced.md 统计更新（20 事件/30 脚本）
+
+#### Fixed / 修复
+
+- **插件安装失败**（#4）— `plugin.json` 的 `userConfig.hookProfile` 使用了验证器不支持的 `enum`/`description` 键且缺少必需的 `title`，导致 Claude Code 2.1.x 上 manifest 校验失败、无法安装；改为 `title` + `type` + `default` 格式
+
+#### Notes / 备注（官方新能力，无需插件改动）
+
+- `/reload-skills`（v2.1.152+）— 开发 skill 时免重启重扫描
+- `/cd`（v2.1.169+）— 切换工作目录且不打断 prompt cache
+- `--safe-mode` / `disableBundledSkills`（v2.1.169+）— 故障排查时禁用自定义/内置 skills
+- 管理设置 `requiredMinimumVersion`/`requiredMaximumVersion`（v2.1.163+）
 
 ### [0.10.0] - 2026-04-09
 

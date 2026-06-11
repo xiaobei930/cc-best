@@ -1,6 +1,7 @@
 ---
 description: 需求澄清智能体，解决 REQ 文档中的待澄清项
 allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, Task, WebSearch, WebFetch
+disallowed-tools: Bash
 ---
 
 # /clarify - 需求澄清智能体

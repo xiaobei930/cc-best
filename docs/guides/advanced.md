@@ -22,7 +22,7 @@ AI coding assistants without principles produce inconsistent results. CC-Best em
 - **Dao** defines 8 core principles (P1-P8) and 5 autonomous decision principles (A1-A5)
 - **Fa** translates principles into role workflows (PM → Lead → Dev → QA)
 - **Shu** implements standards as enforceable rules (43 rules across 10 directories)
-- **Qi** automates enforcement through hooks (30 scripts across 19 lifecycle events)
+- **Qi** automates enforcement through hooks (30 scripts across 20 lifecycle events)
 
 ### Meta Principles
 

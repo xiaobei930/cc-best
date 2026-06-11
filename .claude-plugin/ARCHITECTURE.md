@@ -1,6 +1,6 @@
 # CC-Best Architecture | 架构文档
 
-> Version: 0.10.0 | Last Updated: 2026-04-09
+> Version: 0.11.0 | Last Updated: 2026-06-11
 
 本文档描述 CC-Best 插件的完整架构、组件关系和调用链路。
 
@@ -61,7 +61,7 @@
                        │ 触发
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Hooks (30 脚本 / 19 事件)                   │
+│                  Hooks (30 脚本 / 20 事件)                   │
 │  SessionStart      → session-check                          │
 │  UserPromptSubmit  → user-prompt-submit                     │
 │  PreToolUse        → validate-command, pause-before-push,   │
@@ -85,6 +85,7 @@
 │  CwdChanged        → cwd-changed               (v0.10.0)  │
 │  ConfigChange      → config-change             (v0.10.0)  │
 │  TaskCompleted     → task-completed            (v0.10.0)  │
+│  MessageDisplay    → message-display           (v0.11.0)  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -324,7 +325,7 @@ hooks/
 | `CLAUDE.md`                       | 头部 Version |
 | `CHANGELOG.md`                    | 最新条目     |
 
-当前版本: **0.10.0**
+当前版本: **0.11.0**
 
 ---
 
@@ -487,7 +488,7 @@ tools: Read, Grep, Glob
 
 ## 13. 官方特性兼容性 | Official Feature Compatibility
 
-> 基于 Claude Code v2.1.97 评估（2026-04-09 更新）
+> 基于 Claude Code v2.1.173 评估（2026-06-11 更新）
 
 ### 已采用特性 | Adopted Features
 
@@ -516,6 +517,9 @@ tools: Read, Grep, Glob
 | CwdChanged 事件          | hooks 配置 (v0.10.0)                  | ✅   |
 | ConfigChange 事件        | hooks 配置 (v0.10.0)                  | ✅   |
 | TaskCompleted 事件       | hooks 配置 (v0.10.0)                  | ✅   |
+| MessageDisplay 事件      | hooks 配置 (v0.11.0)                  | ✅   |
+| SessionStart sessionTitle| session-check.js (v0.11.0)            | ✅   |
+| disallowed-tools (命令)  | pm/lead/designer/clarify (v0.11.0)    | ✅   |
 | Agent `background`       | code-reviewer 等 (v0.9.0)             | ✅   |
 | Agent `isolation`        | architect (v0.9.0)                    | ✅   |
 | Agent `memory`           | 5 agents (v0.9.0)                     | ✅   |

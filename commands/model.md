@@ -91,6 +91,15 @@ node scripts/node/model-strategy.js <strategy>
 
 ---
 
+## 模型别名现状（2026-06，Claude Code v2.1.173）
+
+- `opus` / `sonnet` / `haiku` 是别名，自动跟踪最新版本，无需手动升级
+- 当前 `opus` → **Opus 4.8**（v2.1.154+ 默认 high effort，快速模式成本更低）
+- **Fable 5**（`claude-fable-5`，v2.1.170+）为 Mythos 级新模型（1M 上下文/128k 输出），无别名，如需使用须在 agent frontmatter 显式写完整模型 ID；适合超长自治循环和大型架构分析
+- 不写 `model` 字段 = inherit（继承会话模型），用户控制层 agent 采用此策略
+
+---
+
 ## 注意事项
 
 - 策略变更直接修改 `agents/*.md` 文件的 `model:` frontmatter 字段

@@ -509,6 +509,10 @@ const HOOK_PROFILES = {
   // learning: 权限拒绝追踪、任务完成追踪
   "permission-denied": "learning",
   "task-completed": "learning",
+
+  // v0.11.0 新增 hook（对齐 Claude Code v2.1.173）
+  // safety: 显示层敏感信息打码
+  "message-display": "safety",
 };
 
 const PROFILE_LEVELS = { minimal: 1, standard: 2, full: 3 };

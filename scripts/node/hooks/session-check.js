@@ -148,10 +148,32 @@ function getLastSessionSummary() {
   }
 }
 
-const { shouldRunInProfile } = require('../lib/utils');
+/**
+ * 生成会话标题 (v2.1.152+ sessionTitle)
+ * 优先使用 git 分支名，回退到目录名；仅在 startup/resume 时生效（官方行为）
+ */
+function getSessionTitle() {
+  try {
+    const branch = execSync("git branch --show-current", {
+      cwd: PROJECT_ROOT,
+      timeout: 3000,
+      encoding: "utf8",
+      stdio: ["pipe", "pipe", "pipe"],
+    }).trim();
+    const dirName = path.basename(PROJECT_ROOT);
+    if (branch && branch !== "main" && branch !== "master") {
+      return `${dirName}:${branch}`;
+    }
+    return dirName;
+  } catch {
+    return null;
+  }
+}
+
+const { shouldRunInProfile } = require("../lib/utils");
 
 // Hook Profile 检查
-if (!shouldRunInProfile('session-check')) {
+if (!shouldRunInProfile("session-check")) {
   process.exit(0);
 }
 
@@ -178,14 +200,20 @@ function main() {
 
   // SessionStart hook 必须输出 JSON 格式，否则会报 'hook error'
   // 参考：https://github.com/anthropics/claude-code/issues/12671
+  const hookOutput = { hookEventName: "SessionStart" };
+
   if (contextParts.length > 0) {
-    console.log(
-      JSON.stringify({
-        hookSpecificOutput: {
-          additionalContext: contextParts.join("\n\n"),
-        },
-      }),
-    );
+    hookOutput.additionalContext = contextParts.join("\n\n");
+  }
+
+  // 自动命名会话（v2.1.152+，仅 startup/resume 时官方生效，clear/compact 时被忽略）
+  const sessionTitle = getSessionTitle();
+  if (sessionTitle) {
+    hookOutput.sessionTitle = sessionTitle;
+  }
+
+  if (hookOutput.additionalContext || hookOutput.sessionTitle) {
+    console.log(JSON.stringify({ hookSpecificOutput: hookOutput }));
   } else {
     // 无问题时也输出空 JSON
     console.log("{}");

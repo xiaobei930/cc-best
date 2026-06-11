@@ -348,6 +348,18 @@
         "description": "配置变更: 检测配置文件修改并提醒重新加载"
       }
     ],
+    "MessageDisplay": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/node/hooks/message-display.js\"",
+            "timeout": 3
+          }
+        ],
+        "description": "显示打码: 助手消息显示时打码密钥等敏感信息（仅影响显示，v2.1.152+）"
+      }
+    ],
     "TaskCompleted": [
       {
         "matcher": ".*",

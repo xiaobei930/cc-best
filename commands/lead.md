@@ -1,6 +1,7 @@
 ---
 description: 研发经理智能体，负责技术方案设计和任务分解
 allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, Task, Skill, WebSearch, WebFetch, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot
+disallowed-tools: Bash
 ---
 
 # /lead - 研发经理智能体

@@ -1,6 +1,7 @@
 ---
 description: 产品经理智能体，负责需求分析和产品规划
 allowed-tools: Read, Write, Edit, Glob, Grep, TodoWrite, Task, WebSearch, WebFetch, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_snapshot, mcp__plugin_playwright_playwright__browser_take_screenshot
+disallowed-tools: Bash
 ---
 
 # /pm - 产品经理智能体

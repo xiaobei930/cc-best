@@ -1,7 +1,7 @@
 {
   "name": "cc-best",
-  "version": "0.10.0",
-  "description": "Production-ready Claude Code configuration with role-based workflows (PM→Lead→Designer→Dev→QA), safety hooks, 44 commands, 19 skills, 8 agents, 43 rules, 30 hook scripts across 19 events, auto-learning pipeline, hook profiles, and multi-language coding standards",
+  "version": "0.11.0",
+  "description": "Production-ready Claude Code configuration with role-based workflows (PM→Lead→Designer→Dev→QA), safety hooks, 44 commands, 19 skills, 8 agents, 43 rules, 30 hook scripts across 20 events, auto-learning pipeline, hook profiles, and multi-language coding standards",
   "author": {
     "name": "xiaobei930",
     "url": "https://github.com/xiaobei930"
@@ -34,10 +34,9 @@
   "bin": ["./bin/"],
   "userConfig": {
     "hookProfile": {
+      "title": "Hook execution tier: minimal (safety only), standard (safety + quality), full (all hooks)",
       "type": "string",
-      "enum": ["minimal", "standard", "full"],
-      "default": "full",
-      "description": "Hook execution tier: minimal (safety only), standard (safety + quality), full (all hooks)"
+      "default": "full"
     }
   },
   "commands": ["./commands/"],
