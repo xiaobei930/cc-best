@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] `/designer` 命令 + `architecture` 技能
 - [x] Windows 兼容性修复
 - [x] 文档审计与一致性修复
-- [ ] ~~核心命令英文版~~ → 等待官方 i18n 支持 (#7233)
+- [ ] ~~核心命令英文版~~ → 官方暂无插件级 i18n（原跟踪 issue #7233 已失效）；英文用户可设置 settings.json `"language": "english"` 让 Claude 输出英文作为变通
 
 ### v0.6.x ✅ (Released 2026-02-08 ~ 2026-02-12) - 综合审计 + 学习管线 + 架构增强 + 文档升级
 
@@ -117,7 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] 稳定的插件 API（无破坏性变更）
 - [ ] Memory-bank 云同步（可选）
 - [ ] 团队协作支持（多人共享配置）
-- [ ] 完整 i18n（等待官方支持）
+- [ ] 完整 i18n（官方仅有 `language` 回复语言设置，暂无插件组件级 i18n 机制）
 
 ---
 
